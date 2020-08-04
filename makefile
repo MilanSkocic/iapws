@@ -22,10 +22,10 @@ EXE=$(BIN)/iapws_linux.exe
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) -o $@ $^ $(FFLAGS)
+	$(CC) -o $@ $^
 
 $(BUILD)/%.o: $(SRC)/%.c
-	$(CC) -o $@ -c $< $(FFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 .PHONY: clean cleanall run
 

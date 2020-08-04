@@ -21,9 +21,11 @@ set intelcompiler=1
 if %intelcompiler%==1 (
 echo "INTEL"
 set CC=%icc%
+set CFLAGS=%iccflags%
 ) else (
 echo "MSVC"
 set CC=%msvc%
+set CFLAGS=%msvcflags%
 )
 
 if "%1" == "" goto all
@@ -35,9 +37,11 @@ if "%1" == "clean" goto clean
 if "%1" == "cleanall" goto cleanall
 
 :all
-%CC% /c %SRC%main.c /Fo%BUILD%main.obj
-%CC% /c %SRC%functions.c /Fo%BUILD%functions.obj
-link %BUILD%main.obj %BUILD%functions.obj /out:%BIN%%EXE%
+for %%f in (%SRC%*.c) do (
+    echo "Compiling...  %%f"
+    %CC% /c %SRC%%%~nf.c /Fo%BUILD%%%~nf.obj
+)
+link %BUILD%*.obj /out:%BIN%%EXE%
 goto exit
 
 :clean
