@@ -1,5 +1,4 @@
 #ifndef IAPWS
-
 #define IAPWS
 
 double convert_to_kelvin(double T);

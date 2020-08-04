@@ -1,15 +1,50 @@
+/**
+ * @file iapws.c
+ * @author M. Skocic
+ * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
+ * @date 2020/08/04
+ * The computation is based on the parameters provided by the IAPWS 2004: @f$ k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 @f$.
+ * where @f$f_2@f$ and @f$x_2@f$ are, respectively, the liquid-phase fugacity and mole fraction of the solute.
+ * The Henry's constant @f$k_H@f$ is given as a function of temperature by:
+ * \f{eqnarray*}{
+ * \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau \\
+ * \tau = 1-T_R \\
+ * T_R = T/T_{c1}
+ * \f}
+ * @f$T_{c1}@f$ is the critical temperature of the solvent as recommended by IAPWS1997
+ * (647.096 for H2O and 643.847 K for D2O) and @f$p_1^*@f$ is the vapor pressure of the
+ * solvent at the temperature of interest.
+ * @f$p_1^*@f$ is calculated from the correlation of Wagner and Pruss for H2O and from
+ * the correlation of Harvey and Lemmon  for D2O.
+ * Both equations have the form @f$ \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i} @f$
+ * where the number of terms n is 6 for  H2O and 5 for D2O , @f$p_{c1}@f$ is the critical
+ * pressure of the solvent recommended by IAPWS IAPWS1997 (22.064 MPa for H2O and 21.671 MPa for D2O)
+ * The Henry's constant :@f$k_H@f$ has a dimension of pressure expressed here in bars:
+ * \f{eqnarray*}{
+ * x_2 [\text{mole fraction per bar}] = \frac{1}{k_H}\\
+ * wt_2 = \text{molfrac2massfrac}(x_2)\\
+ * S [ppm.bar^{-1}] = \text{massfraction2ppm}(wt_2)\\
+ * S [cm^3.kg^{-1}.bar^{-1}] = \frac{x_2 \cdot V_m}{M_s}
+ * \f}
+ *
+ * @see [IAPWS2004] Guideline on the Henry’s Constant and Vapor-Liquid Distribution Constant for Gases in H2O and D2O at High Temperatures », IAPWS, Kyoto, Japan, G7-04, 2004
+ * @see [IAPWS1997] Revised Release on the IAPWS Industrial Formulation 1997 for the thermodynamic Properties of Water and Steam, IAPWS, Lucerne Switzerland R7-97, 2012.
+ * @see [WagnerPruss] W. Wagner et A. Pruss, « International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987) », Journal of Physical and Chemical Reference Data, vol. 22, n°3, p. 783‑787, mai 1993. <https://doi.org/10.1063/1.555926>
+ * @see [HarveyLemmon] A. H. Harvey et E. W. Lemmon, « Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point », Journal of Physical and Chemical Reference Data, vol. 31, n°1, p. 173‑181, mars 2002 <https://doi.org/10.1063/1.1430231>
+
+ */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include "iapws.h"
 
-#define T_KELVIN 273.16
-#define Vm (0.02241396954*1e6)
-#define Tc1_water 647.896
-#define pc1_water 22.064
-#define Tc1_heavywater 643.847
-#define pc1_heavywater 21.671
-#define Ms (1.0078250321*2+15.9949146221)
+#define T_KELVIN 273.16 /**< Absolute temperature in KELVIN */
+#define Vm (0.02241396954*1e6) /**< Molar volume of ideal gas (273.15 K, 101.325 kPa)  */
+#define Tc1_water 647.896 /**< critical temperature of water */
+#define pc1_water 22.064 /**< critical pressure of the water */
+#define Tc1_heavywater 643.847 /**< critical temperature of heavy water */
+#define pc1_heavywater 21.671 /**< critical pressure of heavywater */
+#define Ms (1.0078250321*2+15.9949146221) /**< Molar mass water */
 
 static char *available_gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"};
 static double M_gases[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, 31.9988, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192};
@@ -37,9 +72,15 @@ static double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
                              {-4.51499, 5.23538, 4.42126, 273.15, 533.09},
                              {-10.44708, 4.66491, 12.12986, 275.46, 633.11},
                              {-19.67563, 4.51222, 20.62567, 275.44, 473.46},
-                             {-16.56118, 2.15289, 20.35440, 283.14, 505.55}};
+                             {-16.56118, 2.15289, 20.35440, 283.14, 505.55}}; /**< ABC constants. */
 
 
+/** @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
+ * Print the result on stdout.
+ * @param *gas Gas for which the computation has to be performed.
+ * @param T_C Temperature in °C.
+ * @param heavywater Flag for selecting heavywater instead of water.
+ */
 void solubility(char *gas, double T_C, int heavywater)
 {
     double T_K=298.0;
@@ -125,6 +166,13 @@ void solubility(char *gas, double T_C, int heavywater)
 
 }
 
+/**
+ * @brief Find the index of an item in a list of strings.
+ * @param item Item to be found in list.
+ * @param list List of strings.
+ * @param size Size of the list.
+ * @return index >0 if item was found or -1 if not found.
+ */
 int find(char *item, char **list, int size)
 {
     int i=0;
