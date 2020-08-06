@@ -44,10 +44,16 @@
 #define pc1_water 22.064 /**< critical pressure of the water */
 #define Tc1_heavywater 643.847 /**< critical temperature of heavy water */
 #define pc1_heavywater 21.671 /**< critical pressure of heavywater */
-#define Ms (1.0078250321*2+15.9949146221) /**< Molar mass water */
+#define Ms_water (1.0078250321*2+15.9949146221) /**< Molar mass water */
+#define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
 
-static char *available_gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"};
+static char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"};
 static double M_gases[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, 31.9988, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192};
+
+static char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
+static double M_gases_water[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
+
+
 enum {A, B, C, Tmin, Tmax};
 
 static int ni_water = 6;
@@ -58,7 +64,7 @@ static int ni_heavywater = 5;
 static double ai_heavy_water[5] = {-7.8966570, 24.7330800, -27.8112800, 9.3559130, -9.2200830};
 static double bi_heavy_water[5] = {1.00, 1.89, 2.00, 3.00, 3.60};
 
-
+static int ngas_water = 14;
 static double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
                              {-3.18301, 5.31448, 5.43774, 273.20, 543.36},
                              {-8.40954, 4.29587, 10.52779, 273.19, 568.36},
@@ -72,7 +78,16 @@ static double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
                              {-4.51499, 5.23538, 4.42126, 273.15, 533.09},
                              {-10.44708, 4.66491, 12.12986, 275.46, 633.11},
                              {-19.67563, 4.51222, 20.62567, 275.44, 473.46},
-                             {-16.56118, 2.15289, 20.35440, 283.14, 505.55}}; /**< ABC constants. */
+                             {-16.56118, 2.15289, 20.35440, 283.14, 505.55}}; /**< ABC constants water. */
+
+static int ngas_heavywater = 7;
+static double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15, 553.18},
+                             {-0.91999, 5.65327, 3.17247, 288.18, 549.96},
+                             {-7.17725, 4.48177, 9.31509, 288.30, 583.76},
+                             {-8.47059, 3.91580, 10.69433, 288.19, 523.06},
+                             {-14.46485, 4.42330, 15.60919, 295.39, 574.85},
+                             {-5.33843, 6.15723, 6.53046, 288.17, 581.00},
+                             {-10.01915, 4.73368, 11.75711, 288.16, 517.46}}; /**< ABC constants heavywater. */
 
 
 /** @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
@@ -81,8 +96,18 @@ static double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
  * @param T_C Temperature in °C.
  * @param heavywater Flag for selecting heavywater instead of water.
  */
-void solubility(char *gas, double T_C, int heavywater)
+void solubility(char *gas, double T_C, int heavywater, int print)
 {
+    double Tc1=Tc1_water;
+    double pc1=pc1_water;
+    double Ms=Ms_water;
+    double (*abc)[5] = abc_water;
+    double *ai = ai_water;
+    double *bi = bi_water;
+    int ni = ni_water;
+    int ngas = ngas_water;
+    char solvent[4] = "H2O";
+    char **list_gas = available_gases_water;
     double T_K=298.0;
     double Tr=0.0;
     double tau=0.0;
@@ -98,57 +123,42 @@ void solubility(char *gas, double T_C, int heavywater)
     int ix=0;
     T_K = T_C+T_KELVIN;
 
-    ix = find(gas, available_gases, 14);
+    if (T_C == 0.0)
+    {
+        printf("Warning: Temperature was set to %f C. Check if the correct temperature was entered.\n", T_C);
+    }
 
+    if (heavywater)
+    {
+        Tc1 = Tc1_heavywater;
+        pc1 = pc1_heavywater;
+        Ms = Ms_heavywater;
+        abc = abc_heavywater;
+        ai = ai_heavy_water;
+        bi = bi_heavy_water;
+        ni = ni_heavywater;
+        ngas = ngas_heavywater;
+        list_gas = available_gases_heavywater;
+        strcpy(solvent, "D2O");
+    }
+    ix = find(gas, list_gas, ngas);
     if (ix < 0)
     {
-        printf("Error. %s was not found in the list of available gases.", gas);
-
+        printf("Error. %s was not found in the list of available gases in %s.", gas, solvent);
     }
     else
     {
-       if (heavywater)
-        {
-            Tr = T_K/Tc1_heavywater;
-        }
-        else
-        {
-            Tr = T_K/Tc1_water;
-        }
-
+        Tr = T_K/Tc1;
         tau  = 1-Tr;
-        ln_kH_pstar = abc_water[ix][A]/Tr + abc_water[ix][B]*pow(tau,0.355)/Tr + abc_water[ix][C]*exp(tau)*pow(Tr,-0.41);
+        ln_kH_pstar = abc[ix][A]/Tr + abc[ix][B]*pow(tau,0.355)/Tr + abc[ix][C]*exp(tau)*pow(Tr,-0.41);
 
-        if (heavywater)
+        for (i=0; i<ni;i++)
         {
-            for (i=0; i<5;i++)
-            {
-
-                res = res + ai_heavy_water[i]*pow(tau, bi_heavy_water[i]);
-            }
+            res = res + ai[i]*pow(tau, bi[i]);
         }
-        else
-        {
-            for (i=0; i<6;i++)
-            {
-                res = res + ai_water[i]*pow(tau, bi_water[i]);
-            }
-        }
-
 
         ln_pstar_pcl = 1/Tr * res;
-
-        if (heavywater)
-        {
-             pstar = exp(ln_pstar_pcl)*pc1_heavywater;
-
-        }
-        else
-        {
-
-            pstar = exp(ln_pstar_pcl)*pc1_water; //MPa
-
-        }
+        pstar = exp(ln_pstar_pcl)*pc1; //MPa
 
         kH = exp(ln_kH_pstar)*pstar/1000.0;
         x2 = 1.0/kH; // mole fraction per GPa
@@ -156,12 +166,22 @@ void solubility(char *gas, double T_C, int heavywater)
         ppm = cm3_per_kg_per_bar * M_gases[ix]*1e3 / Vm;
 
 
-        printf("Gas = %s at T = %.1f C\n", gas, T_C);
+        printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
         printf("ln(kH in GPa) = %f\n", log(kH));
         printf("kH = %f GPa\n", kH);
         printf("x2 = 1/kH = %f GPa-1\n", x2);
         printf("S = %f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
         printf("S = %f ppm.bar-1\n", ppm);
+
+        if (print)
+        {
+            printf("\n\n");
+            for (i=0;i<ni;i++)
+            {
+                printf("a[%d] = %f \t b[%d] = %f\n", i, ai[i], i, bi[i]);
+            }
+        }
+
     }
 
 }
@@ -190,6 +210,7 @@ int find(char *item, char **list, int size)
     }
     return index;
 }
+
 
 
 

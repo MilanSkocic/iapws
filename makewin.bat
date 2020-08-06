@@ -8,7 +8,8 @@
 set SRC=./src/
 set BUILD=./build/
 set BIN=./bin/
-set EXE=iapws_win.exe
+set arch=x64
+set os=win
 
 set msvc=cl
 set msvcflags=-O3
@@ -16,7 +17,7 @@ set msvcflags=-O3
 set icc=icl
 set iccflags=-O3
 
-set intelcompiler=1
+set intelcompiler=0
 
 if %intelcompiler%==1 (
 echo "INTEL"
@@ -27,6 +28,8 @@ echo "MSVC"
 set CC=%msvc%
 set CFLAGS=%msvcflags%
 )
+
+set EXE=iapws_%CC%_%os%_%arch%.exe
 
 if "%1" == "" goto all
 
@@ -50,7 +53,7 @@ goto exit
 
 :cleanall
 rm -rf %BUILD%*.obj
-rm -rf %BIN%*_win.exe
+rm -rf %BIN%*cl*.exe
 goto exit
 
 :exit
