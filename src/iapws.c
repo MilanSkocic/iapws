@@ -38,9 +38,9 @@
 #include <math.h>
 #include "iapws.h"
 
-#define T_KELVIN 273.16 /**< Absolute temperature in KELVIN */
+#define T_KELVIN 273.15 /**< Absolute temperature in KELVIN */
 #define Vm (0.02241396954*1e6) /**< Molar volume of ideal gas (273.15 K, 101.325 kPa)  */
-#define Tc1_water 647.896 /**< critical temperature of water */
+#define Tc1_water 647.096 /**< critical temperature of water */
 #define pc1_water 22.064 /**< critical pressure of the water */
 #define Tc1_heavywater 643.847 /**< critical temperature of heavy water */
 #define pc1_heavywater 21.671 /**< critical pressure of heavywater */
@@ -48,10 +48,10 @@
 #define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
 
 static char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"};
-static double M_gases[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, 31.9988, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192};
+static double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, 31.9988, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192};
 
 static char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
-static double M_gases_water[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
+static double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
 
 
 enum {A, B, C, Tmin, Tmax};
@@ -104,6 +104,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     double (*abc)[5] = abc_water;
     double *ai = ai_water;
     double *bi = bi_water;
+    double *M_gases = M_gases_water;
     int ni = ni_water;
     int ngas = ngas_water;
     char solvent[4] = "H2O";
@@ -140,6 +141,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         ngas = ngas_heavywater;
         list_gas = available_gases_heavywater;
         strcpy(solvent, "D2O");
+        M_gases = M_gases_heavywater;
     }
     ix = find(gas, list_gas, ngas);
     if (ix < 0)
@@ -156,7 +158,6 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         {
             res = res + ai[i]*pow(tau, bi[i]);
         }
-
         ln_pstar_pcl = 1/Tr * res;
         pstar = exp(ln_pstar_pcl)*pc1; //MPa
 
@@ -165,7 +166,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         cm3_per_kg_per_bar = (x2 / 1e4) * Vm / (Ms*1e-3);
         ppm = cm3_per_kg_per_bar * M_gases[ix]*1e3 / Vm;
 
-
+        printf("***** Results *****\n");
         printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
         printf("ln(kH in GPa) = %f\n", log(kH));
         printf("kH = %f GPa\n", kH);
@@ -175,11 +176,16 @@ void solubility(char *gas, double T_C, int heavywater, int print)
 
         if (print)
         {
-            printf("\n\n");
+            printf("\n");
+            printf("***** ai and bi Coefficients *****\n");
             for (i=0;i<ni;i++)
             {
                 printf("a[%d] = %f \t b[%d] = %f\n", i, ai[i], i, bi[i]);
             }
+
+            printf("\n");
+            printf("**** ABC Coefficients *****\n");
+            printf("A=%f \t B=%f \t C=%f\n\n", abc[ix][A], abc[ix][B], abc[ix][C]);
         }
 
     }

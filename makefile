@@ -32,7 +32,7 @@ endif
 
 # Set GNU compiler and flags
 GCC=gcc
-GCFLAGS = -O3
+GCFLAGS = -O3 -Wall
 
 # Set Intel compiler and flags
 ICC=icc

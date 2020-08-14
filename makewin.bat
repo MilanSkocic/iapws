@@ -17,7 +17,7 @@ set msvcflags=-O3
 set icc=icl
 set iccflags=-O3
 
-set intelcompiler=0
+set intelcompiler=1
 
 if %intelcompiler%==1 (
 echo "INTEL"

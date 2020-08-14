@@ -7,9 +7,16 @@
 #include "iapws.h"
 #include "main.h"
 
-static char docstring[] = "Usage: iapws GAS TEMPERATURE [D2O]\n"
-        "IAPWS Computation of solubility in water.\n"
-        "Supported gases in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6.\n";
+static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
+        "\t IAPWS Computation of solubility in water.\n"
+        "\t Supported gases in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6.\n"
+        "\t Supported gases in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4\n"
+        "Arguments:\n"
+        "    gas\t\t gas for the computation [default: O2]\n"
+        "    temperature\t temperature in degree Celsius for the computation [default 25.0]\n"
+        "Options:\n"
+        "    -p, --print\t print coefficients\n"
+        "    -h, --help\t help\n\n";
 
 /**
  * \brief Start program.
@@ -24,51 +31,97 @@ static char docstring[] = "Usage: iapws GAS TEMPERATURE [D2O]\n"
  */
 int main(int argc, char **argv)
 {
-    int heavywater=0;
-    int print = 0;
-    int wrong_argument=0;
+    //initialization
+    int i=0, ix=0, j=0, run = 1;
+    int stringlen = 32;
+    char default_gas[] = "O2";
+    char default_temp[] = "25.0";
 
-    if (argc>=3)
+    // options
+    int n_options = 5;
+    char **option_keys = (char **) calloc(n_options, sizeof(char *));
+    for (i=0; i<n_options; i++)
     {
-        if (argc==4)
+        option_keys[i] = (char *) calloc(1, (stringlen+1)*sizeof(char));
+    }
+    enum{D, P, PRINT, H, HELP};
+    strcpy(option_keys[D], "-d");
+    strcpy(option_keys[P], "-p");
+    strcpy(option_keys[PRINT], "--print");
+    strcpy(option_keys[H], "-h");
+    strcpy(option_keys[HELP], "--help");
+    int *option_values = (int *) calloc(n_options, sizeof(int));
+
+
+    // positional arguments
+    int nargs = 2;
+    char **args = (char **) calloc(nargs, sizeof(char *));
+    for (i=0; i<n_options; i++)
+    {
+        args[i] = (char *) calloc(1, (stringlen+1)*sizeof(char));
+    }
+    enum{GAS, TEMP};
+    strcpy(args[GAS], default_gas);
+    strcpy(args[TEMP], default_temp);
+
+    for (i=0; i<argc; i++)
+    {
+        if (i)
         {
-            if (strcmp(argv[3], "D2O")==0)
+            ix = find(argv[i], option_keys, n_options);
+            if (ix>=0)
             {
-                heavywater = 1;
-            }
-            else if (strcmp(argv[3], "H2O")==0)
-            {
-                heavywater = 0;
-            }
-            else if (strcmp(argv[3], "PRINT")==0)
-            {
-                print = 1;
+                option_values[ix] = 1;
             }
             else
             {
-                printf("Warning: %s is not an available solvent. Switiching back to H2O\n", argv[3]);
-                heavywater = 0;
+                if (j<nargs)
+                {
+                    strcpy(args[j], argv[i]);
+                    j = j + 1;
+                }
             }
         }
-        else if (argc==5)
-        {
-            if (strcmp(argv[4], "PRINT")==0) {print = 1;}
-        }
-
-    }
-    else
-    {
-        wrong_argument = 1;
     }
 
-    if (wrong_argument)
+    if (argc == 1)
     {
-        printf("%s", docstring);
+        printf("%s", help);
     }
-    else
+
+    if (option_values[H]|option_values[HELP])
     {
-        solubility(argv[1], strtod(argv[2], NULL), heavywater, print);
+    option_values[H] = 1;
+    option_values[HELP] = 1;
+    printf("%s", help);
+    run = 0;
     }
+    if (option_values[P]|option_values[PRINT])
+    {
+    option_values[P] = 1;
+    option_values[PRINT] = 1;
+    run = 1;
+    }
+
+    if (run)
+    {
+        solubility(args[GAS], strtod(args[TEMP], NULL), option_values[D], option_values[P]);
+    }
+
+    // Clean up pointers
+    free(option_values);
+
+    for (i=0; i<n_options; i++)
+    {
+        free(option_keys[i]);
+    }
+    free(option_keys);
+
+    for (i=0; i<nargs; i++)
+    {
+        free(args[i]);
+    }
+    free(args);
 
     return 0;
 }
