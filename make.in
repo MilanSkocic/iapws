@@ -1,0 +1,18 @@
+# common variables
+SRC=./src
+BIN=./bin
+BUILD=./build
+
+# Windows specific variables
+MSVC=cl.exe
+INTEL=icl.exe
+LINKER=link.exe
+LIBLINKER=lib.exe
+WCFLAGS=-Wall
+WLDFLAGS=
+USEINTEL=0
+
+# Unix/linux specific variables
+GNU=gcc
+GCFLAGS=-Wall
+GLDFLAGS=-lm
