@@ -8,9 +8,9 @@ MSVC=cl.exe
 INTEL=icl.exe
 LINKER=link.exe
 LIBLINKER=lib.exe
-WCFLAGS=-Wall
+WCFLAGS=
 WLDFLAGS=
-USEINTEL=0
+USEINTEL=1
 
 # Unix/linux specific variables
 GNU=gcc

@@ -1,3 +1,5 @@
+# Windows specific makefile to be used with nmake
+
 include make.in
 
 !IF $(USEINTEL)==0
