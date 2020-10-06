@@ -177,14 +177,14 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         if (print)
         {
             printf("\n");
-            printf("***** ai and bi Coefficients *****\n");
+            printf("***** ai and bi Coefficients for %s *****\n", gas);
             for (i=0;i<ni;i++)
             {
                 printf("a[%d] = %f \t b[%d] = %f\n", i, ai[i], i, bi[i]);
             }
 
             printf("\n");
-            printf("**** ABC Coefficients *****\n");
+            printf("**** ABC Coefficients for %s *****\n", gas);
             printf("A=%f \t B=%f \t C=%f\n\n", abc[ix][A], abc[ix][B], abc[ix][C]);
         }
 
