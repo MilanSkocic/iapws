@@ -1,5 +1,8 @@
 /**
  *@file main.c
+ * @author M. Skocic
+ * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
+ * @date 2020/08/04
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +19,8 @@ static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
         "    temperature\t temperature in degree Celsius for the computation [default 25.0]\n"
         "Options:\n"
         "    -p, --print\t print coefficients\n"
-        "    -h, --help\t help\n\n";
+        "    -h, --help\t help\n"
+        "    -t, --test\t test\n\n";
 
 /**
  * \brief Start program.
@@ -32,24 +36,26 @@ static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
 int main(int argc, char **argv)
 {
     //initialization
-    int i=0, ix=0, j=0, run = 1;
+    int i=0, ix=0, j=0, run = 1, test=0;
     int stringlen = 32;
     char default_gas[] = "O2";
     char default_temp[] = "25.0";
 
     // options
-    int n_options = 5;
+    int n_options = 7;
     char **option_keys = (char **) calloc(n_options, sizeof(char *));
     for (i=0; i<n_options; i++)
     {
         option_keys[i] = (char *) calloc(1, (stringlen+1)*sizeof(char));
     }
-    enum{D, P, PRINT, H, HELP};
+    enum{D, P, PRINT, H, HELP, T, TEST};
     strcpy(option_keys[D], "-d");
     strcpy(option_keys[P], "-p");
     strcpy(option_keys[PRINT], "--print");
     strcpy(option_keys[H], "-h");
     strcpy(option_keys[HELP], "--help");
+    strcpy(option_keys[T], "-t");
+    strcpy(option_keys[TEST], "--test");
     int *option_values = (int *) calloc(n_options, sizeof(int));
 
 
@@ -102,10 +108,23 @@ int main(int argc, char **argv)
     option_values[PRINT] = 1;
     run = 1;
     }
+    if (option_values[T]|option_values[TEST])
+    {
+    option_values[T] = 1;
+    option_values[TEST] = 1;
+    run = 0;
+    test = 1;
+    }
 
     if (run)
     {
         solubility(args[GAS], strtod(args[TEMP], NULL), option_values[D], option_values[P]);
+    }
+
+    if(test)
+    {
+        test_water();
+        test_heavywater();
     }
 
     // Clean up pointers
