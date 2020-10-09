@@ -36,7 +36,7 @@ static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
 int main(int argc, char **argv)
 {
     //initialization
-    int i=0, ix=0, j=0, run = 1, test=0;
+    int i, ix, j=0, run = 1, test=0;
     int stringlen = 32;
     char default_gas[] = "O2";
     char default_temp[] = "25.0";

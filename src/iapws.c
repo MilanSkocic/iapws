@@ -111,13 +111,13 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     int ngas = ngas_water;
     char solvent[4] = "H2O";
     char **list_gas = available_gases_water;
-    double T_K=298.0;
-    double kH=0.0;
-    double x2=0.0;
-    double cm3_per_kg_per_bar=0.0;
+    double T_K;
+    double kH;
+    double x2;
+    double cm3_per_kg_per_bar;
     double ppm;
-    int i=0;
-    int ix=0;
+    int i;
+    int ix;
     T_K = T_C+T_KELVIN;
 
     if (T_C == 0.0)
@@ -187,7 +187,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
  */
 int find(char *item, char **list, int size)
 {
-    int i=0;
+    int i;
     int index=-1;
     for (i=0;i<size;i++)
     {
@@ -216,19 +216,20 @@ int find(char *item, char **list, int size)
  */
 double henry_constant(int ix, double T_K, double Tc1, double pc1, int ni, double *ai, double *bi, double *abc)
 {
-    double Tr=0.0;
-    double tau=0.0;
-    double ln_kH_pstar=0.0;
-    double res=0.0;
-    double ln_pstar_pcl=0.0;
-    double pstar=0.0;
-    double kH=0.0;
+    double Tr;
+    double tau;
+    double ln_kH_pstar;
+    double res;
+    double ln_pstar_pcl;
+    double pstar;
+    double kH;
     int i;
 
     Tr = T_K/Tc1;
     tau  = 1-Tr;
     ln_kH_pstar = *(abc+ix*abc_ncols+A)/Tr + *(abc+ix*abc_ncols+B)*pow(tau,0.355)/Tr + *(abc+ix*abc_ncols+C)*exp(tau)*pow(Tr,-0.41);
 
+    res = 0.0;
     for (i=0; i<ni;i++)
     {
         res = res + ai[i]*pow(tau, bi[i]);
