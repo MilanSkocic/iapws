@@ -6,11 +6,12 @@ BUILD=./build
 # Windows specific variables
 MSVC=cl.exe
 INTEL=icl.exe
-LINKER=link.exe
+MSLINKER=link.exe
+XILINKER=xilink.exe
 LIBLINKER=lib.exe
 WCFLAGS=
 WLDFLAGS=
-USEINTEL=1
+USEINTEL=0
 
 # Unix/linux specific variables
 GNU=gcc

@@ -4,10 +4,12 @@ include make.in
 
 !IF $(USEINTEL)==0
 CC=$(MSVC)
+LINKER=$(MSLINKER)
 COMPILER=cl
 !ELSE
 CC=$(INTEL)
 COMPILER=icl
+LINKER=$(XILINKER)
 !ENDIF
 
 OBJ = $(BUILD)/iapws.obj $(BUILD)/main.obj
@@ -16,7 +18,7 @@ EXE=$(BIN)/iapws_$(COMPILER)_win.exe
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(LINKER) $(WLDFLAGS) /out:$@ $**
+	$(LINKER) $(WLDFLAGS) $** /out:$@
 
 $(BUILD)/iapws.obj: $(SRC)/iapws.c
 	$(CC) /c $** $(WCFLAGS) /Fo$@
