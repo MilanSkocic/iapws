@@ -102,8 +102,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     double Tc1=Tc1_water;
     double pc1=pc1_water;
     double Ms=Ms_water;
-    double (*abc)[5] = abc_water;
-    double *abc_ = abc_water[0];
+    double *abc = abc_water[0];
     double *ai = ai_water;
     double *bi = bi_water;
     double *M_gases = M_gases_water;
@@ -130,8 +129,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         Tc1 = Tc1_heavywater;
         pc1 = pc1_heavywater;
         Ms = Ms_heavywater;
-        abc = abc_heavywater;
-        abc_ = abc_heavywater[0];
+        abc = abc_heavywater[0];
         ai = ai_heavy_water;
         bi = bi_heavy_water;
         ni = ni_heavywater;
@@ -147,7 +145,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     }
     else
     {
-        kH = henry_constant(ix, T_K, Tc1, pc1, ni, ai, bi, abc_);
+        kH = henry_constant(ix, T_K, Tc1, pc1, ni, ai, bi, abc);
         x2 = 1.0/kH; // mole fraction per GPa
         cm3_per_kg_per_bar = (x2 / 1e4) * Vm / (Ms*1e-3);
         ppm = cm3_per_kg_per_bar * M_gases[ix]*1e3 / Vm;
@@ -171,7 +169,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
 
             printf("\n");
             printf("**** ABC Coefficients for %s *****\n", gas);
-            printf("A=%f \t B=%f \t C=%f\n\n", abc[ix][A], abc[ix][B], abc[ix][C]);
+            printf("A=%f \t B=%f \t C=%f\n\n",  *(abc+ix*abc_ncols+A), *(abc+ix*abc_ncols+B), *(abc+ix*abc_ncols+C));
         }
 
     }
