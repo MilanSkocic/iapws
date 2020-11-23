@@ -152,11 +152,11 @@ void solubility(char *gas, double T_C, int heavywater, int print)
 
         printf("***** Results *****\n");
         printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
-        printf("ln(kH in GPa) = %f\n", log(kH));
-        printf("kH = %f GPa\n", kH);
-        printf("x2 = 1/kH = %f GPa-1\n", x2);
-        printf("S = %f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
-        printf("S = %f ppm.bar-1\n", ppm);
+        printf("ln(kH in GPa) = %.4f\n", log(kH));
+        printf("kH = %.4f GPa\n", kH);
+        printf("x2 = 1/kH = %.4f GPa-1\n", x2);
+        printf("S = %.2f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
+        printf("S = %.2f ppm.bar-1\n", ppm);
 
         if (print)
         {
