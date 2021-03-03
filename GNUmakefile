@@ -48,7 +48,7 @@ EXE=$(BIN)/iapws_$(CC)_$(OSFLAG).exe
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) -o $@ $^ $(GLDFLAGS)
+	$(CC) -o $@ $^ $(GLDFLAGS) -static
 
 $(BUILD)/%.o: $(SRC)/%.c
 	$(CC) -o $@ -c $< $(GCFLAGS)
