@@ -42,7 +42,7 @@ ICFLAGS = -O3
 CC=$(GCC)
 CFLAGS=$(GCFLAGS)
 
-OBJ = $(patsubst $(SRC)/%.c,$(BUILD)/%.o, $(wildcard ./src/*.c))
+OBJ = $(patsubst $(SRC)/%.c,$(SRC)/%.o, $(wildcard ./src/*.c))
 EXE=$(BIN)/iapws_$(CC)_$(OSFLAG).exe
 
 all: $(EXE)
@@ -50,13 +50,13 @@ all: $(EXE)
 $(EXE): $(OBJ)
 	$(CC) -o $@ $^ $(GLDFLAGS) -static
 
-$(BUILD)/%.o: $(SRC)/%.c
+$(SRC)/%.o: $(SRC)/%.c
 	$(CC) -o $@ -c $< $(GCFLAGS)
 
 .PHONY: clean cleanall
 
 clean:
-	rm -rf $(BUILD)/*.o
+	rm -rf $(SRC)/*.o
 
 cleanall: clean
 	rm -rf $(BIN)/*gcc*

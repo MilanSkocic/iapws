@@ -40,29 +40,29 @@ if "%1" == "cleanall" goto cleanall
 
 :: compile only one file
 echo "Compiling... "%1"
-%compiler% %cflags% /c %SRC%%1.c /Fo%BUILD%%1.obj
+%compiler% %cflags% /c %SRC%%1.c /Fo%SRC%%1.obj
 goto exit
 
 :: compile all files
 :all
 for %%f in (%SRC%*.c) do (
     echo "Compiling...  %%f"
-    %compiler% %cflags% /c %SRC%%%~nf.c /Fo%BUILD%%%~nf.obj
+    %compiler% %cflags% /c %SRC%%%~nf.c /Fo%SRC%%%~nf.obj
 )
 :: Link
 set objs=
-for %%f in (%BUILD%*.obj) do (
-    set objs=!objs! %BUILD%%%f
+for %%f in (%SRC%*.obj) do (
+    set objs=!objs! %SRC%%%f
 )
 %linker% %lflags% %objs% /out:%BIN%%EXE%
 goto exit
 
 :clean
-rm -rf %BUILD%*.obj
+rm -rf %SRC%*.obj
 goto exit
 
 :cleanall
-rm -rf %BUILD%*.obj
+rm -rf %SRC%*.obj
 rm -rf %BIN%*cl*.exe
 goto exit
 
