@@ -1,11 +1,11 @@
 @echo off
 setlocal enabledelayedexpansion enableextensions
 
-set cc_intel=icl.exe
-set cc_msvc=cl.exe
-set linker_msvc=link.exe
-set linker_intel=xilink.exe
-set liblinker=lib.exe
+set cc_intel=icl
+set cc_msvc=cl
+set linker_msvc=link
+set linker_intel=xilink
+set liblinker=lib
 
 :: modify according to your system configuration
 set arch=x64
