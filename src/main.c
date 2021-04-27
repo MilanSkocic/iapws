@@ -4,11 +4,7 @@
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "iapws.h"
-#include "main.h"
 
 static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
         "\t IAPWS Computation of solubility in water.\n"

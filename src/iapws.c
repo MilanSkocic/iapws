@@ -31,11 +31,7 @@
  * @see [IAPWS1997] Revised Release on the IAPWS Industrial Formulation 1997 for the thermodynamic Properties of Water and Steam, IAPWS, Lucerne Switzerland R7-97, 2012.
  * @see [WagnerPruss] W. Wagner et A. Pruss, « International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987) », Journal of Physical and Chemical Reference Data, vol. 22, n°3, p. 783‑787, mai 1993. <https://doi.org/10.1063/1.555926>
  * @see [HarveyLemmon] A. H. Harvey et E. W. Lemmon, « Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point », Journal of Physical and Chemical Reference Data, vol. 31, n°1, p. 173‑181, mars 2002 <https://doi.org/10.1063/1.1430231>
-
  */
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
 #include "iapws.h"
 
 #define T_KELVIN 273.15 /**< Absolute temperature in KELVIN */
@@ -96,6 +92,7 @@ static double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15, 553.1
  * @param *gas Gas for which the computation has to be performed.
  * @param T_C Temperature in °C.
  * @param heavywater Flag for selecting heavywater instead of water.
+ * @param print Flag for printing coefficients ai, bi, and ABC
  */
 void solubility(char *gas, double T_C, int heavywater, int print)
 {
@@ -176,30 +173,6 @@ void solubility(char *gas, double T_C, int heavywater, int print)
 
 }
 
-/**
- * @brief Find the index of an item in a list of strings.
- * @param item Item to be found in list.
- * @param list List of strings.
- * @param size Size of the list.
- * @return index >0 if item was found or -1 if not found.
- */
-int find(char *item, char **list, int size)
-{
-    int i;
-    int index=-1;
-    for (i=0;i<size;i++)
-    {
-
-        if (strcmp(list[i], item)==0)
-        {
-            index = i;
-            break;
-
-        }
-
-    }
-    return index;
-}
 
 
 /** @brief Compute the henry constant of a given gas.
@@ -333,11 +306,6 @@ void test_heavywater()
 }
 
 
-double roundn(double x, int n){
-
-    return round(x * pow(10, n)) / pow(10, n);
-
-}
 
 
 
