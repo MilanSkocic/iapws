@@ -14,6 +14,7 @@ static char help[] = "usage: iapws [option] [<gas>] [<temperature>]\n"
         "    gas\t\t gas for the computation [default: O2]\n"
         "    temperature\t temperature in degree Celsius for the computation [default 25.0]\n"
         "Options:\n"
+        "    -d, \t Select D2O as solvent. Default solvent is H2O\n"
         "    -p, --print\t print coefficients\n"
         "    -h, --help\t help\n"
         "    -t, --test\t test\n\n";
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
 {
     //initialization
     int i, ix, j=0, run = 1, test=0;
-    int stringlen = 32;
+    int stringlen = 256;
     char default_gas[] = "O2";
     char default_temp[] = "25.0";
 
@@ -42,7 +43,7 @@ int main(int argc, char **argv)
     char **option_keys = (char **) calloc(n_options, sizeof(char *));
     for (i=0; i<n_options; i++)
     {
-        option_keys[i] = (char *) calloc(1, (stringlen+1)*sizeof(char));
+        option_keys[i] = (char *) calloc((stringlen+1),sizeof(char));
     }
     enum{D, P, PRINT, H, HELP, T, TEST};
     strcpy(option_keys[D], "-d");
@@ -58,9 +59,9 @@ int main(int argc, char **argv)
     // positional arguments
     int nargs = 2;
     char **args = (char **) calloc(nargs, sizeof(char *));
-    for (i=0; i<n_options; i++)
+    for (i=0; i<nargs; i++)
     {
-        args[i] = (char *) calloc(1, (stringlen+1)*sizeof(char));
+        args[i] = (char *) calloc((stringlen+1), sizeof(char));
     }
     enum{GAS, TEMP};
     strcpy(args[GAS], default_gas);
@@ -93,23 +94,23 @@ int main(int argc, char **argv)
 
     if (option_values[H]|option_values[HELP])
     {
-    option_values[H] = 1;
-    option_values[HELP] = 1;
-    printf("%s", help);
-    run = 0;
+        option_values[H] = 1;
+        option_values[HELP] = 1;
+        printf("%s", help);
+        run = 0;
     }
     if (option_values[P]|option_values[PRINT])
     {
-    option_values[P] = 1;
-    option_values[PRINT] = 1;
-    run = 1;
+        option_values[P] = 1;
+        option_values[PRINT] = 1;
+        run = 1;
     }
     if (option_values[T]|option_values[TEST])
     {
-    option_values[T] = 1;
-    option_values[TEST] = 1;
-    run = 0;
-    test = 1;
+        option_values[T] = 1;
+        option_values[TEST] = 1;
+        run = 0;
+        test = 1;
     }
 
     if (run)
