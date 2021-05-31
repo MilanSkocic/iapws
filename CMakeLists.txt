@@ -4,7 +4,7 @@ project(iapws C)
 
 set(CMAKE_INSTALL_PREFIX C:/Users/mskocic/LocalApps/)
 
-set(LINK_LIBS_WIN32 libm)
+set(LINK_LIBS_WIN32 )
 set(LINK_LIBS_WIN32_MSYS m)
 set(LINK_LIBS_UNIX m)
 set(LINK_LIBS_UNIX_MSYS m)
@@ -20,10 +20,16 @@ if(WIN32)
         set(LINK_LIBS ${LINK_LIBS_WIN32_MSYS})
         set(COMPILER gcc)
         add_link_options("-static")
+    elseif(MINGW)
+        MESSAGE(STATUS "WIN32 and MinGW")
+        set(LINK_LIBS ${LINK_LIBS_WIN32_MSYS})
+        set(COMPILER gcc)
+        add_link_options("-Bstatic")
     elseif(INTEL)
         MESSAGE(STATUS "WIN32 and INTEL")
         set(COMPILER icl)
         set(CMAKE_C_COMPILER icl)
+        add_link_options("-Bstatic")
     elseif(MSVC)
         MESSAGE(STATUS "WIN32 and MSVC")
         set(LINK_LIBS ${LINK_LIBS_WIN32})
@@ -46,9 +52,11 @@ endif()
 
 set(NAME ${PROJECT_NAME}_${COMPILER})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUTPUT_DIR})
+        
 
 add_executable(${PROJECT_NAME} src/main.c src/iapws.c src/utilities.c)
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBS})
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${NAME})
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${NAME} MSVC_RUNTIME_LIBRARY "MultiThread")
+
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
