@@ -105,7 +105,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     double *M_gases = M_gases_water;
     int ni = ni_water;
     int ngas = ngas_water;
-    char solvent[4] = "H2O";
+    char solvent[] = "H2O";
     char **list_gas = available_gases_water;
     double T_K;
     double kH;
@@ -170,7 +170,6 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         }
 
     }
-
 }
 
 
