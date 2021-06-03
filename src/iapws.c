@@ -138,7 +138,7 @@ void solubility(char *gas, double T_C, int heavywater, int print)
     ix = find(gas, list_gas, ngas);
     if (ix < 0)
     {
-        printf("Error. %s was not found in the list of available gases in %s.", gas, solvent);
+        printf("Error. %s was not found in the list of available gases in %s.\n", gas, solvent);
     }
     else
     {
