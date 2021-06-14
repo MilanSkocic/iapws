@@ -6,14 +6,17 @@ set(CMAKE_INSTALL_PREFIX C:/Users/mskocic/LocalApps/)
 
 set(LINK_LIBS_WIN32 )
 set(LINK_LIBS_WIN32_MSYS m argp)
-set(LINK_LIBS_UNIX m)
-set(LINK_LIBS_UNIX_MSYS m)
+set(INCLUDE_DIRS_WIN32_MSYS C:/msys64/mingw64/include C:/msys64/usr/include)
+set(LINK_LIBS_UNIX m argp)
+set(LINK_LIBS_UNIX_MSYS m argp)
+set(INCLUDE_DIRS_UNIX )
 
 
 # Conditions for platforms
 if(WIN32)
     MESSAGE(STATUS "WIN32")
     set(OUTPUT_DIR windows)
+    set(INCLUDE_DIRECTORIES ${INCLUDE_DIRS_WIN32_MSYS})
     if(MSYS)
         MESSAGE(STATUS "WIN32 and MSYS")
         set(LINK_LIBS ${LINK_LIBS_WIN32_MSYS})
@@ -25,6 +28,7 @@ elseif(UNIX)
     MESSAGE(STATUS "UNIX")
     set(OUTPUT_DIR unix)
     set(LINK_LIBS ${LINK_LIBS_UNIX})
+    set(INCLUDE_DIRECTORIES ${INCLUDE_DIRS_UNIX})
 endif()
 
 set(NAME ${PROJECT_NAME})
