@@ -10,3 +10,8 @@ add_executable(${PROJECT_NAME} src/main.c src/iapws.c src/utilities.c)
 target_link_libraries(${PROJECT_NAME} PRIVATE m argp)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+
+if(WIN32)
+    install(FILES "C:/msys64/usr/bin/msys-argp-0.dll" DESTINATION bin)
+    install(FILES "C:/msys64/usr/bin/msys-2.0.dll" DESTINATION bin)
+endif()
