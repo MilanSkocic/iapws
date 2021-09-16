@@ -242,22 +242,23 @@ void test_water()
                         {1.1418, 1.8495, 0.8274, -0.8141},
                         {3.1445, 3.6919, 2.6749, 1.2402}};
 
-    printf("\n***** TEST for Water: ln(kH)computed - ln(kH) IAPWS *****\n");
-
+    printf("\n***** TEST for Water: ln(kH) computed / ln(kH) IPAWS / computed - IAPWS *****\n");
+    printf("%4s", "Gas\t");
     for (j=0; j<cols; j++)
     {
-        printf("%dK\t", (int) T[j]);
+        printf("%25dK\t", (int) T[j]);
     }
     printf("\n");
     for (i=0; i<ngas_water; i++)
     {
+        printf("%4s\t", available_gases_water[i]);
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_water, pc1_water, ni_water, ai_water, bi_water, abc_water[0]);
-            ln_kH = roundn(log(kH), 4);
-            printf("%.4f\t", ln_kH - results[i][j]);
+            ln_kH = roundn(log(kH), 5);
+            printf("%+8.4f/%+8.4f/%+8.4f\t", ln_kH, results[i][j], ln_kH - results[i][j]);
         }
-        printf("%s\n", available_gases_water[i]);
+        printf("\n");
     }
 
 }
@@ -284,22 +285,24 @@ void test_heavywater()
                                 {1.6594, 1.6762, 0.9042, -0.3665},
                                 {1.3624, 1.7968, 1.0491, -0.2186}};
 
-    printf("\n***** TEST for HeavyWater: ln(kH)computed - ln(kH) IAPWS *****\n");
+    printf("\n***** TEST for HeavyWater: ln(kH) computed / ln(kH) IPAWS / computed - IAPWS *****\n");
 
+    printf("%4s", "Gas\t");
     for (j=0; j<cols; j++)
     {
-        printf("%dK\t", (int) T[j]);
+        printf("%25dK\t", (int) T[j]);
     }
     printf("\n");
     for (i=0; i<ngas_heavywater; i++)
     {
+        printf("%4s\t", available_gases_water[i]);
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_heavywater, pc1_heavywater, ni_heavywater, ai_heavy_water, bi_heavy_water, abc_heavywater[0]);
-            ln_kH = roundn(log(kH), 4);
-            printf("%.4f\t", ln_kH - results[i][j]);
+            ln_kH = roundn(log(kH), 5);
+            printf("%+8.4f/%+8.4f/%+8.4f\t", ln_kH, results[i][j], ln_kH - results[i][j]);
         }
-        printf("%s\n", available_gases_water[i]);
+        printf("\n");
     }
 
 }
