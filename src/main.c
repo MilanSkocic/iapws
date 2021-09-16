@@ -20,7 +20,7 @@ static char args_doc[] = "GAS TEMPERATURE";
 static struct argp_option options[] = {
         {"heavywater", 'd', 0, 0, "Set solvent to heavywater"},
         {"print_coefficients", 'p', 0, 0, "Print the ABC and ai, bi coefficients"},
-        {"test", 't', 0, 0, "Test computations"},
+        {"test", 't', 0, 0, "Test computations. When this option is selected all arguments are ignored."},
         {0}
 };
 
@@ -44,14 +44,14 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state){
                     arguments->test = 1;
                     break;
             case ARGP_KEY_ARG:
-                    if(state->arg_num >=2){
+                    if((state->arg_num >=2) & (arguments->test == 0)){
                             argp_usage(state);
                     }else{
                         arguments->args[state->arg_num] = arg;
                     }
                     break;
             case ARGP_KEY_END:
-                    if(state->arg_num < 2){
+                    if((state->arg_num < 2) & (arguments->test == 0)){
                             argp_usage(state);
                     }
                     break;
@@ -86,6 +86,8 @@ int main(int argc, char **argv)
     arguments.print = 0;
     arguments.test  = 0;
     arguments.heavywater = 0;
+    arguments.args[0] = default_gas;
+    arguments.args[1] = default_temp;
 
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
