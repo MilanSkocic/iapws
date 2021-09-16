@@ -10,12 +10,20 @@
  /**
  * @brief Round with n decimals
  * @param x Value to be rounded
- * @param n Number of decimals
+ * @param p Number of significant digits
  * @return Rounded x
  */
-double roundn(double x, int n){
+double roundn(double x, int p){
 
-    return round(x * pow(10, n)) / pow(10, n);
+    double fac, logx, n;
+    logx = floor(log10(fabs(x)));
+
+    n = logx + 1 - p;
+
+    fac = pow(10, n);
+
+
+    return round(x / fac) * fac;
 
 }
 
