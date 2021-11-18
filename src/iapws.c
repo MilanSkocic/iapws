@@ -94,7 +94,7 @@ static double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15, 553.1
  * @param heavywater Flag for selecting heavywater instead of water.
  * @param print Flag for printing coefficients ai, bi, and ABC
  */
-void solubility(char *gas, double T_C, int heavywater, int print)
+void solubility(char *gas, double T_C, int heavywater, int print, char *solubility_unit, double pressure, int verbose)
 {
     double Tc1=Tc1_water;
     double pc1=pc1_water;
@@ -147,13 +147,46 @@ void solubility(char *gas, double T_C, int heavywater, int print)
         cm3_per_kg_per_bar = (x2 / 1e4) * Vm / (Ms*1e-3);
         ppm = cm3_per_kg_per_bar * M_gases[ix]*1e3 / Vm;
 
-        printf("***** Results *****\n");
-        printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
-        printf("ln(kH in GPa) = %.4f\n", log(kH));
-        printf("kH = %.4f GPa\n", kH);
-        printf("x2 = 1/kH = %.4f GPa-1\n", x2);
-        printf("S = %.2f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
-        printf("S = %.2f ppm.bar-1\n", ppm);
+        if (verbose){
+            printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
+            printf("ln(kH in GPa) = %.4f\n", log(kH));
+            printf("kH = %.4f GPa\n", kH);
+
+        }
+        
+        if(strcmp(solubility_unit, "gpa")==0){
+            printf("x2 = 1/kH = %.4f GPa-1\n", x2);
+        }
+        
+        if (strcmp(solubility_unit, "ppm")==0){
+            if (pressure){
+                printf("S = %.2f ppm\n", ppm*pressure);
+            }else{
+                printf("S = %.2f ppm.bar-1\n", ppm);
+            }
+        }
+
+        if (strcmp(solubility_unit, "cm3")==0){
+            if(pressure){
+                printf("S = %.2f cm3.kg-1\n", cm3_per_kg_per_bar*pressure);
+            }
+            else{       
+                printf("S = %.2f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
+            }
+        }
+
+        if(strcmp(solubility_unit, "all")==0){
+            printf("x2 = 1/kH = %.4f GPa-1\n", x2);
+            if(pressure){
+                printf("S = %.2f ppm\n", ppm*pressure);
+                printf("S = %.2f cm3.kg-1\n", cm3_per_kg_per_bar*pressure);
+            }
+            else{
+                printf("S = %.2f ppm.bar-1\n", ppm);
+                printf("S = %.2f cm3.kg-1.bar-1\n", cm3_per_kg_per_bar);
+            }   
+
+        }
 
         if (print)
         {

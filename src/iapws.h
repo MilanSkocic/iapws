@@ -9,7 +9,7 @@
 
 #include "utilities.h"
 
-void solubility(char *gas, double T_C, int heavywater, int print);
+void solubility(char *gas, double T_C, int heavywater, int print, char *solubility_unit, double pressure, int verbose);
 double henry_constant(int ix, double T_K, double Tc1, double pc1, int ni, double *ai, double *bi, double *abc);
 void test_water();
 void test_heavywater();

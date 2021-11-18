@@ -19,16 +19,23 @@ static char args_doc[] = "GAS TEMPERATURE";
 
 static struct argp_option options[] = {
         {"heavywater", 'd', 0, 0, "Set solvent to heavywater"},
-        {"print_coefficients", 'p', 0, 0, "Print the ABC and ai, bi coefficients"},
+        {"print_coefficients", 'c', 0, 0, "Print the ABC and ai, bi coefficients"},
         {"test", 't', 0, 0, "Test computations. When this option is selected all arguments are ignored."},
+        {"verbose", 'v', 0, 0, "Verbose output: ln(kH) and kH"},
+        {"solubility", 's', "sol_unit", OPTION_ARG_OPTIONAL, "Specify the solubility unit: ppm, cm3, gpa, all."},
+        {"pressure", 'p', "pressure", OPTION_ARG_OPTIONAL, "Set pressure value in bar."},
         {0}
 };
 
 struct arguments{
     char *args[2];
     int print;
+    int verbose;
+    double pressure;
+    int kh;
     int heavywater;
     int test;
+    char *solubility;
 };
 
 static error_t parse_opt(int key, char *arg, struct argp_state *state){
@@ -37,12 +44,26 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state){
             case 'd':
                     arguments->heavywater = 1;
                     break;
-            case 'p':
+            case 'c':
                     arguments->print = 1;
                     break;
             case 't':
                     arguments->test = 1;
                     break;
+            case 's':
+                    arguments->solubility=arg;
+                    break;    
+            case 'v':
+                    arguments->verbose = 1;
+                    break;  
+            case 'p':
+                    if (arg==NULL){
+                            arguments->pressure = 0.0;
+                    } 
+                    else{
+                        arguments->pressure = strtod(arg, NULL);
+                    }
+                    break;         
             case ARGP_KEY_ARG:
                     if((state->arg_num >=2) & (arguments->test == 0)){
                             argp_usage(state);
@@ -81,22 +102,34 @@ int main(int argc, char **argv)
     int stringlen = 256;
     char default_gas[] = "O2";
     char default_temp[] = "25.0";
+    char default_solubility[] = "ppm";
 
     struct arguments arguments;
     arguments.print = 0;
+    arguments.verbose = 0;
     arguments.test  = 0;
     arguments.heavywater = 0;
+    arguments.pressure = 0.0;
     arguments.args[0] = default_gas;
     arguments.args[1] = default_temp;
+    arguments.solubility = default_solubility;
 
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
+    if (arguments.solubility == NULL){
+        arguments.solubility = default_solubility;
+    }
     if(arguments.test)
     {
         test_water();
         test_heavywater();
     }else{
-         solubility(arguments.args[0], strtod(arguments.args[1], NULL), arguments.heavywater, arguments.print);
+         solubility(arguments.args[0], strtod(arguments.args[1], NULL), 
+                    arguments.heavywater, 
+                    arguments.print, 
+                    arguments.solubility,
+                    arguments.pressure,
+                    arguments.verbose);
     }
 
 
