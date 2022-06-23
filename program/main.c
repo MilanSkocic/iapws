@@ -4,16 +4,16 @@
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04
  */
+#include<string.h>
 #include "iapws.h"
+#include "version.h"
 #include "argp.h"
 
-const char *argp_program_version = "iapws 1.0";
+const char *argp_program_version = PROJECT_VERSION;
 
 const char *argp_program_bug_address = "<milan.skocic@gmail.com>";
 
-static char doc[] =  "\t IAPWS Computation of solubility in water.\n"
-                     "\t Supported gases in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6.\n"
-                     "\t Supported gases in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4\n";
+static char doc[] =  PROJECT_DESCRIPTION;
 
 static char args_doc[] = "GAS TEMPERATURE";
 
