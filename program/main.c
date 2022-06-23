@@ -119,6 +119,9 @@ int main(int argc, char **argv)
     if (arguments.solubility == NULL){
         arguments.solubility = default_solubility;
     }
+    if(arguments.print){
+        print_coefficients(arguments.args[0], arguments.heavywater);
+    }
     
     if (arguments.test == 1){
         if (arguments.heavywater==1){
@@ -131,7 +134,6 @@ int main(int argc, char **argv)
     else{
         solubility(arguments.args[0], strtod(arguments.args[1], NULL), 
                     arguments.heavywater, 
-                    arguments.print, 
                     arguments.solubility,
                     arguments.pressure,
                     arguments.verbose);

@@ -40,9 +40,11 @@
  * @param *gas Gas for which the computation has to be performed.
  * @param T_C Temperature in °C.
  * @param heavywater Flag for selecting heavywater instead of water.
- * @param print Flag for printing coefficients ai, bi, and ABC
+ * @param solubility_unit Unit for the computation.
+ * @param pressure Pressure in bar.
+ * @param verbose Flag for printing additional information.
  */
-void solubility(char *gas, double T_C, int heavywater, int print, char *solubility_unit, double pressure, int verbose)
+void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, double pressure, int verbose)
 {
     double Tc1=Tc1_water;
     double pc1=pc1_water;
@@ -143,20 +145,6 @@ void solubility(char *gas, double T_C, int heavywater, int print, char *solubili
 
         }
 
-        if (print)
-        {
-            printf("\n");
-            printf("***** ai and bi Coefficients for %s *****\n", gas);
-            for (i=0;i<ni;i++)
-            {
-                printf("a[%d] = %f \t b[%d] = %f\n", i, ai[i], i, bi[i]);
-            }
-
-            printf("\n");
-            printf("**** ABC Coefficients for %s *****\n", gas);
-            printf("A=%f \t B=%f \t C=%f\n\n",  *(abc+ix*abc_ncols+A), *(abc+ix*abc_ncols+B), *(abc+ix*abc_ncols+C));
-        }
-
     }
 }
 
@@ -227,6 +215,65 @@ double x2_to_ppm(double x2, double Ms, double Mgas){
     double ppm;
     ppm = (x2 / 1e4) * Mgas / Ms * 1e6;
     return ppm;
+}
+
+/**
+ * @brief Print the IAPWS coefficients for the selected gas. 
+ * 
+ * @param gas Gas for which the coefficient have to be printed.
+ * @param heavywater Flag for selecting heavywater instead of water.
+ */
+void print_coefficients(char *gas, int heavywater){
+    
+    double Tc1=Tc1_water;
+    double pc1=pc1_water;
+    double Ms=Ms_water;
+    double *abc = abc_water[0];
+    double *ai = ai_water;
+    double *bi = bi_water;
+    double *M_gases = M_gases_water;
+    int ni = ni_water;
+    int ngas = ngas_water;
+    char solvent[] = "H2O";
+    char **list_gas = available_gases_water;
+    int i;
+    int ix;
+    
+    if (heavywater)
+    {
+        Tc1 = Tc1_heavywater;
+        pc1 = pc1_heavywater;
+        Ms = Ms_heavywater;
+        abc = abc_heavywater[0];
+        ai = ai_heavy_water;
+        bi = bi_heavy_water;
+        ni = ni_heavywater;
+        ngas = ngas_heavywater;
+        list_gas = available_gases_heavywater;
+        strcpy(solvent, "D2O");
+        M_gases = M_gases_heavywater;
+    }
+
+    ix = find(gas, list_gas, ngas);
+    if (ix < 0)
+    {
+        printf("Error. %s was not found in the list of available gases in %s.\n", gas, solvent);
+    }
+    else
+    {
+
+        printf("\n");
+        printf("***** ai and bi Coefficients for %s *****\n", gas);
+        for (i=0;i<ni;i++)
+        {
+            printf("a[%d] = %f \t b[%d] = %f\n", i, ai[i], i, bi[i]);
+        }
+
+        printf("\n");
+        printf("**** ABC Coefficients for %s *****\n", gas);
+        printf("A=%f \t B=%f \t C=%f\n\n",  *(abc+ix*abc_ncols+A), *(abc+ix*abc_ncols+B), *(abc+ix*abc_ncols+C));
+    }
+
 }
 
 /**
