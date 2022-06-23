@@ -10,7 +10,7 @@
 #include "utilities.h"
 
 #define T_KELVIN 273.15 /**< Absolute temperature in KELVIN */
-#define Vm (0.02241396954*1e6) /**< Molar volume of ideal gas (273.15 K, 101.325 kPa)  */
+#define Vm 022413.96954 /**< Molar volume of ideal gas (273.15 K, 101.325 kPa) in cm3/mol  */
 #define Tc1_water 647.096 /**< critical temperature of water */
 #define pc1_water 22.064 /**< critical pressure of the water */
 #define Tc1_heavywater 643.847 /**< critical temperature of heavy water */
@@ -18,9 +18,10 @@
 #define Ms_water (1.0078250321*2+15.9949146221) /**< Molar mass water */
 #define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
 #define abc_ncols 5 /**<Number of columns in ABC table */
+#define Ms_O2 (2*15.9949146221)
 
 char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
-double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, 31.9988, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
+double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, Ms_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
 
 char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
 double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
