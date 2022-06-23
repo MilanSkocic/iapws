@@ -1,17 +1,31 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(iapws VERSION 1.1 LANGUAGES C)
+project(ciapws VERSION 1.1 LANGUAGES C)
 
 set(CMAKE_INSTALL_PREFIX C:/Users/mskocic/LocalApps/)
 
-set(NAME ${PROJECT_NAME})
-add_executable(${PROJECT_NAME} src/main.c src/iapws.c src/utilities.c)
+message("Build type:" ${CMAKE_BUILD_TYPE})
+message("C FLAGS DEBUG:" ${CMAKE_C_FLAGS_DEBUG})
+message("C FLAGS RELEASE:" ${CMAKE_C_FLAGS_RELEASE})
+message("INSTALL PREFIX:" ${CMAKE_INSTALL_PREFIX})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE m argp)
+
+
+add_subdirectory(./src)
+add_subdirectory(./tests)
+add_subdirectory(./program)
+
+
+enable_testing()
+add_test(NAME solubility COMMAND test_solubility)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
+install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
 
 if(WIN32)
     install(FILES "C:/msys64/usr/bin/msys-argp-0.dll" DESTINATION bin)
     install(FILES "C:/msys64/usr/bin/msys-2.0.dll" DESTINATION bin)
+    install(TARGETS static_iapws DESTINATION bin)
+    install(TARGETS shared_iapws DESTINATION bin)
 endif()
