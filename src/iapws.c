@@ -92,8 +92,8 @@ void solubility(char *gas, double T_C, int heavywater, int print, char *solubili
     {
         kH = henry_constant(ix, T_K, Tc1, pc1, ni, ai, bi, abc);
         x2 = 1.0/kH; // mole fraction per GPa
-        cm3_per_kg_per_bar = (x2 / 1e4) * Vm / (Ms*1e-3);
-        ppm = cm3_per_kg_per_bar * M_gases[ix]*1e3 / Vm;
+        cm3_per_kg_per_bar = x2_to_cm3(x2, Ms);
+        ppm = x2_to_ppm(x2, Ms, M_gases[ix]);
 
         if (verbose){
             printf("Gas = %s at T = %.1f C in %s\n", gas, T_C, solvent);
@@ -161,7 +161,6 @@ void solubility(char *gas, double T_C, int heavywater, int print, char *solubili
 }
 
 
-
 /** @brief Compute the henry constant of a given gas.
  * @param ix Gas index for which the computation has to be performed.
  * @param T_K Temperature in K.
@@ -199,6 +198,35 @@ double henry_constant(int ix, double T_K, double Tc1, double pc1, int ni, double
 
     return kH;
 
+}
+
+/**
+ * @brief Convert mole fraction into cm3 per kg per bar.
+ * 
+ * @param x2 Mole fraction per GPa.
+ * @param Ms Molar mass of the solvent.
+ * @return Volume of dissolevd gas per kg per bar.
+ */
+double x2_to_cm3(double x2, double Ms){
+
+    double cm3_per_kg_bar;
+    cm3_per_kg_bar = (x2 / 1e4) * Vm / (Ms*1e-3);
+    return cm3_per_kg_bar;
+}
+
+/**
+ * @brief Convert mole fraction to ppm.
+ * 
+ * @param x2 Mole fraction per GPa.
+ * @param Ms Molar mass of the solvent.
+ * @param Mgas Molar mass of the gas.
+ * @return ppm of dissolved gas.
+ */
+double x2_to_ppm(double x2, double Ms, double Mgas){
+
+    double ppm;
+    ppm = (x2 / 1e4) * Mgas / Ms * 1e6;
+    return ppm;
 }
 
 /**
