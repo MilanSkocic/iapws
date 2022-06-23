@@ -113,6 +113,13 @@ void solubility(char *gas, double T_C, int heavywater, int print, char *solubili
                 printf("S = %.2f ppm.bar-1\n", ppm);
             }
         }
+        if (strcmp(solubility_unit, "ppb")==0){
+            if (pressure){
+                printf("S = %.2f ppb\n", 1000.0*ppm*pressure);
+            }else{
+                printf("S = %.2f ppb.bar-1\n", 1000.0*ppm);
+            }
+        }
 
         if (strcmp(solubility_unit, "cm3")==0){
             if(pressure){
