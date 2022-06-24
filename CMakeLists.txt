@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 project("ciapws" VERSION "0.1" LANGUAGES "C" DESCRIPTION "Compute the solubility of different gases in water and heavywater. Supported gases in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6. Supported gases in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4")
 configure_file("./src/version.h.in" "./src/version.h")
 
-set(CMAKE_INSTALL_PREFIX C:/Users/mskocic/LocalApps/)
 
 message("Build type:" ${CMAKE_BUILD_TYPE})
 message("C FLAGS DEBUG:" ${CMAKE_C_FLAGS_DEBUG})
