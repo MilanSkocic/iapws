@@ -1,0 +1,7 @@
+IAPWS must be compiled with gcc. For windows, see MSYS2 for installing gcc toolchain. 
+If your MSYS installation path differs from standard location (i.e. C:/), you must edit the CMakeLists.txt file (l.12 and l.13).
+
+mkdir build
+cd build
+cmake -G "Unix Makefiles" ..
+make
