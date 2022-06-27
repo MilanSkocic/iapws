@@ -1,5 +1,5 @@
 /**
- * @file test.c
+ * @file test_solubility.c
  * @brief Test IAPWS
  * 
  * @details Test water and heavywater formulas

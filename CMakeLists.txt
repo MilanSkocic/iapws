@@ -18,6 +18,7 @@ add_subdirectory(./program)
 
 enable_testing()
 add_test(NAME solubility COMMAND test_solubility)
+add_test(NAME utilities COMMAND test_utilities)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)

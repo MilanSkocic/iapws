@@ -3,6 +3,8 @@
  * @author M. Skocic
  * @brief Functions for assiting computation
  * @date 2021/04/27
+ *
+ * Provides functions for assisting the main computations.
  */
 
 #include "utilities.h"
