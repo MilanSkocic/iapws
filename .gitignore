@@ -1,0 +1,7 @@
+.idea/
+bin/
+build/
+docs/build/
+.vscode/
+*.obj
+*.o
