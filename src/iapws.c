@@ -3,6 +3,7 @@
  * @author M. Skocic
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04
+ * 
  * The computation is based on the parameters provided by the IAPWS 2004: @f$ k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 @f$.
  * where @f$f_2@f$ and @f$x_2@f$ are, respectively, the liquid-phase fugacity and mole fraction of the solute.
  * The Henry's constant @f$k_H@f$ is given as a function of temperature by:
@@ -22,8 +23,7 @@
  * The Henry's constant :@f$k_H@f$ has a dimension of pressure expressed here in bars:
  * \f{eqnarray*}{
  * x_2 [\text{mole fraction per bar}] = \frac{1}{k_H}\\
- * wt_2 = \text{molfrac2massfrac}(x_2)\\
- * S [ppm.bar^{-1}] = \text{massfraction2ppm}(wt_2)\\
+ * S [ppm.bar^{-1}] = \frac{x_2 \cdot M_{gas}}{M_s} \cdot 10^6 \\
  * S [cm^3.kg^{-1}.bar^{-1}] = \frac{x_2 \cdot V_m}{M_s}
  * \f}
  *
