@@ -318,7 +318,7 @@ int test_water()
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_water, pc1_water, ni_water, ai_water, bi_water, abc_water[0]);
-            ln_kH = roundn(log(kH), 5);
+            ln_kH = roundn(log(kH), 4);
             printf("%+8.4f/%+8.4f/%+8.4f\t", ln_kH, results[i][j], ln_kH - results[i][j]);
         }
         printf("\n");
@@ -362,7 +362,7 @@ int test_heavywater()
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_heavywater, pc1_heavywater, ni_heavywater, ai_heavy_water, bi_heavy_water, abc_heavywater[0]);
-            ln_kH = roundn(log(kH), 5);
+            ln_kH = roundn(log(kH), 4);
             printf("%+8.4f/%+8.4f/%+8.4f\t", ln_kH, results[i][j], ln_kH - results[i][j]);
         }
         printf("\n");
