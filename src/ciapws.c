@@ -1,5 +1,5 @@
 /**
- * @file iapws.c
+ * @file ciapws.c
  * @author M. Skocic
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04
@@ -32,7 +32,7 @@
  * @see [WagnerPruss] W. Wagner et A. Pruss, « International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987) », Journal of Physical and Chemical Reference Data, vol. 22, n°3, p. 783‑787, mai 1993. <https://doi.org/10.1063/1.555926>
  * @see [HarveyLemmon] A. H. Harvey et E. W. Lemmon, « Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point », Journal of Physical and Chemical Reference Data, vol. 31, n°1, p. 173‑181, mars 2002 <https://doi.org/10.1063/1.1430231>
  */
-#include "iapws.h"
+#include "ciapws.h"
 
 
 /** @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.

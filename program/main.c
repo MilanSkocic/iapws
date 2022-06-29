@@ -4,8 +4,7 @@
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04
  */
-#include<string.h>
-#include "iapws.h"
+#include "ciapws.h"
 #include "version.h"
 #include "argp.h"
 

@@ -1,11 +1,11 @@
 /**
- *@file iapws.h
+ *@file ciapws.h
  * @author M. Skocic
  * @brief Header for iapws.
  */
 
-#ifndef IAPWS
-#define IAPWS
+#ifndef CIAPWS
+#define CIAPWS
 
 #include "utilities.h"
 
@@ -18,7 +18,7 @@
 #define Ms_water (1.0078250321*2+15.9949146221) /**< Molar mass water */
 #define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
 #define abc_ncols 5 /**<Number of columns in ABC table */
-#define Ms_O2 (2*15.9949146221)
+#define Ms_O2 (2*15.9949146221) /**<Molar mass of O2 */
 
 char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
 double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, Ms_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
