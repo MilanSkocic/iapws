@@ -14,6 +14,6 @@
 #include <math.h>
 
 int find(char *item, char **list, int size);
-double roundn(double x, int p);
+double roundn(double x, int n);
 
 #endif

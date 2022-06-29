@@ -11,22 +11,44 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "iapws.h"
+#include "utilities.h"
 
 
 
 int main(int argc, char **argv){
     
-    double value = 0.0356;
+    double value = 0.0356655422;
     double computed;
-    double expected = 0.037;
+    double expected = 0.036;
+    double d;
 
     computed = roundn(value, 3);
-    
-    if((computed == expected)>0.0){
-        EXIT_SUCCESS;
-    }
-    else{EXIT_FAILURE;}
+    d = roundn(computed - expected, 3);
+    printf("Computed/Expected/Difference: %f/%f/%.16e\n", computed, expected, d);
 
+    if(d){
+        return EXIT_FAILURE;
+    }
+    
+    value = 1001.36;
+    computed = roundn(value, 0);
+    expected = 1001.0;
+    d = roundn(computed - expected, 0);
+    printf("Computed/Expected/Difference: %f/%f/%.16e\n", computed, expected, d);
+
+    if(d){
+        return EXIT_FAILURE;
+    }
+
+    char *list[] = {"a", "b", "c"};
+    char item[] = "b";
+    int expected_index = 1;
+    int found_index = find(item, list, 3);
+    printf("Found index/Expected index %d/%d\n", found_index, expected_index);
+    if(found_index != expected_index){
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS; 
 }
 
