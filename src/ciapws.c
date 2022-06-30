@@ -38,22 +38,22 @@
 static char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
 static double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, Ms_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
 
-char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
-double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
+static char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
+static double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
 
 
 enum {A, B, C, Tmin, Tmax}; /**< Column indexes in ABC table */
 
-int ni_water = 6; /**< Number of indexes for water */
-double ai_water[6] = {-7.85951783, 1.84408259, -11.78664970, 22.68074110, -15.96187190, 1.80122502}; /**< ai coefficients for water */
-double bi_water[6] = {1.000, 1.500, 3.000, 3.500, 4.000, 7.500}; /**< bi coefficients for water */
+static int ni_water = 6; /**< Number of indexes for water */
+static double ai_water[6] = {-7.85951783, 1.84408259, -11.78664970, 22.68074110, -15.96187190, 1.80122502}; /**< ai coefficients for water */
+static double bi_water[6] = {1.000, 1.500, 3.000, 3.500, 4.000, 7.500}; /**< bi coefficients for water */
 
-int ni_heavywater = 5; /**< Number of indexes for heavywater */
-double ai_heavy_water[5] = {-7.8966570, 24.7330800, -27.8112800, 9.3559130, -9.2200830}; /**< ai coefficients for heavywater */
-double bi_heavy_water[5] = {1.00, 1.89, 2.00, 3.00, 3.60}; /**< bi coefficients for heavywater */
+static int ni_heavywater = 5; /**< Number of indexes for heavywater */
+static double ai_heavy_water[5] = {-7.8966570, 24.7330800, -27.8112800, 9.3559130, -9.2200830}; /**< ai coefficients for heavywater */
+static double bi_heavy_water[5] = {1.00, 1.89, 2.00, 3.00, 3.60}; /**< bi coefficients for heavywater */
 
-int ngas_water = 14; /**< Number of gases for water */
-double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
+static int ngas_water = 14; /**< Number of gases for water */
+static double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
                              {-3.18301, 5.31448, 5.43774, 273.20, 543.36},
                              {-8.40954, 4.29587, 10.52779, 273.19, 568.36},
                              {-8.97358, 3.61508, 11.29963, 273.19, 525.56},
@@ -68,8 +68,8 @@ double abc_water[14][5] = {{-3.52839, 7.12983, 4.47770, 273.21, 553.18},
                              {-19.67563, 4.51222, 20.62567, 275.44, 473.46},
                              {-16.56118, 2.15289, 20.35440, 283.14, 505.55}}; /**< ABC constants water. */
 
-int ngas_heavywater = 7; /**< Number of gases for heavywater */
-double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15, 553.18},
+static int ngas_heavywater = 7; /**< Number of gases for heavywater */
+static double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15, 553.18},
                              {-0.91999, 5.65327, 3.17247, 288.18, 549.96},
                              {-7.17725, 4.48177, 9.31509, 288.30, 583.76},
                              {-8.47059, 3.91580, 10.69433, 288.19, 523.06},
