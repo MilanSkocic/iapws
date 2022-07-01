@@ -22,7 +22,10 @@
 
 
 void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, double pressure, int verbose);
-double henry_constant(int ix, double T_K, double Tc1, double pc1, int ni, double *ai, double *bi, double *abc);
+double henry_constant(int ix, double T_K, double Tc1, double pc1, int ni, 
+                      const double *ai,
+                      const double *bi, 
+                      const double *abc);
 double x2_to_cm3(double x2, double Ms);
 double x2_to_ppm(double x2, double Ms, double Mgas);
 void print_coefficients(char *gas, int heavywater);

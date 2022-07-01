@@ -40,7 +40,7 @@ int main(int argc, char **argv){
         return EXIT_FAILURE;
     }
 
-    char *list[] = {"a", "b", "c"};
+    const char *list[] = {"a", "b", "c"};
     char item[] = "b";
     int expected_index = 1;
     int found_index = find(item, list, 3);

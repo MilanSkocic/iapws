@@ -13,7 +13,7 @@
 #include <string.h>
 #include <math.h>
 
-int find(char *item, char **list, int size);
+int find(char *item, const char **list, int size);
 double roundn(double x, int n);
 
 #endif

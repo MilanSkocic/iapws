@@ -32,7 +32,7 @@ double roundn(double x, int n){
  * @param size Size of the list.
  * @return index >0 if item was found or -1 if not found.
  */
-int find(char *item, char **list, int size)
+int find(char *item, const char **list, int size)
 {
     int i;
     int index=-1;
