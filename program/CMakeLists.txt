@@ -5,9 +5,10 @@ add_executable(pciapws main.c)
 target_include_directories(pciapws PUBLIC ${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
 
 
-if(UNIX AND NOT APPLE)
+if(UNIX)
 	set(LINKLIBS "ciapws")
-else()
+endif()
+if(MSYS OR APPLE)
 	set(LINKLIBS "ciapws" "argp")
 endif()
 
