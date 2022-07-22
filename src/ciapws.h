@@ -11,10 +11,10 @@
 
 #define T_KELVIN 273.15 /**< Absolute temperature in KELVIN */
 #define Vm 022413.96954 /**< Molar volume of ideal gas (273.15 K, 101.325 kPa) in cm3/mol  */
-#define Tc1_water 647.096 /**< critical temperature of water */
-#define pc1_water 22.064 /**< critical pressure of the water */
-#define Tc1_heavywater 643.847 /**< critical temperature of heavy water */
-#define pc1_heavywater 21.671 /**< critical pressure of heavywater */
+#define Tc1_water 647.096 /**< critical temperature of water in K*/
+#define pc1_water 22.064 /**< critical pressure of the water in K*/
+#define Tc1_heavywater 643.847 /**< critical temperature of heavy water MPa */
+#define pc1_heavywater 21.671 /**< critical pressure of heavywater MPa */
 #define Ms_water (1.0078250321*2+15.9949146221) /**< Molar mass water */
 #define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
 #define abc_ncols 5 /**<Number of columns in ABC table */

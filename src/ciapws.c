@@ -102,7 +102,6 @@ static const char **list_gas = available_gases_water;
  */
 void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, double pressure, int verbose)
 {
-    double Tc1=Tc1_water;
     double T_K;
     double kH;
     double x2;

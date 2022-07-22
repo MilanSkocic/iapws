@@ -21,8 +21,8 @@ static struct argp_option options[] = {
         {"print_coefficients", 'c', 0, 0, "Print the ABC and ai, bi coefficients"},
         {"test", 't', 0, 0, "Test computations. When this option is selected all arguments are ignored."},
         {"verbose", 'v', 0, 0, "Verbose output: ln(kH) and kH"},
-        {"solubility", 's', "sol_unit", OPTION_ARG_OPTIONAL, "Specify the solubility unit: ppm, cm3, gpa, all."},
-        {"pressure", 'p', "pressure", OPTION_ARG_OPTIONAL, "Set pressure value in bar."},
+        {"solubility", 's', "sol_unit", OPTION_ARG_OPTIONAL, "Specify the solubility unit: ppm, cm3, gpa, all. The default unit is ppm.bar-1"},
+        {"pressure", 'p', "pressure", OPTION_ARG_OPTIONAL, "Set pressure value in bar. The returned value is a concentration."},
         {0}
 };
 
