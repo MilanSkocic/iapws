@@ -39,12 +39,13 @@
 #include "utilities.h"
 #include "ciapws.h"
 
+#define abc_ncols 5 /**<Number of columns in ABC table */
 
 static const char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
-static const double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 2.01588, 28.0134, Ms_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
+static const double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, M_H2, 28.0134, M_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
 
 static const char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
-static const double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
+static const double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, M_D2, 16.04246};
 
 
 enum COLS{A, B, C, Tmin, Tmax}; /**< Column indexes in ABC table */
@@ -85,7 +86,7 @@ static const double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15,
 
 static double Tc1=Tc1_water; /**< Critical temperature  */
 static double pc1=pc1_water; /**< Critical pressure */
-static double Ms=Ms_water;
+static double Ms=M_water;
 static const double *abc = abc_water[0];
 static const double *ai = ai_water;
 static const double *bi = bi_water;
@@ -125,7 +126,7 @@ void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, do
     {
         Tc1 = Tc1_heavywater;
         pc1 = pc1_heavywater;
-        Ms = Ms_heavywater;
+        Ms = M_heavywater;
         abc = abc_heavywater[0];
         ai = ai_heavy_water;
         bi = bi_heavy_water;
@@ -285,7 +286,7 @@ void print_coefficients(char *gas, int heavywater){
     {
         Tc1 = Tc1_heavywater;
         pc1 = pc1_heavywater;
-        Ms = Ms_heavywater;
+        Ms = M_heavywater;
         abc = abc_heavywater[0];
         ai = ai_heavy_water;
         bi = bi_heavy_water;

@@ -14,15 +14,16 @@
 #define Tc1_heavywater 643.847 /**< critical temperature of heavy water MPa */
 #define pc1_heavywater 21.671 /**< critical pressure of heavywater MPa */
 
-#define Ms_H 1.0078250321 /**< Molar mass of H in g.mol-1. */
-#define Ms_O 15.9949146221 /**< Molar of O in g.mol-1 */
+#define M_H 1.0078250321 /**< Molar mass of H in g.mol-1. */
+#define M_D 2.01410178 /**< Molar mass of D in g.mol-1. */
+#define M_O 15.9949146221 /**< Molar of O in g.mol-1 */
 
-#define Ms_H2 (2*Ms_H)
-#define Ms_O2 (2*Ms_O) /**<Molar mass of O2 */
+#define M_H2 (2*M_H)
+#define M_D2 (2*M_D)
+#define M_O2 (2*M_O) /**<Molar mass of O2 */
 
-#define Ms_water (Ms_H*2+15.9949146221) /**< Molar mass water */
-#define Ms_heavywater (2.01410178*2+15.9949146221) /**< Molar mass heavywater */
-#define abc_ncols 5 /**<Number of columns in ABC table */
+#define M_water (M_H*2+M_O) /**< Molar mass water */
+#define M_heavywater (M_D*2+M_O) /**< Molar mass heavywater */
 
 
 
