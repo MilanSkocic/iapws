@@ -1,5 +1,5 @@
 /**
- *@file main.c
+ * @file main.c
  * @author M. Skocic
  * @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
  * @date 2020/08/04

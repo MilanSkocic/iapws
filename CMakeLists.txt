@@ -14,12 +14,8 @@ if (MSYS)
     message("MSYS ROOT: " ${MSYS_ROOT})
 endif()
 
-
-
 add_subdirectory(./src)
 add_subdirectory(./tests)
-add_subdirectory(./program)
-
 
 enable_testing()
 add_test(NAME solubility COMMAND test_solubility)
