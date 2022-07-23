@@ -84,9 +84,9 @@ static const double abc_heavywater[7][5] = {{-0.72643, 7.02134, 2.04433, 288.15,
                              {-10.01915, 4.73368, 11.75711, 288.16, 517.46}}; /**< ABC constants heavywater. */
 
 
-static double Tc1=Tc1_water; /**< Critical temperature  */
-static double pc1=pc1_water; /**< Critical pressure */
-static double Ms=M_water;
+static double Tc1 = Tc1_water; /**< Critical temperature  */
+static double pc1 = pc1_water; /**< Critical pressure */
+static double Ms = M_water;
 static const double *abc = abc_water[0];
 static const double *ai = ai_water;
 static const double *bi = bi_water;
