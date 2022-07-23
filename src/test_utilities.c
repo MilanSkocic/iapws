@@ -1,6 +1,6 @@
 /**
- * @file test_utilites.c
- * @brief Test IAPWS
+ * @file test_utilities.c
+ * @brief Test utilties functions
  * 
  * @details Test water and heavywater formulas
  * 

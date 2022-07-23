@@ -1,6 +1,6 @@
 /**
  * @file test_solubility.c
- * @brief Test IAPWS
+ * @brief Test library functions.
  * 
  * @details Test water and heavywater formulas
  * 
