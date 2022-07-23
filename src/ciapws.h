@@ -18,8 +18,8 @@
 #define M_D 2.01410178 /**< Molar mass of D in g.mol-1. */
 #define M_O 15.9949146221 /**< Molar of O in g.mol-1 */
 
-#define M_H2 (2*M_H)
-#define M_D2 (2*M_D)
+#define M_H2 (2*M_H) /**< Molar mass of H2 in g.mol-1 */
+#define M_D2 (2*M_D) /**< Molar mass of D2 in g.mol-1 */
 #define M_O2 (2*M_O) /**<Molar mass of O2 */
 
 #define M_water (M_H*2+M_O) /**< Molar mass water */
