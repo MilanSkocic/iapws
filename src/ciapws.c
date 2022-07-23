@@ -32,6 +32,11 @@
  * @see [WagnerPruss] W. Wagner et A. Pruss, « International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987) », Journal of Physical and Chemical Reference Data, vol. 22, n°3, p. 783‑787, mai 1993. <https://doi.org/10.1063/1.555926>
  * @see [HarveyLemmon] A. H. Harvey et E. W. Lemmon, « Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point », Journal of Physical and Chemical Reference Data, vol. 31, n°1, p. 173‑181, mars 2002 <https://doi.org/10.1063/1.1430231>
  */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include "utilities.h"
 #include "ciapws.h"
 
 
@@ -42,7 +47,7 @@ static const char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe",
 static const double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, 4.02820356, 16.04246};
 
 
-enum {A, B, C, Tmin, Tmax}; /**< Column indexes in ABC table */
+enum COLS{A, B, C, Tmin, Tmax}; /**< Column indexes in ABC table */
 
 static const int ni_water = 6; /**< Number of indexes for water */
 static const double ai_water[6] = {-7.85951783, 1.84408259, -11.78664970, 22.68074110, -15.96187190, 1.80122502}; /**< ai coefficients for water */

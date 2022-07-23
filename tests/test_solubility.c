@@ -6,7 +6,7 @@
  * 
  * Author: Milan Skocic <milan.skocic@gmail.com>
  */
-
+#include <stdlib.h>
 #include "ciapws.h"
 
 

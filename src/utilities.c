@@ -6,7 +6,8 @@
  *
  * Provides functions for assisting the main computations.
  */
-
+#include <string.h>
+#include <math.h>
 #include "utilities.h"
 
  /**

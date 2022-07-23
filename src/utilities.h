@@ -8,11 +8,6 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
 int find(char *item, const char **list, int size);
 double roundn(double x, int n);
 
