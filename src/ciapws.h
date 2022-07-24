@@ -16,7 +16,10 @@
 
 #define M_H 1.0078250321 /**< Molar mass of H in g.mol-1. */
 #define M_D 2.01410178 /**< Molar mass of D in g.mol-1. */
-#define M_O 15.9949146221 /**< Molar of O in g.mol-1 */
+#define M_O (+ 15.99491461957 * 99.757/100.0 \
+             + 16.9991317565 * 0.038/100.0 \
+             + 17.9991596129 * 0.205/100.0) /**< Molar of O in g.mol-1 */
+
 
 #define M_H2 (2*M_H) /**< Molar mass of H2 in g.mol-1 */
 #define M_D2 (2*M_D) /**< Molar mass of D2 in g.mol-1 */
@@ -24,8 +27,6 @@
 
 #define M_water (M_H*2+M_O) /**< Molar mass water */
 #define M_heavywater (M_D*2+M_O) /**< Molar mass heavywater */
-
-
 
 
 void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, double pressure, int verbose);
