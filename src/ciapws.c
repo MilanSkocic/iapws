@@ -60,10 +60,10 @@
 #define abc_ncols 5 /**<Number of columns in ABC table */
 
 static const char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
-static const double M_gases_water[14] = {4.002602, 20.1797, 39.948, 83.798, 131.293, M_H2, 28.0134, M_O2, 28.0101, 44.0095, 34.08088, 16.04246, 30.06904, 146.0554192}; /**< Gases for heavywater */
+static const double M_gases_water[14] = {M_He, M_Ne, M_Ar, M_Kr, M_Xe, M_H2, M_N2, M_O2, M_CO, M_CO2, M_H2S, M_CH4, M_C2H6, M_SF6}; /**< Gases for heavywater */
 
 static const char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
-static const double M_gases_heavywater[7] = {4.002602, 20.1797, 39.948, 83.798, 131.293, M_D2, 16.04246};
+static const double M_gases_heavywater[7] = {M_He, M_Ne, M_Ar, M_Kr, M_Xe, M_D2, M_CH4};
 
 
 enum COLS{A, B, C, Tmin, Tmax}; /**< Column indexes in ABC table */
