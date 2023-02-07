@@ -1,21 +1,26 @@
-IAPWS must be compiled with gcc. For windows, see MSYS2 for installing gcc toolchain. 
+# Installation 
 
-1. Create the build folder:
+## Create build directory
 
-    mkdir build
-    cd build
+* mkdir build
 
-2. Configure the build process. 
+* cd build
 
-2.1 On Unix systems, you can configure the build type and the installation folder:
+## Generate a makefile
+
+* On Unix-like OS: `cmake -G "Unix Makefiles" -S .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/path/to/folder`
+
+* On windows with MSYS2: `cmake -G "Unix Makefiles" -S .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/path/to/folder`
+
+
+## Build either with cmake
+
+    cmake --build . 
+
+## Run tests
+
+    ctest
+
+## Install
     
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/folder/ ..
-
-2.2 On windows, you can specify the MSYS root folder if different from the default folder (C:/msys64/)
-    
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/folder/ -DMSYS_ROOT=/path/to/msys64/ ..
-    
-2.3 Build and install
-
-    cmake --build .
     cmake --install .
