@@ -1,4 +1,23 @@
 !> @file
+!! The molar masses were taken from the NIST website: https://www.nist.gov/pml/periodic-table-elements.
+!! 
+!! Copyright (C) 2020-2022  Milan Skocic.
+!!
+!! This program is free software: you can redistribute it and/or modify
+!! it under the terms of the GNU General Public License as published by
+!! the Free Software Foundation, either version 3 of the License, or
+!! (at your option) any later version.
+!!
+!! This program is distributed in the hope that it will be useful,
+!! but WITHOUT ANY WARRANTY; without even the implied warranty of
+!! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!! GNU General Public License for more details.
+!!
+!! You should have received a copy of the GNU General Public License
+!! along with this program.  If not, see <https://www.gnu.org/licenses/>. 
+!!
+!!
+!! Author: Milan Skocic <milan.skocic@icloud.com>
 
 !> @brief Parameters for IAPWS G7-04
 module iapws_G7_04
@@ -49,5 +68,30 @@ integer(int32) :: C = 3
 integer(int32) :: Tmin = 4
 !> Index of col Tmax
 integer(int32) :: Tmax = 5
+
+contains
+
+!> @brief Compute the henry constant of a given gas.
+!! @param ix Gas index for which the computation has to be performed.
+!! @param T_K Temperature in K.
+!! @param Tc1 Critical temperature.
+!! @param pc1 Critical pressure.
+!! @param ni Number of indexes for ai and bi coefficients.
+!! @param ai ai coefficients.
+!! @param bi bi coefficients.
+!! @param abc abc table.
+!! @return kH Henry constant in mole fraction per GPa.
+pure function iapws_G7_04_henry_constant(ix, T_K, Tc1, pc1, ni, ai, bi, abc) result(kh)
+    integer(int32), intent(in) :: ix
+    real(real64), intent(in) :: T_K
+    real(real64), intent(in) :: Tc1
+    real(real64), intent(in) :: pc1
+    integer(int32), intent(in) :: ni
+    real(real64), intent(in), dimension(:) :: ai
+    real(real64), intent(in), dimension(:) :: bi
+    real(real64), intent(in), dimension(:,:) :: abc
+    real(real64) :: kh
+    kh = 0.0d0
+end function
 
 end module
