@@ -55,7 +55,7 @@
 #include <string.h>
 #include <math.h>
 #include "utilities.h"
-#include "ciapws.h"
+#include "iapws.h"
 
 #define abc_ncols 5 /**<Number of columns in ABC table */
 

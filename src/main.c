@@ -22,7 +22,7 @@
  * Author: Milan Skocic <milan.skocic@icloud.com>
  */
 #include <stdlib.h>
-#include "ciapws.h"
+#include "iapws.h"
 #include "version.h"
 #include "argp.h"
 
