@@ -69,6 +69,48 @@ integer(int32) :: Tmin = 4
 !> Index of col Tmax
 integer(int32) :: Tmax = 5
 
+!! ai, bi coefficients
+!> Number of indexes for water
+integer(int32), parameter :: ni_water = 6
+!>ai coefficients for water
+real(real64), dimension(ni_water), parameter :: ai_water = [-7.85951783d0, &
+                                                      1.84408259d0, &
+                                                      -11.78664970d0, &
+                                                      22.68074110d0, &
+                                                      -15.96187190d0, &
+                                                      1.80122502d0] 
+!> bi coefficients for water */
+real(real64), dimension(ni_water), parameter :: bi_water = [1.000d0, 1.500d0, 3.000d0, 3.500d0, 4.000d0, 7.500d0] 
+
+!> Number of indexes for heavywater
+integer(int32), parameter :: ni_heavywater = 5
+!>ai coefficients for heavywater
+real(real64), dimension(ni_heavywater), parameter :: ai_heavy_water = [-7.8966570d0, &
+                                                                       24.7330800d0, &
+                                                                       -27.8112800d0, &
+                                                                       9.3559130d0, &
+                                                                       -9.2200830d0]
+!> bi coefficients for heavywater */
+real(real64), dimension(ni_heavywater), parameter :: bi_heavy_water = [1.00d0, 1.89d0, 2.00d0, 3.00d0, 3.60d0]
+
+!> ABC constants water.
+real(real64), dimension(ngas_water, abc_ncols), parameter :: abc_water = transpose(&
+                                                                    reshape([-3.52839d0, 7.12983d0, 4.47770d0, 273.21d0, 553.18d0,&
+                                                                    -3.18301d0, 5.31448d0, 5.43774d0, 273.20d0, 543.36d0,&
+                                                                    -8.40954d0, 4.29587d0, 10.52779d0, 273.19d0, 568.36d0,&
+                                                                    -8.97358d0, 3.61508d0, 11.29963d0, 273.19d0, 525.56d0,&
+                                                                    -14.21635d0, 4.00041d0, 15.60999d0, 273.22d0, 574.85d0,&
+                                                                    -4.73284d0, 6.08954d0, 6.06066d0, 273.15d0, 636.09d0,&
+                                                                    -9.67578d0, 4.72162d0, 11.70585d0, 278.12d0, 636.46d0,&
+                                                                    -9.44833d0, 4.43822d0, 11.42005d0, 274.15d0, 616.52d0,&
+                                                                    -10.52862d0, 5.13259d0, 12.01421d0, 278.15d0, 588.67d0,&
+                                                                    -8.55445d0, 4.01195d0, 9.52345d0, 274.19d0, 642.66d0,&
+                                                                    -4.51499d0, 5.23538d0, 4.42126d0, 273.15d0, 533.09d0,&
+                                                                    -10.44708d0, 4.66491d0, 12.12986d0, 275.46d0, 633.11d0,&
+                                                                    -19.67563d0, 4.51222d0, 20.62567d0, 275.44d0, 473.46d0,&
+                                                                    -16.56118d0, 2.15289d0, 20.35440d0, 283.14d0, 505.55d0], &
+                                                                    [abc_ncols, ngas_water])) 
+
 contains
 
 !> @brief Compute the henry constant of a given gas.
