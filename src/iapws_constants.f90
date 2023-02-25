@@ -1,6 +1,7 @@
 !> @file
 
-!> Constants for computations
+!> @brief Constants for computations
+!! @details The molar masses were taken from the NIST website: https://www.nist.gov/pml/periodic-table-elements.
 module iapws_constants
     use iso_fortran_env
     implicit none
