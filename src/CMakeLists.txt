@@ -5,7 +5,7 @@ set(IAPWS_SOURCES "iapws_G7_04.f90")
 add_library(static_iapws STATIC iapws.c utilities.c iapws_constants.f90 iapws_G7_04.f90)
 set_target_properties(static_iapws PROPERTIES OUTPUT_NAME iapws)
 
-add_library(shared_iapws SHARED iapws.c utilities)
+add_library(shared_iapws SHARED iapws.c utilities iapws_constants.f90 iapws_G7_04.f90)
 set_target_properties(shared_iapws PROPERTIES OUTPUT_NAME iapws)
 
 target_include_directories(static_iapws PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -32,6 +32,12 @@ target_link_libraries(test_solubility PRIVATE m iapws)
 add_executable(iapws_run main.c)
 target_include_directories(iapws_run PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
 target_link_directories(iapws_run PRIVATE ${CMAKE_BINARY_DIR}/src)
+
+add_executable(fmain fmain.f90)
+target_include_directories(fmain PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
+target_link_directories(fmain PRIVATE ${CMAKE_BINARY_DIR}/src)
+target_link_libraries(fmain PRIVATE iapws)
+set_target_properties(fmain PROPERTIES LINKER_LANGUAGE "Fortran")
 
 
 if(UNIX)

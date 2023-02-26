@@ -93,6 +93,34 @@ real(real64), dimension(ngas_water, abc_ncols), parameter :: abc_water = transpo
                                                                     -16.56118d0, 2.15289d0, 20.35440d0, 283.14d0, 505.55d0], &
                                                                     [abc_ncols, ngas_water])) 
 
+!> ABC constants for heavywater
+real(real64), dimension(ngas_heavywater, abc_ncols), parameter :: abc_heavywater = transpose(&
+                             reshape([-0.72643d0, 7.02134d0, 2.04433d0, 288.15d0, 553.18d0,&
+                                      -0.91999d0, 5.65327d0, 3.17247d0, 288.18d0, 549.96d0,&
+                                      -7.17725d0, 4.48177d0, 9.31509d0, 288.30d0, 583.76d0,&
+                                      -8.47059d0, 3.91580d0, 10.69433d0, 288.19d0, 523.06d0,&
+                                      -14.46485d0, 4.42330d0, 15.60919d0, 295.39d0, 574.85d0,&
+                                      -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0,&
+                                      -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0],&
+                                      [abc_ncols, ngas_heavywater]))
+
+!> Critical temperature
+real(real64), private :: Tc1 = Tc1_water
+!> Critical pressure
+real(real64), private :: pc1 = pc1_water
+!> Molar mass of solvent
+real(real64), private :: Ms = M_water
+!> pointer for ABC table
+!!real(real64)
+! static const double *abc = abc_water[0];
+! static const double *ai = ai_water;
+! static const double *bi = bi_water;
+! static const double *M_gases = M_gases_water;
+! static int ni = ni_water;
+! static int ngas = ngas_water;
+! static char solvent[] = "H2O";
+! static const char **list_gas = available_gases_water;
+
 contains
 
 !> @brief Compute the henry constant of a given gas.
@@ -114,8 +142,28 @@ pure function iapws_G7_04_henry_constant(ix, T_K, Tc1, pc1, ni, ai, bi, abc) res
     real(real64), intent(in), dimension(:) :: ai
     real(real64), intent(in), dimension(:) :: bi
     real(real64), intent(in), dimension(:,:) :: abc
+    
+    real(real64) :: Tr
+    real(real64) :: tau
+    real(real64) :: ln_kH_pstar
+    real(real64) :: res
+    real(real64) :: ln_pstar_pcl
+    real(real64) :: pstar
     real(real64) :: kh
-    kh = 0.0d0
+    integer(int32) :: i
+    
+    Tr = T_K/Tc1
+    tau  = 1-Tr
+    ln_kH_pstar = abc(ix, A)/Tr + abc(ix, B)*(tau**0.355)/Tr + abc(ix,C)*exp(tau)*Tr**(-0.41)
+    
+    res = 0.0;
+    do i=1, ni
+        res = res + ai(i)*tau**bi(i)
+    enddo
+
+    ln_pstar_pcl = 1/Tr * res
+    pstar = exp(ln_pstar_pcl)*pc1 !! MPa
+    kH = exp(ln_kH_pstar)*pstar/1000.0
 end function
 
 end module
