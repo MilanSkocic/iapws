@@ -71,6 +71,7 @@ type(abc), dimension(7), parameter :: abc_heavywater = &
 
 public :: Tc1_water, Tc1_heavywater, pc1_water, pc1_heavywater
 public :: aibi_water, aibi_heavywater, abc_water, abc_heavywater
+public :: iapws_G7_04_henry_constant
 
 contains
 
@@ -94,9 +95,8 @@ pure function iapws_G7_04_henry_constant(gas, solvent) result(kh)
     real(real64) :: Tc1
     real(real64) :: pc1
     integer(int32) :: ni
-    real(real64), dimension(:) :: ai
-    real(real64), dimension(:) :: bi
-    real(real64), intent(in), dimension(:,:) :: abc
+    real(real64), dimension(:,:) :: aibi
+    real(real64), dimension(:,:) :: abc
     
     real(real64) :: Tr
     real(real64) :: tau
@@ -106,13 +106,24 @@ pure function iapws_G7_04_henry_constant(gas, solvent) result(kh)
     real(real64) :: pstar
     real(real64) :: kh
     integer(int32) :: i
+
+    abc = abc_water
+    aibi = aibi_water
+    Tc1 = Tc1_water
+    pc1 = pc1_water
+    if (trim(solvent) .eq. "D2O")then
+        abc = abc_heavywater
+        aibi = aibi_heavywater
+        Tc1 = Tc1_heavywater
+        pc1 = pc1_heavywater
+    endif 
     
     Tr = T_K/Tc1
     tau  = 1-Tr
     ln_kH_pstar = abc(ix, A)/Tr + abc(ix, B)*(tau**0.355)/Tr + abc(ix,C)*exp(tau)*Tr**(-0.41)
     
     res = 0.0;
-    do i=1, ni
+    do i=1, shape(aibi, dim=1)
         res = res + ai(i)*tau**bi(i)
     enddo
 
