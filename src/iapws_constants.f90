@@ -6,6 +6,9 @@ module iapws_constants
     use iso_fortran_env
     implicit none
 
+!> Absolute temperature in KELVIN 
+real(real64), parameter ::  T_KELVIN = 273.15d0 
+
 !! Molar masses from the NIST website 
 real(real64), parameter :: M_H = 1.008d0 
 real(real64), parameter :: M_D = 2.014d0

@@ -9,20 +9,17 @@ module iapws_G7_04
     implicit none
     private
 
-
 !! Parameters from IAPWS G7-04 
-!> Absolute temperature in KELVIN 
-real(real64), parameter ::  T_KELVIN = 273.15d0 
 !> critical temperature of water in K
-real(real64), parameter ::  Tc1_water = 647.096d0 
+real(real64), parameter ::  iapws_G7_04_Tc1_water = 647.096d0 
 !> critical pressure of the water in K
-real(real64), parameter ::  pc1_water = 22.064d0 
+real(real64), parameter ::  iapws_G7_04_pc1_water = 22.064d0 
 !> critical temperature of heavy water MPa 
-real(real64), parameter ::  Tc1_heavywater = 643.847d0 
+real(real64), parameter ::  iapws_G7_04_Tc1_heavywater = 643.847d0 
 !> critical pressure of heavywater MPa 
-real(real64), parameter ::  pc1_heavywater = 21.671d0 
+real(real64), parameter ::  iapws_G7_04_pc1_heavywater = 21.671d0 
 
-type :: abc
+type :: iapws_G7_04_t_abc
     character(len=5) :: gas
     real(real64) :: A
     real(real64) :: B
@@ -33,103 +30,87 @@ type :: abc
 end type
 
 !> ai and bi coefficients for water
-real(real64), dimension(6, 2), parameter :: aibi_water = reshape([&
+real(real64), dimension(6, 2), parameter :: iapws_G7_04_aibi_water = reshape([&
 -7.85951783d0, 1.84408259d0, -11.78664970d0, 22.68074110d0, -15.96187190d0, 1.80122502d0,&
 1.000d0, 1.500d0, 3.000d0, 3.500d0, 4.000d0, 7.500d0], [6,2])
 
 !> ai and bi coefficients for heavywater
-real(real64), dimension(5, 2), parameter :: aibi_heavywater = reshape([&
+real(real64), dimension(5, 2), parameter :: iapws_G7_04_aibi_heavywater = reshape([&
 -7.8966570d0, 24.7330800d0, -27.8112800d0,  9.3559130d0, -9.2200830d0, &
 1.00d0, 1.89d0, 2.00d0, 3.00d0, 3.60d0], [5, 2])
 
 !> ABC constants water.
-type(abc), dimension(14), parameter :: abc_water = &
-    [abc("He", -3.52839d0, 7.12983d0, 4.47770d0, 273.21d0, 553.18d0, M_He),&
-     abc("Ne", -3.18301d0, 5.31448d0, 5.43774d0, 273.20d0, 543.36d0, M_Ne),&
-     abc("Ar", -8.40954d0, 4.29587d0, 10.52779d0, 273.19d0, 568.36d0, M_Ar),&
-     abc("Kr", -8.97358d0, 3.61508d0, 11.29963d0, 273.19d0, 525.56d0, M_Kr),&
-     abc("Xe", -14.21635d0, 4.00041d0, 15.60999d0, 273.22d0, 574.85d0, M_Xe),&
-     abc("H2", -4.73284d0, 6.08954d0, 6.06066d0, 273.15d0, 636.09d0, M_H2),&
-     abc("N2", -9.67578d0, 4.72162d0, 11.70585d0, 278.12d0, 636.46d0, M_N2),&
-     abc("O2", -9.44833d0, 4.43822d0, 11.42005d0, 274.15d0, 616.52d0, M_O2),&
-     abc("CO", -10.52862d0, 5.13259d0, 12.01421d0, 278.15d0, 588.67d0, M_CO),&
-     abc("CO2", -8.55445d0, 4.01195d0, 9.52345d0, 274.19d0, 642.66d0, M_CO2),&
-     abc("H2S", -4.51499d0, 5.23538d0, 4.42126d0, 273.15d0, 533.09d0, M_H2S),&
-     abc("CH4", -10.44708d0, 4.66491d0, 12.12986d0, 275.46d0, 633.11d0, M_CH4),&
-     abc("C2H6", -19.67563d0, 4.51222d0, 20.62567d0, 275.44d0, 473.46d0, M_C2H6),&
-     abc("SF6", -16.56118d0, 2.15289d0, 20.35440d0, 283.14d0, 505.55d0, M_SF6)]
+type(iapws_G7_04_t_abc), dimension(14), parameter :: iapws_G7_04_abc_water = &
+    [iapws_G7_04_t_abc("He", -3.52839d0, 7.12983d0, 4.47770d0, 273.21d0, 553.18d0, M_He),&
+     iapws_G7_04_t_abc("Ne", -3.18301d0, 5.31448d0, 5.43774d0, 273.20d0, 543.36d0, M_Ne),&
+     iapws_G7_04_t_abc("Ar", -8.40954d0, 4.29587d0, 10.52779d0, 273.19d0, 568.36d0, M_Ar),&
+     iapws_G7_04_t_abc("Kr", -8.97358d0, 3.61508d0, 11.29963d0, 273.19d0, 525.56d0, M_Kr),&
+     iapws_G7_04_t_abc("Xe", -14.21635d0, 4.00041d0, 15.60999d0, 273.22d0, 574.85d0, M_Xe),&
+     iapws_G7_04_t_abc("H2", -4.73284d0, 6.08954d0, 6.06066d0, 273.15d0, 636.09d0, M_H2),&
+     iapws_G7_04_t_abc("N2", -9.67578d0, 4.72162d0, 11.70585d0, 278.12d0, 636.46d0, M_N2),&
+     iapws_G7_04_t_abc("O2", -9.44833d0, 4.43822d0, 11.42005d0, 274.15d0, 616.52d0, M_O2),&
+     iapws_G7_04_t_abc("CO", -10.52862d0, 5.13259d0, 12.01421d0, 278.15d0, 588.67d0, M_CO),&
+     iapws_G7_04_t_abc("CO2", -8.55445d0, 4.01195d0, 9.52345d0, 274.19d0, 642.66d0, M_CO2),&
+     iapws_G7_04_t_abc("H2S", -4.51499d0, 5.23538d0, 4.42126d0, 273.15d0, 533.09d0, M_H2S),&
+     iapws_G7_04_t_abc("CH4", -10.44708d0, 4.66491d0, 12.12986d0, 275.46d0, 633.11d0, M_CH4),&
+     iapws_G7_04_t_abc("C2H6", -19.67563d0, 4.51222d0, 20.62567d0, 275.44d0, 473.46d0, M_C2H6),&
+     iapws_G7_04_t_abc("SF6", -16.56118d0, 2.15289d0, 20.35440d0, 283.14d0, 505.55d0, M_SF6)]
 
 !> ABC constants for heavywater
-type(abc), dimension(7), parameter :: abc_heavywater = &
-    [abc("He", -0.72643d0, 7.02134d0, 2.04433d0, 288.15d0, 553.18d0, M_He),&
-     abc("Ne", -0.91999d0, 5.65327d0, 3.17247d0, 288.18d0, 549.96d0, M_Ne),&
-     abc("Ar", -7.17725d0, 4.48177d0, 9.31509d0, 288.30d0, 583.76d0, M_Ar),&
-     abc("Kr", -8.47059d0, 3.91580d0, 10.69433d0, 288.19d0, 523.06d0, M_Kr),&
-     abc("Xe", -14.46485d0, 4.42330d0, 15.60919d0, 295.39d0, 574.85d0, M_Xe),&
-     abc("D2", -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0, M_D2),&
-     abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0, M_CH4)]
+type(iapws_G7_04_t_abc), dimension(7), parameter :: iapws_G7_04_abc_heavywater = &
+    [iapws_G7_04_t_abc("He", -0.72643d0, 7.02134d0, 2.04433d0, 288.15d0, 553.18d0, M_He),&
+     iapws_G7_04_t_abc("Ne", -0.91999d0, 5.65327d0, 3.17247d0, 288.18d0, 549.96d0, M_Ne),&
+     iapws_G7_04_t_abc("Ar", -7.17725d0, 4.48177d0, 9.31509d0, 288.30d0, 583.76d0, M_Ar),&
+     iapws_G7_04_t_abc("Kr", -8.47059d0, 3.91580d0, 10.69433d0, 288.19d0, 523.06d0, M_Kr),&
+     iapws_G7_04_t_abc("Xe", -14.46485d0, 4.42330d0, 15.60919d0, 295.39d0, 574.85d0, M_Xe),&
+     iapws_G7_04_t_abc("D2", -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0, M_D2),&
+     iapws_G7_04_t_abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0, M_CH4)]
 
-public :: Tc1_water, Tc1_heavywater, pc1_water, pc1_heavywater
-public :: aibi_water, aibi_heavywater, abc_water, abc_heavywater
-public :: iapws_G7_04_henry_constant
+public :: iapws_G7_04_Tc1_water, iapws_G7_04_Tc1_heavywater, iapws_G7_04_pc1_water, iapws_G7_04_pc1_heavywater
+public :: iapws_G7_04_aibi_water, iapws_G7_04_aibi_heavywater, iapws_G7_04_abc_water, iapws_G7_04_abc_heavywater
+public :: iapws_G7_04_kh
 
 contains
 
 !> @brief Compute the henry constant of a given gas.
-!! @param ix Gas index for which the computation has to be performed.
-!! @param T_K Temperature in K.
-!! @param Tc1 Critical temperature.
-!! @param pc1 Critical pressure.
-!! @param ni Number of indexes for ai and bi coefficients.
-!! @param ai ai coefficients.
-!! @param bi bi coefficients.
-!! @param abc abc table.
+!! @param[in] ix Gas index for which the computation has to be performed.
+!! @param[in] T_K Temperature in K.
+!! @param[in] Tc1 Critical temperature.
+!! @param[in] pc1 Critical pressure.
+!! @param[in] gas_abc abc parameters of gas
+!! @param[in] aibi ai and bi coefficients of a solvent.
 !! @return kH Henry constant in mole fraction per GPa.
-pure function iapws_G7_04_henry_constant(gas, solvent) result(kh)
-    implicit none
-    character(len=*), intent(in) :: gas
-    character(len=*), intent(in) :: solvent
-
-    integer(int32) :: ix
-    real(real64) :: T_K
-    real(real64) :: Tc1
-    real(real64) :: pc1
-    integer(int32) :: ni
-    real(real64), dimension(:,:) :: aibi
-    real(real64), dimension(:,:) :: abc
+pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
+    !! arguments 
+    real(real64), intent(in) :: T_K
+    real(real64), intent(in) :: Tc1
+    real(real64), intent(in) :: pc1
+    type(iapws_G7_04_t_abc), intent(in) :: gas_abc
+    real(real64), intent(in), dimension(:,:) :: aibi
+    !! returns
+    real(real64) :: kh
     
+    !! local variables
     real(real64) :: Tr
     real(real64) :: tau
     real(real64) :: ln_kH_pstar
     real(real64) :: res
     real(real64) :: ln_pstar_pcl
     real(real64) :: pstar
-    real(real64) :: kh
-    integer(int32) :: i
-
-    abc = abc_water
-    aibi = aibi_water
-    Tc1 = Tc1_water
-    pc1 = pc1_water
-    if (trim(solvent) .eq. "D2O")then
-        abc = abc_heavywater
-        aibi = aibi_heavywater
-        Tc1 = Tc1_heavywater
-        pc1 = pc1_heavywater
-    endif 
     
     Tr = T_K/Tc1
     tau  = 1-Tr
-    ln_kH_pstar = abc(ix, A)/Tr + abc(ix, B)*(tau**0.355)/Tr + abc(ix,C)*exp(tau)*Tr**(-0.41)
+    ln_kH_pstar = gas_abc%A/Tr + gas_abc%B*(tau**0.355)/Tr + gas_abc%C*exp(tau)*Tr**(-0.41)
     
-    res = 0.0;
-    do i=1, shape(aibi, dim=1)
-        res = res + ai(i)*tau**bi(i)
-    enddo
+    res = 0.0
+    res = sum(aibi(:,1) * tau**(aibi(:,2)))
 
     ln_pstar_pcl = 1/Tr * res
     pstar = exp(ln_pstar_pcl)*pc1 !! MPa
     kH = exp(ln_kH_pstar)*pstar/1000.0
 end function
+
+
+
 
 end module
