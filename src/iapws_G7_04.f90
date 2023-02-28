@@ -4,7 +4,6 @@
 !> @brief Parameters for IAPWS G7-04
 module iapws_G7_04
     use iso_fortran_env
-    use ieee_arithmetic, only : ieee_value, ieee_quiet_nan
     use iapws_constants
     implicit none
     private
@@ -68,6 +67,7 @@ type(iapws_G7_04_t_abc), dimension(7), parameter :: iapws_G7_04_abc_heavywater =
 
 public :: iapws_G7_04_Tc1_water, iapws_G7_04_Tc1_heavywater, iapws_G7_04_pc1_water, iapws_G7_04_pc1_heavywater
 public :: iapws_G7_04_aibi_water, iapws_G7_04_aibi_heavywater, iapws_G7_04_abc_water, iapws_G7_04_abc_heavywater
+public :: iapws_G7_04_t_abc
 public :: iapws_G7_04_kh
 
 contains

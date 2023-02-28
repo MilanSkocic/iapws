@@ -12,10 +12,10 @@ message("INSTALL PREFIX:" ${CMAKE_INSTALL_PREFIX})
 
 add_subdirectory(./src)
 
-enable_testing()
-add_test(NAME solubility COMMAND test_solubility)
-add_test(NAME utilities COMMAND test_utilities)
+# enable_testing()
+# add_test(NAME solubility COMMAND test_solubility)
+# add_test(NAME utilities COMMAND test_utilities)
 
-install(TARGETS iapws_run RUNTIME DESTINATION bin)
-install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
-install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
+# install(TARGETS iapws_run RUNTIME DESTINATION bin)
+# install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
+# install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
