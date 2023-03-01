@@ -4,6 +4,7 @@
 !> @brief Parameters for IAPWS G7-04
 module iapws_G7_04
     use iso_fortran_env
+    use ieee_arithmetic
     use iapws_constants
     implicit none
     private
@@ -65,10 +66,7 @@ type(iapws_G7_04_t_abc), dimension(7), parameter :: iapws_G7_04_abc_heavywater =
      iapws_G7_04_t_abc("D2", -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0, M_D2),&
      iapws_G7_04_t_abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0, M_CH4)]
 
-public :: iapws_G7_04_Tc1_water, iapws_G7_04_Tc1_heavywater, iapws_G7_04_pc1_water, iapws_G7_04_pc1_heavywater
-public :: iapws_G7_04_aibi_water, iapws_G7_04_aibi_heavywater, iapws_G7_04_abc_water, iapws_G7_04_abc_heavywater
-public :: iapws_G7_04_t_abc
-public :: iapws_G7_04_kh
+public :: iapws_kh_water, iapws_kh_heavywater 
 
 contains
 
@@ -110,6 +108,91 @@ pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
     kH = exp(ln_kH_pstar)*pstar/1000.0
 end function
 
+!> @brief Compute the henry constante for a given temperature and gas in water.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @param[out] kh Henry constante in mole fraction per GPa. NaN if status > 0.
+!! @param[out] status 0: no error, 1: gas not found, 2: T out of bounds.
+pure subroutine iapws_kh_water(T, gas, kh, status)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    real(real64), intent(out) :: kh
+    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found, 2: T out of bounds
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+    type(iapws_G7_04_t_abc) :: gas_abc
+
+    T_K = T + T_KELVIN
+    status = 0
+
+    do i=1, size(iapws_G7_04_abc_water)
+        if(trim(gas) .eq. iapws_G7_04_abc_water(i)%gas)then
+            gas_abc = iapws_G7_04_abc_water(i)
+            if((T_K < gas_abc%Tmin) .or. (T_K > gas_abc%Tmax))then
+                status = 2
+            endif
+            exit
+        else
+            status = 1
+        endif
+    end do
+
+
+    if(status > 0)then
+        kh = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        kh = iapws_G7_04_kh(T_K, iapws_G7_04_Tc1_water, iapws_G7_04_pc1_water, gas_abc, iapws_G7_04_aibi_water)
+    endif
+end subroutine
+
+!> @brief Compute the henry constante for a given temperature and gas in heavywater.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @param[out] kh Henry constante in mole fraction per GPa. NaN if status > 0.
+!! @param[out] status 0: no error, 1: gas not found, 2: T out of bounds.
+pure subroutine iapws_kh_heavywater(T, gas, kh, status)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    real(real64), intent(out) :: kh
+    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found, 2: T out of bounds
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+    type(iapws_G7_04_t_abc) :: gas_abc
+
+    T_K = T + T_KELVIN
+    status = 0
+
+    do i=1, size(iapws_G7_04_abc_water)
+        if(trim(gas) .eq. iapws_G7_04_abc_heavywater(i)%gas)then
+            gas_abc = iapws_G7_04_abc_heavywater(i)
+            if((T_K < gas_abc%Tmin) .or. (T_K > gas_abc%Tmax))then
+                status = 2
+            endif
+            exit
+        else
+            status = 1
+        endif
+    end do
+
+    if(status > 0)then
+        kh = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        kh = iapws_G7_04_kh(T_K, iapws_G7_04_Tc1_heavywater, &
+                                 iapws_G7_04_pc1_heavywater, &
+                                 gas_abc, &
+                                 iapws_G7_04_aibi_heavywater)
+    endif
+end subroutine
 
 
 
