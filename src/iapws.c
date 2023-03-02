@@ -59,10 +59,10 @@
 
 #define abc_ncols 5 /**<Number of columns in ABC table */
 
-static const char *available_gases_water[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
+static const char *gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
 static const double M_gases_water[14] = {M_He, M_Ne, M_Ar, M_Kr, M_Xe, M_H2, M_N2, M_O2, M_CO, M_CO2, M_H2S, M_CH4, M_C2H6, M_SF6}; /**< Gases for heavywater */
 
-static const char *available_gases_heavywater[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
+static const char *gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
 static const double M_gases_heavywater[7] = {M_He, M_Ne, M_Ar, M_Kr, M_Xe, M_D2, M_CH4};
 
 
@@ -112,7 +112,7 @@ static const double *M_gases = M_gases_water;
 static int ni = ni_water;
 static int ngas = ngas_water;
 static char solvent[] = "H2O";
-static const char **list_gas = available_gases_water;
+static const char **list_gas = gases;
 
 
 /** @brief Compute the solubility constants for 14 gases in water and 7 gases in heavy water.
@@ -150,7 +150,7 @@ void solubility(char *gas, double T_C, int heavywater, char *solubility_unit, do
         bi = bi_heavy_water;
         ni = ni_heavywater;
         ngas = ngas_heavywater;
-        list_gas = available_gases_heavywater;
+        list_gas = gases;
         strcpy(solvent, "D2O");
         M_gases = M_gases_heavywater;
     }
@@ -310,7 +310,7 @@ void print_coefficients(char *gas, int heavywater){
         bi = bi_heavy_water;
         ni = ni_heavywater;
         ngas = ngas_heavywater;
-        list_gas = available_gases_heavywater;
+        list_gas = gases;
         strcpy(solvent, "D2O");
         M_gases = M_gases_heavywater;
     }
@@ -375,7 +375,7 @@ int test_water()
     printf("\n");
     for (i=0; i<ngas_water; i++)
     {
-        printf("%4s\t", available_gases_water[i]);
+        printf("%4s\t", gases[i]);
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_water, pc1_water, ni_water, ai_water, bi_water, abc_water[0]);
@@ -419,7 +419,7 @@ int test_heavywater()
     printf("\n");
     for (i=0; i<ngas_heavywater; i++)
     {
-        printf("%4s\t", available_gases_water[i]);
+        printf("%4s\t", gases[i]);
         for(j=0; j<cols; j++)
         {
             kH = henry_constant(i, T[j], Tc1_heavywater, pc1_heavywater, ni_heavywater, ai_heavy_water, bi_heavy_water, abc_heavywater[0]);

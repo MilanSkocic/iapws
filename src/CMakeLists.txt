@@ -1,4 +1,3 @@
-# Library
 set(IAPWS_PUBLIC_HEADERS "${CMAKE_BINARY_DIR}/src/iapws.mod" "${CMAKE_SOURCE_DIR}/src/iapws.h")
 set(IAPWS_SOURCES "iapws_constants.f90" "iapws_G7_04.f90" "iapws.f90" "iapws_capi.f90")
 

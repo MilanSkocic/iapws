@@ -128,17 +128,15 @@ pure subroutine iapws_kh_water(T, gas, kh, status)
     type(iapws_G7_04_t_abc) :: gas_abc
 
     T_K = T + T_KELVIN
-    status = 0
+    status = 1
 
     do i=1, size(iapws_G7_04_abc_water)
         if(trim(gas) .eq. iapws_G7_04_abc_water(i)%gas)then
             gas_abc = iapws_G7_04_abc_water(i)
+            status = 0
             exit
-        else
-            status = 1
         endif
     end do
-
 
     if(status > 0)then
         kh = ieee_value(1.0d0, ieee_quiet_nan)
@@ -167,14 +165,13 @@ pure subroutine iapws_kh_heavywater(T, gas, kh, status)
     type(iapws_G7_04_t_abc) :: gas_abc
 
     T_K = T + T_KELVIN
-    status = 0
+    status = 1
 
     do i=1, size(iapws_G7_04_abc_water)
         if(trim(gas) .eq. iapws_G7_04_abc_heavywater(i)%gas)then
             gas_abc = iapws_G7_04_abc_heavywater(i)
+            status = 0
             exit
-        else
-            status = 1
         endif
     end do
 

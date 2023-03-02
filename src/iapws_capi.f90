@@ -38,7 +38,7 @@ subroutine iapws_capi_kh(T, gas, solvent, kh, status, size_gas, size_solvent)bin
     integer(int32) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
-    call c_f_pointer(gas, c2f_solvent, shape=[size_solvent])
+    call c_f_pointer(solvent, c2f_solvent, shape=[size_solvent])
 
     do i=1, size_gas
         f_gas(i:i) = c2f_gas(i)
