@@ -76,6 +76,7 @@ message("Fortran Compiler ID = " ${CMAKE_Fortran_COMPILER_ID})
 
 add_subdirectory(./src)
 add_subdirectory(./tests)
+add_subdirectory(./examples)
 
 enable_testing()
 add_test(NAME test_water COMMAND test_water)

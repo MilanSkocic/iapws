@@ -1,5 +1,6 @@
 !> @file
 !! Main module for IAPWS
+!! @example example_in_f.f90
 
 !> @brief Main module for IAPWS computations
 module iapws
