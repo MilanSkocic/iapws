@@ -67,9 +67,34 @@ type(iapws_G7_04_t_abc), dimension(7), parameter :: iapws_G7_04_abc_heavywater =
      iapws_G7_04_t_abc("D2", -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0, M_D2, M_heavywater),&
      iapws_G7_04_t_abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0, M_CH4, M_heavywater)]
 
-public :: iapws_kh_water, iapws_kh_heavywater 
+public :: iapws_G7_04_kh_water, iapws_G7_04_kh_heavywater 
+public :: iapws_G7_04_Scm3_water, iapws_G7_04_Scm3_heavywater
+public :: iapws_G7_04_Sppm_water, iapws_G7_04_Sppm_heavywater
 
 contains
+
+!> @brief Find the index of the gas in the ABC table.
+!! @param[in] gas Gas.
+!! @param[in] abc ABC table.
+pure function iapws_G7_04_findgas(gas, abc)result(index)
+    implicit none
+    !! arguments
+    character(len=*), intent(in) :: gas
+    type(iapws_G7_04_t_abc), dimension(:), intent(in) :: abc
+    !! returns
+    integer(int32) :: index
+    !! local variables
+    integer(int32) :: i
+
+    index = 0
+
+    do i=1, size(abc)
+        if(trim(gas) .eq. abc(i)%gas)then
+            index = i
+            exit
+        endif
+    end do
+end function
 
 !> @brief Compute the henry constant of a given gas.
 !! @param[in] ix Gas index for which the computation has to be performed.
@@ -110,7 +135,7 @@ pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
     kH = exp(ln_kH_pstar)*pstar/1000.0
 end function
 
-!> @brief Compute the solubility constant of a given gas.
+!> @brief Compute the solubility of a given gas.
 !! @param[in] ix Gas index for which the computation has to be performed.
 !! @param[in] T_K Temperature in K.
 !! @param[in] Tc1 Critical temperature.
@@ -118,7 +143,7 @@ end function
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
 !! @return Scm3 Solubility constant in cm3.kg-1.bar-1.
-pure function iapws_G7_04_Scm3(T_K, Tc1, pc1, gas_abc, aibi) result(Scm3)
+pure function iapws_G7_04_scm3(T_K, Tc1, pc1, gas_abc, aibi) result(Scm3)
     implicit none
     !! arguments 
     real(real64), intent(in) :: T_K
@@ -137,15 +162,15 @@ pure function iapws_G7_04_Scm3(T_K, Tc1, pc1, gas_abc, aibi) result(Scm3)
 
 end function
 
-!> @brief Compute the solubility constant of a given gas.
+!> @brief Compute the solubility of a given gas.
 !! @param[in] ix Gas index for which the computation has to be performed.
 !! @param[in] T_K Temperature in K.
 !! @param[in] Tc1 Critical temperature.
 !! @param[in] pc1 Critical pressure.
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
-!! @return Scm3 Solubility constant in ppm.
-pure function iapws_G7_04_Sppm(T_K, Tc1, pc1, gas_abc, aibi) result(Sppm)
+!! @return Sppm Solubility constant in ppm.
+pure function iapws_G7_04_sppm(T_K, Tc1, pc1, gas_abc, aibi) result(Sppm)
     implicit none
     !! arguments 
     real(real64), intent(in) :: T_K
@@ -167,80 +192,187 @@ end function
 !> @brief Compute the henry constante for a given temperature and gas in water.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @param[out] kh Henry constante in mole fraction per GPa. NaN if status > 0.
-!! @param[out] status 0: no error, 1: gas not found, 2: T out of bounds.
-pure subroutine iapws_kh_water(T, gas, kh, status)
+!! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
+pure function iapws_G7_04_kh_water(T, gas)result(kh)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
-    real(real64), intent(out) :: kh
-    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found, 2: T out of bounds
+    !! returns
+    real(real64) :: kh
 
     !! local variables
     real(real64) :: T_K
     integer(int32) :: i
-    type(iapws_G7_04_t_abc) :: gas_abc
 
     T_K = T + T_KELVIN
-    status = 1
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
 
-    do i=1, size(iapws_G7_04_abc_water)
-        if(trim(gas) .eq. iapws_G7_04_abc_water(i)%gas)then
-            gas_abc = iapws_G7_04_abc_water(i)
-            status = 0
-            exit
-        endif
-    end do
-
-    if(status > 0)then
+    if(i==0)then
         kh = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        kh = iapws_G7_04_kh(T_K, iapws_G7_04_Tc1_water, iapws_G7_04_pc1_water, gas_abc, iapws_G7_04_aibi_water)
+        kh = iapws_G7_04_kh(T_K, &
+                            iapws_G7_04_Tc1_water, &
+                            iapws_G7_04_pc1_water, &
+                            iapws_G7_04_abc_water(i), &
+                            iapws_G7_04_aibi_water)
     endif
-end subroutine
+end function
 
 !> @brief Compute the henry constante for a given temperature and gas in heavywater.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @param[out] kh Henry constante in mole fraction per GPa. NaN if status > 0.
-!! @param[out] status 0: no error, 1: gas not found
-pure subroutine iapws_kh_heavywater(T, gas, kh, status)
+!! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
+pure function iapws_G7_04_kh_heavywater(T, gas)result(kh)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
-    real(real64), intent(out) :: kh
-    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found
+    !! returns
+    real(real64) :: kh
 
     !! local variables
     real(real64) :: T_K
     integer(int32) :: i
-    type(iapws_G7_04_t_abc) :: gas_abc
 
     T_K = T + T_KELVIN
-    status = 1
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
 
-    do i=1, size(iapws_G7_04_abc_water)
-        if(trim(gas) .eq. iapws_G7_04_abc_heavywater(i)%gas)then
-            gas_abc = iapws_G7_04_abc_heavywater(i)
-            status = 0
-            exit
-        endif
-    end do
-
-    if(status > 0)then
+    if(i==0)then
         kh = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        kh = iapws_G7_04_kh(T_K, iapws_G7_04_Tc1_heavywater, &
-                                 iapws_G7_04_pc1_heavywater, &
-                                 gas_abc, &
-                                 iapws_G7_04_aibi_heavywater)
+        kh = iapws_G7_04_kh(T_K, &
+                            iapws_G7_04_Tc1_heavywater, &
+                            iapws_G7_04_pc1_heavywater, &
+                            iapws_G7_04_abc_heavywater(i), &
+                            iapws_G7_04_aibi_heavywater)
     endif
-end subroutine
+end function
 
+!> @brief Compute the solubility for a given temperature and gas in water.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return Scm3 Solubility constant in cm3.kg-1.bar-1. NaN if gas not found.
+pure function iapws_G7_04_scm3_water(T, gas)result(Scm3)
+    implicit none
 
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: Scm3
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
+
+    if(i==0)then
+        Scm3 = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        Scm3 = iapws_G7_04_Scm3(T_K, &
+                            iapws_G7_04_Tc1_water, &
+                            iapws_G7_04_pc1_water, &
+                            iapws_G7_04_abc_water(i), &
+                            iapws_G7_04_aibi_water)
+    endif
+end function
+
+!> @brief Compute the solubility for a given temperature and gas in heavywater.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return Scm3 Solubility constant in cm3.kg-1.bar-1. NaN if gas not found.
+pure function iapws_G7_04_scm3_heavywater(T, gas)result(Scm3)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: Scm3
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
+
+    if(i==0)then
+        Scm3 = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        Scm3 = iapws_G7_04_Scm3(T_K, &
+                            iapws_G7_04_Tc1_heavywater, &
+                            iapws_G7_04_pc1_heavywater, &
+                            iapws_G7_04_abc_heavywater(i), &
+                            iapws_G7_04_aibi_heavywater)
+    endif
+end function
+
+!> @brief Compute the solubility for a given temperature and gas in water.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return Sppm Solubility constant in ppm. NaN if gas not found.
+pure function iapws_G7_04_sppm_water(T, gas)result(Sppm)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: Sppm
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
+
+    if(i==0)then
+        Sppm = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        Sppm = iapws_G7_04_Sppm(T_K, &
+                            iapws_G7_04_Tc1_water, &
+                            iapws_G7_04_pc1_water, &
+                            iapws_G7_04_abc_water(i), &
+                            iapws_G7_04_aibi_water)
+    endif
+end function
+
+!> @brief Compute the solubility for a given temperature and gas in heavywater.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return Sppm Solubility constant in ppm. NaN if gas not found.
+pure function iapws_G7_04_sppm_heavywater(T, gas)result(Sppm)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: Sppm
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
+
+    if(i==0)then
+        Sppm = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        Sppm = iapws_G7_04_Sppm(T_K, &
+                            iapws_G7_04_Tc1_heavywater, &
+                            iapws_G7_04_pc1_heavywater, &
+                            iapws_G7_04_abc_heavywater(i), &
+                            iapws_G7_04_aibi_heavywater)
+    endif
+end function
 
 end module
