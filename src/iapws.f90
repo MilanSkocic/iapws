@@ -31,7 +31,7 @@ pure subroutine iapws_kh(T, gas, solvent, kh, status)
     real(real64), intent(out) :: kh
     integer(int32), intent(out) :: status !! 0: no error, 1: gas not found, 2: T out of bounds
 
-    if(trim(solvent) .eq. "D20")then
+    if(trim(solvent) .eq. "D2O")then
         call iapws_kh_heavywater(T, gas, kh, status)
     else
         call iapws_kh_water(T, gas, kh, status)

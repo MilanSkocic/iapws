@@ -133,9 +133,6 @@ pure subroutine iapws_kh_water(T, gas, kh, status)
     do i=1, size(iapws_G7_04_abc_water)
         if(trim(gas) .eq. iapws_G7_04_abc_water(i)%gas)then
             gas_abc = iapws_G7_04_abc_water(i)
-            if((T_K < gas_abc%Tmin) .or. (T_K > gas_abc%Tmax))then
-                status = 2
-            endif
             exit
         else
             status = 1
@@ -154,7 +151,7 @@ end subroutine
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @param[out] kh Henry constante in mole fraction per GPa. NaN if status > 0.
-!! @param[out] status 0: no error, 1: gas not found, 2: T out of bounds.
+!! @param[out] status 0: no error, 1: gas not found
 pure subroutine iapws_kh_heavywater(T, gas, kh, status)
     implicit none
 
@@ -162,7 +159,7 @@ pure subroutine iapws_kh_heavywater(T, gas, kh, status)
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     real(real64), intent(out) :: kh
-    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found, 2: T out of bounds
+    integer(int32), intent(out) :: status !! 0: no error, 1: gas not found
 
     !! local variables
     real(real64) :: T_K
@@ -175,9 +172,6 @@ pure subroutine iapws_kh_heavywater(T, gas, kh, status)
     do i=1, size(iapws_G7_04_abc_water)
         if(trim(gas) .eq. iapws_G7_04_abc_heavywater(i)%gas)then
             gas_abc = iapws_G7_04_abc_heavywater(i)
-            if((T_K < gas_abc%Tmin) .or. (T_K > gas_abc%Tmax))then
-                status = 2
-            endif
             exit
         else
             status = 1
