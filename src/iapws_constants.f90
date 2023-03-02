@@ -37,6 +37,6 @@ real(real64), parameter :: M_D2 = (2*M_D)
 real(real64), parameter :: M_water = (M_H*2+M_O) 
 real(real64), parameter :: M_heavywater = (M_D*2+M_O)
 !> Molar volume of ideal gas (273.15 K, 100 kPa) in cm3/mol 
-real(real64), parameter ::  Vm_1b = 22710.95464d0 
+real(real64), parameter ::  Vm = 22710.95464d0 
 
 end module
