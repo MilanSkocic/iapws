@@ -41,7 +41,8 @@ int main(int argc, char **argv){
 
     double T_C;
     double kh = 0.0;
-    int status = 0;
+    double Scm3 = 0.0;
+    double Sppm = 0.0;
     char solvent[] = "D2O";
     double diff;
     int i, j;
@@ -60,8 +61,7 @@ int main(int argc, char **argv){
         printf("%5s\t", gases[j]);
         for(i=0;i<4;i++){
             T_C = T_K[i] - 273.15;
-            iapws_capi_kh(T_C, gases[j], solvent, &kh, &status, 
-                        strlen(gases[j]), strlen(solvent));
+            kh = iapws_capi_kh(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
             diff = roundn(log(kh) - ref_kh[j][i], 4);
             printf("%+7.4f/%+7.4f/%+7.4f\t", log(kh), ref_kh[j][i], log(kh) - ref_kh[j][i]);
             if(diff != 0.0){
@@ -70,6 +70,31 @@ int main(int argc, char **argv){
         }
         printf("\n");
     }
+    printf("*****  S in cm3.kg-1.bar-1 *****\n");
+    for(j=0; j<ngas; j++){
+        printf("%5s\t", gases[j]);
+        for(i=0;i<4;i++){
+            T_C = T_K[i] - 273.15;
+            Scm3 = iapws_capi_scm3(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
+            printf("%+23.4f\t", Scm3);
+            if(diff != 0.0){
+                return 1;
+            }
+        }
+        printf("\n");
+    }
+    printf("*****  S in ppm.bar-1 *****\n");
+    for(j=0; j<ngas; j++){
+        printf("%5s\t", gases[j]);
+        for(i=0;i<4;i++){
+            T_C = T_K[i] - 273.15;
+            Sppm = iapws_capi_sppm(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
+            printf("%+23.4f\t", Sppm);
+            if(diff != 0.0){
+                return 1;
+            }
+        }
     printf("\n");
+    }
     return 0;
 }
