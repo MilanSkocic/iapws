@@ -8,7 +8,7 @@ The static and shared libraries can be installed in order to be included in Fort
 The compilation was tested on Linux (Debian), MacOS, Windows (MSYS2).
 
 The sources are available are available on [github](https://github.com/MilanSkocic/iapws).
-The online documentation is available [here](https://milanskocic.github.io/ipaws/index.html).
+The online documentation is available [here](https://milanskocic.github.io/iapws/index.html).
 
 NB: The library was originaly written in C and is currently being rewritten in Fortran. A simple command line app was written in C and will remain in C.
 
