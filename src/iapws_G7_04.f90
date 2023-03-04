@@ -109,21 +109,21 @@ contains
 !> @brief Find the index of the gas in the ABC table.
 !! @param[in] gas Gas.
 !! @param[in] abc ABC table.
-pure function iapws_G7_04_findgas(gas, abc)result(index)
+pure function iapws_G7_04_findgas(gas, abc)result(value)
     implicit none
     !! arguments
     character(len=*), intent(in) :: gas
     type(iapws_G7_04_t_abc), dimension(:), intent(in) :: abc
     !! returns
-    integer(int32) :: index
+    integer(int32) :: value
     !! local variables
     integer(int32) :: i
 
-    index = 0
+    value = 0
 
     do i=1, size(abc)
         if(trim(gas) .eq. abc(i)%gas)then
-            index = i
+            value = i
             exit
         endif
     end do
@@ -137,7 +137,7 @@ end function
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
 !! @return kH Henry constant in mole fraction per GPa.
-pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
+pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(value)
     implicit none
     !! arguments 
     real(real64), intent(in) :: T_K
@@ -146,7 +146,7 @@ pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
     type(iapws_G7_04_t_abc), intent(in) :: gas_abc
     real(real64), intent(in), dimension(:,:) :: aibi
     !! returns
-    real(real64) :: kh
+    real(real64) :: value
     
     !! local variables
     real(real64) :: Tr
@@ -165,7 +165,7 @@ pure function iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi) result(kh)
 
     ln_pstar_pcl = 1/Tr * res
     pstar = exp(ln_pstar_pcl)*pc1 !! MPa
-    kH = exp(ln_kH_pstar)*pstar/1000.0
+    value = exp(ln_kH_pstar)*pstar/1000.0
 end function
 
 !> @brief Compute the solubility of a given gas.
@@ -176,7 +176,7 @@ end function
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
 !! @return Scm3 Solubility constant in cm3.kg-1.bar-1.
-pure function iapws_G7_04_scm3(T_K, Tc1, pc1, gas_abc, aibi) result(Scm3)
+pure function iapws_G7_04_scm3(T_K, Tc1, pc1, gas_abc, aibi) result(value)
     implicit none
     !! arguments 
     real(real64), intent(in) :: T_K
@@ -185,13 +185,13 @@ pure function iapws_G7_04_scm3(T_K, Tc1, pc1, gas_abc, aibi) result(Scm3)
     type(iapws_G7_04_t_abc), intent(in) :: gas_abc
     real(real64), intent(in), dimension(:,:) :: aibi
     !! returns
-    real(real64) :: Scm3
+    real(real64) :: value
 
     !! local variables
     real(real64):: kh
 
     kh = iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi)
-    Scm3 = (1/(kh*1.0d4)) * Vm / (gas_abc%Ms*1.0d-3)
+    value = (1/(kh*1.0d4)) * Vm / (gas_abc%Ms*1.0d-3)
 
 end function
 
@@ -203,7 +203,7 @@ end function
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
 !! @return Sppm Solubility constant in ppm.
-pure function iapws_G7_04_sppm(T_K, Tc1, pc1, gas_abc, aibi) result(Sppm)
+pure function iapws_G7_04_sppm(T_K, Tc1, pc1, gas_abc, aibi) result(value)
     implicit none
     !! arguments 
     real(real64), intent(in) :: T_K
@@ -212,13 +212,13 @@ pure function iapws_G7_04_sppm(T_K, Tc1, pc1, gas_abc, aibi) result(Sppm)
     type(iapws_G7_04_t_abc), intent(in) :: gas_abc
     real(real64), intent(in), dimension(:,:) :: aibi
     !! returns
-    real(real64) :: Sppm
+    real(real64) :: value
 
     !! local variables
     real(real64):: kh
 
     kh = iapws_G7_04_kh(T_K, Tc1, pc1, gas_abc, aibi)
-    Sppm = (1/(kh*1.0d4)) * gas_abc%Mgas / gas_abc%Ms * 1.0d6
+    value = (1/(kh*1.0d4)) * gas_abc%Mgas / gas_abc%Ms * 1.0d6
 
 end function
 
@@ -226,14 +226,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
-pure function iapws_G7_04_kh_water(T, gas)result(kh)
+pure function iapws_G7_04_kh_water(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: kh
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -243,9 +243,9 @@ pure function iapws_G7_04_kh_water(T, gas)result(kh)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
 
     if(i==0)then
-        kh = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        kh = iapws_G7_04_kh(T_K, &
+        value = iapws_G7_04_kh(T_K, &
                             iapws_G7_04_Tc1_water, &
                             iapws_G7_04_pc1_water, &
                             iapws_G7_04_abc_water(i), &
@@ -257,14 +257,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
-pure function iapws_G7_04_kh_heavywater(T, gas)result(kh)
+pure function iapws_G7_04_kh_heavywater(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: kh
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -274,9 +274,9 @@ pure function iapws_G7_04_kh_heavywater(T, gas)result(kh)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
 
     if(i==0)then
-        kh = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        kh = iapws_G7_04_kh(T_K, &
+        value = iapws_G7_04_kh(T_K, &
                             iapws_G7_04_Tc1_heavywater, &
                             iapws_G7_04_pc1_heavywater, &
                             iapws_G7_04_abc_heavywater(i), &
@@ -288,14 +288,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return Scm3 Solubility constant in cm3.kg-1.bar-1. NaN if gas not found.
-pure function iapws_G7_04_scm3_water(T, gas)result(Scm3)
+pure function iapws_G7_04_scm3_water(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: Scm3
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -305,9 +305,9 @@ pure function iapws_G7_04_scm3_water(T, gas)result(Scm3)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
 
     if(i==0)then
-        Scm3 = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        Scm3 = iapws_G7_04_Scm3(T_K, &
+        value = iapws_G7_04_Scm3(T_K, &
                             iapws_G7_04_Tc1_water, &
                             iapws_G7_04_pc1_water, &
                             iapws_G7_04_abc_water(i), &
@@ -319,14 +319,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return Scm3 Solubility constant in cm3.kg-1.bar-1. NaN if gas not found.
-pure function iapws_G7_04_scm3_heavywater(T, gas)result(Scm3)
+pure function iapws_G7_04_scm3_heavywater(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: Scm3
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -336,9 +336,9 @@ pure function iapws_G7_04_scm3_heavywater(T, gas)result(Scm3)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
 
     if(i==0)then
-        Scm3 = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        Scm3 = iapws_G7_04_Scm3(T_K, &
+        value = iapws_G7_04_Scm3(T_K, &
                             iapws_G7_04_Tc1_heavywater, &
                             iapws_G7_04_pc1_heavywater, &
                             iapws_G7_04_abc_heavywater(i), &
@@ -350,14 +350,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return Sppm Solubility constant in ppm. NaN if gas not found.
-pure function iapws_G7_04_sppm_water(T, gas)result(Sppm)
+pure function iapws_G7_04_sppm_water(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: Sppm
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -367,9 +367,9 @@ pure function iapws_G7_04_sppm_water(T, gas)result(Sppm)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_water)
 
     if(i==0)then
-        Sppm = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        Sppm = iapws_G7_04_Sppm(T_K, &
+        value = iapws_G7_04_Sppm(T_K, &
                             iapws_G7_04_Tc1_water, &
                             iapws_G7_04_pc1_water, &
                             iapws_G7_04_abc_water(i), &
@@ -381,14 +381,14 @@ end function
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return Sppm Solubility constant in ppm. NaN if gas not found.
-pure function iapws_G7_04_sppm_heavywater(T, gas)result(Sppm)
+pure function iapws_G7_04_sppm_heavywater(T, gas)result(value)
     implicit none
 
     !! arguments
     real(real64), intent(in) :: T
     character(len=*), intent(in) :: gas
     !! returns
-    real(real64) :: Sppm
+    real(real64) :: value
 
     !! local variables
     real(real64) :: T_K
@@ -398,9 +398,9 @@ pure function iapws_G7_04_sppm_heavywater(T, gas)result(Sppm)
     i = iapws_G7_04_findgas(gas, iapws_G7_04_abc_heavywater)
 
     if(i==0)then
-        Sppm = ieee_value(1.0d0, ieee_quiet_nan)
+        value = ieee_value(1.0d0, ieee_quiet_nan)
     else
-        Sppm = iapws_G7_04_Sppm(T_K, &
+        value = iapws_G7_04_Sppm(T_K, &
                             iapws_G7_04_Tc1_heavywater, &
                             iapws_G7_04_pc1_heavywater, &
                             iapws_G7_04_abc_heavywater(i), &
