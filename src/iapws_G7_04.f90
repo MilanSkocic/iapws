@@ -1,7 +1,7 @@
 !> @file
-!! 
+!! @brief Module for IAPWS G7_04 
 
-!> @brief Parameters for IAPWS G7-04
+!> @brief Module for IAPWS G7-04
 module iapws_G7_04
     use iso_fortran_env
     use ieee_arithmetic

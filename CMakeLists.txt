@@ -83,5 +83,5 @@ add_test(NAME test_water COMMAND test_water)
 add_test(NAME test_heavywater COMMAND test_heavywater)
 
 # install(TARGETS iapws_run RUNTIME DESTINATION bin)
-# install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
-# install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
+install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
+install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)

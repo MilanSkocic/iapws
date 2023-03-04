@@ -1,4 +1,5 @@
 !> @file
+!! @brief C API for the IAPWS module.
 
 !> @brief C API for the IAPWS module.
 module iapws_capi
