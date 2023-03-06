@@ -7,8 +7,10 @@
 #include <stdio.h>
 #include "config.h"
 
-
- int main(int argc, char **argv){
+/**
+ * @brief Prints the configuration for the iapws library.
+ */
+int main(int argc, char **argv){
 
     // avoid compiler complaining
     if (argc>1){
