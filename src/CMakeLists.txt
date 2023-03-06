@@ -12,9 +12,3 @@ target_include_directories(shared_iapws PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_
 
 set_target_properties(static_iapws PROPERTIES PUBLIC_HEADER "${IAPWS_PUBLIC_HEADERS}")
 set_target_properties(shared_iapws PROPERTIES PUBLIC_HEADER "${IAPWS_PUBLIC_HEADERS}")
-
-
-# Program
-# add_executable(iapws_run main.c)
-# target_include_directories(iapws_run PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
-# target_link_directories(iapws_run PRIVATE ${CMAKE_BINARY_DIR}/src)

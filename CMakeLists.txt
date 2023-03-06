@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project("iapws" VERSION "0.1" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
-configure_file("./src/version.h.in" "./src/version.h")
+configure_file("./app/config.h.in" "./app/config.h")
 
 # GNU / AppleClang
 set(C_FLAGS_DEBUG_GCC "-std=c11 -Wall -Wextra -pedantic")
@@ -77,11 +77,12 @@ message("Fortran Compiler ID = " ${CMAKE_Fortran_COMPILER_ID})
 add_subdirectory(./src)
 add_subdirectory(./tests)
 add_subdirectory(./examples)
+add_subdirectory(./app)
 
 enable_testing()
 add_test(NAME test_water COMMAND test_water)
 add_test(NAME test_heavywater COMMAND test_heavywater)
 
-# install(TARGETS iapws_run RUNTIME DESTINATION bin)
+install(TARGETS iapws-config RUNTIME DESTINATION bin)
 install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
 install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
