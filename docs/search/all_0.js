@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arguments_0',['arguments',['../structarguments.html',1,'']]]
+  ['config_2ec_0',['config.c',['../config_8c.html',1,'']]]
 ];
