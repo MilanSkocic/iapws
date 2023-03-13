@@ -9,6 +9,8 @@ The compilation was tested on Linux (Debian), MacOS and Windows.
 
 The sources are available are available on [github](https://github.com/MilanSkocic/iapws).
 The online documentation is available [here](https://milanskocic.github.io/iapws/index.html).
+A pdf version of the documentation can be found 
+[here](https://milanskocic.github.io/iapws/refman.pdf). 
 
 # Installation
 

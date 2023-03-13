@@ -84,6 +84,9 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memitem:a130d4b77dec4ef27c1efcd3debc9af39"><td class="memItemLeft" align="right" valign="top">pure real(real64) function, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiapws.html#a130d4b77dec4ef27c1efcd3debc9af39">iapws_sppm</a> (T, gas, solvent)</td></tr>
 <tr class="memdesc:a130d4b77dec4ef27c1efcd3debc9af39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the solubility for a given temperature and gas in solvent.  <a href="namespaceiapws.html#a130d4b77dec4ef27c1efcd3debc9af39">More...</a><br /></td></tr>
 <tr class="separator:a130d4b77dec4ef27c1efcd3debc9af39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04cab2fe127a729395d0c7f19a7f34fb"><td class="memItemLeft" align="right" valign="top">pure subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiapws.html#a04cab2fe127a729395d0c7f19a7f34fb">iapws_kh_vs_t</a> (T, gas, solvent, kh)</td></tr>
+<tr class="memdesc:a04cab2fe127a729395d0c7f19a7f34fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the henry constant for different temperatures and gas in solvent.  <a href="namespaceiapws.html#a04cab2fe127a729395d0c7f19a7f34fb">More...</a><br /></td></tr>
+<tr class="separator:a04cab2fe127a729395d0c7f19a7f34fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main module for IAPWS computations. </p>
@@ -129,7 +132,58 @@ Functions/Subroutines</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kh Henry constante in mole fraction per GPa. NaN if gas not found. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>kh Henry constant in mole fraction per GPa. NaN if gas not found. </dd></dl>
+
+</div>
+</div>
+<a id="a04cab2fe127a729395d0c7f19a7f34fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04cab2fe127a729395d0c7f19a7f34fb">&#9670;&nbsp;</a></span>iapws_kh_vs_t()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pure subroutine, public iapws::iapws_kh_vs_t </td>
+          <td>(</td>
+          <td class="paramtype">real(real64), dimension(:), intent(in)&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(len=*), intent(in)&#160;</td>
+          <td class="paramname"><em>gas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(len=*), intent(in)&#160;</td>
+          <td class="paramname"><em>solvent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(real64), dimension(:), intent(out)&#160;</td>
+          <td class="paramname"><em>kh</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the henry constant for different temperatures and gas in solvent. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">T</td><td>rank-1 array of temperatures in °C. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">gas</td><td>Gas. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">solvent</td><td>Solvents: H2O or D2O. Default is H2O. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kh</td><td>rank-1 array of Henry constants in mole fraction per GPa. NaN if gas not found. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -226,7 +280,7 @@ Functions/Subroutines</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 2 2023 15:46:26 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu Mar 9 2023 11:32:28 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
