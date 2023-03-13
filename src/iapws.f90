@@ -10,7 +10,7 @@ module iapws
     implicit none
     private
 
-public :: iapws_kh, iapws_Scm3, iapws_Sppm, iapws_kh_vs_t
+public :: iapws_kh, iapws_Scm3, iapws_Sppm
 
 contains
 
@@ -83,27 +83,5 @@ pure function iapws_sppm(T, gas, solvent)result(value)
 
 end function
 
-!> @brief Compute the henry constant for different temperatures and gas in solvent 
-!! @param[in] T rank-1 array of temperatures in °C.
-!! @param[in] gas Gas.
-!! @param[in] solvent Solvents: H2O or D2O. Default is H2O.
-!! @param[out] kh rank-1 array of Henry constants in mole fraction per GPa. NaN if gas not found.
-pure subroutine iapws_kh_vs_t(T, gas, solvent, kh)
-    implicit none
-    !! arguments
-    real(real64), dimension(:), intent(in) :: T
-    character(len=*), intent(in) :: gas
-    character(len=*), intent(in) :: solvent
-    !!returns 
-    real(real64), dimension(:), intent(out) :: kh
-
-    !! local variables
-    integer(int32) :: i
-
-    do i=1, size(T)
-        kh(i) = iapws_kh(T(i), gas, solvent)
-    enddo
-
-end subroutine
 
 end module
