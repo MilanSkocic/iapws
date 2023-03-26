@@ -1,5 +1,5 @@
 set(IAPWS_PUBLIC_HEADERS "${CMAKE_BINARY_DIR}/src/iapws.mod" "${CMAKE_SOURCE_DIR}/src/iapws.h")
-set(IAPWS_SOURCES "iapws_G7_04.f90" "iapws.f90" "iapws_capi.f90")
+set(IAPWS_SOURCES "iapwsG704.f90" "iapws.f90" "iapws_capi.f90")
 
 add_library(static_iapws STATIC "${IAPWS_SOURCES}")
 set_target_properties(static_iapws PROPERTIES OUTPUT_NAME iapws)
