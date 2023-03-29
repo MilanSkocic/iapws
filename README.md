@@ -7,12 +7,12 @@ The static and shared libraries can be installed in order to be included in Fort
 
 The compilation was tested on Linux (Debian), MacOS and Windows.
 
-The sources are available are available on [github](https://github.com/MilanSkocic/iapws).
-The online documentation is available [here](https://milanskocic.github.io/iapws/iapws/index.html).
-A pdf version of the documentation can be found 
-[here](https://milanskocic.github.io/iapws/iapws/refman.pdf).
+Links:
 
-A python wrapper is also available [here](https://milanskocic.github.io/iapws/pyiapws/index.html).
+* Sources: [](https://github.com/MilanSkocic/iapws).
+* Online documentation: [](https://milanskocic.github.io/iapws/iapws/index.html).
+* PDF documentation: [](https://milanskocic.github.io/iapws/iapws/refman.pdf).
+* Python wrapper: [](https://milanskocic.github.io/iapws/pyiapws/index.html).
 
 # Installation
 
