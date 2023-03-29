@@ -1,0 +1,13 @@
+# sdist
+recursive-include sphinx *
+recursive-exclude sphinx/build *
+
+include INSTALL.TXT
+include LICENSE.TXT
+include MANIFEST.in
+include README.rst
+include requirements.txt
+include site.cfg.example
+
+# bdist
+# recursive-include pyiapws *.c *.h *.f90
