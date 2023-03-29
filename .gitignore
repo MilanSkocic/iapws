@@ -20,3 +20,7 @@ docs/build/
 *.obj
 *.o
 *.mod
+
+*.egg-info
+__pycache__
+*.so
