@@ -6,7 +6,7 @@ Description
   :end-before: readme_inclusion_end
 
 A pdf version of the documentation can be found here :download:`pycodata <../../build/latex/pyiapws.pdf>`. 
-The source code can be viewed on `GitHub <http://www.github.com/MilanSkocic/iapws/pywrapper>`_.
+The source code can be viewed on `GitHub <http://www.github.com/MilanSkocic/iapws/tree/main/pywrapper>`_.
 
 How to install
 =================
