@@ -19,3 +19,9 @@ requirements.md: ../REQUIREMENTS.txt
 pdf: 
 	make -C build/latex
 	cp build/latex/refman.pdf build/html
+
+pywrapper:
+	make -C ../pywrapper/sphinx latexpdf
+	make -C ../pywrapper/sphinx html
+	rm -rf ../docs/pyiapws/*
+	cp -r ../pywrapper/sphinx/build/html/* ../docs/pyiapws/
