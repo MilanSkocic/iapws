@@ -1,7 +1,6 @@
 import unittest
 
 import pyiapws
-from math import log
 import numpy as np
 
 class TestLib(unittest.TestCase):

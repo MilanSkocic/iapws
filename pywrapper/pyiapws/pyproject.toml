@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptool", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyiapws"
+
+dynamic = ["version"]
+
+
+[tool.setuptools.dynamic]
+version = {attr="pyiapws.__version__"}
