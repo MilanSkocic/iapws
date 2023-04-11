@@ -1,9 +1,9 @@
 import os
-from setuptools import setup, find_packages, Extension
 import configparser
 import importlib
 import pathlib
 import platform
+from setuptools import setup, find_packages, Extension
 
 # Import only version.py file for extracting the version
 spec = importlib.util.spec_from_file_location('version', './pyiapws/version.py')
@@ -46,8 +46,8 @@ def search_headers(include_dirs, libraries):
     found = 0
     for library in libraries:
         print(f"Looking for {library}.h...")
-        for dir in include_dirs:
-            fdir = pathlib.Path(dir)
+        for dir_ in include_dirs:
+            fdir = pathlib.Path(dir_)
             if fdir.exists():
                 fpath = fdir / f"{library}.h"
                 print(f"\t{fpath}...{fpath.exists()}")
@@ -65,8 +65,8 @@ def search_libraries(lib_dirs, libraries, static=False):
         ext = ext_shared
     for library in libraries:
         print(f"Looking for {library}{ext}...")
-        for dir in lib_dirs:
-            fdir = pathlib.Path(dir)
+        for dir_ in lib_dirs:
+            fdir = pathlib.Path(dir_)
             if fdir.exists():
                 fpath = fdir / (prefix+f"{library}"+ext)
                 print(f"\t{fpath}...{fpath.exists()}")
