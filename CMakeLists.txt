@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.10)
 project("iapws" VERSION "0.1" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
 configure_file("./app/config.h.in" "./app/config.h")
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "release")
+endif()
+
 # GNU / AppleClang
 set(C_FLAGS_DEBUG_GCC "-std=c11 -Wall -Wextra -pedantic")
 set(C_FLAGS_RELEASE_GCC "-std=c11 -O2 -w")
