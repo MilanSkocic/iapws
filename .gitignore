@@ -25,3 +25,5 @@ dist/
 *.egg-info
 __pycache__
 *.so
+
+.DS_Store
