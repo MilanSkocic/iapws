@@ -70,31 +70,5 @@ int main(int argc, char **argv){
         }
         printf("\n");
     }
-    printf("*****  S in cm3.kg-1.bar-1 *****\n");
-    for(j=0; j<ngas; j++){
-        printf("%5s\t", gases[j]);
-        for(i=0;i<4;i++){
-            T_C = T_K[i] - 273.15;
-            Scm3 = iapws_capi_scm3(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
-            printf("%+23.4f\t", Scm3);
-            if(diff != 0.0){
-                return 1;
-            }
-        }
-        printf("\n");
-    }
-    printf("*****  S in ppm.bar-1 *****\n");
-    for(j=0; j<ngas; j++){
-        printf("%5s\t", gases[j]);
-        for(i=0;i<4;i++){
-            T_C = T_K[i] - 273.15;
-            Sppm = iapws_capi_sppm(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
-            printf("%+23.4f\t", Sppm);
-            if(diff != 0.0){
-                return 1;
-            }
-        }
-    printf("\n");
-    }
     return 0;
 }
