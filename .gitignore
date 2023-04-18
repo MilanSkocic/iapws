@@ -16,6 +16,7 @@
 bin/
 build/
 docs/build/
+dist/
 .vscode/
 *.obj
 *.o
