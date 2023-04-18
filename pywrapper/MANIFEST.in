@@ -10,4 +10,4 @@ include requirements.txt
 include site.cfg.example
 
 # bdist
-# recursive-include pyiapws *.c *.h *.f90
+recursive-include pyiapws *.dll
