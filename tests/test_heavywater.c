@@ -41,8 +41,6 @@ int main(int argc, char **argv){
 
     double T_C;
     double kh = 0.0;
-    double Scm3 = 0.0;
-    double Sppm = 0.0;
     char solvent[] = "D2O";
     double diff;
     int i, j;

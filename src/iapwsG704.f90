@@ -21,6 +21,11 @@ real(real64), parameter ::  iapwsG704_Tc1_heavywater = 643.847d0
 !> critical pressure of heavywater MPa 
 real(real64), parameter ::  iapwsG704_pc1_heavywater = 21.671d0 
 
+!> solvent coefficient for kd in water
+real(real64), parameter :: iapwsG704_q_water = -0.023767d0
+!> solvent coefficient for kd in heavywater
+real(real64), parameter :: iapwsG704_q_heavywater = -0.024552d0
+
 type :: iapwsG704_t_abc
     character(len=5) :: gas
     real(real64) :: A
@@ -75,7 +80,7 @@ type(iapwsG704_t_abc), dimension(7), parameter :: iapwsG704_abc_heavywater = &
 
 !> ci and di coefficients for water
 real(real64), dimension(6, 2), parameter :: iapwsG704_cidi_water = reshape([&
-1.99274064d0, 1.09965342d0, -0.510839303d0, -1.75493479d0, -45.5170352d0, 6.7469445d5,&
+1.99274064d0, 1.09965342d0, -0.510839303d0, -1.75493479d0, -45.5170352d0, -6.7469445d5,&
 1.0d0/3.0d0, 2.0d0/3.0d0, 5.0d0/3.0d0, 16.0d0/3.0d0, 43.0d0/3.0d0, 110.0d0/3.0d0], [6,2])
 
 !> ci and di coefficients for heavywater
@@ -84,9 +89,21 @@ real(real64), dimension(4, 2), parameter :: iapwsG704_cidi_heavywater = reshape(
 0.374d0, 1.45d0, 2.6d0, 12.3d0], [4,2])
 
 !> EFGH constants for water
-type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_water = &
+type(iapwsG704_t_efgh), dimension(14), parameter :: iapwsG704_efgh_water = &
 [iapwsG704_t_efgh("He", 2267.4082d0, -2.9616d0, -3.2604d0, 7.8819d0),&
- iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0)]
+ iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0),&
+ iapwsG704_t_efgh("Ar", 2310.5463d0, -46.7034d0, 160.4066d0, -118.3043d0),&
+ iapwsG704_t_efgh("Kr", 2276.9722d0, -61.1494d0, 214.0117d0, -159.0407d0),&
+ iapwsG704_t_efgh("Xe", 2022.8375d0, 16.7913d0, -61.2401d0, 41.9236d0),&
+ iapwsG704_t_efgh("H2", 2286.4159d0, 11.3397d0, -70.7279d0, 63.0631d0),&
+ iapwsG704_t_efgh("N2", 2388.8777d0, -14.9593d0, 42.0179d0, -29.4396d0),&
+ iapwsG704_t_efgh("O2", 2305.0674d0, -11.3240d0, 25.3224d0, -15.6449d0),&
+ iapwsG704_t_efgh("CO", 2346.2291d0, -57.6317d0, 204.5324d0, -152.6377d0),&
+ iapwsG704_t_efgh("CO2", 1672.9376d0, 28.1751d0, -112.4619d0, 85.3807d0),&
+ iapwsG704_t_efgh("H2S", 1319.1205d0, 14.1571d0, -46.8361d0, 33.2266d0),&
+ iapwsG704_t_efgh("CH4", 2215.6977d0, -0.1089d0, -6.6240d0, 4.6789d0),&
+ iapwsG704_t_efgh("C2H6", 2143.8121d0, 6.8859d0, -12.6084d0, 0.0d0),&
+ iapwsG704_t_efgh("SF6", 2871.7265d0, -66.7556d0, 229.7191d0, -172.7400d0)]
 
  !> EFGH constants for heavywater
 type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_heavywater = &
@@ -94,13 +111,14 @@ type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_heavywater = &
  iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0)]
 
 public :: iapwsG704_kh_water, iapwsG704_kh_heavywater 
+public :: iapwsG704_kd_water, iapwsG704_kd_heavywater
 
 contains
 
 !> @brief Find the index of the gas in the ABC table.
 !! @param[in] gas Gas.
 !! @param[in] abc ABC table.
-pure function iapwsG704_findgas(gas, abc)result(value)
+pure function iapwsG704_findgas_abc(gas, abc)result(value)
     implicit none
     !! arguments
     character(len=*), intent(in) :: gas
@@ -114,6 +132,29 @@ pure function iapwsG704_findgas(gas, abc)result(value)
 
     do i=1, size(abc)
         if(trim(gas) .eq. abc(i)%gas)then
+            value = i
+            exit
+        endif
+    end do
+end function
+
+!> @brief Find the index of the gas in the ABC table.
+!! @param[in] gas Gas.
+!! @param[in] abc ABC table.
+pure function iapwsG704_findgas_efgh(gas, efgh)result(value)
+    implicit none
+    !! arguments
+    character(len=*), intent(in) :: gas
+    type(iapwsG704_t_efgh), dimension(:), intent(in) :: efgh
+    !! returns
+    integer(int32) :: value
+    !! local variables
+    integer(int32) :: i
+
+    value = 0
+
+    do i=1, size(efgh)
+        if(trim(gas) .eq. efgh(i)%gas)then
             value = i
             exit
         endif
@@ -159,10 +200,10 @@ pure function iapwsG704_kh(T_K, Tc1, pc1, gas_abc, aibi) result(value)
     value = exp(ln_kH_pstar)*pstar/1000.0
 end function
 
-!> @brief Compute the henry constante for a given temperature and gas in water.
+!> @brief Compute the henry constant for a given temperature and gas in water.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
 pure function iapwsG704_kh_water(T, gas)result(value)
     implicit none
 
@@ -177,7 +218,7 @@ pure function iapwsG704_kh_water(T, gas)result(value)
     integer(int32) :: i
 
     T_K = T + T_KELVIN
-    i = iapwsG704_findgas(gas, iapwsG704_abc_water)
+    i = iapwsG704_findgas_abc(gas, iapwsG704_abc_water)
 
     if(i==0)then
         value = ieee_value(1.0d0, ieee_quiet_nan)
@@ -190,10 +231,10 @@ pure function iapwsG704_kh_water(T, gas)result(value)
     endif
 end function
 
-!> @brief Compute the henry constante for a given temperature and gas in heavywater.
+!> @brief Compute the henry constant for a given temperature and gas in heavywater.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @return kh Henry constante in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
 pure function iapwsG704_kh_heavywater(T, gas)result(value)
     implicit none
 
@@ -208,7 +249,7 @@ pure function iapwsG704_kh_heavywater(T, gas)result(value)
     integer(int32) :: i
 
     T_K = T + T_KELVIN
-    i = iapwsG704_findgas(gas, iapwsG704_abc_heavywater)
+    i = iapwsG704_findgas_abc(gas, iapwsG704_abc_heavywater)
 
     if(i==0)then
         value = ieee_value(1.0d0, ieee_quiet_nan)
@@ -221,14 +262,14 @@ pure function iapwsG704_kh_heavywater(T, gas)result(value)
     endif
 end function
 
-!> @brief Compute the vapor-liquid constant of a given gas.
+!> @brief Compute the vapor-liquid constant kd of a given gas.
 !! @param[in] ix Gas index for which the computation has to be performed.
 !! @param[in] T_K Temperature in K.
 !! @param[in] Tc1 Critical temperature.
 !! @param[in] q solvent coefficient
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] cidi ai and bi coefficients of a solvent.
-!! @return kH Henry constant in mole fraction per GPa.
+!! @return kd Vapor-liquid constant.
 pure function iapwsG704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
     implicit none
     !! arguments 
@@ -243,7 +284,7 @@ pure function iapwsG704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
     !! local variables
     real(real64) :: Tr
     real(real64) :: tau
-    real(real64) :: res
+    real(real64) :: ft
     real(real64) :: p1
     real(real64) :: p2
     real(real64) :: p3
@@ -252,17 +293,77 @@ pure function iapwsG704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
     Tr = T_K/Tc1
     tau  = 1-Tr
     
-    res = 0.0
-    res = sum(cidi(:,1) * tau**(cidi(:,2)))
+    ft = 0.0
+    ft = sum(cidi(:,1) * tau**(cidi(:,2)))
 
     p1 = q*gas_efgh%F
-    p2 = gas_efgh%E/T_K*res
-    p3 = (gas_efgh%F + gas_efgh%G*res**(2.0d0/3.0d0) + gas_efgh%H*tau)
+    p2 = gas_efgh%E/T_K*ft
+    p3 = (gas_efgh%F + gas_efgh%G*tau**(2.0d0/3.0d0) + gas_efgh%H*tau)
     p4 = exp((273.15d0 - T_K)/100.0d0)
 
-    value = p1 + p2 + p3 * p4
+    value = exp(p1 + p2 + p3 * p4)
 
 end function
 
+!> @brief Compute the kd constant for a given temperature and gas in water.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return kd Vapor-liquid constant. NaN if gas not found.
+pure function iapwsG704_kd_water(T, gas)result(value)
+    implicit none
 
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: value
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapwsG704_findgas_efgh(gas, iapwsG704_efgh_water)
+
+    if(i==0)then
+        value = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        value = iapwsG704_kd(T_K, &
+                            iapwsG704_Tc1_water, &
+                            iapwsG704_q_water, &
+                            iapwsG704_efgh_water(i), &
+                            iapwsG704_cidi_water)
+    endif
+end function
+
+!> @brief Compute the kd constant for a given temperature and gas in heavywater.
+!! @param[in] T Temperature in °C.
+!! @param[in] gas Gas.
+!! @return kd Vapor-liquid constant. NaN if gas not found.
+pure function iapwsG704_kd_heavywater(T, gas)result(value)
+    implicit none
+
+    !! arguments
+    real(real64), intent(in) :: T
+    character(len=*), intent(in) :: gas
+    !! returns
+    real(real64) :: value
+
+    !! local variables
+    real(real64) :: T_K
+    integer(int32) :: i
+
+    T_K = T + T_KELVIN
+    i = iapwsG704_findgas_efgh(gas, iapwsG704_efgh_heavywater)
+
+    if(i==0)then
+        value = ieee_value(1.0d0, ieee_quiet_nan)
+    else
+        value = iapwsG704_kd(T_K, &
+                            iapwsG704_Tc1_heavywater, &
+                            iapwsG704_q_heavywater, &
+                            iapwsG704_efgh_heavywater(i), &
+                            iapwsG704_cidi_heavywater)
+    endif
+end function
 end module

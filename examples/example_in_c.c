@@ -7,7 +7,7 @@ int main(int argc, char **argv){
     double T = 25.0; /* in C*/
     char *gas = "O2";
     char *solvent = "H2O";
-    double kh, Scm3, Sppm;
+    double kh;
     
     if(argc > 1 ){
         printf("%s\n", argv[1]);

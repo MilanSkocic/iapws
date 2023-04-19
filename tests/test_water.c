@@ -37,6 +37,23 @@ static double ref_kh[14][4] = {{2.6576, 2.1660, 1.1973, -0.1993},
                     {1.1418, 1.8495, 0.8274, -0.8141},
                     {3.1445, 3.6919, 2.6749, 1.2402}};
 
+// data copied directly from PDF of the paper
+// Guideline on the Henry’s Constant and Vapor-Liquid Distribution Constant for Gases
+// in H2O and D2O at High Temperatures » IAPWS, Kyoto, Japan, G7-04, 2004
+static double ref_kd[14][4] = {{15.2250, 10.4364, 6.9971, 3.8019},
+                              {15.0743, 10.6379, 7.4116, 4.2308},
+                              {13.9823, 10.0558, 6.9869, 3.9861},
+                              {13.3968, 9.7362, 6.8371, 3.9654},
+                              {12.8462, 9.4268, 6.3639, 3.3793},
+                              {14.5286, 10.1484, 6.8948, 3.7438},
+                              {14.7334, 10.6221, 7.2923, 4.0333},
+                              {14.0716, 10.1676, 6.9979, 3.8707},
+                              {14.3276, 10.2573, 7.1218, 4.0880},
+                              {10.8043, 7.7705, 5.2123, 2.7293},
+                              {9.6846, 6.5840, 4.2781, 2.2200},
+                              {13.9659, 10.0819, 6.8559, 3.7238},
+                              {13.7063, 10.1510, 6.8453, 3.6493},
+                              {15.7067, 11.9887, 8.5550, 4.9599}};
 static char *gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"}; /**< Gases for water */
 static double T_K[4] = {300.0, 400.0, 500.0, 600.0};
 
@@ -47,8 +64,7 @@ int main(int argc, char **argv){
     }
     double T_C;
     double kh = 0.0;
-    double Scm3 = 0.0;
-    double Sppm = 0.0;
+    double kd = 0.0;
     char solvent[] = "H2O";
     double diff;
     int i, j;
@@ -70,6 +86,27 @@ int main(int argc, char **argv){
             kh = iapws_capi_kh(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
             diff = roundn(log(kh) - ref_kh[j][i], 4);
             printf("%+7.4f/%+7.4f/%+7.4f\t", log(kh), ref_kh[j][i], log(kh) - ref_kh[j][i]);
+            if(diff != 0.0){
+                return 1;
+            }
+        }
+        printf("\n");
+    }
+    
+    printf("***** Test kd in water *****\n");
+
+    printf("%5s\t", "Gas");
+    for(i=0; i<nT; i++){
+        printf("%23.0f\t", T_K[i]);
+    }
+    printf("\n");
+    for(j=0; j<ngas; j++){
+        printf("%5s\t", gases[j]);
+        for(i=0;i<4;i++){
+            T_C = T_K[i] - 273.15;
+            kd = iapws_capi_kd(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
+            diff = roundn(log(kd) - ref_kd[j][i], 4);
+            printf("%+7.4f/%+7.4f/%+7.4f\t", log(kd), ref_kd[j][i], log(kd) - ref_kd[j][i]);
             if(diff != 0.0){
                 return 1;
             }
