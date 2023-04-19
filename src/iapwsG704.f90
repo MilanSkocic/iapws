@@ -26,8 +26,14 @@ type :: iapwsG704_t_abc
     real(real64) :: A
     real(real64) :: B
     real(real64) :: C
-    real(real64) :: Tmin
-    real(real64) :: Tmax
+end type
+
+type :: iapwsG704_t_efgh
+    character(len=5) :: gas
+    real(real64) :: E
+    real(real64) :: F
+    real(real64) :: G
+    real(real64) :: H
 end type
 
 !> ai and bi coefficients for water
@@ -42,30 +48,50 @@ real(real64), dimension(5, 2), parameter :: iapwsG704_aibi_heavywater = reshape(
 
 !> ABC constants water.
 type(iapwsG704_t_abc), dimension(14), parameter :: iapwsG704_abc_water = &
-    [iapwsG704_t_abc("He", -3.52839d0, 7.12983d0, 4.47770d0, 273.21d0, 553.18d0),&
-     iapwsG704_t_abc("Ne", -3.18301d0, 5.31448d0, 5.43774d0, 273.20d0, 543.36d0),&
-     iapwsG704_t_abc("Ar", -8.40954d0, 4.29587d0, 10.52779d0, 273.19d0, 568.36d0),&
-     iapwsG704_t_abc("Kr", -8.97358d0, 3.61508d0, 11.29963d0, 273.19d0, 525.56d0),&
-     iapwsG704_t_abc("Xe", -14.21635d0, 4.00041d0, 15.60999d0, 273.22d0, 574.85d0),&
-     iapwsG704_t_abc("H2", -4.73284d0, 6.08954d0, 6.06066d0, 273.15d0, 636.09d0),&
-     iapwsG704_t_abc("N2", -9.67578d0, 4.72162d0, 11.70585d0, 278.12d0, 636.46d0),&
-     iapwsG704_t_abc("O2", -9.44833d0, 4.43822d0, 11.42005d0, 274.15d0, 616.52d0),&
-     iapwsG704_t_abc("CO", -10.52862d0, 5.13259d0, 12.01421d0, 278.15d0, 588.67d0),&
-     iapwsG704_t_abc("CO2", -8.55445d0, 4.01195d0, 9.52345d0, 274.19d0, 642.66d0),&
-     iapwsG704_t_abc("H2S", -4.51499d0, 5.23538d0, 4.42126d0, 273.15d0, 533.09d0),&
-     iapwsG704_t_abc("CH4", -10.44708d0, 4.66491d0, 12.12986d0, 275.46d0, 633.11d0),&
-     iapwsG704_t_abc("C2H6", -19.67563d0, 4.51222d0, 20.62567d0, 275.44d0, 473.46d0),&
-     iapwsG704_t_abc("SF6", -16.56118d0, 2.15289d0, 20.35440d0, 283.14d0, 505.55d0)]
+    [iapwsG704_t_abc("He", -3.52839d0, 7.12983d0, 4.47770d0),&
+     iapwsG704_t_abc("Ne", -3.18301d0, 5.31448d0, 5.43774d0),&
+     iapwsG704_t_abc("Ar", -8.40954d0, 4.29587d0, 10.52779d0),&
+     iapwsG704_t_abc("Kr", -8.97358d0, 3.61508d0, 11.29963d0),&
+     iapwsG704_t_abc("Xe", -14.21635d0, 4.00041d0, 15.60999d0),&
+     iapwsG704_t_abc("H2", -4.73284d0, 6.08954d0, 6.06066d0),&
+     iapwsG704_t_abc("N2", -9.67578d0, 4.72162d0, 11.70585d0),&
+     iapwsG704_t_abc("O2", -9.44833d0, 4.43822d0, 11.42005d0),&
+     iapwsG704_t_abc("CO", -10.52862d0, 5.13259d0, 12.01421d0),&
+     iapwsG704_t_abc("CO2", -8.55445d0, 4.01195d0, 9.52345d0),&
+     iapwsG704_t_abc("H2S", -4.51499d0, 5.23538d0, 4.42126d0),&
+     iapwsG704_t_abc("CH4", -10.44708d0, 4.66491d0, 12.12986d0),&
+     iapwsG704_t_abc("C2H6", -19.67563d0, 4.51222d0, 20.62567d0),&
+     iapwsG704_t_abc("SF6", -16.56118d0, 2.15289d0, 20.35440d0)]
 
 !> ABC constants for heavywater
 type(iapwsG704_t_abc), dimension(7), parameter :: iapwsG704_abc_heavywater = &
-    [iapwsG704_t_abc("He", -0.72643d0, 7.02134d0, 2.04433d0, 288.15d0, 553.18d0),&
-     iapwsG704_t_abc("Ne", -0.91999d0, 5.65327d0, 3.17247d0, 288.18d0, 549.96d0),&
-     iapwsG704_t_abc("Ar", -7.17725d0, 4.48177d0, 9.31509d0, 288.30d0, 583.76d0),&
-     iapwsG704_t_abc("Kr", -8.47059d0, 3.91580d0, 10.69433d0, 288.19d0, 523.06d0),&
-     iapwsG704_t_abc("Xe", -14.46485d0, 4.42330d0, 15.60919d0, 295.39d0, 574.85d0),&
-     iapwsG704_t_abc("D2", -5.33843d0, 6.15723d0, 6.53046d0, 288.17d0, 581.00d0),&
-     iapwsG704_t_abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0, 288.16d0, 517.46d0)]
+    [iapwsG704_t_abc("He", -0.72643d0, 7.02134d0, 2.04433d0),&
+     iapwsG704_t_abc("Ne", -0.91999d0, 5.65327d0, 3.17247d0),&
+     iapwsG704_t_abc("Ar", -7.17725d0, 4.48177d0, 9.31509d0),&
+     iapwsG704_t_abc("Kr", -8.47059d0, 3.91580d0, 10.69433d0),&
+     iapwsG704_t_abc("Xe", -14.46485d0, 4.42330d0, 15.60919d0),&
+     iapwsG704_t_abc("D2", -5.33843d0, 6.15723d0, 6.53046d0),&
+     iapwsG704_t_abc("CH4", -10.01915d0, 4.73368d0, 11.75711d0)]
+
+!> ci and di coefficients for water
+real(real64), dimension(6, 2), parameter :: iapwsG704_cidi_water = reshape([&
+1.99274064d0, 1.09965342d0, -0.510839303d0, -1.75493479d0, -45.5170352d0, 6.7469445d5,&
+1.0d0/3.0d0, 2.0d0/3.0d0, 5.0d0/3.0d0, 16.0d0/3.0d0, 43.0d0/3.0d0, 110.0d0/3.0d0], [6,2])
+
+!> ci and di coefficients for heavywater
+real(real64), dimension(4, 2), parameter :: iapwsG704_cidi_heavywater = reshape([&
+2.7072d0, 0.58662d0, -1.3069d0, -45.663d0, &
+0.374d0, 1.45d0, 2.6d0, 12.3d0], [4,2])
+
+!> EFGH constants for water
+type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_water = &
+[iapwsG704_t_efgh("He", 2267.4082d0, -2.9616d0, -3.2604d0, 7.8819d0),&
+ iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0)]
+
+ !> EFGH constants for heavywater
+type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_heavywater = &
+[iapwsG704_t_efgh("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257d0), &
+ iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0)]
 
 public :: iapwsG704_kh_water, iapwsG704_kh_heavywater 
 
@@ -194,5 +220,49 @@ pure function iapwsG704_kh_heavywater(T, gas)result(value)
                             iapwsG704_aibi_heavywater)
     endif
 end function
+
+!> @brief Compute the vapor-liquid constant of a given gas.
+!! @param[in] ix Gas index for which the computation has to be performed.
+!! @param[in] T_K Temperature in K.
+!! @param[in] Tc1 Critical temperature.
+!! @param[in] q solvent coefficient
+!! @param[in] gas_abc abc parameters of gas
+!! @param[in] cidi ai and bi coefficients of a solvent.
+!! @return kH Henry constant in mole fraction per GPa.
+pure function iapwsG704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
+    implicit none
+    !! arguments 
+    real(real64), intent(in) :: T_K
+    real(real64), intent(in) :: Tc1
+    real(real64), intent(in) :: q
+    type(iapwsG704_t_efgh), intent(in) :: gas_efgh
+    real(real64), intent(in), dimension(:,:) :: cidi
+    !! returns
+    real(real64) :: value
+    
+    !! local variables
+    real(real64) :: Tr
+    real(real64) :: tau
+    real(real64) :: res
+    real(real64) :: p1
+    real(real64) :: p2
+    real(real64) :: p3
+    real(real64) :: p4
+    
+    Tr = T_K/Tc1
+    tau  = 1-Tr
+    
+    res = 0.0
+    res = sum(cidi(:,1) * tau**(cidi(:,2)))
+
+    p1 = q*gas_efgh%F
+    p2 = gas_efgh%E/T_K*res
+    p3 = (gas_efgh%F + gas_efgh%G*res**(2.0d0/3.0d0) + gas_efgh%H*tau)
+    p4 = exp((273.15d0 - T_K)/100.0d0)
+
+    value = p1 + p2 + p3 * p4
+
+end function
+
 
 end module
