@@ -2,10 +2,18 @@
 \_form#1=11x13:$f_2$
 \_form#2=13x9:$x_2$
 \_form#3=15x13:$k_H$
-\_form#4=271x68:\begin{eqnarray*} \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau \\ \tau = 1-T_R \\ T_R = T/T_{c1} \end{eqnarray*}
+\_form#4=271x68:\begin{eqnarray*}
+\ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau \\
+\tau = 1-T_R \\
+T_R = T/T_{c1}
+\end{eqnarray*}
 \_form#5=18x11:$T_{c1}$
 \_form#6=13x14:$p_1^*$
 \_form#7=156x16:$ \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i} $
 \_form#8=16x9:$p_{c1}$
-\_form#9=171x93:\begin{eqnarray*} x_2 [\text{mole fraction per bar}] = \frac{1}{k_H}\\ S [ppm.bar^{-1}] = \frac{x_2 \cdot M_{gas}}{M_s} \cdot 10^6 \\ S [cm^3.kg^{-1}.bar^{-1}] = \frac{x_2 \cdot V_m}{M_s} \end{eqnarray*}
+\_form#9=171x93:\begin{eqnarray*}
+x_2 [\text{mole fraction per bar}] = \frac{1}{k_H}\\
+S [ppm.bar^{-1}] = \frac{x_2 \cdot M_{gas}}{M_s} \cdot 10^6 \\
+S [cm^3.kg^{-1}.bar^{-1}] = \frac{x_2 \cdot V_m}{M_s}
+\end{eqnarray*}
 \_form#10=108x14:$k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 $
