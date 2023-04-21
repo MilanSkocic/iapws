@@ -26,8 +26,8 @@ Both equations have the form:
 \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}
 @f}
 
-* @f$n@f$ is 6 for  H2O and 5 for D2O
-* @f$p_{c1}@f$ is the critical pressure of the solvent recommended by IAPWS \cite iapws2007 (22.064 MPa for H2O and 21.671 MPa for D2O)
+* @f$ n @f$ is 6 for  H2O and 5 for D2O
+* @f$ p_{c1} @f$ is the critical pressure of the solvent recommended by IAPWS \cite iapws2007 (22.064 MPa for H2O and 21.671 MPa for D2O)
 
 The Henry's constant :@f$k_H@f$ has a dimension of pressure expressed here in GPa-1.
 
@@ -37,8 +37,8 @@ The Henry's constant :@f$k_H@f$ has a dimension of pressure expressed here in GP
 k_H = \lim_{x_2 \rightarrow 0} y_2/x_2 
 \f}
 
-* @f$x_2@f$: mole fraction of the solute
-* @f$y_2@f$ is the vapor-phase solute mole fraction in equilibrium with the liquid
+* @f$ x_2 @f$: mole fraction of the solute
+* @f$ y_2 @f$ is the vapor-phase solute mole fraction in equilibrium with the liquid
 
 The vapor-liquid distribution constant @f$k_D@f$ is given as a function of temperature by:
 
@@ -46,11 +46,11 @@ The vapor-liquid distribution constant @f$k_D@f$ is given as a function of tempe
 lnK =qF+ f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)
 @f}
 
-* @f$q@f$: −0.023767 for H2O and −0.024552 for D2O.
-* @f$f(\tau)@f$ \cite wagner1993 for H2O  and \cite fernandez-prini2003 for D2O.
+* @f$ q @f$ : -0.023767 for H2O and -0.024552 for D2O.
+* @f$ f(\tau) @f$ \cite wagner1993 for H2O  and \cite fernandez-prini2003 for D2O.
 
 In both cases, @f$f(\tau)@f$ has the following form:
 @f{eqnarray*}{
     f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}
 @f}
-* @$n@$ is 6 for H2O and 4 for D2O 
+* @f$ n @f$ is 6 for H2O and 4 for D2O 
