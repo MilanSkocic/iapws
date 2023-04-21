@@ -26,8 +26,8 @@ function iapws_capi_kh(T, gas, solvent, size_gas, size_solvent)bind(C)result(kh)
     real(c_double), value :: T
     type(c_ptr), intent(in), value :: gas
     type(c_ptr), intent(in), value :: solvent 
-    integer(c_int), intent(in), value :: size_gas
-    integer(c_int), intent(in), value :: size_solvent
+    integer(c_size_t), intent(in), value :: size_gas
+    integer(c_size_t), intent(in), value :: size_solvent
     !! returns
     real(c_double) :: kh
     
@@ -66,8 +66,8 @@ function iapws_capi_kd(T, gas, solvent, size_gas, size_solvent)bind(C)result(kh)
     real(c_double), value :: T
     type(c_ptr), intent(in), value :: gas
     type(c_ptr), intent(in), value :: solvent 
-    integer(c_int), intent(in), value :: size_gas
-    integer(c_int), intent(in), value :: size_solvent
+    integer(c_size_t), intent(in), value :: size_gas
+    integer(c_size_t), intent(in), value :: size_solvent
     !! returns
     real(c_double) :: kh
     
