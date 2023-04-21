@@ -19,13 +19,13 @@ set(C_FLAGS_DEBUG_MSVC "/std:c11 /Wall")
 set(C_FLAGS_RELEASE_MSVC "/std:c11 /O2 /w")
 
 # Intel C
-set(C_FLAGS_DEBUG_Intel_win32 "/std:c11 /Wall")
-set(C_FLAGS_RELEASE_Intel_win32 "/std:c11 /O2 /w")
+set(C_FLAGS_DEBUG_Intel_win32 "/Qstd:c11 /Wall")
+set(C_FLAGS_RELEASE_Intel_win32 "/Qstd:c11 /O2 /w")
 set(C_FLAGS_DEBUG_Intel_unix "-std=c11 -Wall")
 set(C_FLAGS_RELEASE_Intel_unix "-std=c11 -O2 -w")
 
 #Intel Fortran
-set(Fortran_FLAGS_DEBUG_Intel_win32 "/stand:f08 /Wall ")
+set(Fortran_FLAGS_DEBUG_Intel_win32 "/stand:f08 /warn ")
 set(Fortran_FLAGS_RELEASE_Intel_win32 "/stand:f08 /O2 /w")
 set(Fortran_FLAGS_DEBUG_Intel_unix "-stand f08 -Wall ")
 set(Fortran_FLAGS_RELEASE_Intel_unix "-stand f08 -O2 -w ")
@@ -67,11 +67,11 @@ set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} ${Fortran_FLAGS_DEBU
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${C_FLAGS_RELEASE}")
 set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} ${Fortran_FLAGS_RELEASE}")
 
-message("Cflags release = " ${CMAKE_C_FLAGS_RELEASE})
-message("Cflags debug = " ${CMAKE_C_FLAGS_DEBUG})
-message("Fflags release = " ${CMAKE_Fortran_FLAGS_RELEASE})
-message("Fflags debug = " ${CMAKE_Fortran_FLAGS_DEBUG})
 message("build type = " ${CMAKE_BUILD_TYPE})
+message("CFlags release = " ${CMAKE_C_FLAGS_RELEASE})
+message("FFlags release = " ${CMAKE_Fortran_FLAGS_RELEASE})
+message("FFlags debug = " ${CMAKE_Fortran_FLAGS_DEBUG})
+message("CFlags debug = " ${CMAKE_C_FLAGS_DEBUG})
 message("prefix = " ${CMAKE_INSTALL_PREFIX})
 message("C Compiler = " ${CMAKE_C_COMPILER})
 message("C Compiler ID = " ${CMAKE_C_COMPILER_ID})
