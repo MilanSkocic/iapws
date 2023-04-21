@@ -34,7 +34,7 @@ The Henry's constant :@f$k_H@f$ has a dimension of pressure expressed here in GP
 ## Vapor-Liquid Distribution Constant: kd
 
 \f{eqnarray*}{
-k_H = \lim_{x_2 \rightarrow 0} y_2/x_2 
+k_D = \lim_{x_2 \rightarrow 0} y_2/x_2 
 \f}
 
 * @f$ x_2 @f$: mole fraction of the solute
@@ -54,3 +54,10 @@ In both cases, @f$f(\tau)@f$ has the following form:
     f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}
 @f}
 * @f$ n @f$ is 6 for H2O and 4 for D2O 
+
+## Molar fractions
+
+@f{eqnarray*}{
+    x_2 = \frac{1}{k_H}\\
+    y_2 = \frac{k_D}{k_H}
+@f}
