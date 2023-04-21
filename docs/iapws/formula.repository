@@ -17,3 +17,38 @@ S [ppm.bar^{-1}] = \frac{x_2 \cdot M_{gas}}{M_s} \cdot 10^6 \\
 S [cm^3.kg^{-1}.bar^{-1}] = \frac{x_2 \cdot V_m}{M_s}
 \end{eqnarray*}
 \_form#10=108x14:$k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 $
+\_form#11=90x19:\begin{eqnarray*}
+k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 
+\end{eqnarray*}
+\_form#12=271x33:\begin{eqnarray*}
+\ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau\end{eqnarray*}
+\_form#13=61x11:$ \tau = 1-T_R $
+\_form#14=65x14:$ T_R = T/T_{c1} $
+\_form#15=18x11:$ T_{c1} $
+\_form#16=143x35:\begin{eqnarray*}
+\ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}
+\end{eqnarray*}
+\_form#17=9x6:$n$
+\_form#18=333x31:\begin{eqnarray*}
+lnK =qF+ f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)
+\end{eqnarray*}
+\_form#19=90x19:\begin{eqnarray*}
+k_H = \lim_{x_2 \rightarrow 0} y_2/x_2 
+\end{eqnarray*}
+\_form#20=13x9:$y_2$
+\_form#21=15x13:$k_D$
+\_form#22=6x9:$q$
+\_form#23=15x14:$(\tau)$
+\_form#24=23x14:$f(\tau)$
+\_form#25=123x28:\begin{eqnarray*}
+    f(\tau) = \sum _i=1 ^{n} c_i \cdot \tau ^{d_i}
+\end{eqnarray*}
+\_form#26=95x35:\begin{eqnarray*}
+    f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}
+\end{eqnarray*}
+\_form#27=9x6:$ n $
+\_form#28=16x9:$ p_{c1} $
+\_form#29=13x9:$ x_2 $
+\_form#30=13x9:$ y_2 $
+\_form#31=6x9:$ q $
+\_form#32=23x14:$ f(\tau) $
