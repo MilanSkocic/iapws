@@ -27,3 +27,28 @@ def get_kh(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Unio
         return np.asarray(kh)
     else:
         return kh
+
+def get_kd(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[float, NDArray]:
+    """
+    Compute the vapor-liquid distribution constant for the gas and solvent at temperature.
+    
+    Parameters
+    -----------
+    temperature: int, float or array-like.
+        Temperature in °C.
+    gas: str
+        Desired gas.
+    solvent: str
+        Desired solvent: H2O or D2O.
+
+    Returns
+    --------
+    kd: float or array-like
+        Henry constant in GPa-1.
+    """
+    kd = _iapws.get_kd(temperature, gas, solvent)
+    if isinstance(kd, memoryview):
+        return np.asarray(kd)
+    else:
+        return kd
+
