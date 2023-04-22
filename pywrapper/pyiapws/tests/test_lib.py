@@ -1,23 +1,43 @@
+r"""Tests"""
 import unittest
 
 import pyiapws
 import numpy as np
 
-class TestLib(unittest.TestCase):
+class TestkH(unittest.TestCase):
     r"""Test pyiawps library."""
     def test_int_input(self):
-        value = pyiapws.get_kh(25, "He", "H2O")
-        expected = 14.2613
+        value = np.log(pyiapws.get_kh(int(300.0-273.15), "He", "H2O"))
+        expected = 2.6576
         self.assertAlmostEqual(value, expected, places=4)
 
     def test_float_input(self):
-        value = pyiapws.get_kh(25.0, "He", "H2O")
-        expected = 14.2613
+        value = np.log(pyiapws.get_kh(300.0-273.15, "He", "H2O"))
+        expected = 2.6576
+        self.assertAlmostEqual(value, expected, places=4)
+
+    def test_array_input(self):
+        x = np.linspace(25, 360, 100000)
+        y = pyiapws.get_kh(x, "He", "H2O")
+        value = type(y)
+        expected = type(x)
+        self.assertEqual(value, expected)
+
+class TestkD(unittest.TestCase):
+    r"""Test pyiawps library."""
+    def test_int_input(self):
+        value = np.log(pyiapws.get_kd(int(300-273.15), "He", "H2O"))
+        expected = 15.2749
+        self.assertAlmostEqual(value, expected, places=4)
+
+    def test_float_input(self):
+        value = np.log(pyiapws.get_kd(300.0-273.15, "He", "H2O"))
+        expected = 15.2250
         self.assertAlmostEqual(value, expected, places=4)
 
     def test_array_input(self):
         x = np.linspace(25,360,100000)
-        y = pyiapws.get_kh(x, "He", "H2O")
+        y = pyiapws.get_kd(x, "He", "H2O")
         value = type(y)
         expected = type(x)
         self.assertEqual(value, expected)
