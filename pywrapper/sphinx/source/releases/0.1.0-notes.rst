@@ -1,10 +1,10 @@
-PyCodata 0.1.0 Release Note
+pyiapws 0.1.0 Release Note
 ===================================
 
 Changes
 ------------
 
-* Implementation interface for IAPWS_G7_04 around the iapws constants.
+* C extension for kH and kD.
 
 Download
 ---------------
@@ -20,4 +20,4 @@ Milan Skocic
 Commits
 --------------
 
-Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/....0.2.0
+Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/....0.1.0
