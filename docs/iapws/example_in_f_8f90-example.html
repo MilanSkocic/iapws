@@ -77,22 +77,25 @@ $(function() {
 <div class="line"><span class="lineno">    2</span>    <span class="keywordtype">use </span>iso_fortran_env</div>
 <div class="line"><span class="lineno">    3</span>    <span class="keywordtype">use </span><a class="code hl_namespace" href="namespaceiapws.html">iapws</a></div>
 <div class="line"><span class="lineno">    4</span>    <span class="keywordtype">implicit none</span></div>
-<div class="line"><span class="lineno">    5</span><span class="keywordtype">    real</span>(real64) :: kh, Scm3, Sppm</div>
-<div class="line"><span class="lineno">    6</span>    <span class="keywordtype">integer(int32)</span> :: status</div>
-<div class="line"><span class="lineno">    7</span>    <span class="keywordtype">character(len=5)</span> :: gas = <span class="stringliteral">&quot;O2&quot;</span></div>
-<div class="line"><span class="lineno">    8</span>    <span class="keywordtype">character(len=5)</span> :: solvent = <span class="stringliteral">&quot;H2O&quot;</span></div>
-<div class="line"><span class="lineno">    9</span><span class="keywordtype">    real</span>(real64) :: T = 25.0d0</div>
-<div class="line"><span class="lineno">   10</span> </div>
-<div class="line"><span class="lineno">   11</span>    kh = <a class="code hl_function" href="namespaceiapws.html#a3332c46104887740dc06fe5b9167de92">iapws_kh</a>(t, gas, solvent)</div>
-<div class="line"><span class="lineno">   12</span>    print <span class="stringliteral">&quot;(A10, X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F10.4)&quot;</span>, <span class="stringliteral">&quot;Gas=&quot;</span>, gas, <span class="stringliteral">&quot;T=&quot;</span>, t, <span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;kh=&quot;</span>, kh</div>
-<div class="line"><span class="lineno">   13</span> </div>
-<div class="line"><span class="lineno">   14</span><span class="keyword">end program</span></div>
+<div class="line"><span class="lineno">    5</span><span class="keywordtype">    real</span>(real64) :: kh, kd</div>
+<div class="line"><span class="lineno">    6</span>    <span class="keywordtype">character(len=5)</span> :: gas = <span class="stringliteral">&quot;O2&quot;</span></div>
+<div class="line"><span class="lineno">    7</span>    <span class="keywordtype">character(len=5)</span> :: solvent = <span class="stringliteral">&quot;H2O&quot;</span></div>
+<div class="line"><span class="lineno">    8</span><span class="keywordtype">    real</span>(real64) :: T = 25.0d0</div>
+<div class="line"><span class="lineno">    9</span> </div>
+<div class="line"><span class="lineno">   10</span>    kh = <a class="code hl_function" href="namespaceiapws.html#a3332c46104887740dc06fe5b9167de92">iapws_kh</a>(t, gas, solvent)</div>
+<div class="line"><span class="lineno">   11</span>    print <span class="stringliteral">&quot;(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F10.4)&quot;</span>, <span class="stringliteral">&quot;Gas=&quot;</span>, gas, <span class="stringliteral">&quot;T=&quot;</span>, t, <span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;kh=&quot;</span>, kh</div>
+<div class="line"><span class="lineno">   12</span>    </div>
+<div class="line"><span class="lineno">   13</span>    kd = <a class="code hl_function" href="namespaceiapws.html#a1a0937b529edb298a3a4fa18192c8b84">iapws_kd</a>(t, gas, solvent)</div>
+<div class="line"><span class="lineno">   14</span>    print <span class="stringliteral">&quot;(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F15.4)&quot;</span>, <span class="stringliteral">&quot;Gas=&quot;</span>, gas, <span class="stringliteral">&quot;T=&quot;</span>, t, <span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;kh=&quot;</span>, kd</div>
+<div class="line"><span class="lineno">   15</span> </div>
+<div class="line"><span class="lineno">   16</span><span class="keyword">end program</span></div>
 <div class="ttc" id="anamespaceiapws_html"><div class="ttname"><a href="namespaceiapws.html">iapws</a></div><div class="ttdoc">Main module for IAPWS computations.</div><div class="ttdef"><b>Definition:</b> iapws.f90:6</div></div>
+<div class="ttc" id="anamespaceiapws_html_a1a0937b529edb298a3a4fa18192c8b84"><div class="ttname"><a href="namespaceiapws.html#a1a0937b529edb298a3a4fa18192c8b84">iapws::iapws_kd</a></div><div class="ttdeci">pure real(real64) function, public iapws_kd(t, gas, solvent)</div><div class="ttdoc">Compute the vapor-liquid constant for a given temperature and gas in solvent.</div><div class="ttdef"><b>Definition:</b> iapws.f90:46</div></div>
 <div class="ttc" id="anamespaceiapws_html_a3332c46104887740dc06fe5b9167de92"><div class="ttname"><a href="namespaceiapws.html#a3332c46104887740dc06fe5b9167de92">iapws::iapws_kh</a></div><div class="ttdeci">pure real(real64) function, public iapws_kh(t, gas, solvent)</div><div class="ttdoc">Compute the henry constant for a given temperature and gas in solvent.</div><div class="ttdef"><b>Definition:</b> iapws.f90:23</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 21 2023 07:05:35 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+Generated on Mon Apr 24 2023 07:24:23 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
 </small></address>
 </body>
 </html>

@@ -52,3 +52,18 @@ k_H = \lim_{x_2 \rightarrow 0} y_2/x_2
 \_form#30=13x9:$ y_2 $
 \_form#31=6x9:$ q $
 \_form#32=23x14:$ f(\tau) $
+\_form#33=89x19:\begin{eqnarray*}
+k_D = \lim_{x_2 \rightarrow 0} y_2/x_2 
+\end{eqnarray*}
+\_form#34=275x29:\begin{eqnarray}
+    x_2 = \frac{1}{k_H}
+    y_2 = \frac{k_D}{k_H}
+\end{eqnarray}
+\_form#35=251x61:\begin{eqnarray}
+    x_2 = \frac{1}{k_H}\\
+    y_2 = \frac{k_D}{k_H}
+\end{eqnarray}
+\_form#36=48x61:\begin{eqnarray*}
+    x_2 = \frac{1}{k_H}\\
+    y_2 = \frac{k_D}{k_H}
+\end{eqnarray*}

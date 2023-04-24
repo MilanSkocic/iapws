@@ -87,18 +87,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0e6d16353732837a66ce4508bbf8655e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iapws_8h.html#a0e6d16353732837a66ce4508bbf8655e">iapws_capi_kh</a> (double T, char *gas, char *solvent, int size_gas, int size_solvent)</td></tr>
-<tr class="memdesc:a0e6d16353732837a66ce4508bbf8655e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the henry constant for a given temperature and gas in solvent.  <br /></td></tr>
-<tr class="separator:a0e6d16353732837a66ce4508bbf8655e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1861a4f5d948af7b6b11deba05b07b0b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iapws_8h.html#a1861a4f5d948af7b6b11deba05b07b0b">iapws_capi_kd</a> (double T, char *gas, char *solvent, int size_gas, int size_solvent)</td></tr>
-<tr class="memdesc:a1861a4f5d948af7b6b11deba05b07b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the vapor-liquid constant for a given temperature and gas in solvent.  <br /></td></tr>
-<tr class="separator:a1861a4f5d948af7b6b11deba05b07b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a725fee90e1f82929c246c5375b79ad61"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iapws_8h.html#a725fee90e1f82929c246c5375b79ad61">iapws_capi_kh</a> (double T, char *gas, char *solvent, size_t size_gas, size_t size_solvent)</td></tr>
+<tr class="memdesc:a725fee90e1f82929c246c5375b79ad61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the henry constant for a given temperature and gas in solvent.  <br /></td></tr>
+<tr class="separator:a725fee90e1f82929c246c5375b79ad61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513b67e7b9a44ad583c263cd864b1beb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iapws_8h.html#a513b67e7b9a44ad583c263cd864b1beb">iapws_capi_kd</a> (double T, char *gas, char *solvent, size_t size_gas, size_t size_solvent)</td></tr>
+<tr class="memdesc:a513b67e7b9a44ad583c263cd864b1beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the vapor-liquid constant for a given temperature and gas in solvent.  <br /></td></tr>
+<tr class="separator:a513b67e7b9a44ad583c263cd864b1beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>C header for the IAPWS libary. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a1861a4f5d948af7b6b11deba05b07b0b" name="a1861a4f5d948af7b6b11deba05b07b0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1861a4f5d948af7b6b11deba05b07b0b">&#9670;&#160;</a></span>iapws_capi_kd()</h2>
+<a id="a513b67e7b9a44ad583c263cd864b1beb" name="a513b67e7b9a44ad583c263cd864b1beb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513b67e7b9a44ad583c263cd864b1beb">&#9670;&#160;</a></span>iapws_capi_kd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,13 +124,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size_gas</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size_solvent</em>&#160;</td>
         </tr>
         <tr>
@@ -153,11 +153,13 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>kd Vapor-liquid constant. NaN if gas not found. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="example_in_c_8c-example.html#a2">example_in_c.c</a>.</dd>
+</dl>
 
 </div>
 </div>
-<a id="a0e6d16353732837a66ce4508bbf8655e" name="a0e6d16353732837a66ce4508bbf8655e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e6d16353732837a66ce4508bbf8655e">&#9670;&#160;</a></span>iapws_capi_kh()</h2>
+<a id="a725fee90e1f82929c246c5375b79ad61" name="a725fee90e1f82929c246c5375b79ad61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a725fee90e1f82929c246c5375b79ad61">&#9670;&#160;</a></span>iapws_capi_kh()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,13 +185,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size_gas</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size_solvent</em>&#160;</td>
         </tr>
         <tr>
@@ -220,7 +222,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 21 2023 07:05:35 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+Generated on Mon Apr 24 2023 07:24:23 for IAPWS by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
 </small></address>
 </body>
 </html>
