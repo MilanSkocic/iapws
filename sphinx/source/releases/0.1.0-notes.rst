@@ -1,47 +1,27 @@
-pyiapws 0.1.0 Release Note
-===================================
+iapws 0.1.0 Release Note
+==================================
 
 Changes
-------------
+^^^^^^^^
 
-* C extension for kH and kD.
+* Implementation of kH and kD from IAPWS G7-04 in fortran + C API
+* Python wrapper for kH and kD.
 
 Download
----------------
-`PyPI <https://pypi.org/project/pyiapws/>`_
+^^^^^^^^^^
+
+`iapws <https://github.com/MilanSkocic/iapws/releases>`_
+
+`pyiapws <https://pypi.org/pyiapws>`_
 
 
 Contributors
-----------------
+^^^^^^^^^^^^^^^
 
 Milan Skocic
 
 
 Commits
---------------
-
-Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/....0.1.0
-
-
-
-
-
-# iapws 0.1.0 Release Note
-
-## Changes
-
-* Implementation of kH and kD from IAPWS G7-04 in fortran + C API
-* Python wrapper for kH and kD.
-
-## Download
-[iapws releases](https://github.com/MilanSkocic/iapws/releases)
-
-
-## Contributors
-
-Milan Skocic
-
-
-## Commits
+^^^^^^^^
 
 Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/....0.1.0

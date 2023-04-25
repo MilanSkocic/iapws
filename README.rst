@@ -12,9 +12,9 @@ The compilation was tested on Linux (Debian), MacOS and Windows.
 
 Links:
 
-* Sources: <https://github.com/MilanSkocic/iapws>.
-* Online documentation: <https://milanskocic.github.io/iapws/iapws/index.html>.
-* PDF documentation: <https://milanskocic.github.io/iapws/iapws/refman.pdf>.
+* Sources: https://github.com/MilanSkocic/iapws.
+* Online documentation: https://milanskocic.github.io/iapws/iapws/index.html.
+* PDF documentation: :download:`iapws <../../build/latex/iapws.pdf>`. 
 
 .. readme_inclusion_end
 

@@ -29,7 +29,8 @@ breathe_default_project = mod.__package_name__
 breathe_projects = {mod.__package_name__: "../doxygen/xml/"}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-bibtex_bibfiles = ["./references/iapws.bib"]
+bibtex_bibfiles = ["references/iapws.bib"]
+bibtex_default_style = 'unsrt'
 # The suffix(e filenames.
 # You can specify multiple suffix as a list of string:
 #
@@ -40,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = mod.__package_name__
+project = "iapws"
 copyright = mod.__copyright__
 author = mod.__author__
 
@@ -161,3 +162,8 @@ numpy_show_class_members = True
 numpydoc_show_inherited_class_members = False
 
 autoclass_content = 'init'  # PEP257 indicates that classes should be documented in __init__
+
+numfig = True
+math_numfig = True
+numfig_secnum_depth = 2
+math_eqref_format = "Eq.{number}"

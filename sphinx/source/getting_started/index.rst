@@ -1,7 +1,9 @@
-Introduction
+Getting Started
 ================
 
 .. toctree::
     :maxdepth: 2
 
-    introduction.rst
+    iapws.rst
+    pyiapws.rst
+    examples.rst
