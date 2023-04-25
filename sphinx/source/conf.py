@@ -3,11 +3,11 @@
 
 import os
 import sys, importlib.util
-sys.path.insert(0, os.path.abspath('../../'))
-cautodoc_root = os.path.abspath('../../')
+sys.path.insert(0, os.path.abspath('../../pywrapper/'))
+cautodoc_root = os.path.abspath('../../pywrapper/')
 
 # Import only version.py file for extracting the version
-spec = importlib.util.spec_from_file_location('version', '../../pyiapws/version.py')
+spec = importlib.util.spec_from_file_location('version', '../../pywrapper/pyiapws/version.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -16,21 +16,21 @@ spec.loader.exec_module(mod)
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '5.0'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
-              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.imgmath',
-              'sphinx.ext.ifconfig', 'sphinx.ext.viewcode','numpydoc']
+              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.imgmath', "breathe",
+              'sphinx.ext.ifconfig', 'sphinx.ext.viewcode','numpydoc', "sphinxcontrib.bibtex"]
 
-#breathe_default_project = mod.__package_name__
-#breathe_projects = {mod.__package_name__: "../doxygen/xml/"}
+breathe_default_project = mod.__package_name__
+breathe_projects = {mod.__package_name__: "../doxygen/xml/"}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
-# The suffix(es) of source filenames.
+bibtex_bibfiles = ["./references/iapws.bib"]
+# The suffix(e filenames.
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
@@ -122,7 +122,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyiapws.tex', 'pyiapws Documentation',
+    (master_doc, 'iapws.tex', 'iapws Documentation',
      'M. Skocic', 'manual'),
 ]
 
@@ -132,7 +132,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyiapws Demonstration', 'pyiapws Demonstration Documentation',
+    (master_doc, 'iapws Demonstration', 'iapws Demonstration Documentation',
      [author], 1)
 ]
 
@@ -143,9 +143,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pyiapws Demonstration', 'C Extensiion Demonstration Documentation',
-     author, 'pyiapws Demonstration', 'One line description of project.',
-     'Miscellaneous'),
+    (master_doc, 'iapws', "iapws library",
+     author, 'pyiapws Demonstration', "IAPWS",
+     'Science'),
 ]
 
 

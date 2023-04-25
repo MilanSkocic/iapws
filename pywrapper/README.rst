@@ -4,19 +4,19 @@ Description
  .. readme_inclusion_start
 
 Python wrapper around the
-`Fortran iapws library <https://milanskocic.github.io/iapws/iapws/index.html>`_.
-Follow the `installation instructions <https://milanskocic.github.io/iapws/iapws/pages.html>`_.
+`Fortran iapws library <https://milanskocic.github.io/iapws/index.html>`_.
+Follow the 
+`installation instructions <https://milanskocic.github.io/iapws/getting_started/introduction.html#how-to-install>`_.
 for compiling and installing the library.
 
 For now,the wrapper must be compiled on Linux, windows and MacOS platforms
 after installing the iapws library using the compiler that was used to compile your python interpreter.
 
-The version of the python wrapper follows the versions (major and minor) of the iapws library.
-The patches will be independent.
+The version of the python wrapper follows the versions of the iapws library.
 
 .. readme_inclusion_end 
 
-The online documentation: `<https://milanskocic.github.io/iapws/pyiapws/index.html>`_.
+The online documentation: `<https://milanskocic.github.io/iapws/index.html>`_.
 
 Installation
 ===================

@@ -1,7 +1,6 @@
 /**
  * @file iapws.h
  * @brief C header for the IAPWS libary.
- * @example example_in_c.c
  */
 
 #ifndef IAPWS_H

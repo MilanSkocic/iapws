@@ -27,3 +27,5 @@ __pycache__
 *.so
 
 .DS_Store
+
+sphinx/doxygen/xml/
