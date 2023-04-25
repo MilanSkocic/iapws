@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>iapws library &#8212; iapws 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python wrapper pyiapws" href="pyiapws.html" />
+    <link rel="prev" title="Getting Started" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyiapws.html" title="Python wrapper pyiapws"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iapws library</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="iapws-library">
+<h1>iapws library<a class="headerlink" href="#iapws-library" title="Permalink to this heading">¶</a></h1>
+<p><cite>ipaws</cite> is a  Fortran library providing the formulas for computing light and heavy water properties.
+It also provides a API for the C language. The formulations are taken from <a class="reference external" href="http://iapws.org">http://iapws.org</a>.
+A shared and a static library <cite>libiapws</cite> are compiled (f2008+) with the Fortran and C headers.
+The static and shared libraries can be installed in order to be included in Fortran or C programs.</p>
+<p>The compilation was tested on Linux (Debian), MacOS and Windows.</p>
+<p>Links:</p>
+<ul class="simple">
+<li><p>Sources: <a class="reference external" href="https://github.com/MilanSkocic/iapws">https://github.com/MilanSkocic/iapws</a>.</p></li>
+<li><p>Online documentation: <a class="reference external" href="https://milanskocic.github.io/iapws/iapws/index.html">https://milanskocic.github.io/iapws/iapws/index.html</a>.</p></li>
+<li><p>PDF documentation: <a class="reference download internal" download="" href="../_downloads/c6590f1cb16fa3c0fab9a03d320b9284/iapws.pdf"><code class="xref download docutils literal notranslate"><span class="pre">iapws</span></code></a>.</p></li>
+</ul>
+<section id="how-to-install">
+<h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this heading">¶</a></h2>
+<p>Create build directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>build
+$<span class="w"> </span>d<span class="w"> </span>build
+</pre></div>
+</div>
+<p>Generate a makefile</p>
+<ul class="simple">
+<li><p>On Unix-like OS:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Unix Makefiles&quot;</span><span class="w"> </span>-S<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/path/to/folder
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On windows with MSYS2:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Unix Makefiles&quot;</span><span class="w"> </span>-S<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/path/to/folder
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On windows with ifort and msvc:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;NMake Makefiles&quot;</span><span class="w"> </span>-S<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/path/to/folder
+</pre></div>
+</div>
+<p>Build</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--build<span class="w"> </span>.
+</pre></div>
+</div>
+<p>Run tests</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ctest
+</pre></div>
+</div>
+<p>Install</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--install<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span><span class="o">&gt;=</span><span class="mf">4.6</span> <span class="ow">or</span> <span class="n">msvc</span><span class="o">&gt;=</span><span class="mi">14</span>
+
+<span class="n">gfortran</span><span class="o">&gt;=</span><span class="mf">4.6</span> <span class="ow">or</span> <span class="n">ifort</span><span class="o">&gt;=</span><span class="mi">18</span>
+
+<span class="n">cmake</span><span class="o">&gt;=</span><span class="mf">3.10</span>
+</pre></div>
+</div>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="../_downloads/1791305e2a972bbe03ebc5ed6c738780/LICENSE.txt"><code class="xref download docutils literal notranslate"><span class="pre">GNU</span> <span class="pre">General</span> <span class="pre">Public</span> <span class="pre">License</span> <span class="pre">v3</span> <span class="pre">(GPLv3)</span></code></a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">iapws library</a><ul>
+<li><a class="reference internal" href="#how-to-install">How to install</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Getting Started</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="pyiapws.html"
+                          title="next chapter">Python wrapper pyiapws</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting_started/iapws.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyiapws.html" title="Python wrapper pyiapws"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Getting Started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Getting Started</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iapws library</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright Copyright (C) 2023 Milan Skocic.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+iapws 0.1.0 Release Note
+==================================
+
+Changes
+^^^^^^^^
+
+* Implementation of kH and kD from IAPWS G7-04 in fortran + C API
+* Python wrapper for kH and kD.
+
+Download
+^^^^^^^^^^
+
+`iapws <https://github.com/MilanSkocic/iapws/releases>`_
+
+`pyiapws <https://pypi.org/pyiapws>`_
+
+
+Contributors
+^^^^^^^^^^^^^^^
+
+Milan Skocic
+
+
+Commits
+^^^^^^^^
+
+Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/....0.1.0
