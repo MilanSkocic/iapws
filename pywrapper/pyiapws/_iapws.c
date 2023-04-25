@@ -6,15 +6,15 @@
 
 PyDoc_STRVAR(module_docstring, "C extension wrapping the Fortran iapws library.");
 
-PyDoc_STRVAR(iapws_get_kh_doc, 
+PyDoc_STRVAR(iapws_kh_doc, 
 "get_kh(T, gas, solvent) --> float \n\n"
 "Get the kH in GPa-1 value for gas in solvent for T. If not found returns NaN");
 
-PyDoc_STRVAR(iapws_get_kd_doc, 
+PyDoc_STRVAR(iapws_kd_doc, 
 "get_kd(T, gas, solvent) --> float \n\n"
 "Get the kD in GPa-1 value for gas in solvent for T. If not found returns NaN");
 
-static PyObject *_iapws_get_kh(PyObject *self, PyObject *args){
+static PyObject *_iapws_kh(PyObject *self, PyObject *args){
 
     PyObject *T_obj;
     PyObject *mview;
@@ -74,7 +74,7 @@ static PyObject *_iapws_get_kh(PyObject *self, PyObject *args){
 }
 
 
-static PyObject *_iapws_get_kd(PyObject *self, PyObject *args){
+static PyObject *_iapws_kd(PyObject *self, PyObject *args){
 
     PyObject *T_obj;
     PyObject *mview;
@@ -134,8 +134,8 @@ static PyObject *_iapws_get_kd(PyObject *self, PyObject *args){
 }
 
 static PyMethodDef myMethods[] = {
-    {"get_kh", (PyCFunction) _iapws_get_kh, METH_VARARGS, iapws_get_kh_doc},
-    {"get_kd", (PyCFunction) _iapws_get_kd, METH_VARARGS, iapws_get_kd_doc},
+    {"kh", (PyCFunction) _iapws_kh, METH_VARARGS, iapws_kh_doc},
+    {"kd", (PyCFunction) _iapws_kd, METH_VARARGS, iapws_kd_doc},
     { NULL, NULL, 0, NULL }
 };
 
