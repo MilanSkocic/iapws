@@ -140,7 +140,7 @@ end function
 
 !> @brief Find the index of the gas in the ABC table.
 !! @param[in] gas Gas.
-!! @param[in] abc ABC table.
+!! @param[in] efgh ABC table.
 pure function iapwsG704_findgas_efgh(gas, efgh)result(value)
     implicit none
     !! arguments
@@ -162,7 +162,6 @@ pure function iapwsG704_findgas_efgh(gas, efgh)result(value)
 end function
 
 !> @brief Compute the henry constant of a given gas.
-!! @param[in] ix Gas index for which the computation has to be performed.
 !! @param[in] T_K Temperature in K.
 !! @param[in] Tc1 Critical temperature.
 !! @param[in] pc1 Critical pressure.
@@ -263,11 +262,10 @@ pure function iapwsG704_kh_heavywater(T, gas)result(value)
 end function
 
 !> @brief Compute the vapor-liquid constant kd of a given gas.
-!! @param[in] ix Gas index for which the computation has to be performed.
 !! @param[in] T_K Temperature in K.
 !! @param[in] Tc1 Critical temperature.
 !! @param[in] q solvent coefficient
-!! @param[in] gas_abc abc parameters of gas
+!! @param[in] gas_efgh abc parameters of gas
 !! @param[in] cidi ai and bi coefficients of a solvent.
 !! @return kd Vapor-liquid constant.
 pure function iapwsG704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
