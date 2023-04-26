@@ -167,7 +167,7 @@ end function
 !! @param[in] pc1 Critical pressure.
 !! @param[in] gas_abc abc parameters of gas
 !! @param[in] aibi ai and bi coefficients of a solvent.
-!! @return kH Henry constant in mole fraction per GPa.
+!! @return kh Henry constant.
 pure function iapwsG704_kh(T_K, Tc1, pc1, gas_abc, aibi) result(value)
     implicit none
     !! arguments 
@@ -202,7 +202,7 @@ end function
 !> @brief Compute the henry constant for a given temperature and gas in water.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant. NaN if gas not found.
 pure function iapwsG704_kh_water(T, gas)result(value)
     implicit none
 
@@ -233,7 +233,7 @@ end function
 !> @brief Compute the henry constant for a given temperature and gas in heavywater.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
-!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant. NaN if gas not found.
 pure function iapwsG704_kh_heavywater(T, gas)result(value)
     implicit none
 

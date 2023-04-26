@@ -19,7 +19,7 @@ contains
 !! @param[in] solvent Solvents: H2O or D2O. Default is H2O.
 !! @param[in] size_gas Length of the string gas.
 !! @param[in] size_solvent Length of the string gas.
-!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant. NaN if gas not found.
 function iapws_capi_kh(T, gas, solvent, size_gas, size_solvent)bind(C)result(kh)
     implicit none
     !! arguments

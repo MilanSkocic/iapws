@@ -8,11 +8,11 @@ PyDoc_STRVAR(module_docstring, "C extension wrapping the Fortran iapws library."
 
 PyDoc_STRVAR(iapws_kh_doc, 
 "get_kh(T, gas, solvent) --> float \n\n"
-"Get the kH in GPa-1 value for gas in solvent for T. If not found returns NaN");
+"Get the kH value for gas in solvent for T. If not found returns NaN");
 
 PyDoc_STRVAR(iapws_kd_doc, 
 "get_kd(T, gas, solvent) --> float \n\n"
-"Get the kD in GPa-1 value for gas in solvent for T. If not found returns NaN");
+"Get the kD value for gas in solvent for T. If not found returns NaN");
 
 static PyObject *_iapws_kh(PyObject *self, PyObject *args){
 

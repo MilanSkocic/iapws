@@ -13,7 +13,7 @@
  * @param[in] solvent Solvents: H2O or D2O. Default is H2O.
  * @param[in] size_gas Length of gas string
  * @param[in] size_solvent Length of solvent string
- * @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
+ * @return kh Henry constant. NaN if gas not found.
  */
 extern double iapws_capi_kh(double T, char *gas, char *solvent, size_t size_gas, size_t size_solvent);
 
