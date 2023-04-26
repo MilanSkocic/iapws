@@ -37,7 +37,6 @@ Both equations have the form:
 * :math:`n` is 6 for  H2O and 5 for D2O
 * :math:`p_{c1}` is the critical pressure of the solvent recommended by IAPWS :cite:p:`iapws2007` (22.064 MPa for H2O and 21.671 MPa for D2O)
 
-The Henry's constant :math:`k_H` has a dimension of pressure expressed here in :math:`GPa^{-1}`.
 
 Vapor-Liquid Distribution Constant: kd
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
