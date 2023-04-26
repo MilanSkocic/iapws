@@ -1,4 +1,4 @@
-iapws library
+iapws
 ===============
 
 .. doxygennamespace:: iapws
