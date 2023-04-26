@@ -1,4 +1,4 @@
-Python wrapper pyiapws
+pyiapws
 =========================
 
 .. include:: ../../../pywrapper/README.rst
