@@ -10,13 +10,13 @@ The static and shared libraries can be installed in order to be included in Fort
 
 The compilation was tested on Linux (Debian), MacOS and Windows.
 
+.. readme_inclusion_end
+
 Links:
 
 * Sources: https://github.com/MilanSkocic/iapws.
 * Online documentation: https://milanskocic.github.io/iapws/index.html.
-* PDF documentation: :download:`iapws <../../build/latex/iapws.pdf>`. 
 
-.. readme_inclusion_end
 
 Installation
 =================
