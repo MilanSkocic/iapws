@@ -50,7 +50,8 @@
 <p>The computation is based on the parameters provided by the IAPWS 2004 <span id="id1">[<a class="reference internal" href="../references/index.html#id4" title="IAPWS. Guideline on the Henry's Constant and Vapor-Liquid Distribution Constant for Gases in H\textsubscript 2O and D\textsubscript 2O at High Temperatures. Technical Report G7-04, IAPWS, Kyoto, Japan, 2004.">1</a>]</span>.</p>
 <section id="henry-contant-kh">
 <h2>Henry Contant: kh<a class="headerlink" href="#henry-contant-kh" title="Permalink to this heading">¶</a></h2>
-<p>The Henry constant <img class="math" src="../_images/math/e97052bb6fed48da8b4e12328ce0c890780e44a9.png" alt="kH"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kh">Eq.1</a>.</p>
+<p>The Henry constant <img class="math" src="../_images/math/e97052bb6fed48da8b4e12328ce0c890780e44a9.png" alt="kH"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kh">Eq.1</a>.
+<img class="math" src="../_images/math/ffbfb1be94728ccddf2d8877eef911c5e6fc6cd4.png" alt="k_H"/> is expressed in MPa.</p>
 <div class="math" id="equation-eq-iapws-kh">
 <p><span class="eqno">(1)<a class="headerlink" href="#equation-eq-iapws-kh" title="Permalink to this equation">¶</a></span><img src="../_images/math/036fd6d2be6a1347316dcf1e5e202270d708fca8.png" alt="k_H = \lim_{x_2 \rightarrow 0} f_2/x_2"/></p>
 </div><ul class="simple">
@@ -63,20 +64,23 @@
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/045f714bd70e021b2406e0439db8d07728df28fe.png" alt="\tau = 1-T_R"/></p></li>
 <li><p><img class="math" src="../_images/math/ee10016037cad9575a47e6d7a44dbc867d96ecfc.png" alt="T_R = T/T_{c1}"/></p></li>
-<li><p><img class="math" src="../_images/math/ac244badcd47cd992eb34566c4072bd9592059ca.png" alt="T_{c1}"/>: critical temperature of the solvent as recommended by IAPWS <span id="id2">[<a class="reference internal" href="../references/index.html#id5" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, Lucerne, Switzerland, 2007.">2</a>]</span> (647.096 for H2O and 643.847 K for D2O)</p></li>
-<li><p><img class="math" src="../_images/math/9ffea4b06b04a7fc821d4fb2643264181c698106.png" alt="p_1^*"/> is the vapor pressure of the solvent at the temperature of interest and is calculated from the correlation of Wagner and Pruss for H2O <span id="id3">[<a class="reference internal" href="../references/index.html#id6" title="Wolfgang Wagner and A. Pruss. International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.">3</a>]</span> and from the correlation of Harvey and Lemmon  for D2O <span id="id4">[<a class="reference internal" href="../references/index.html#id3" title="Allan H. Harvey and Eric W. Lemmon. Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point. Journal of Physical and Chemical Reference Data, 31(1):173–181, March 2002. doi:10.1063/1.1430231.">4</a>]</span>.</p></li>
+<li><p><img class="math" src="../_images/math/ac244badcd47cd992eb34566c4072bd9592059ca.png" alt="T_{c1}"/>: critical temperature of the solvent as recommended by IAPWS <span id="id2">[<a class="reference internal" href="../references/index.html#id5" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, Lucerne, Switzerland, 2007.">2</a>]</span></p></li>
+<li><p><img class="math" src="../_images/math/9ffea4b06b04a7fc821d4fb2643264181c698106.png" alt="p_1^*"/> is the vapor pressure of the solvent at the temperature of interest and
+is calculated from the correlation of Wagner and Pruss for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> <span id="id3">[<a class="reference internal" href="../references/index.html#id6" title="Wolfgang Wagner and A. Pruss. International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.">3</a>]</span>
+and from the correlation of Harvey and Lemmon  for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/> <span id="id4">[<a class="reference internal" href="../references/index.html#id3" title="Allan H. Harvey and Eric W. Lemmon. Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point. Journal of Physical and Chemical Reference Data, 31(1):173–181, March 2002. doi:10.1063/1.1430231.">4</a>]</span>.</p></li>
 </ul>
 <p>Both equations have the form:</p>
 <div class="math" id="equation-eq-iapws-pstar">
 <p><span class="eqno">(3)<a class="headerlink" href="#equation-eq-iapws-pstar" title="Permalink to this equation">¶</a></span><img src="../_images/math/bd2681c96d49c252ac2c7ac31fe3ab11af959859.png" alt="\ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}"/></p>
 </div><ul class="simple">
-<li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for  H2O and 5 for D2O</p></li>
-<li><p><img class="math" src="../_images/math/ca28b53554b735e9d40e96303676a4a6450f340a.png" alt="p_{c1}"/> is the critical pressure of the solvent recommended by IAPWS <span id="id5">[<a class="reference internal" href="../references/index.html#id5" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, Lucerne, Switzerland, 2007.">2</a>]</span> (22.064 MPa for H2O and 21.671 MPa for D2O)</p></li>
+<li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for  <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and 5 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/></p></li>
+<li><p><img class="math" src="../_images/math/ca28b53554b735e9d40e96303676a4a6450f340a.png" alt="p_{c1}"/> is the critical pressure of the solvent recommended by IAPWS <span id="id5">[<a class="reference internal" href="../references/index.html#id5" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, Lucerne, Switzerland, 2007.">2</a>]</span></p></li>
 </ul>
 </section>
 <section id="vapor-liquid-distribution-constant-kd">
 <h2>Vapor-Liquid Distribution Constant: kd<a class="headerlink" href="#vapor-liquid-distribution-constant-kd" title="Permalink to this heading">¶</a></h2>
-<p>The liquid-vapor distribution constant <img class="math" src="../_images/math/1ce400c34295480d5eeed6c2f4a0c01de811df7c.png" alt="kD"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kd">Eq.4</a>.</p>
+<p>The liquid-vapor distribution constant <img class="math" src="../_images/math/1ce400c34295480d5eeed6c2f4a0c01de811df7c.png" alt="kD"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kd">Eq.4</a>.
+<img class="math" src="../_images/math/edd4359a33019e2ad319666dae51160aac14cf8c.png" alt="K_D"/> is adimensional.</p>
 <div class="math" id="equation-eq-iapws-kd">
 <p><span class="eqno">(4)<a class="headerlink" href="#equation-eq-iapws-kd" title="Permalink to this equation">¶</a></span><img src="../_images/math/b259f8a66b0588bc7a12cfa6261ea2233b91e7b7.png" alt="k_D = \lim_{x_2 \rightarrow 0} y_2/x_2"/></p>
 </div><ul class="simple">
@@ -87,21 +91,23 @@
 <div class="math" id="equation-eq-iapws-lnkd">
 <p><span class="eqno">(5)<a class="headerlink" href="#equation-eq-iapws-lnkd" title="Permalink to this equation">¶</a></span><img src="../_images/math/cb0f1499a7a12cec4814d912e2f478b738e65865.png" alt="\ln K_D =qF+ f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)"/></p>
 </div><ul class="simple">
-<li><p><img class="math" src="../_images/math/a5fa84b363f309ebc8fe7db38304541732c7de9a.png" alt="q"/> : -0.023767 for H2O and -0.024552 for D2O.</p></li>
-<li><p><img class="math" src="../_images/math/349f39ce1b19cbb1ec1db2d0d4e9db0daf86f905.png" alt="f(\tau)"/> <span id="id6">[<a class="reference internal" href="../references/index.html#id6" title="Wolfgang Wagner and A. Pruss. International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.">3</a>]</span> for H2O  and <span id="id7">[<a class="reference internal" href="../references/index.html#id2" title="R. Fernandez-Prini, J.L. Alvarez, and A.H. Harvey. Henry's Constants and Vapor–Liquid Distribution Constants for Gaseous Solutes in H2O and D2O at High Temperatures. Journal of Physical Chemistry Reference Data, 32(2):903–916, 2003.">5</a>]</span> for D2O.</p></li>
+<li><p><img class="math" src="../_images/math/a5fa84b363f309ebc8fe7db38304541732c7de9a.png" alt="q"/> : -0.023767 for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and -0.024552 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>.</p></li>
+<li><p><img class="math" src="../_images/math/349f39ce1b19cbb1ec1db2d0d4e9db0daf86f905.png" alt="f(\tau)"/> <span id="id6">[<a class="reference internal" href="../references/index.html#id6" title="Wolfgang Wagner and A. Pruss. International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.">3</a>]</span> for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/>  and <span id="id7">[<a class="reference internal" href="../references/index.html#id2" title="R. Fernandez-Prini, J.L. Alvarez, and A.H. Harvey. Henry's Constants and Vapor–Liquid Distribution Constants for Gaseous Solutes in H2O and D2O at High Temperatures. Journal of Physical Chemistry Reference Data, 32(2):903–916, 2003.">5</a>]</span> for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>.</p></li>
 </ul>
 <p>In both cases, <img class="math" src="../_images/math/349f39ce1b19cbb1ec1db2d0d4e9db0daf86f905.png" alt="f(\tau)"/> has the following form:</p>
 <div class="math" id="equation-eq-iapws-ftau">
 <p><span class="eqno">(6)<a class="headerlink" href="#equation-eq-iapws-ftau" title="Permalink to this equation">¶</a></span><img src="../_images/math/718c43e384adc07a88378d28a2e9b8dbbf831535.png" alt="f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}"/></p>
 </div><ul class="simple">
-<li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for H2O and 4 for D2O</p></li>
+<li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and 4 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/></p></li>
 </ul>
 </section>
 <section id="molar-fractions">
 <h2>Molar fractions<a class="headerlink" href="#molar-fractions" title="Permalink to this heading">¶</a></h2>
 <div class="math" id="equation-eq-iapws-molar-frac">
-<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq-iapws-molar-frac" title="Permalink to this equation">¶</a></span><img src="../_images/math/e4d713f619d94afa02db0303305cbd55896b5d0b.png" alt="x_2 = \frac{1}{k_H}\\
-y_2 = \frac{k_D}{k_H}"/></p>
+<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq-iapws-molar-frac" title="Permalink to this equation">¶</a></span><img src="../_images/math/bb032e40c31c39815e3ca9d844e2ababda7059f3.png" alt="x_2 = \frac{f_2}{k_H}\\
+\frac{x_2}{f_2} = \frac{1}{k_H}\\
+y_2 = \frac{k_D}{k_H} \cdot f_2 \\
+\frac{y_2}{f_2} = \frac{k_D}{k_H}"/></p>
 </div></section>
 </section>
 

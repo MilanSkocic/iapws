@@ -6,6 +6,7 @@ Changes
 
 * Implementation of kH and kD from IAPWS G7-04 in fortran + C API
 * Python wrapper for kH and kD.
+* Documentation with sphinx.
 
 Download
 ^^^^^^^^^^
