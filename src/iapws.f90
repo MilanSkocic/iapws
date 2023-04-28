@@ -17,7 +17,7 @@ contains
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @param[in] solvent Solvents: H2O or D2O. Default is H2O.
-!! @return kh Henry constant in mole fraction per GPa. NaN if gas not found.
+!! @return kh Henry constant. NaN if gas not found.
 pure function iapws_kh(T, gas, solvent)result(value)
     implicit none
 

@@ -130,17 +130,8 @@ if __name__ == "__main__":
         install_requires=pathlib.Path("requirements.txt").read_text(encoding="utf-8").split('\n'),
         classifiers=["Development Status :: 4 - Beta",
                     "Intended Audience :: Science/Research",
-                    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-                    "Programming Language :: Python",
-                    "Programming Language :: Python :: 3 :: Only",
-                    "Programming Language :: Python :: 3.7",
-                    "Programming Language :: Python :: 3.8",
-                    "Programming Language :: Python :: 3.9",
-                    "Programming Language :: Python :: 3.10",
-                    "Programming Language :: Python :: 3.11",
-                    "Topic :: Scientific/Engineering",
-                    "Operating System :: OS Independent"],
-            ext_modules=[mod_ext]
+                    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"],
+        ext_modules=[mod_ext]
         )
 
 

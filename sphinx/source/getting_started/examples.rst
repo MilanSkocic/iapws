@@ -13,3 +13,10 @@ Example in C
 
 .. literalinclude:: ../../../examples/example_in_c.c
     :language: C
+
+
+Example in Python
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../examples/example_in_py.py
+    :language: python
