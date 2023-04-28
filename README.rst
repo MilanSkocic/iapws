@@ -12,10 +12,6 @@ The compilation was tested on Linux (Debian), MacOS and Windows.
 
 .. readme_inclusion_end
 
-Links:
-
-* Online documentation: https://milanskocic.github.io/iapws/index.html.
-
 
 Installation
 =================
