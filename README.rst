@@ -14,7 +14,6 @@ The compilation was tested on Linux (Debian), MacOS and Windows.
 
 Links:
 
-* Sources: https://github.com/MilanSkocic/iapws.
 * Online documentation: https://milanskocic.github.io/iapws/index.html.
 
 
