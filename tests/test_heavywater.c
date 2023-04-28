@@ -59,7 +59,7 @@ int main(int argc, char **argv){
         printf("%5s\t", gases[j]);
         for(i=0;i<4;i++){
             T_C = T_K[i] - 273.15;
-            kh = iapws_capi_kh(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
+            kh = iapws_capi_kh(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent))/1000.0;
             diff = roundn(log(kh) - ref_kh[j][i], 4);
             printf("%+7.4f/%+7.4f/%+7.4f\t", log(kh), ref_kh[j][i], log(kh) - ref_kh[j][i]);
             if(diff != 0.0){

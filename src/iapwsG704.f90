@@ -196,7 +196,7 @@ pure function iapwsG704_kh(T_K, Tc1, pc1, gas_abc, aibi) result(value)
 
     ln_pstar_pcl = 1/Tr * res
     pstar = exp(ln_pstar_pcl)*pc1 !! MPa
-    value = exp(ln_kH_pstar)*pstar/1000.0
+    value = exp(ln_kH_pstar)*pstar !! MPa
 end function
 
 !> @brief Compute the henry constant for a given temperature and gas in water.
