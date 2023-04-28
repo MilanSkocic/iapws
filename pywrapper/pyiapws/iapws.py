@@ -20,7 +20,7 @@ def kh(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
     Returns
     --------
     kh: float or array-like
-        Henry constant in GPa-1.
+        Henry constant.
     """
     kh = _iapws.kh(temperature, gas, solvent)
     if isinstance(kh, memoryview):
@@ -44,7 +44,7 @@ def kd(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
     Returns
     --------
     kd: float or array-like
-        Henry constant in GPa-1.
+        Liquid-Vapor distribution constant.
     """
     kd = _iapws.kd(temperature, gas, solvent)
     if isinstance(kd, memoryview):
