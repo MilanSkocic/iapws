@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>iapws &#8212; iapws 0.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -55,7 +55,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
-<span class="target" id="namespaceiapws_1a5efa40e32eb842713834ce64854061d8"></span><span class="sig-name descname"><span class="pre">pure</span> <span class="pre">real(real64)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_kh</span> <span class="pre">(T,</span> <span class="pre">gas,</span> <span class="pre">solvent)</span></span></dt>
+<span class="target" id="namespaceiapws_1a3332c46104887740dc06fe5b9167de92"></span><span class="sig-name descname"><span class="pre">pure</span> <span class="pre">real(real64)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_kh</span> <span class="pre">(t,</span> <span class="pre">gas,</span> <span class="pre">solvent)</span></span></dt>
 <dd><p>Compute the henry constant for a given temperature and gas in solvent. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -73,7 +73,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
-<span class="target" id="namespaceiapws_1a77e113ed3735b982a70d68b09eb2602e"></span><span class="sig-name descname"><span class="pre">pure</span> <span class="pre">real(real64)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_kd</span> <span class="pre">(T,</span> <span class="pre">gas,</span> <span class="pre">solvent)</span></span></dt>
+<span class="target" id="namespaceiapws_1a1a0937b529edb298a3a4fa18192c8b84"></span><span class="sig-name descname"><span class="pre">pure</span> <span class="pre">real(real64)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_kd</span> <span class="pre">(t,</span> <span class="pre">gas,</span> <span class="pre">solvent)</span></span></dt>
 <dd><p>Compute the vapor-liquid constant for a given temperature and gas in solvent. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -100,7 +100,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
-<span class="target" id="namespaceiapws__capi_1aec1144574663c10181ab98ae2dc954f7"></span><span class="sig-name descname"><span class="pre">real(c_double)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_capi_kh</span> <span class="pre">(T,</span> <span class="pre">gas,</span> <span class="pre">solvent,</span> <span class="pre">size_gas,</span> <span class="pre">size_solvent)</span></span></dt>
+<span class="target" id="namespaceiapws__capi_1a48416f647f665a353c05cd3985fd63a3"></span><span class="sig-name descname"><span class="pre">real(c_double)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_capi_kh</span> <span class="pre">(t,</span> <span class="pre">gas,</span> <span class="pre">solvent,</span> <span class="pre">size_gas,</span> <span class="pre">size_solvent)</span></span></dt>
 <dd><p>Compute the henry constant for a given temperature and gas in solvent. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -120,7 +120,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
-<span class="target" id="namespaceiapws__capi_1aa11c945d459b15c3a867cb305aa6cc3e"></span><span class="sig-name descname"><span class="pre">real(c_double)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_capi_kd</span> <span class="pre">(T,</span> <span class="pre">gas,</span> <span class="pre">solvent,</span> <span class="pre">size_gas,</span> <span class="pre">size_solvent)</span></span></dt>
+<span class="target" id="namespaceiapws__capi_1af9e2085699ea42893d6bbaf42e832ea4"></span><span class="sig-name descname"><span class="pre">real(c_double)</span> <span class="pre">function,</span> <span class="pre">public</span> <span class="pre">iapws_capi_kd</span> <span class="pre">(t,</span> <span class="pre">gas,</span> <span class="pre">solvent,</span> <span class="pre">size_gas,</span> <span class="pre">size_solvent)</span></span></dt>
 <dd><p>Compute the vapor-liquid constant for a given temperature and gas in solvent. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -203,7 +203,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Copyright (C) 2023 Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
     </div>
   </body>
 </html>
