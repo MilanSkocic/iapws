@@ -1,6 +1,9 @@
 Introduction
 ================
 
+.. image:: ./media/logo-iapws.png
+    :width: 200
+
 .. readme_inclusion_start
 
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
