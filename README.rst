@@ -15,6 +15,9 @@ The compilation was tested on Linux (Debian), MacOS and Windows.
 
 .. readme_inclusion_end
 
+For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
+technical report R7-97. 
+
 
 Installation
 =================
