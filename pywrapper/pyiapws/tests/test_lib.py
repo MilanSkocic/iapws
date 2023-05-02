@@ -41,3 +41,13 @@ class TestkD(unittest.TestCase):
         value = type(y)
         expected = type(x)
         self.assertEqual(value, expected)
+
+
+class TestArrayFailure(unittest.TestCase):
+    @unittest.expectedFailure
+    def test_kh(self):
+        x = np.zeros(shape=(5, 2))
+        y = pyiapws.kh(x, "He", "H2O")
+        value = type(y)
+        expected = type(x)
+        self.assertEqual(1, 0, "broken")
