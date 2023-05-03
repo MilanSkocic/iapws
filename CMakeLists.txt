@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project("iapws" VERSION "X.X.X" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
+project("iapws" VERSION "0.1.1" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
 configure_file("./app/config.h.in" "./app/config.h")
 
 if(NOT CMAKE_BUILD_TYPE)
