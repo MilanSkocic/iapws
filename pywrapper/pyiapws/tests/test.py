@@ -48,3 +48,8 @@ class TestArrayFailure(unittest.TestCase):
     def test_kh(self):
         x = np.zeros(shape=(5, 2))
         y = pyiapws.kh(x, "He", "H2O")
+
+    @unittest.expectedFailure
+    def test_kd(self):
+        x = np.zeros(shape=(5, 2))
+        y = pyiapws.kd(x, "He", "H2O")
