@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>pyiapws &#8212; iapws 0.1.1 documentation</title>
+    <title>iapws 0.1.1 Release Note &#8212; iapws 0.1.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     
@@ -16,8 +16,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="iapw" href="iapws.html" /> 
+    <link rel="next" title="iapws 0.1.0 Release Note" href="0.1.0-notes.html" />
+    <link rel="prev" title="Release Notes" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -29,14 +29,14 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="examples.html" title="Examples"
+          <a href="0.1.0-notes.html" title="iapws 0.1.0 Release Note"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="iapws.html" title="iapw"
+          <a href="index.html" title="Release Notes"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.1.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">pyiapws</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Release Notes</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iapws 0.1.1 Release Note</a></li> 
       </ul>
     </div>  
 
@@ -45,30 +45,28 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="pyiapws">
-<h1>pyiapws<a class="headerlink" href="#pyiapws" title="Permalink to this heading">¶</a></h1>
-<p>Python wrapper around the
-<a class="reference external" href="https://milanskocic.github.io/iapws/index.html">Fortran iapws library</a>.
-Follow the
-<a class="reference external" href="https://milanskocic.github.io/iapws/getting_started/introduction.html#how-to-install">installation instructions</a>.
-for compiling and installing the library.</p>
-<p>For now,the wrapper must be compiled on Linux, windows and MacOS platforms
-after installing the iapws library using the compiler that was used to compile your python interpreter.</p>
-<section id="how-to-install">
-<h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyiapws
-</pre></div>
-</div>
+  <section id="iapws-0-1-1-release-note">
+<h1>iapws 0.1.1 Release Note<a class="headerlink" href="#iapws-0-1-1-release-note" title="Permalink to this heading">¶</a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Logo creation</p></li>
+<li><p>Error handling in python wrapper for arrays with rank greater than 1</p></li>
+<li><p>Tests in python wrapper for expected failures with rank-n arrays</p></li>
+</ul>
 </section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numpy</span><span class="o">&gt;=</span><span class="mf">1.21</span>
-</pre></div>
-</div>
+<section id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">iapws</a></p>
+<p><a class="reference external" href="https://pypi.org/pyiapws">pyiapws</a></p>
 </section>
-<section id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
-<p><a class="reference download internal" download="" href="../_downloads/376e97cfcc8af47a534b65885c50797a/LICENSE.txt"><code class="xref download docutils literal notranslate"><span class="pre">GNU</span> <span class="pre">General</span> <span class="pre">Public</span> <span class="pre">License</span> <span class="pre">v3</span> <span class="pre">(GPLv3)</span></code></a></p>
+<section id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h2>
+<p>Milan Skocic</p>
+</section>
+<section id="commits">
+<h2>Commits<a class="headerlink" href="#commits" title="Permalink to this heading">¶</a></h2>
+<p>Full Changelog: <a class="reference external" href="https://github.com/MilanSkocic/pyiapws/compare/0.1.0...0.1.1">https://github.com/MilanSkocic/pyiapws/compare/0.1.0…0.1.1</a></p>
 </section>
 </section>
 
@@ -82,10 +80,11 @@ after installing the iapws library using the compiler that was used to compile y
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">pyiapws</a><ul>
-<li><a class="reference internal" href="#how-to-install">How to install</a></li>
-<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#">iapws 0.1.1 Release Note</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#download">Download</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+<li><a class="reference internal" href="#commits">Commits</a></li>
 </ul>
 </li>
 </ul>
@@ -93,18 +92,18 @@ after installing the iapws library using the compiler that was used to compile y
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="iapws.html"
-                          title="previous chapter">iapw</a></p>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Release Notes</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="examples.html"
-                          title="next chapter">Examples</a></p>
+    <p class="topless"><a href="0.1.0-notes.html"
+                          title="next chapter">iapws 0.1.0 Release Note</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/getting_started/pyiapws.rst.txt"
+      <li><a href="../_sources/releases/0.1.1-notes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -132,14 +131,14 @@ after installing the iapws library using the compiler that was used to compile y
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="examples.html" title="Examples"
+          <a href="0.1.0-notes.html" title="iapws 0.1.0 Release Note"
              >next</a> |</li>
         <li class="right" >
-          <a href="iapws.html" title="iapw"
+          <a href="index.html" title="Release Notes"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.1.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Getting Started</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">pyiapws</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Release Notes</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iapws 0.1.1 Release Note</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

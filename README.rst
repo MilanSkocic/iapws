@@ -1,6 +1,9 @@
 Introduction
 ================
 
+.. image:: ./media/logo-iapws.png
+    :width: 200
+
 .. readme_inclusion_start
 
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
@@ -11,6 +14,9 @@ The static and shared libraries can be installed in order to be included in Fort
 The compilation was tested on Linux (Debian), MacOS and Windows.
 
 .. readme_inclusion_end
+
+For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
+technical report R7-97. 
 
 
 Installation
