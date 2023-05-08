@@ -43,10 +43,10 @@ static PyObject *_iapws_kh(PyObject *self, PyObject *args){
         buffer = PyMemoryView_GET_BUFFER(mview);
         
         if(strcmp(buffer->format, "d")!=0){
-            PyErr_SetString(PyExc_TypeError, "T must be a rank-1 array of floats.");
+            PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else if(buffer->ndim>1){
-            PyErr_SetString(PyExc_TypeError, "T must be a rank-1 array of floats.");
+            PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else{
 
@@ -70,7 +70,7 @@ static PyObject *_iapws_kh(PyObject *self, PyObject *args){
             return new_mview;
         }
     }else{
-        PyErr_SetString(PyExc_TypeError, "T must be an int, a float or a rank-1 array of floats");
+        PyErr_SetString(PyExc_TypeError, "T must be an int, a float or a 1d-array of floats");
         return NULL;
     }
 
@@ -106,10 +106,10 @@ static PyObject *_iapws_kd(PyObject *self, PyObject *args){
         buffer = PyMemoryView_GET_BUFFER(mview);
         
         if(strcmp(buffer->format, "d")!=0){
-            PyErr_SetString(PyExc_TypeError, "T must be a rank-1 array of floats.");
+            PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else if(buffer->ndim>1){
-            PyErr_SetString(PyExc_TypeError, "T must be a rank-1 of floats.");
+            PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else{
 
@@ -133,7 +133,7 @@ static PyObject *_iapws_kd(PyObject *self, PyObject *args){
             return new_mview;
         }
     }else{
-        PyErr_SetString(PyExc_TypeError, "T must be an int, a float or a rank-1 array of floats");
+        PyErr_SetString(PyExc_TypeError, "T must be an int, a float or a 1d-array of floats");
         return NULL;
     }
 

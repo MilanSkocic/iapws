@@ -10,7 +10,7 @@ def kh(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
     
     Parameters
     -----------
-    temperature: int, float or array-like.
+    temperature: int, float or 1d-array.
         Temperature in °C.
     gas: str
         Desired gas.
@@ -19,7 +19,7 @@ def kh(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
 
     Returns
     --------
-    kh: float or array-like
+    kh: float or 1d-array
         Henry constant.
     """
     kh = _iapws.kh(temperature, gas, solvent)
@@ -34,7 +34,7 @@ def kd(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
     
     Parameters
     -----------
-    temperature: int, float or array-like.
+    temperature: int, float or 1d-array.
         Temperature in °C.
     gas: str
         Desired gas.
@@ -43,7 +43,7 @@ def kd(temperature: Union[int, float, NDArray], gas: str, solvent:str)->Union[fl
 
     Returns
     --------
-    kd: float or array-like
+    kd: float or 1d-array
         Liquid-Vapor distribution constant.
     """
     kd = _iapws.kd(temperature, gas, solvent)
