@@ -50,7 +50,7 @@ static PyObject *_iapws_kh(PyObject *self, PyObject *args){
             return NULL;
         }else{
 
-            new_buffer.buf = PyMem_Calloc(buffer->len, sizeof(double));
+            new_buffer.buf = PyMem_Malloc(buffer->len);
             new_buffer.obj = NULL;
             new_buffer.len = buffer->len;
             new_buffer.readonly = buffer->readonly;
@@ -113,7 +113,7 @@ static PyObject *_iapws_kd(PyObject *self, PyObject *args){
             return NULL;
         }else{
 
-            new_buffer.buf = PyMem_Calloc(buffer->len, sizeof(double));
+            new_buffer.buf = PyMem_Malloc(buffer->len);
             new_buffer.obj = NULL;
             new_buffer.len = buffer->len;
             new_buffer.readonly = buffer->readonly;
