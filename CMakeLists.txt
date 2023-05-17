@@ -55,7 +55,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
         set(Fortran_FLAGS_DEBUG "${Fortran_FLAGS_DEBUG_Intel_unix}")
         set(Fortran_FLAGS_RELEASE "${Fortran_FLAGS_RELEASE_Intel_unix}")
     endif()
-elseif()
+else()
     set(Fortran_FLAGS_DEBUG "${Fortran_FLAGS_DEBUG_GCC}")
     set(Fortran_FLAGS_RELEASE "${Fortran_FLAGS_RELEASE_GCC}")
 
