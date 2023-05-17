@@ -36,7 +36,7 @@ function iapws_capi_kh(T, gas, solvent, size_gas, size_solvent)bind(C)result(kh)
     character, pointer, dimension(:) :: c2f_solvent
     character(len=size_gas) :: f_gas
     character(len=size_solvent) :: f_solvent
-    integer(int32) :: i
+    integer(int64) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
     call c_f_pointer(solvent, c2f_solvent, shape=[size_solvent])
@@ -76,7 +76,7 @@ function iapws_capi_kd(T, gas, solvent, size_gas, size_solvent)bind(C)result(kh)
     character, pointer, dimension(:) :: c2f_solvent
     character(len=size_gas) :: f_gas
     character(len=size_solvent) :: f_solvent
-    integer(int32) :: i
+    integer(int64) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
     call c_f_pointer(solvent, c2f_solvent, shape=[size_solvent])
