@@ -1,5 +1,4 @@
 r"""Example in python"""
-import numpy as np
 import pyiapws
 
 T = 25.0

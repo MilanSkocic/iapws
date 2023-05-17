@@ -14,13 +14,29 @@ PyDoc_STRVAR(iapws_kd_doc,
 "get_kd(T, gas, solvent) --> float \n\n"
 "Get the kD value for gas in solvent for T. If not found returns NaN");
 
-static PyObject *_iapws_kh(PyObject *self, PyObject *args){
+static Py_buffer newbuffer_like(Py_buffer *buffer){
+    Py_buffer newbuffer;
+    newbuffer.buf = PyMem_Malloc(buffer->len);
+    newbuffer.obj = NULL;
+    newbuffer.len = buffer->len;
+    newbuffer.readonly = buffer->readonly;
+    newbuffer.itemsize = buffer->itemsize;
+    newbuffer.format = buffer->format;
+    newbuffer.ndim = buffer->ndim;
+    newbuffer.shape = buffer->shape;
+    newbuffer.strides = buffer->strides;
+    newbuffer.suboffsets = NULL;
+
+    return newbuffer;
+}
+
+static PyObject *iapws_kh(PyObject *self, PyObject *args){
 
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
     PyObject *new_mview;
-    Py_buffer new_buffer;
+    Py_buffer newbuffer;
     char *gas;
     char *solvent;
     double value, T;
@@ -49,24 +65,13 @@ static PyObject *_iapws_kh(PyObject *self, PyObject *args){
             PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else{
-
-            new_buffer.buf = PyMem_Malloc(buffer->len);
-            new_buffer.obj = NULL;
-            new_buffer.len = buffer->len;
-            new_buffer.readonly = buffer->readonly;
-            new_buffer.itemsize = buffer->itemsize;
-            new_buffer.format = buffer->format;
-            new_buffer.ndim = buffer->ndim;
-            new_buffer.shape = buffer->shape;
-            new_buffer.strides = buffer->strides;
-            new_buffer.suboffsets = NULL;
-            
+            newbuffer = newbuffer_like(buffer);
             for(i=0; i<buffer->shape[0]; i++){
                 T =  *(((double * )buffer->buf)+i);
                 value = iapws_capi_kh(T, gas, solvent, strlen(gas), strlen(solvent));
-                *(((double *) new_buffer.buf)+i) = value;
+                *(((double *) newbuffer.buf)+i) = value;
             }
-            new_mview = PyMemoryView_FromBuffer(&new_buffer);
+            new_mview = PyMemoryView_FromBuffer(&newbuffer);
             return new_mview;
         }
     }else{
@@ -77,13 +82,13 @@ static PyObject *_iapws_kh(PyObject *self, PyObject *args){
 }
 
 
-static PyObject *_iapws_kd(PyObject *self, PyObject *args){
+static PyObject *iapws_kd(PyObject *self, PyObject *args){
 
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
     PyObject *new_mview;
-    Py_buffer new_buffer;
+    Py_buffer newbuffer;
     char *gas;
     char *solvent;
     double value, T;
@@ -112,24 +117,13 @@ static PyObject *_iapws_kd(PyObject *self, PyObject *args){
             PyErr_SetString(PyExc_TypeError, "T must be a 1d-array of floats.");
             return NULL;
         }else{
-
-            new_buffer.buf = PyMem_Malloc(buffer->len);
-            new_buffer.obj = NULL;
-            new_buffer.len = buffer->len;
-            new_buffer.readonly = buffer->readonly;
-            new_buffer.itemsize = buffer->itemsize;
-            new_buffer.format = buffer->format;
-            new_buffer.ndim = buffer->ndim;
-            new_buffer.shape = buffer->shape;
-            new_buffer.strides = buffer->strides;
-            new_buffer.suboffsets = NULL;
-            
+            newbuffer = newbuffer_like(buffer);
             for(i=0; i<buffer->shape[0]; i++){
                 T =  *(((double * )buffer->buf)+i);
                 value = iapws_capi_kd(T, gas, solvent, strlen(gas), strlen(solvent));
-                *(((double *) new_buffer.buf)+i) = value;
+                *(((double *) newbuffer.buf)+i) = value;
             }
-            new_mview = PyMemoryView_FromBuffer(&new_buffer);
+            new_mview = PyMemoryView_FromBuffer(&newbuffer);
             return new_mview;
         }
     }else{
@@ -140,24 +134,24 @@ static PyObject *_iapws_kd(PyObject *self, PyObject *args){
 }
 
 static PyMethodDef myMethods[] = {
-    {"kh", (PyCFunction) _iapws_kh, METH_VARARGS, iapws_kh_doc},
-    {"kd", (PyCFunction) _iapws_kd, METH_VARARGS, iapws_kd_doc},
+    {"kh", (PyCFunction) iapws_kh, METH_VARARGS, iapws_kh_doc},
+    {"kd", (PyCFunction) iapws_kd, METH_VARARGS, iapws_kd_doc},
     { NULL, NULL, 0, NULL }
 };
 
 // Our Module Definition struct
-static struct PyModuleDef _iapws = {
+static struct PyModuleDef iapws = {
     PyModuleDef_HEAD_INIT,
-    "_iapws",
+    "iapws",
     module_docstring,
     -1,
     myMethods
 };
 
 // Initializes our module using our above struct
-PyMODINIT_FUNC PyInit__iapws(void)
+PyMODINIT_FUNC PyInit_iapws(void)
 {
-    return PyModule_Create(&_iapws);
+    return PyModule_Create(&iapws);
 }
 
 

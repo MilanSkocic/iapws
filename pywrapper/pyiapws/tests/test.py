@@ -20,7 +20,7 @@ class TestkH(unittest.TestCase):
         x = np.linspace(25, 360, 100000)
         y = pyiapws.kh(x, "He", "H2O")
         value = type(y)
-        expected = type(x)
+        expected = type(memoryview(x))
         self.assertEqual(value, expected)
 
 class TestkD(unittest.TestCase):
@@ -39,7 +39,7 @@ class TestkD(unittest.TestCase):
         x = np.linspace(25,360,100000)
         y = pyiapws.kd(x, "He", "H2O")
         value = type(y)
-        expected = type(x)
+        expected = type(memoryview(x))
         self.assertEqual(value, expected)
 
 

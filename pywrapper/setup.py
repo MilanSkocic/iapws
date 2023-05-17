@@ -109,8 +109,8 @@ if __name__ == "__main__":
     found_shared = search_libraries(iapws_library_dirs, iapws_libraries, static=False)
     found_static = search_libraries(iapws_library_dirs, iapws_libraries, static=True)
 
-    mod_ext = Extension(name="pyiapws._iapws",
-                                         sources=["./pyiapws/_iapws.c"],
+    mod_ext = Extension(name="pyiapws.iapws",
+                                         sources=["./pyiapws/iapws.c"],
                                          libraries=iapws_libraries,
                                          library_dirs=iapws_library_dirs,
                                          include_dirs=iapws_include_dirs)
