@@ -5,7 +5,7 @@
 module iapws
     use iso_fortran_env
     use ieee_arithmetic
-    use iapwsG704
+    use iapws_g704
     implicit none
     private
 
@@ -29,9 +29,9 @@ pure function iapws_kh(T, gas, solvent)result(value)
     real(real64) :: value
 
     if(trim(solvent) .eq. "D2O")then
-        value =  iapwsG704_kh_heavywater(T, gas)
+        value =  iapws_g704_kh_D2O(T, gas)
     else
-        value = iapwsG704_kh_water(T, gas)
+        value = iapws_g704_kh_H2O(T, gas)
     endif
 
 end function
@@ -52,9 +52,9 @@ pure function iapws_kd(T, gas, solvent)result(value)
     real(real64) :: value
 
     if(trim(solvent) .eq. "D2O")then
-        value =  iapwsG704_kd_heavywater(T, gas)
+        value =  iapws_g704_kd_D2O(T, gas)
     else
-        value = iapwsG704_kd_water(T, gas)
+        value = iapws_g704_kd_H2O(T, gas)
     endif
 
 end function
