@@ -106,9 +106,14 @@ type(iapwsG704_t_efgh), dimension(14), parameter :: iapwsG704_efgh_water = &
  iapwsG704_t_efgh("SF6", 2871.7265d0, -66.7556d0, 229.7191d0, -172.7400d0)]
 
  !> EFGH constants for heavywater
-type(iapwsG704_t_efgh), dimension(2), parameter :: iapwsG704_efgh_heavywater = &
-[iapwsG704_t_efgh("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257d0), &
- iapwsG704_t_efgh("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0)]
+type(iapwsG704_t_efgh), dimension(7), parameter :: iapwsG704_efgh_heavywater = &
+[iapwsG704_t_efgh("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257), &
+ iapwsG704_t_efgh("Ne", 2439.6677d0, -93.4934d0, 330.7783d0, -243.0100d0),&
+ iapwsG704_t_efgh("Ar", 2269.2352d0, -53.6321d0, 191.8421d0, -143.7659d0),&
+ iapwsG704_t_efgh("Kr", 2250.3857d0, -42.0835d0, 140.7656d0, -102.7592d0),&
+ iapwsG704_t_efgh("Xe", 2038.3656d0, 68.1228d0, -271.3390d0, 207.7984d0),& 
+ iapwsG704_t_efgh("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
+ iapwsG704_t_efgh("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
 
 public :: iapwsG704_kh_water, iapwsG704_kh_heavywater 
 public :: iapwsG704_kd_water, iapwsG704_kd_heavywater
