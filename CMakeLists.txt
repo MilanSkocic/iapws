@@ -82,8 +82,8 @@ add_subdirectory(./tests)
 add_subdirectory(./examples)
 
 enable_testing()
-add_test(NAME test_water COMMAND test_water)
-add_test(NAME test_heavywater COMMAND test_heavywater)
+add_test(NAME test_iapws_g704_H2O COMMAND test_iapws_g704_H2O)
+add_test(NAME test_iapws_g704_D2O COMMAND test_iapws_g704_D2O)
 
 install(TARGETS static_iapws DESTINATION include ARCHIVE DESTINATION lib)
 install(TARGETS shared_iapws PUBLIC_HEADER DESTINATION include LIBRARY DESTINATION lib)
