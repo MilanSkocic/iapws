@@ -8,7 +8,5 @@
 
 extern double iapws_capi_kh(double T, char *gas, char *solvent, int size_gas, int size_solvent);
 extern double iapws_capi_kd(double T, char *gas, char *solvent, int size_gas, int size_solvent);
-extern double iapws_capi_kh_H2O(double T, char *gas, int size_gas);
-extern double iapws_capi_kd_H2O(double T, char *gas, int size_gas);
 
 #endif

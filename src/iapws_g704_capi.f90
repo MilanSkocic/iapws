@@ -5,7 +5,7 @@
 module iapws_capi
     use iso_fortran_env
     use iso_c_binding
-    use iapws
+    use iapws_g704
     implicit none
     private
 

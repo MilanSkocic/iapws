@@ -18,7 +18,7 @@ contains
 !! @param[in] gas Gas.
 !! @param[in] solvent Solvents: H2O or D2O. Default is H2O.
 !! @return kh Henry constant. NaN if gas not found.
-pure function iapws_kh(T, gas, solvent)result(value)
+pure elemental function iapws_kh(T, gas, solvent)result(value)
     implicit none
 
     !! arguments

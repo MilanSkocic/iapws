@@ -115,8 +115,7 @@ type(efgh_t), dimension(7), parameter :: efgh_D2O = &
  efgh_t("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
  efgh_t("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
 
-public :: iapws_g704_kh_H2O, iapws_g704_kh_D2O 
-public :: iapws_g704_kd_H2O, iapws_g704_kd_D2O
+public :: iapws_g704_kh
 
 contains
 
@@ -166,97 +165,119 @@ pure function findgas_efgh(gas, efgh)result(value)
     end do
 end function
 
-!> @brief Compute the henry constant of a given gas.
-!! @param[in] T_K Temperature in K.
-!! @param[in] Tc1 Critical temperature.
-!! @param[in] pc1 Critical pressure.
-!! @param[in] gas_abc abc parameters of gas
-!! @param[in] aibi ai and bi coefficients of a solvent.
-!! @return kh Henry constant.
-pure function iapws_g704_kh(T_K, Tc1, pc1, gas_abc, aibi) result(value)
+pure elemental function f_p1star_H2O(T)result(value)
     implicit none
-    !! arguments 
-    real(real64), intent(in) :: T_K
-    real(real64), intent(in) :: Tc1
-    real(real64), intent(in) :: pc1
-    type(abc_t), intent(in) :: gas_abc
-    real(real64), intent(in), dimension(:,:) :: aibi
-    !! returns
+    !! arguments
+    real(real64), intent(in) :: T
+    !! return
     real(real64) :: value
-    
-    !! local variables
+    !! variables
     real(real64) :: Tr
     real(real64) :: tau
-    real(real64) :: ln_kH_pstar
-    real(real64) :: res
-    real(real64) :: ln_pstar_pcl
-    real(real64) :: pstar
-    
-    Tr = T_K/Tc1
-    tau  = 1-Tr
-    ln_kH_pstar = gas_abc%A/Tr + gas_abc%B*(tau**0.355)/Tr + gas_abc%C*exp(tau)*Tr**(-0.41)
-    
-    res = 0.0
-    res = sum(aibi(:,1) * tau**(aibi(:,2)))
 
-    ln_pstar_pcl = 1/Tr * res
-    pstar = exp(ln_pstar_pcl)*pc1 !! MPa
-    value = exp(ln_kH_pstar)*pstar !! MPa
+    Tr = (T+T_KELVIN)/Tc1_H2O
+    tau = 1 - Tr
+    value = exp(1/(Tr) * sum(aibi_H2O(:,1)*tau**(aibi_H2O(:,2)))) * pc1_H2O
 end function
+
+pure elemental function f_p1star_D2O(T)result(value)
+    implicit none
+    !! arguments
+    real(real64), intent(in) :: T
+    !! return
+    real(real64) :: value
+    !! variables
+    real(real64) :: Tr
+    real(real64) :: tau
+
+    Tr = (T+T_KELVIN)/Tc1_D2O
+    tau = 1 - Tr
+    value = exp(1/(Tr) * sum(aibi_D2O(:,1)*tau**(aibi_D2O(:,2)))) * pc1_D2O
+end function
+
+pure elemental function f_kh_p1star_H2O(T, abc)result(value)
+    !! arguments
+    real(real64), intent(in) :: T
+    type(abc_t), intent(in) :: abc
+    !! return 
+    real(real64) :: value
+    !! variables
+    real(real64) :: Tr
+    real(real64) :: tau
+
+    Tr = (T+T_KELVIN)/Tc1_H2O
+    tau = 1 - Tr
+    value = exp(abc%A/Tr + abc%B*(tau**0.355d0)/Tr + abc%C*exp(tau)*Tr**(-0.41d0))
+end function
+
+pure elemental function f_kh_p1star_D2O(T, abc)result(value)
+    !! arguments
+    real(real64), intent(in) :: T
+    type(abc_t), intent(in) :: abc
+    !! return 
+    real(real64) :: value
+    !! variables
+    real(real64) :: Tr
+    real(real64) :: tau
+
+    Tr = (T+T_KELVIN)/Tc1_D2O
+    tau = 1 - Tr
+    value = exp(abc%A/Tr + abc%B*(tau**0.355d0)/Tr + abc%C*exp(tau)*Tr**(-0.41d0))
+end function
+
 
 !> @brief Compute the henry constant for a given temperature and gas in water.
 !! @param[in] T Temperature in °C.
-!! @param[in] gas Gas.
+!! @param[in] abc ABC parameters.
 !! @return kh Henry constant. NaN if gas not found.
-pure function iapws_g704_kh_H2O(T, gas)result(value)
+pure elemental function iapws_g704_kh_H2O(T, abc)result(value)
     implicit none
-
     !! arguments
     real(real64), intent(in) :: T
-    character(len=*), intent(in) :: gas
+    type(abc_t), intent(in) :: abc
     !! returns
     real(real64) :: value
-
-    !! local variables
-    real(real64) :: T_K
-    integer(int32) :: i
-
-    T_K = T + T_KELVIN
-    i = findgas_abc(gas, abc_H2O)
-
-    if(i==0)then
-        value = ieee_value(1.0d0, ieee_quiet_nan)
-    else
-        value = iapws_g704_kh(T_K, Tc1_H2O, pc1_H2O, abc_H2O(i), aibi_H2O)
-    endif
+    value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
 end function
 
 !> @brief Compute the henry constant for a given temperature and gas in heavywater.
 !! @param[in] T Temperature in °C.
 !! @param[in] gas Gas.
 !! @return kh Henry constant. NaN if gas not found.
-pure function iapws_g704_kh_D2O(T, gas)result(value)
+pure elemental function iapws_g704_kh_D2O(T, abc)result(value)
     implicit none
-
     !! arguments
     real(real64), intent(in) :: T
-    character(len=*), intent(in) :: gas
+    type(abc_t), intent(in) :: abc
     !! returns
     real(real64) :: value
+    value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
+end function
 
-    !! local variables
-    real(real64) :: T_K
+!> @brief Compute the henry constant for a given temperature and gas in solvent 
+!! @param[in] T Temperature in °C as 1d-array.
+!! @param[in] gas Gas.
+!! @param[in] heavywtaer Flag if D2O (true) is used or H2O(false).
+!! @param[out] k Henry constant as 1d-array. Filled with NaNs if gas not found.
+pure subroutine iapws_g704_kh(T, gas, heavywater, k)
+    implicit none
+    !! arguments
+    real(real64), intent(in) :: T(:)
+    character(len=*), intent(in) :: gas
+    logical, intent(in) :: heavywater
+    real(real64), intent(out) :: k(:)
+    !! variables
     integer(int32) :: i
 
-    T_K = T + T_KELVIN
-    i = findgas_abc(gas, abc_D2O)
-
-    if(i==0)then
-        value = ieee_value(1.0d0, ieee_quiet_nan)
+    if(heavywater .eqv. .true.)then
+        i = findgas_abc(gas, abc_D2O)
+        k =  iapws_g704_kh_D2O(T, abc_D2O(i))
     else
-        value = iapws_g704_kh(T_K, Tc1_D2O, pc1_D2O, abc_D2O(i), aibi_D2O)
+        i = findgas_abc(gas, abc_H2O)
+        k = iapws_g704_kh_H2O(T, abc_H2O(i))
     endif
-end function
+
+end subroutine
 
 !> @brief Compute the vapor-liquid constant kd of a given gas.
 !! @param[in] T_K Temperature in K.
