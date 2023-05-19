@@ -34,8 +34,8 @@ static Py_buffer newbuffer_like(Py_buffer *buffer){
     return newbuffer;
 }
 
-static PyObject *g704_kh(PyObject *self, PyObject *args){
-
+static PyObject *kx(char k, PyObject *args){
+    
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -44,6 +44,19 @@ static PyObject *g704_kh(PyObject *self, PyObject *args){
     char *gas;
     int heavywater;
 
+    void (*fkx)(double *, char *, int, double *, int, size_t);
+
+    switch(k){
+        case 'h':
+            fkx = &iapws_g704_capi_kh;
+            break;
+        case 'd':
+            fkx = &iapws_g704_capi_kd;
+            break;
+        default:
+            fkx = NULL;
+    }
+    
     if(!PyArg_ParseTuple(args, "Osp", &T_obj, &gas, &heavywater)){
         PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
         return NULL;
@@ -61,7 +74,7 @@ static PyObject *g704_kh(PyObject *self, PyObject *args){
             return NULL;
         }else{
             newbuffer = newbuffer_like(buffer);
-            iapws_g704_capi_kh((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
+            fkx((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
             new_mview = PyMemoryView_FromBuffer(&newbuffer);
             return new_mview;
         }
@@ -69,45 +82,14 @@ static PyObject *g704_kh(PyObject *self, PyObject *args){
         PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
         return NULL;
     }
+}
 
+static PyObject *g704_kh(PyObject *self, PyObject *args){
+    return kx('h', args);
 }
 
 static PyObject *g704_kd(PyObject *self, PyObject *args){
-
-    PyObject *T_obj;
-    PyObject *mview;
-    Py_buffer *buffer;
-    PyObject *new_mview;
-    Py_buffer newbuffer;
-    char *gas;
-    int heavywater;
-
-    if(!PyArg_ParseTuple(args, "Osp", &T_obj, &gas, &heavywater)){
-        PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
-        return NULL;
-    }
-
-    if(PyObject_CheckBuffer(T_obj)==1){
-        mview = PyMemoryView_FromObject(T_obj);
-        buffer = PyMemoryView_GET_BUFFER(mview);
-        
-        if(strcmp(buffer->format, "d")!=0){
-            PyErr_SetString(PyExc_TypeError, ERR_MSG_T_TYPE);
-            return NULL;
-        }else if(buffer->ndim>1){
-            PyErr_SetString(PyExc_TypeError, ERR_MSG_T_TYPE);
-            return NULL;
-        }else{
-            newbuffer = newbuffer_like(buffer);
-            iapws_g704_capi_kd((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
-            new_mview = PyMemoryView_FromBuffer(&newbuffer);
-            return new_mview;
-        }
-    }else{
-        PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
-        return NULL;
-    }
-
+    return kx('d', args);
 }
 
 static PyMethodDef myMethods[] = {
