@@ -4,18 +4,32 @@ iapws
 Fortran
 ---------
 
-.. doxygenfile:: iapws_g704.f90
+The sources are directly included here due to the lack of support for Fortran in Breathe.
+
+.. literalinclude:: ../../../src/iapws_g704.f90
+    :language: Fortran
 
 
 C API
 -------
 
 Common headers
---------------
+^^^^^^^^^^^^^^^^^
 
 * `iapws.h`
 
-.. literalinclude:: ../../../iapws.h
+.. literalinclude:: ../../../src/iapws.h
     :language:  C
 
-.. doxygenfile:: iapws_g704_capi.f90
+IAPWS G704
+^^^^^^^^^^^^^^^^^^^^^
+
+* Header: `iapws_g704.h`
+
+.. literalinclude:: ../../../src/iapws_g704.h
+    :language: Fortran
+
+* Implementation: `iapws_g704_capi.f90`
+
+.. literalinclude:: ../../../src/iapws_g704_capi.f90
+    :language: C
