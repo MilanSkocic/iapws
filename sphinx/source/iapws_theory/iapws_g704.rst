@@ -61,7 +61,7 @@ The vapor-liquid distribution constant `k_D` is given as a function of temperatu
 .. math:: 
     :label: eq_iapws_lnkD
 
-    \ln K_D =qF+ f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)
+    \ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)
 
 * :math:`q` : -0.023767 for :math:`H_2O` and -0.024552 for :math:`D_2O`.
 * :math:`f(\tau)` :cite:p:`wagner1993` for :math:`H_2O`  and :cite:p:`fernandez-prini2003` for :math:`D_2O`.

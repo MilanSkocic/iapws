@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "iapws.h"
+#include "iapws_g704_capi.h"
 
  /**
  * @brief Round with n decimals
@@ -65,7 +65,7 @@ int main(int argc, char **argv){
     double T_C;
     double kh = 0.0;
     double kd = 0.0;
-    char solvent[] = "H2O";
+    int D2O = 0;
     double diff;
     int i, j;
     int ngas = 14;
@@ -83,7 +83,8 @@ int main(int argc, char **argv){
         printf("%5s\t", gases[j]);
         for(i=0;i<4;i++){
             T_C = T_K[i] - 273.15;
-            kh = iapws_capi_kh(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent))/1000.0;
+            iapws_g704_capi_kh(&T_C, gases[j], D2O, &kh, strlen(gases[j]), 1);
+            kh /= 1000.0;
             diff = roundn(log(kh) - ref_kh[j][i], 4);
             printf("%+7.4f/%+7.4f/%+7.4f\t", log(kh), ref_kh[j][i], log(kh) - ref_kh[j][i]);
             if(diff != 0.0){
@@ -94,7 +95,7 @@ int main(int argc, char **argv){
     }
     
     printf("***** Test kd in water *****\n");
-
+    
     printf("%5s\t", "Gas");
     for(i=0; i<nT; i++){
         printf("%23.0f\t", T_K[i]);
@@ -104,7 +105,7 @@ int main(int argc, char **argv){
         printf("%5s\t", gases[j]);
         for(i=0;i<4;i++){
             T_C = T_K[i] - 273.15;
-            kd = iapws_capi_kd(T_C, gases[j], solvent, strlen(gases[j]), strlen(solvent));
+            iapws_g704_capi_kd(&T_C, gases[j], D2O, &kd, strlen(gases[j]), 1);
             diff = roundn(log(kd) - ref_kd[j][i], 4);
             printf("%+7.4f/%+7.4f/%+7.4f\t", log(kd), ref_kd[j][i], log(kd) - ref_kd[j][i]);
             if(diff != 0.0){

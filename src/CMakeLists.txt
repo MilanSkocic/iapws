@@ -1,5 +1,6 @@
 set(IAPWS_PUBLIC_HEADERS "${CMAKE_SOURCE_DIR}/src/iapws.h"
-                         "${CMAKE_SOURCE_DIR}/src/iapws_g704_capi.h"
+                         "${CMAKE_SOURCE_DIR}/src/iapws.mod"
+                         "${CMAKE_SOURCE_DIR}/src/iapws_g704.h"
                          "${CMAKE_BINARY_DIR}/src/iapws_g704.mod") 
 set(IAPWS_SOURCES "iapws.f90"
                   "iapws_g704.f90" 

@@ -4,5 +4,5 @@
  */
 #ifndef IAPWS_H
 #define IAPWS_H
-#include "iapws_g704_capi.h"
+#include "iapws_g704.h"
 #endif

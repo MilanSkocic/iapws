@@ -16,4 +16,4 @@ if platform.system() == "Windows":
 
 
 from .version import *
-from .iapws import *
+from . import g704

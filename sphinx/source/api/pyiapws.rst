@@ -1,6 +1,8 @@
 pyipaws
 ================
 
+IAPWS G704: Gas solubilities
+-------------------------------
 
-.. automodule:: pyiapws.iapws
+.. automodule:: pyiapws.g704
     :members:

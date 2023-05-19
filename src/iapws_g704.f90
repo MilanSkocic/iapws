@@ -115,7 +115,7 @@ type(efgh_t), dimension(7), parameter :: efgh_D2O = &
  efgh_t("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
  efgh_t("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
 
-public :: iapws_g704_kh
+public :: iapws_g704_kh, iapws_g704_kd
 
 contains
 
@@ -225,12 +225,25 @@ pure elemental function f_kh_p1star_D2O(T, abc)result(value)
     value = exp(abc%A/Tr + abc%B*(tau**0.355d0)/Tr + abc%C*exp(tau)*Tr**(-0.41d0))
 end function
 
+pure elemental function ft_H2O(tau)result(value)
+    implicit none
+    !! arguments
+    real(real64), intent(in) :: tau
+    !! return
+    real(real64) :: value
+    value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
+end function
 
-!> @brief Compute the henry constant for a given temperature and gas in water.
-!! @param[in] T Temperature in °C.
-!! @param[in] abc ABC parameters.
-!! @return kh Henry constant. NaN if gas not found.
-pure elemental function iapws_g704_kh_H2O(T, abc)result(value)
+pure elemental function ft_D2O(tau)result(value)
+    implicit none
+    !! arguments
+    real(real64), intent(in) :: tau
+    !! return
+    real(real64) :: value
+    value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
+end function
+
+pure elemental function f_kh_H2O(T, abc)result(value)
     implicit none
     !! arguments
     real(real64), intent(in) :: T
@@ -240,11 +253,7 @@ pure elemental function iapws_g704_kh_H2O(T, abc)result(value)
     value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
 end function
 
-!> @brief Compute the henry constant for a given temperature and gas in heavywater.
-!! @param[in] T Temperature in °C.
-!! @param[in] gas Gas.
-!! @return kh Henry constant. NaN if gas not found.
-pure elemental function iapws_g704_kh_D2O(T, abc)result(value)
+pure elemental function f_kh_D2O(T, abc)result(value)
     implicit none
     !! arguments
     real(real64), intent(in) :: T
@@ -254,125 +263,124 @@ pure elemental function iapws_g704_kh_D2O(T, abc)result(value)
     value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
 end function
 
-!> @brief Compute the henry constant for a given temperature and gas in solvent 
+pure elemental function f_kd_H2O(T, efgh) result(value)
+    implicit none
+    !! arguments 
+    real(real64), intent(in) :: T
+    type(efgh_t), intent(in) :: efgh
+    !! returns
+    real(real64) :: value
+    !! local variables
+    real(real64) :: Tr
+    real(real64) :: tau
+    real(real64) :: p1
+    real(real64) :: p2
+    real(real64) :: p3
+    real(real64) :: p4
+    
+    Tr = (T+T_KELVIN)/Tc1_H2O
+    tau  = 1-Tr
+    
+    p1 = q_H2O*efgh%F
+    p2 = efgh%E/(T+T_KELVIN)*ft_H2O(tau)
+    p3 = (efgh%F + efgh%G*tau**(2.0d0/3.0d0) + efgh%H*tau)
+    p4 = exp(-T/100.0d0)
+
+    value = exp(p1 + p2 + p3 * p4)
+
+end function
+
+pure elemental function f_kd_D2O(T, efgh) result(value)
+    implicit none
+    !! arguments 
+    real(real64), intent(in) :: T
+    type(efgh_t), intent(in) :: efgh
+    !! returns
+    real(real64) :: value
+    !! local variables
+    real(real64) :: Tr
+    real(real64) :: tau
+    real(real64) :: p1
+    real(real64) :: p2
+    real(real64) :: p3
+    real(real64) :: p4
+    
+    Tr = (T+T_KELVIN)/Tc1_D2O
+    tau  = 1-Tr
+    
+    p1 = q_D2O*efgh%F
+    p2 = efgh%E/(T+T_KELVIN)*ft_D2O(tau)
+    p3 = (efgh%F + efgh%G*tau**(2.0d0/3.0d0) + efgh%H*tau)
+    p4 = exp(-T/100.0d0)
+
+    value = exp(p1 + p2 + p3 * p4)
+
+end function
+
+!> @brief Compute the henry constant for a given temperature.
 !! @param[in] T Temperature in °C as 1d-array.
 !! @param[in] gas Gas.
-!! @param[in] heavywtaer Flag if D2O (true) is used or H2O(false).
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
 !! @param[out] k Henry constant as 1d-array. Filled with NaNs if gas not found.
 pure subroutine iapws_g704_kh(T, gas, heavywater, k)
     implicit none
     !! arguments
     real(real64), intent(in) :: T(:)
     character(len=*), intent(in) :: gas
-    logical, intent(in) :: heavywater
+    integer(int32), intent(in) :: heavywater
     real(real64), intent(out) :: k(:)
     !! variables
     integer(int32) :: i
-
-    if(heavywater .eqv. .true.)then
+    
+    if(heavywater > 0)then
         i = findgas_abc(gas, abc_D2O)
-        k =  iapws_g704_kh_D2O(T, abc_D2O(i))
+        if(i==0)then
+            k = ieee_value(1.0d0, ieee_quiet_nan)
+        else
+            k =  f_kh_D2O(T, abc_D2O(i))
+        endif
     else
         i = findgas_abc(gas, abc_H2O)
-        k = iapws_g704_kh_H2O(T, abc_H2O(i))
+        if(i==0)then
+            k = ieee_value(1.0d0, ieee_quiet_nan)
+        else
+            k = f_kh_H2O(T, abc_H2O(i))
+        endif
     endif
 
 end subroutine
 
-!> @brief Compute the vapor-liquid constant kd of a given gas.
-!! @param[in] T_K Temperature in K.
-!! @param[in] Tc1 Critical temperature.
-!! @param[in] q solvent coefficient
-!! @param[in] gas_efgh abc parameters of gas
-!! @param[in] cidi ai and bi coefficients of a solvent.
-!! @return kd Vapor-liquid constant.
-pure function iapws_g704_kd(T_K, Tc1, q, gas_efgh, cidi) result(value)
-    implicit none
-    !! arguments 
-    real(real64), intent(in) :: T_K
-    real(real64), intent(in) :: Tc1
-    real(real64), intent(in) :: q
-    type(efgh_t), intent(in) :: gas_efgh
-    real(real64), intent(in), dimension(:,:) :: cidi
-    !! returns
-    real(real64) :: value
-    
-    !! local variables
-    real(real64) :: Tr
-    real(real64) :: tau
-    real(real64) :: ft
-    real(real64) :: p1
-    real(real64) :: p2
-    real(real64) :: p3
-    real(real64) :: p4
-    
-    Tr = T_K/Tc1
-    tau  = 1-Tr
-    
-    ft = 0.0
-    ft = sum(cidi(:,1) * tau**(cidi(:,2)))
-
-    p1 = q*gas_efgh%F
-    p2 = gas_efgh%E/T_K*ft
-    p3 = (gas_efgh%F + gas_efgh%G*tau**(2.0d0/3.0d0) + gas_efgh%H*tau)
-    p4 = exp((273.15d0 - T_K)/100.0d0)
-
-    value = exp(p1 + p2 + p3 * p4)
-
-end function
-
-!> @brief Compute the kd constant for a given temperature and gas in water.
-!! @param[in] T Temperature in °C.
+!> @brief Compute the vapor-liquid constant for a given temperature. 
+!! @param[in] T Temperature in °C as 1d-array.
 !! @param[in] gas Gas.
-!! @return kd Vapor-liquid constant. NaN if gas not found.
-pure function iapws_g704_kd_H2O(T, gas)result(value)
+!! @param[in] heavywater Flag if D2O (true) is used or H2O(false).
+!! @param[out] k Vapor-liquid constant as 1d-array. Filled with NaNs if gas not found.
+pure subroutine iapws_g704_kd(T, gas, heavywater, k)
     implicit none
-
     !! arguments
-    real(real64), intent(in) :: T
+    real(real64), intent(in) :: T(:)
     character(len=*), intent(in) :: gas
-    !! returns
-    real(real64) :: value
-
-    !! local variables
-    real(real64) :: T_K
+    integer(int32), intent(in) :: heavywater
+    real(real64), intent(out) :: k(:)
+    !! variables
     integer(int32) :: i
-
-    T_K = T + T_KELVIN
-    i = findgas_efgh(gas, efgh_H2O)
-
-    if(i==0)then
-        value = ieee_value(1.0d0, ieee_quiet_nan)
+    
+    if(heavywater > 0)then
+        i = findgas_efgh(gas, efgh_D2O)
+        if(i==0)then
+            k = ieee_value(1.0d0, ieee_quiet_nan)
+        else
+            k =  f_kd_D2O(T, efgh_D2O(i))
+        endif
     else
-        value = iapws_g704_kd(T_K, Tc1_H2O, q_H2O, efgh_H2O(i), cidi_H2O)
+        i = findgas_efgh(gas, efgh_H2O)
+        if(i==0)then
+            k = ieee_value(1.0d0, ieee_quiet_nan)
+        else
+            k = f_kd_H2O(T, efgh_H2O(i))
+        endif
     endif
-end function
 
-!> @brief Compute the kd constant for a given temperature and gas in heavywater.
-!! @param[in] T Temperature in °C.
-!! @param[in] gas Gas.
-!! @return kd Vapor-liquid constant. NaN if gas not found.
-pure function iapws_g704_kd_D2O(T, gas)result(value)
-    implicit none
-
-    !! arguments
-    real(real64), intent(in) :: T
-    character(len=*), intent(in) :: gas
-    !! returns
-    real(real64) :: value
-
-    !! local variables
-    real(real64) :: T_K
-    integer(int32) :: i
-
-    T_K = T + T_KELVIN
-    i = findgas_efgh(gas, efgh_D2O)
-
-    if(i==0)then
-        value = ieee_value(1.0d0, ieee_quiet_nan)
-    else
-        value = iapws_g704_kd(T_K, Tc1_D2O, q_D2O, efgh_D2O(i), cidi_D2O)
-    endif
-end function
+end subroutine
 
 end module
