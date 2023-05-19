@@ -7,12 +7,12 @@
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_g704 module of the Fortran iapws library.");
 
 PyDoc_STRVAR(g704_kh_doc, 
-"get_kh(T, gas, solvent) --> memview \n\n"
-"Get the kh value for gas in solvent for T. If gas not found returns NaN");
+"get_kh(T: array, gas: str, heavywater :bool) --> mview \n\n"
+"Get the Henry constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 PyDoc_STRVAR(g704_kd_doc, 
-"get_kd(T, gas, solvent) --> memview \n\n"
-"Get the kd value for gas in solvent for T. If gas not found returns NaN");
+"get_kd(T: array, gas, heavywater: bool) --> mview \n\n"
+"Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, gas is a string, heavywater is a boolean.";
 static const char ERR_MSG_T_DIM[] = "T must be a 1d-array of floats.";
