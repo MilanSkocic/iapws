@@ -27,9 +27,9 @@ IAPWS G704
 * Header: `iapws_g704.h`
 
 .. literalinclude:: ../../../src/iapws_g704.h
-    :language: Fortran
+    :language: C
 
 * Implementation: `iapws_g704_capi.f90`
 
 .. literalinclude:: ../../../src/iapws_g704_capi.f90
-    :language: C
+    :language: Fortran

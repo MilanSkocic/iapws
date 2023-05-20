@@ -2,7 +2,7 @@
 !! @brief C API for the IAPWS module.
 
 !> @brief C API for the IAPWS module.
-module iapws_capi
+module iapws_g704_capi
     use iso_fortran_env
     use iso_c_binding
     use iapws_g704
@@ -50,7 +50,7 @@ end subroutine
 !! @param[in] T Temperature in °C as 1d-array.
 !! @param[in] gas Gas.
 !! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @param[in] k Henry constant as 1d-array. Filled with NaNs if gas not found.
+!! @param[in] k Vapor-liquid constant as 1d-array. Filled with NaNs if gas not found.
 !! @param[in] size_gas Size of the gas string.
 !! @param[in] size_T Size of the T and k 1d-arrays.
 subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
