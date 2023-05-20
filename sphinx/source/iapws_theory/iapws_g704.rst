@@ -78,6 +78,9 @@ In both cases, :math:`f(\tau)` has the following form:
 Molar fractions
 ^^^^^^^^^^^^^^^^^
 
+The molar fractions :math:`x_2` and :math:`y_2` can be expressed from the 
+equations :eq:`eq_iapws_kH` and :eq:`eq_iapws_kD` as shown in :eq:`eq_iapws_molar_frac`. 
+
 .. math::
     :label: eq_iapws_molar_frac
 
@@ -85,3 +88,28 @@ Molar fractions
     \frac{x_2}{f_2} = \frac{1}{k_H}\\
     y_2 = \frac{k_D}{k_H} \cdot f_2 \\
     \frac{y_2}{f_2} = \frac{k_D}{k_H}
+
+By fixing :math:`f_2` at 1.0 it comes that the molar fractions 
+:math:`x_2` and :math:`y_2` are then expressed per 
+unit of pressure as shown in equation :eq:`eq_iapws_molar_frac_simple` .
+
+.. math::
+    :label: eq_iapws_molar_frac_simple
+    
+    x_2 = \frac{1}{k_H}\\
+    y_2 = \frac{k_D}{k_H}
+
+The molar fractions can be converted to solubilties in ppm or cm3/kg as shown in equation :eq:`eq_conversion`
+by considering dilute solutions. :math:`X` is the considered gas and the solvent is either :math:`H_2O`
+or :math:`D_2O`.
+
+.. math:: 
+    :label: eq_conversion
+
+    S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6
+    
+    S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]
+    
+
+
+
