@@ -1,35 +1,27 @@
 iapws
 ===============
 
-Fortran
----------
-
-The sources are directly included here due to the lack of support for Fortran in Breathe.
-
-.. literalinclude:: ../../../src/iapws_g704.f90
-    :language: Fortran
-
-
-C API
--------
-
-Common headers
-^^^^^^^^^^^^^^^^^
-
-* `iapws.h`
+* `iapws.h`: Main C header for the whole library.
 
 .. literalinclude:: ../../../src/iapws.h
     :language:  C
 
-IAPWS G704
-^^^^^^^^^^^^^^^^^^^^^
+IAPWS G704: Gas solubilities
+-------------------------------
 
-* Header: `iapws_g704.h`
+The sources are directly included here due to the lack of support for Fortran in Breathe.
 
-.. literalinclude:: ../../../src/iapws_g704.h
-    :language: C
+* `iapws_g704.f90`: Fortran core.
 
-* Implementation: `iapws_g704_capi.f90`
+.. literalinclude:: ../../../src/iapws_g704.f90
+    :language: Fortran
+
+* `iapws_g704_capi.f90`:  C API.
 
 .. literalinclude:: ../../../src/iapws_g704_capi.f90
     :language: Fortran
+
+* `iapws_g704.h`: C header.
+
+.. literalinclude:: ../../../src/iapws_g704.h
+    :language: C
