@@ -110,6 +110,12 @@ or :math:`D_2O`.
     
     S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]
     
+Available gases
+------------------
 
+:math:`kh` and :math:`kd` can be computed for the following gases:
+
+* in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6
+* in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4
 
 

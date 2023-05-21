@@ -8,7 +8,7 @@ module iapws_g704
     implicit none
     private
 
-    !> Absolute temperature in KELVIN 
+!> Absolute temperature in KELVIN 
 real(real64), parameter ::  T_KELVIN = 273.15d0 
 
 !! Parameters from IAPWS G7-04 
