@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "iapws_g704_capi.h"
+#include "iapws_g704.h"
 
  /**
  * @brief Round with n decimals
