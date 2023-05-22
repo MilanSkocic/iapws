@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project("iapws" VERSION "0.1.1" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
+project("iapws" VERSION "0.2.0" LANGUAGES "C" "Fortran" DESCRIPTION "IAPWS")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "release")
