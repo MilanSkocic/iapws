@@ -22,7 +22,7 @@ Download
 
 `iapws <https://github.com/MilanSkocic/iapws/releases>`_
 
-`pyiapws <https://pypi.org/pyiapws>`_
+`pyiapws <https://pypi.org/project/pyiapws>`_
 
 
 Contributors
