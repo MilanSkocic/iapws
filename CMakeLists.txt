@@ -8,26 +8,26 @@ endif()
 
 # GNU / AppleClang
 set(C_FLAGS_DEBUG_GCC "-std=c11 -Wall -Wextra -pedantic")
-set(C_FLAGS_RELEASE_GCC "-std=c11 -O2 -w")
+set(C_FLAGS_RELEASE_GCC "-DNDEBUG -std=c11 -O3 -w")
 
 set(Fortran_FLAGS_DEBUG_GCC "-std=f2008 -Wall -Wextra -pedantic")
-set(Fortran_FLAGS_RELEASE_GCC "-std=f2008 -O2 -w")
+set(Fortran_FLAGS_RELEASE_GCC "-DNDEBUG -std=f2008 -O3 -w")
 
 # MSVC
 set(C_FLAGS_DEBUG_MSVC "/std:c11 /Wall")
-set(C_FLAGS_RELEASE_MSVC "/std:c11 /O2 /w")
+set(C_FLAGS_RELEASE_MSVC "/DNDEBUG /std:c11 /O2 /w")
 
 # Intel C
 set(C_FLAGS_DEBUG_Intel_win32 "/Qstd:c11 /Wall")
-set(C_FLAGS_RELEASE_Intel_win32 "/Qstd:c11 /O2 /w")
+set(C_FLAGS_RELEASE_Intel_win32 "/DNDEBUG /Qstd:c11 /O3 /w")
 set(C_FLAGS_DEBUG_Intel_unix "-std=c11 -Wall")
-set(C_FLAGS_RELEASE_Intel_unix "-std=c11 -O2 -w")
+set(C_FLAGS_RELEASE_Intel_unix "-DNDEBUG -std=c11 -O3 -w")
 
 #Intel Fortran
 set(Fortran_FLAGS_DEBUG_Intel_win32 "/stand:f08 /warn ")
-set(Fortran_FLAGS_RELEASE_Intel_win32 "/stand:f08 /O2 /w")
+set(Fortran_FLAGS_RELEASE_Intel_win32 "/DNDEBUG /stand:f08 /O3 /w")
 set(Fortran_FLAGS_DEBUG_Intel_unix "-stand f08 -Wall ")
-set(Fortran_FLAGS_RELEASE_Intel_unix "-stand f08 -O2 -w ")
+set(Fortran_FLAGS_RELEASE_Intel_unix "-DNDEBUG -stand f08 -O3 -w ")
 
 # C flags
 if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
@@ -61,10 +61,10 @@ else()
 
 endif()
 
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${C_FLAGS_DEBUG}")
-set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} ${Fortran_FLAGS_DEBUG}")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${C_FLAGS_RELEASE}")
-set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} ${Fortran_FLAGS_RELEASE}")
+set(CMAKE_C_FLAGS_DEBUG "${C_FLAGS_DEBUG}")
+set(CMAKE_Fortran_FLAGS_DEBUG "${Fortran_FLAGS_DEBUG}")
+set(CMAKE_C_FLAGS_RELEASE "${C_FLAGS_RELEASE}")
+set(CMAKE_Fortran_FLAGS_RELEASE "${Fortran_FLAGS_RELEASE}")
 
 message("build type = " ${CMAKE_BUILD_TYPE})
 message("CFlags release = " ${CMAKE_C_FLAGS_RELEASE})
