@@ -1,4 +1,4 @@
-iapws 0.1.1 Release Note
+iapws 0.2.0 Release Note
 ==================================
 
 Summary
