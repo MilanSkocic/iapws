@@ -4,9 +4,18 @@ iapws 0.1.1 Release Note
 Summary
 --------
 
-* Logo creation
-* Error handling in python wrapper for arrays with rank greater than 1
-* Tests in python wrapper for expected failures with rank-n arrays
+* New structure with modules corresponding to the IAPWS papers.
+* API break for iapws_g704_kh and iapws_g704_kd functions:
+   * only 1d-arrays as inputs in Fortran and C API.
+   * only objects with buffer protocol as inputs in python wrapper.
+   * python wrappers return memoryviews.
+* Cleanup old app code not needed anymore.
+* Fix memory allocation in pywrapper.
+* Completed parameters and tests for heavywater.
+* Documentation improvements:
+   * Fortran sources are literaly included in the documentation due to the lack of 
+     support for Fortran in sphinx.
+   * Add conversion equations from molar fractions to solubilities.
 
 Download
 ----------
