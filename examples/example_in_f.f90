@@ -13,4 +13,7 @@ program example_in_f
     call iapws_g704_kd(T, gas, 0, kd)
     print "(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F15.4)", "Gas=", gas, "T=", T, "C", "kh=", kd
 
+    print *, iapws_g704_gases_H2O
+    print *, iapws_g704_gases_D2O
+
 end program

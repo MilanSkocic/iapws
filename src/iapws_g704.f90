@@ -8,6 +8,11 @@ module iapws_g704
     implicit none
     private
 
+integer(int32) :: i
+integer(int32), parameter :: len_gas = 5
+integer(int32), parameter :: ngas_H2O = 14
+integer(int32), parameter :: ngas_D2O = 7
+
 !> Absolute temperature in KELVIN 
 real(real64), parameter ::  T_KELVIN = 273.15d0 
 
@@ -27,14 +32,14 @@ real(real64), parameter :: q_H2O = -0.023767d0
 real(real64), parameter :: q_D2O = -0.024552d0
 
 type :: abc_t
-    character(len=5) :: gas
+    character(len=len_gas) :: gas
     real(real64) :: A
     real(real64) :: B
     real(real64) :: C
 end type
 
 type :: efgh_t
-    character(len=5) :: gas
+    character(len=len_gas) :: gas
     real(real64) :: E
     real(real64) :: F
     real(real64) :: G
@@ -52,7 +57,7 @@ real(real64), dimension(5, 2), parameter :: aibi_D2O = reshape([&
 1.00d0, 1.89d0, 2.00d0, 3.00d0, 3.60d0], [5, 2])
 
 !> ABC constants water.
-type(abc_t), dimension(14), parameter :: abc_H2O = &
+type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
     [abc_t("He", -3.52839d0, 7.12983d0, 4.47770d0),&
      abc_t("Ne", -3.18301d0, 5.31448d0, 5.43774d0),&
      abc_t("Ar", -8.40954d0, 4.29587d0, 10.52779d0),&
@@ -69,7 +74,7 @@ type(abc_t), dimension(14), parameter :: abc_H2O = &
      abc_t("SF6", -16.56118d0, 2.15289d0, 20.35440d0)]
 
 !> ABC constants for heavywater
-type(abc_t), dimension(7), parameter :: abc_D2O = &
+type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
     [abc_t("He", -0.72643d0, 7.02134d0, 2.04433d0),&
      abc_t("Ne", -0.91999d0, 5.65327d0, 3.17247d0),&
      abc_t("Ar", -7.17725d0, 4.48177d0, 9.31509d0),&
@@ -89,7 +94,7 @@ real(real64), dimension(4, 2), parameter :: cidi_D2O = reshape([&
 0.374d0, 1.45d0, 2.6d0, 12.3d0], [4,2])
 
 !> EFGH constants for water
-type(efgh_t), dimension(14), parameter :: efgh_H2O = &
+type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
 [efgh_t("He", 2267.4082d0, -2.9616d0, -3.2604d0, 7.8819d0),&
  efgh_t("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0),&
  efgh_t("Ar", 2310.5463d0, -46.7034d0, 160.4066d0, -118.3043d0),&
@@ -106,7 +111,7 @@ type(efgh_t), dimension(14), parameter :: efgh_H2O = &
  efgh_t("SF6", 2871.7265d0, -66.7556d0, 229.7191d0, -172.7400d0)]
 
  !> EFGH constants for heavywater
-type(efgh_t), dimension(7), parameter :: efgh_D2O = &
+type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 [efgh_t("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257), &
  efgh_t("Ne", 2439.6677d0, -93.4934d0, 330.7783d0, -243.0100d0),&
  efgh_t("Ar", 2269.2352d0, -53.6321d0, 191.8421d0, -143.7659d0),&
@@ -115,7 +120,15 @@ type(efgh_t), dimension(7), parameter :: efgh_D2O = &
  efgh_t("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
  efgh_t("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
 
+ !> List of available gases in H2O.
+character(len_gas), parameter :: iapws_g704_gases_H2O(ngas_H2O) = &
+[(abc_H2O(i)%gas, i=1, ngas_H2O)]
+!> List of available gases in D2O.
+character(len_gas), parameter :: iapws_g704_gases_D2O(ngas_D2O) = &
+[(abc_D2O(i)%gas, i=1, ngas_D2O)]
+
 public :: iapws_g704_kh, iapws_g704_kd
+public :: iapws_g704_gases_H2O, iapws_g704_gases_D2O
 
 contains
 
