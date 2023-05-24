@@ -7,6 +7,8 @@ int main(int argc, char **argv){
     double T = 25.0; /* in C*/
     char *gas = "O2";
     double kh, kd;
+    char **gases;
+    int i;
     
     if(argc > 1 ){
         printf("%s\n", argv[1]);
@@ -17,6 +19,13 @@ int main(int argc, char **argv){
     
     iapws_g704_capi_kd(&T, gas, 0, &kd, strlen(gas), 1);
     printf("Gas=%s\tT=%fC\tkd=%+15.4f\n", gas, T, kd);
+
+    gases = iapws_g704_capi_gases_H2O();
+
+    for(i=0;i<14;i++){
+        printf("%s   ", gases[i]);
+    }
+    printf("\n");
     
     return 0;
 }

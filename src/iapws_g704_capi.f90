@@ -8,6 +8,13 @@ module iapws_g704_capi
     use iapws_g704
     implicit none
     private
+    
+    type, bind(C) :: c_char_p
+        type(c_ptr) :: p
+    end type
+
+    character(len=c_char), allocatable, target :: capi_gases_H2O(:,:)
+    type(c_char_p), allocatable, target :: char_pp(:)
 
     public :: iapws_g704_capi_kh, iapws_g704_capi_kd
 
@@ -78,4 +85,37 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     enddo
     call iapws_g704_kd(f_T, f_gas, heavywater, f_k)    
 end subroutine
+
+function iapws_g704_capi_gases_H2O()&
+bind(C, name="iapws_g704_capi_gases_H2O")result(ptr)
+    implicit none
+    type(c_ptr) :: ptr
+
+    integer(int32) :: i, j, ncol, nrow
+
+    ncol = size(iapws_g704_gases_H2O)
+    nrow = len(iapws_g704_gases_H2O(1))
+
+    if(allocated(capi_gases_H2O))then
+        deallocate(capi_gases_H2O)
+    endif
+    allocate(capi_gases_H2O(nrow+1, ncol))
+
+    if(allocated(char_pp))then
+        deallocate(char_pp)
+    endif
+    allocate(char_pp(ncol))
+
+    do j=1, ncol
+        do i=1, nrow
+            capi_gases_H2O(i, j) = iapws_g704_gases_H2O(j)(i:i)
+            capi_gases_H2O(i+1, j) = c_null_char
+        enddo
+        char_pp(j)%p = c_loc(capi_gases_H2O(1, j))
+    enddo
+
+    ptr = c_loc(char_pp)
+
+end function
+
 end module

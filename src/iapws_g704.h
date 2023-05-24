@@ -8,5 +8,6 @@
 
 extern void iapws_g704_capi_kh(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T);
 extern void iapws_g704_capi_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T);
+extern char ** iapws_g704_capi_gases_H2O();
 
 #endif
