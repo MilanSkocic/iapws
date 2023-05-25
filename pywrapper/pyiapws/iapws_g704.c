@@ -7,12 +7,16 @@
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_g704 module of the Fortran iapws library.");
 
 PyDoc_STRVAR(g704_kh_doc, 
-"get_kh(T: array, gas: str, heavywater :bool) --> mview \n\n"
+"kh(T: array, gas: str, heavywater :bool) --> mview \n\n"
 "Get the Henry constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 PyDoc_STRVAR(g704_kd_doc, 
-"get_kd(T: array, gas, heavywater: bool) --> mview \n\n"
+"kd(T: array, gas, heavywater: bool) --> mview \n\n"
 "Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
+
+PyDoc_STRVAR(g704_gases_doc,
+"gases(heavywater: bool) --> tuple"
+"Get the available gases.");
 
 static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, gas is a string, heavywater is a boolean.";
 static const char ERR_MSG_T_DIM[] = "T must be a 1d-array of floats.";
@@ -92,9 +96,34 @@ static PyObject *g704_kd(PyObject *self, PyObject *args){
     return kx('d', args);
 }
 
+static PyObject *g704_gases(PyObject *self, PyObject *args){
+    int heavywater;
+    char **gases;
+    int ngas;
+    Py_ssize_t i;
+    PyObject *tuple;
+
+    if(!PyArg_ParseTuple(args, "p", &heavywater)){
+        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
+        return NULL;
+    }
+    ngas = iapws_g704_capi_ngas(heavywater);
+    gases = iapws_g704_capi_gases(heavywater);
+    tuple = PyTuple_New((Py_ssize_t) ngas);
+    for(i=0; i<ngas; i++){
+        PyTuple_SET_ITEM(tuple, i, PyUnicode_Replace(PyUnicode_FromString(gases[i]),
+                                                     PyUnicode_FromString(" "),
+                                                     PyUnicode_FromString(""),
+                                                     -1));
+    }
+    return tuple;
+
+}
+
 static PyMethodDef myMethods[] = {
     {"kh", (PyCFunction) g704_kh, METH_VARARGS, g704_kh_doc},
     {"kd", (PyCFunction) g704_kd, METH_VARARGS, g704_kd_doc},
+    {"gases", (PyCFunction) g704_gases, METH_VARARGS, g704_gases_doc},
     { NULL, NULL, 0, NULL }
 };
 

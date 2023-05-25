@@ -8,8 +8,9 @@ module iapws_g704
     implicit none
     private
 
-integer(int32) :: i
-integer(int32), parameter :: len_gas = 5
+integer(int32) :: ii
+!> Length of the gas strings.
+integer(int32), parameter :: iapws_g704_GAS_LENGTH = 5
 integer(int32), parameter :: ngas_H2O = 14
 integer(int32), parameter :: ngas_D2O = 7
 
@@ -32,14 +33,14 @@ real(real64), parameter :: q_H2O = -0.023767d0
 real(real64), parameter :: q_D2O = -0.024552d0
 
 type :: abc_t
-    character(len=len_gas) :: gas
+    character(len=iapws_g704_GAS_LENGTH) :: gas
     real(real64) :: A
     real(real64) :: B
     real(real64) :: C
 end type
 
 type :: efgh_t
-    character(len=len_gas) :: gas
+    character(len=iapws_g704_GAS_LENGTH) :: gas
     real(real64) :: E
     real(real64) :: F
     real(real64) :: G
@@ -119,16 +120,17 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
  efgh_t("Xe", 2038.3656d0, 68.1228d0, -271.3390d0, 207.7984d0),& 
  efgh_t("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
  efgh_t("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
+    
+character(len=iapws_g704_GAS_LENGTH), target :: gases_H2O(ngas_H2O) = &
+[(abc_H2O(ii)%gas, ii=1, ngas_H2O)]
 
- !> List of available gases in H2O.
-character(len_gas), parameter :: iapws_g704_gases_H2O(ngas_H2O) = &
-[(abc_H2O(i)%gas, i=1, ngas_H2O)]
-!> List of available gases in D2O.
-character(len_gas), parameter :: iapws_g704_gases_D2O(ngas_D2O) = &
-[(abc_D2O(i)%gas, i=1, ngas_D2O)]
+character(len=iapws_g704_GAS_LENGTH), target :: gases_D2O(ngas_D2O) = &
+[(abc_D2O(ii)%gas, ii=1, ngas_D2O)]
 
+public :: iapws_g704_GAS_LENGTH
 public :: iapws_g704_kh, iapws_g704_kd
-public :: iapws_g704_gases_H2O, iapws_g704_gases_D2O
+public :: iapws_g704_ngas, iapws_g704_lengas
+public :: iapws_g704_gases
 
 contains
 
@@ -366,7 +368,7 @@ end subroutine
 !> @brief Compute the vapor-liquid constant for a given temperature. 
 !! @param[in] T Temperature in °C as 1d-array.
 !! @param[in] gas Gas.
-!! @param[in] heavywater Flag if D2O (true) is used or H2O(false).
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
 !! @param[out] k Vapor-liquid constant as 1d-array. Filled with NaNs if gas not found.
 pure subroutine iapws_g704_kd(T, gas, heavywater, k)
     implicit none
@@ -395,5 +397,48 @@ pure subroutine iapws_g704_kd(T, gas, heavywater, k)
     endif
 
 end subroutine
+
+!> @brief Returns the number of gases.
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
+!! @return n Number of gases.
+pure function iapws_g704_ngas(heavywater)result(n)
+    implicit none
+    ! arguments
+    integer(int32), intent(in) :: heavywater
+    ! return
+    integer(int32) :: n
+
+    if(heavywater > 0)then
+        n = ngas_D2O
+    else
+        n = ngas_H2O
+    endif
+end function
+
+!> @brief Returns the length of gas string.
+!! @return n Number of gases.
+pure function iapws_g704_lengas()result(n)
+    implicit none
+    ! return
+    integer(int32) :: n
+    n = iapws_g704_GAS_LENGTH
+end function
+
+!> @brief Returns the available gases.
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
+!! @return gases Available gases.
+function iapws_g704_gases(heavywater)result(f_ptr)
+    implicit none
+    ! arguments
+    integer(int32), intent(in) :: heavywater
+    ! return
+    character(len=iapws_g704_GAS_LENGTH), pointer :: f_ptr(:)
+    
+    if(heavywater > 0)then
+        f_ptr => gases_D2O
+    else 
+        f_ptr => gases_H2O
+    end if
+end function
 
 end module

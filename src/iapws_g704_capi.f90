@@ -13,10 +13,12 @@ module iapws_g704_capi
         type(c_ptr) :: p
     end type
 
-    character(len=c_char), allocatable, target :: capi_gases_H2O(:,:)
+    character(len=c_char), allocatable, target :: c_gases(:,:)
     type(c_char_p), allocatable, target :: char_pp(:)
 
     public :: iapws_g704_capi_kh, iapws_g704_capi_kd
+    public :: iapws_g704_capi_ngas, iapws_g704_capi_lengas
+    public :: iapws_g704_capi_gases
 
 contains
 
@@ -86,36 +88,66 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     call iapws_g704_kd(f_T, f_gas, heavywater, f_k)    
 end subroutine
 
-function iapws_g704_capi_gases_H2O()&
-bind(C, name="iapws_g704_capi_gases_H2O")result(ptr)
+!> @brief Returns the number of gases.
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
+!! @return n Number of gases.
+pure function iapws_g704_capi_ngas(heavywater)bind(C)result(n)
     implicit none
-    type(c_ptr) :: ptr
+    ! arguments
+    integer(c_int), intent(in), value :: heavywater
+    ! return
+    integer(c_int) :: n
 
-    integer(int32) :: i, j, ncol, nrow
+    n = iapws_g704_ngas(heavywater)
+end function
 
-    ncol = size(iapws_g704_gases_H2O)
-    nrow = len(iapws_g704_gases_H2O(1))
+!> @brief Returns the length of gas string.
+!! @return n Number of gases.
+pure function iapws_g704_capi_lengas()bind(C)result(n)
+    implicit none
+    ! return
+    integer(c_int) :: n
 
-    if(allocated(capi_gases_H2O))then
-        deallocate(capi_gases_H2O)
+    n = iapws_g704_lengas()
+end function
+
+!> @brief Return the available gases.
+!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
+!! @return gases Available gases.
+function iapws_g704_capi_gases(heavywater)bind(C)result(gases)
+    implicit none
+    ! arguments
+    integer(c_int), intent(in), value :: heavywater
+    ! return
+    type(c_ptr) :: gases
+    ! variables
+    integer(int32) :: ngas, lengas
+    integer(int32) :: i, j
+    character(len=iapws_g704_GAS_LENGTH), pointer :: f_gases(:) => null()
+
+    ngas = iapws_g704_ngas(heavywater)
+    lengas = iapws_g704_lengas()
+    nullify(f_gases)
+    f_gases => iapws_g704_gases(heavywater)
+
+    if(allocated(c_gases))then
+        deallocate(c_gases)
     endif
-    allocate(capi_gases_H2O(nrow+1, ncol))
+    allocate(c_gases(lengas+1, ngas))
 
     if(allocated(char_pp))then
         deallocate(char_pp)
     endif
-    allocate(char_pp(ncol))
+    allocate(char_pp(ngas))
 
-    do j=1, ncol
-        do i=1, nrow
-            capi_gases_H2O(i, j) = iapws_g704_gases_H2O(j)(i:i)
-            capi_gases_H2O(i+1, j) = c_null_char
+    do j=1, ngas
+        do i=1, lengas
+            c_gases(i, j) = f_gases(j)(i:i)
+            c_gases(i+1, j) = c_null_char
         enddo
-        char_pp(j)%p = c_loc(capi_gases_H2O(1, j))
+        char_pp(j)%p = c_loc(c_gases(1, j))
     enddo
-
-    ptr = c_loc(char_pp)
-
+    gases = c_loc(char_pp)
 end function
 
 end module
