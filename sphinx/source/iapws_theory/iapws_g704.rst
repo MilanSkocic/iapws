@@ -118,4 +118,39 @@ Available gases
 * in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6
 * in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4
 
+Plots
+----------
 
+
+.. _fig_kh_H2O:
+.. figure:: ../media/g704_kh_H2O.png
+    :width: 600
+    :align: center
+    :alt: kh in H2O
+
+    kh in H2O
+
+.. _fig_kh_D2O:
+.. figure:: ../media/g704_kh_D2O.png
+    :width: 600
+    :align: center
+    :alt: kh in D2O
+
+    kh in D2O
+
+
+.. _fig_kd_H2O:
+.. figure:: ../media/g704_kd_H2O.png
+    :width: 600
+    :align: center
+    :alt: kd in H2O
+
+    kh in H2O
+
+.. _fig_kd_D2O:
+.. figure:: ../media/g704_kd_D2O.png
+    :width: 600
+    :align: center
+    :alt: kd in D2O
+
+    kd in D2O
