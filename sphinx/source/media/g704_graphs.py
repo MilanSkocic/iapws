@@ -3,23 +3,45 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pyiapws
 
-fig = plt.figure()
-ax = fig.add_subplot()
-ax.grid(visible=True, ls=':')
-ax.set_xlabel("T /°C")
-ax.set_ylabel("ln (kh/1GPa)")
 
 style = {"marker":".", "ls":"", "ms":2}
-HEAVYWATER = False
 T_KELVIN = 273.15
 T = np.linspace(0.0, 360.0, 1000)
 
-gases = ["He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2"]
-for gas in gases:
-    kh_m = pyiapws.g704.kh(T, gas, HEAVYWATER)
-    kh = np.asarray(kh_m) / 1000.0
-    ln_kh = np.log(kh)
-    ax.plot(T, ln_kh, label=gas, **style)
+solvent = {True: "D2O", False: "H2O"}
 
-ax.legend()
-fig.savefig("./g704_kh.png", dpi=300, format="png")
+print("Generating plot for kh")
+kname = "kh"
+for HEAVYWATER in (False, True):
+    print(solvent[HEAVYWATER])
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.grid(visible=True, ls=':')
+    ax.set_xlabel("T /°C")
+    ax.set_ylabel("ln (kh/1GPa)")
+    gases = pyiapws.g704.gases(HEAVYWATER)
+    for gas in gases:
+        k_m = pyiapws.g704.kh(T, gas, HEAVYWATER)
+        k = np.asarray(k_m) / 1000.0
+        ln_k = np.log(k)
+        ax.plot(T, ln_k, label=gas, **style)
+    ax.legend(ncol=3)
+    fig.savefig(f"./g704_{kname:s}_{solvent[HEAVYWATER]:s}.png", dpi=300, format="png")
+
+print("Generating plot for kd")
+kname = "kd"
+for HEAVYWATER in (False, True):
+    print(solvent[HEAVYWATER])
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.grid(visible=True, ls=':')
+    ax.set_xlabel("T /°C")
+    ax.set_ylabel("ln (kh/1GPa)")
+    gases = pyiapws.g704.gases(HEAVYWATER)
+    for gas in gases:
+        k_m = pyiapws.g704.kd(T, gas, HEAVYWATER)
+        k = np.asarray(k_m)
+        ln_k = np.log(k)
+        ax.plot(T, ln_k, label=gas, **style)
+    ax.legend(ncol=3)
+    fig.savefig(f"./g704_{kname:s}_{solvent[HEAVYWATER]:s}.png", dpi=300, format="png")
