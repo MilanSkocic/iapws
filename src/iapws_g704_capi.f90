@@ -12,12 +12,14 @@ module iapws_g704_capi
     type, bind(C) :: c_char_p
         type(c_ptr) :: p
     end type
-
-    character(len=c_char), allocatable, target :: c_gases(:,:)
+    type :: capi_gas_t
+        character(kind=c_char, len=1), allocatable :: gas(:)
+    end type
+    type(capi_gas_t), allocatable, target :: c_gases(:)
     type(c_char_p), allocatable, target :: char_pp(:)
 
     public :: iapws_g704_capi_kh, iapws_g704_capi_kd
-    public :: iapws_g704_capi_ngas, iapws_g704_capi_lengas
+    public :: iapws_g704_capi_ngases
     public :: iapws_g704_capi_gases
 
 contains
@@ -91,24 +93,14 @@ end subroutine
 !> @brief Returns the number of gases.
 !! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
 !! @return n Number of gases.
-pure function iapws_g704_capi_ngas(heavywater)bind(C)result(n)
+pure function iapws_g704_capi_ngases(heavywater)bind(C)result(n)
     implicit none
     ! arguments
     integer(c_int), intent(in), value :: heavywater
     ! return
     integer(c_int) :: n
 
-    n = iapws_g704_ngas(heavywater)
-end function
-
-!> @brief Returns the length of gas string.
-!! @return n Number of gases.
-pure function iapws_g704_capi_lengas()bind(C)result(n)
-    implicit none
-    ! return
-    integer(c_int) :: n
-
-    n = iapws_g704_lengas()
+    n = iapws_g704_ngases(heavywater)
 end function
 
 !> @brief Return the available gases.
@@ -121,31 +113,33 @@ function iapws_g704_capi_gases(heavywater)bind(C)result(gases)
     ! return
     type(c_ptr) :: gases
     ! variables
-    integer(int32) :: ngas, lengas
-    integer(int32) :: i, j
-    character(len=iapws_g704_GAS_LENGTH), pointer :: f_gases(:) => null()
+    integer(int32) :: i, j, ngas, n
 
-    ngas = iapws_g704_ngas(heavywater)
-    lengas = iapws_g704_lengas()
-    nullify(f_gases)
+    type(iapws_g704_gas_t), pointer :: f_gases(:)
     f_gases => iapws_g704_gases(heavywater)
+    ngas = size(f_gases)
 
     if(allocated(c_gases))then
         deallocate(c_gases)
     endif
-    allocate(c_gases(lengas+1, ngas))
+    allocate(c_gases(ngas))
 
     if(allocated(char_pp))then
         deallocate(char_pp)
     endif
     allocate(char_pp(ngas))
 
-    do j=1, ngas
-        do i=1, lengas
-            c_gases(i, j) = f_gases(j)(i:i)
-            c_gases(i+1, j) = c_null_char
+    do i=1, ngas
+        if(allocated(c_gases(i)%gas))then
+            deallocate(c_gases(i)%gas)
+        endif
+        n = len(f_gases(i)%gas)
+        allocate(c_gases(i)%gas(n+1))
+        do j=1, n
+            c_gases(i)%gas(j) = f_gases(i)%gas(j:j)
         enddo
-        char_pp(j)%p = c_loc(c_gases(1, j))
+        c_gases(i)%gas(n+1) = c_null_char
+        char_pp(i)%p = c_loc(c_gases(i)%gas)
     enddo
     gases = c_loc(char_pp)
 end function

@@ -12,7 +12,7 @@ int main(void){
     int i;
     int heavywater = 0;
     
-    /* Compute kh and kd for H2O*/
+    /* Compute kh and kd in H2O*/
     iapws_g704_capi_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
     printf("Gas=%s\tT=%fC\tkh=%+10.4f\n", gas, T, kh);
     
@@ -20,21 +20,20 @@ int main(void){
     printf("Gas=%s\tT=%fC\tkd=%+15.4f\n", gas, T, kd);
 
     /* Get and print the available gases */
-    printf("Gases in H2O\n");
-    ngas = iapws_g704_capi_ngas(heavywater);
+    ngas = iapws_g704_capi_ngases(heavywater);
     gases = iapws_g704_capi_gases(heavywater);
+    printf("Gases in H2O: %d\n", ngas);
     for(i=0; i<ngas; i++){
-        printf("%s ", gases[i]);
+        printf("%s\n", gases[i]);
     }
-    printf("\n");
     
-    printf("Gases in D2O\n");
     heavywater = 1;
-    ngas = iapws_g704_capi_ngas(heavywater);
+    ngas = iapws_g704_capi_ngases(heavywater);
     gases = iapws_g704_capi_gases(heavywater);
+    printf("Gases in D2O: %d\n", ngas);
     for(i=0; i<ngas; i++){
-        printf("%s ", gases[i]);
+        printf("%s\n", gases[i]);
     }
-    printf("\n");
+
     return 0;
 }

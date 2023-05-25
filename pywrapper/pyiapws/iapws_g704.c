@@ -14,6 +14,10 @@ PyDoc_STRVAR(g704_kd_doc,
 "kd(T: array, gas, heavywater: bool) --> mview \n\n"
 "Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
+PyDoc_STRVAR(g704_ngases_doc,
+"gases(heavywater: bool) --> int"
+"Get the number of available gases.");
+
 PyDoc_STRVAR(g704_gases_doc,
 "gases(heavywater: bool) --> tuple"
 "Get the available gases.");
@@ -96,7 +100,21 @@ static PyObject *g704_kd(PyObject *self, PyObject *args){
     return kx('d', args);
 }
 
+static PyObject *g704_ngases(PyObject *self, PyObject *args){
+    int heavywater;
+    int ngas;
+    
+    if(!PyArg_ParseTuple(args, "p", &heavywater)){
+        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
+        return NULL;
+    }
+    ngas = iapws_g704_capi_ngases(heavywater);
+    
+    return Py_BuildValue("i", ngas);
+}
+
 static PyObject *g704_gases(PyObject *self, PyObject *args){
+    
     int heavywater;
     char **gases;
     int ngas;
@@ -107,22 +125,19 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
         PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
-    ngas = iapws_g704_capi_ngas(heavywater);
+    ngas = iapws_g704_capi_ngases(heavywater);
     gases = iapws_g704_capi_gases(heavywater);
     tuple = PyTuple_New((Py_ssize_t) ngas);
     for(i=0; i<ngas; i++){
-        PyTuple_SET_ITEM(tuple, i, PyUnicode_Replace(PyUnicode_FromString(gases[i]),
-                                                     PyUnicode_FromString(" "),
-                                                     PyUnicode_FromString(""),
-                                                     -1));
+        PyTuple_SET_ITEM(tuple, i, PyUnicode_FromString(gases[i]));
     }
     return tuple;
-
 }
 
 static PyMethodDef myMethods[] = {
     {"kh", (PyCFunction) g704_kh, METH_VARARGS, g704_kh_doc},
     {"kd", (PyCFunction) g704_kd, METH_VARARGS, g704_kd_doc},
+    {"ngases", (PyCFunction) g704_ngases, METH_VARARGS, g704_ngases_doc},
     {"gases", (PyCFunction) g704_gases, METH_VARARGS, g704_gases_doc},
     { NULL, NULL, 0, NULL }
 };
