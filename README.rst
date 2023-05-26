@@ -7,11 +7,7 @@ Introduction
 .. readme_inclusion_start
 
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
-It also provides a API for the C language. The formulations are taken from http://iapws.org. 
-A shared and a static library `libiapws` are compiled (f2008+) with the Fortran and C headers.
-The static and shared libraries can be installed in order to be included in Fortran or C programs.
-
-The compilation was tested on Linux (Debian), MacOS and Windows.
+It also provides a API for the C language. The formulas are taken from http://iapws.org. 
 
 .. readme_inclusion_end
 

@@ -1,3 +1,5 @@
+The compilation of the C and Fortran are compiled with c11 and f2008 standards, respectively.
+
 Create build directory
 
 .. code-block:: bash
