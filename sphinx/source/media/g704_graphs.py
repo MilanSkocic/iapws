@@ -36,7 +36,7 @@ for HEAVYWATER in (False, True):
     ax = fig.add_subplot()
     ax.grid(visible=True, ls=':')
     ax.set_xlabel("T /°C")
-    ax.set_ylabel("ln (kh/1GPa)")
+    ax.set_ylabel("ln kd")
     gases = pyiapws.g704.gases(HEAVYWATER)
     for gas in gases:
         k_m = pyiapws.g704.kd(T, gas, HEAVYWATER)

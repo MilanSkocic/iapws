@@ -121,10 +121,12 @@ Available gases
 Plots
 ----------
 
+The evolution of :math:`kh` in :math:`H_2O` and :math:`D_2O`, between 0°C and 360°C, are shown in figures
+:numref:`fig_kh_H2O` and :numref:`fig_kh_D2O`.
 
 .. _fig_kh_H2O:
 .. figure:: ../media/g704_kh_H2O.png
-    :width: 600
+    :width: 400
     :align: center
     :alt: kh in H2O
 
@@ -132,16 +134,18 @@ Plots
 
 .. _fig_kh_D2O:
 .. figure:: ../media/g704_kh_D2O.png
-    :width: 600
+    :width: 400
     :align: center
     :alt: kh in D2O
 
     kh in D2O
 
+The evolution of :math:`kd` in :math:`H_2O` and :math:`D_2O`, between 0°C and 360°C, are shown in figures
+:numref:`fig_kd_H2O` and :numref:`fig_kd_D2O`.
 
 .. _fig_kd_H2O:
 .. figure:: ../media/g704_kd_H2O.png
-    :width: 600
+    :width: 400
     :align: center
     :alt: kd in H2O
 
@@ -149,7 +153,7 @@ Plots
 
 .. _fig_kd_D2O:
 .. figure:: ../media/g704_kd_D2O.png
-    :width: 600
+    :width: 400
     :align: center
     :alt: kd in D2O
 
