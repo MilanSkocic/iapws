@@ -1,7 +1,7 @@
 iapw
 ==============
 
-.. image:: ../media/logo-iapws.png
+.. image:: ../../../media/logo-iapws.png
   :width: 200
   :align: center
 
