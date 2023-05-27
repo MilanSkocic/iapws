@@ -1,3 +1,4 @@
+r"""Setup."""
 import os
 import configparser
 import importlib
@@ -81,14 +82,14 @@ win_roots = ["C:/Program Files/iapws"]
 user_roots = [os.path.expanduser("~")+"/iapws", os.path.expanduser("~")+"/.local"]
 all_roots = unix_roots + win_roots + user_roots
 
-default_include_dirs = get_default_dirs("include")
-default_lib_dirs = get_default_dirs("lib")
+DEFAULT_INCLUDE_DIRS = get_default_dirs("include")
+DEFAULT_LIB_DIRS = get_default_dirs("lib")
 
 
-# Set dirs for codata library
+# Set dirs for iapws library
 cfg_dict = {"IAPWS": {"libraries": "iapws",
-                       "include_dirs": default_include_dirs,
-                       "library_dirs": default_lib_dirs}}
+                       "include_dirs": DEFAULT_INCLUDE_DIRS,
+                       "library_dirs": DEFAULT_LIB_DIRS}}
 
 cfg = configparser.RawConfigParser()
 cfg.read_dict(cfg_dict)
