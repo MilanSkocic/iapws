@@ -14,11 +14,14 @@ spec.loader.exec_module(mod)
 def get_custom_cfg(fpath):
     r"""Read custom config."""
     cfg = configparser.RawConfigParser()
-    if fpath.exists():
-        print(f"{fpath.name} was found.")
-        cfg.read(fpath)
+    if isinstance(fpath, pathlib.Path):
+        if fpath.exists():
+            print(f"{fpath.name} was found.")
+            cfg.read(fpath)
+        else:
+            print(f"{fpath.name} was not found.")
     else:
-        print(f"{fpath.name} was not found.")
+        print("No config files. Using defaults.")
 
     return cfg
 
@@ -98,18 +101,24 @@ cfg_dict = {"IAPWS": {"libraries": "iapws",
                        "include_dirs": DEFAULT_INCLUDE_DIRS,
                        "library_dirs": DEFAULT_LIB_DIRS}}
 
-cdfg_default = configparser.RawConfigParser()
-cdfg_default.read_dict(cfg_dict)
-cfg_user = get_custom_cfg(pathlib.Path("site.cfg"))
-cfg_package = get_custom_cfg(pathlib.Path(os.path.expanduser("~")) / "pyiapws-site.cfg")
-cdfg_default.update(cfg_user)
-cdfg_default.update(cfg_package)
+cfg_default = configparser.RawConfigParser()
+cfg_default.read_dict(cfg_dict)
 
-iapws_include_dirs = cdfg_default["IAPWS"]["include_dirs"].split(",")
-iapws_library_dirs = cdfg_default["IAPWS"]["library_dirs"].split(",")
-iapws_libraries = cdfg_default["IAPWS"]["libraries"].split(",")
+# if package config present
+fpath_site = pathlib.Path("site.cfg")
+fpath_pyiapws_site = pathlib.Path(os.path.expanduser("~")) / "pyiapws-site.cfg"
+fpath = None
+if fpath_site.exists():
+    fpath = fpath_site
+if fpath_pyiapws_site.exists():
+    fpath = fpath_pyiapws_site
 
+cfg_user = get_custom_cfg(fpath)
+cfg_default.update(cfg_user)
 
+iapws_include_dirs = cfg_default["IAPWS"]["include_dirs"].split(",")
+iapws_library_dirs = cfg_default["IAPWS"]["library_dirs"].split(",")
+iapws_libraries = cfg_default["IAPWS"]["libraries"].split(",")
 
 if __name__ == "__main__":
 

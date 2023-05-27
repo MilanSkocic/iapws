@@ -3,6 +3,5 @@
 # Copy this file and rename it to site.cfg in order to be read by the setup.py.
 [IAPWS]
 libraries = iapws
-library_dirs = /usr/lib
-include_dirs = /usr/include
-runtime_library_dirs = /usr/lib
+library_dirs = /usr/lib,/usr/local/lib
+include_dirs = /usr/include,/usr/local/include
