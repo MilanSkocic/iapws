@@ -55,10 +55,11 @@ def search_headers(include_dirs, libraries):
             fdir = pathlib.Path(dir_)
             if fdir.exists():
                 fpath = fdir / f"{library}.h"
-                print(f"\t{fpath}...{fpath.exists()}")
                 if fpath.exists():
+                    print(f"\t{fpath}")
                     found += 1
-
+    if found == 0:
+        print("None")
     return found
                 
 def search_libraries(lib_dirs, libraries, static=False):
@@ -75,10 +76,11 @@ def search_libraries(lib_dirs, libraries, static=False):
             fdir = pathlib.Path(dir_)
             if fdir.exists():
                 fpath = fdir / (prefix+f"{library}"+ext)
-                print(f"\t{fpath}...{fpath.exists()}")
                 if fpath.exists():
+                    print(f"\t{fpath}")
                     found += 1
-
+    if found == 0:
+        print("None")
     return found
 
 # default roots for library dirs
