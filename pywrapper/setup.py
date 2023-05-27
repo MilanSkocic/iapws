@@ -12,6 +12,7 @@ mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
 def get_custom_cfg(fpath):
+    r"""Read custom config."""
     cfg = configparser.RawConfigParser()
     if fpath.exists():
         print(f"{fpath.name} was found.")
@@ -22,6 +23,7 @@ def get_custom_cfg(fpath):
     return cfg
 
 def set_extensions():
+    r"""Set the extension according to the platform."""
     if platform.system() == "Windows":
         prefix = ""
         ext_shared = ".dll"
@@ -37,6 +39,7 @@ def set_extensions():
     return prefix, ext_shared, ext_static
 
 def get_default_dirs(dir_name):
+    r"""Get dirs."""
     dirs = []
     for root in all_roots:
         dirs.append(root + f"/{dir_name}")
@@ -44,6 +47,7 @@ def get_default_dirs(dir_name):
     return ",".join(dirs)
 
 def search_headers(include_dirs, libraries):
+    r"""Search headers."""
     found = 0
     for library in libraries:
         print(f"Looking for {library}.h...")
@@ -58,6 +62,7 @@ def search_headers(include_dirs, libraries):
     return found
                 
 def search_libraries(lib_dirs, libraries, static=False):
+    r"""Search libraries."""
     found = 0
     prefix, ext_shared, ext_static = set_extensions()
     if static:
@@ -91,24 +96,24 @@ cfg_dict = {"IAPWS": {"libraries": "iapws",
                        "include_dirs": DEFAULT_INCLUDE_DIRS,
                        "library_dirs": DEFAULT_LIB_DIRS}}
 
-cfg = configparser.RawConfigParser()
-cfg.read_dict(cfg_dict)
+cdfg_default = configparser.RawConfigParser()
+cdfg_default.read_dict(cfg_dict)
 cfg_user = get_custom_cfg(pathlib.Path("site.cfg"))
 cfg_package = get_custom_cfg(pathlib.Path(os.path.expanduser("~")) / "pyiapws-site.cfg")
-cfg.update(cfg_user)
-cfg.update(cfg_package)
+cdfg_default.update(cfg_user)
+cdfg_default.update(cfg_package)
 
-iapws_include_dirs = cfg["IAPWS"]["include_dirs"].split(",")
-iapws_library_dirs = cfg["IAPWS"]["library_dirs"].split(",")
-iapws_libraries = cfg["IAPWS"]["libraries"].split(",")
+iapws_include_dirs = cdfg_default["IAPWS"]["include_dirs"].split(",")
+iapws_library_dirs = cdfg_default["IAPWS"]["library_dirs"].split(",")
+iapws_libraries = cdfg_default["IAPWS"]["libraries"].split(",")
 
 
 
 if __name__ == "__main__":
 
-    found_headers = search_headers(iapws_include_dirs, iapws_libraries)
-    found_shared = search_libraries(iapws_library_dirs, iapws_libraries, static=False)
-    found_static = search_libraries(iapws_library_dirs, iapws_libraries, static=True)
+    search_headers(iapws_include_dirs, iapws_libraries)
+    search_libraries(iapws_library_dirs, iapws_libraries, static=False)
+    search_libraries(iapws_library_dirs, iapws_libraries, static=True)
 
     mod_ext = Extension(name="pyiapws.g704",
                                          sources=["./pyiapws/iapws_g704.c"],
