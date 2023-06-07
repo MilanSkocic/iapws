@@ -29,7 +29,7 @@ if __name__ == "__main__":
         url='https://milanskocic.github.io/pyiapws/index.html',
         download_url='https://github.com/MilanSkocic/pyiapws',
         packages=find_packages(),
-        include_package_data=False,
+        include_package_data=True,
         python_requires='>=3.8',
         install_requires=pathlib.Path("requirements.txt").read_text(encoding="utf-8").split('\n'),
         classifiers=["Development Status :: 5 - Stable",
