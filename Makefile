@@ -11,15 +11,12 @@ all: $(LIBNAME)
 $(LIBNAME): build
 	cp $(shell find ./build -type f -name lib$(LIBNAME).a) $(BUILD_DIR)
 	cp $(INCLUDE_DIR)/$(LIBNAME)*.h $(PYW_MOD_DIR)/
+	cp $(BUILD_DIR)/lib$(LIBNAME)*.a $(PYW_MOD_DIR)/
 
 build: clean
 	fpm build
 
 shared: shared_$(PLATFORM)
-	cp -f $(BUILD_DIR)/lib$(LIBNAME).so $(PYW_MOD_DIR)/ | true
-	cp -f $(BUILD_DIR)/lib$(LIBNAME).dylib $(PYW_MOD_DIR)/ | true
-	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll $(PYW_MOD_DIR)/ | true
-	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll.a $(PYW_MOD_DIR)/ | true
 
 shared_linux: $(LIBNAME)
 	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
