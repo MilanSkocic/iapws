@@ -1,6 +1,7 @@
 r"""Setup."""
 import pathlib
 import importlib
+import platform
 from setuptools import setup, find_packages, Extension
 
 # Import only version.py file for extracting the version
@@ -8,12 +9,16 @@ spec = importlib.util.spec_from_file_location('version', './pyiapws/version.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
+extra_objects = ["-liapws"]
+if platform.system() == "Windows":
+    extra_objects = ["libiapws.dll.a"]
+
 if __name__ == "__main__":
 
     mod_ext = Extension(name="pyiapws.g704",
                                          sources=["./pyiapws/iapws_g704.c"],
                                          library_dirs=["./pyiapws"],
-                                         extra_objects=["-liapws"])
+                                         extra_objects=extra_objects)
     setup(name=mod.__package_name__,
         version=mod.__version__,
         maintainer=mod.__maintainer__,

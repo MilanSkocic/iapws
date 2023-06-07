@@ -21,6 +21,9 @@ dist/
 *.obj
 *.o
 *.mod
+*.a
+*.dll
+*.so
 
 *.egg-info
 __pycache__
@@ -30,3 +33,8 @@ __pycache__
 
 pywrapper/pyiapws/*.h
 pywrapper/pyiapws/*.a
+pywrapper/pyiapws/*.dll
+pywrapper/pyiapws/*.dll.a
+pywrapper/pyiapws/*.so
+pywrapper/pyiapws/*.dylib
+pywrapper/pyiapws/*.pyd
