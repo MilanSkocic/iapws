@@ -46,3 +46,11 @@ Install
 .. code-block:: bash
     
     cmake --install .
+
+needed msys2 files located in mingw64 or mingw32
+libgcc.a
+libgfortran.dll.a
+libgcc_s_seh-1.dll
+libgfortran-5.dll
+libquadmath-0.dll
+libwinpthread-1.dll
