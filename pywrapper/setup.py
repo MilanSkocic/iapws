@@ -1,9 +1,6 @@
 r"""Setup."""
-import os
-import configparser
-import importlib
 import pathlib
-import platform
+import importlib
 from setuptools import setup, find_packages, Extension
 
 # Import only version.py file for extracting the version
@@ -11,126 +8,11 @@ spec = importlib.util.spec_from_file_location('version', './pyiapws/version.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
-def get_custom_cfg(fpath):
-    r"""Read custom config."""
-    cfg = configparser.RawConfigParser()
-    if isinstance(fpath, pathlib.Path):
-        if fpath.exists():
-            print(f"{fpath.name} was found.")
-            cfg.read(fpath)
-        else:
-            print(f"{fpath.name} was not found.")
-    else:
-        print("No config files. Using defaults.")
-
-    return cfg
-
-def set_extensions():
-    r"""Set the extension according to the platform."""
-    if platform.system() == "Windows":
-        prefix = ""
-        ext_shared = ".dll"
-        ext_static = ".lib"
-    elif platform.system() == "Darwin":
-        prefix = "lib"
-        ext_shared = ".dylib"
-        ext_static = ".a"
-    else:
-        prefix = "lib"
-        ext_shared = ".so"
-        ext_static = ".a"
-    return prefix, ext_shared, ext_static
-
-def get_default_dirs(dir_name):
-    r"""Get dirs."""
-    dirs = []
-    for root in all_roots:
-        dirs.append(root + f"/{dir_name}")
-    
-    return ",".join(dirs)
-
-def search_headers(include_dirs, libraries):
-    r"""Search headers."""
-    found = 0
-    for library in libraries:
-        print(f"Looking for {library}.h...")
-        for dir_ in include_dirs:
-            fdir = pathlib.Path(dir_)
-            if fdir.exists():
-                fpath = fdir / f"{library}.h"
-                if fpath.exists():
-                    print(f"\t{fpath}")
-                    found += 1
-    if found == 0:
-        print("None")
-    return found
-                
-def search_libraries(lib_dirs, libraries, static=False):
-    r"""Search libraries."""
-    found = 0
-    prefix, ext_shared, ext_static = set_extensions()
-    if static:
-        ext = ext_static
-    else:
-        ext = ext_shared
-    for library in libraries:
-        print(f"Looking for {library}{ext}...")
-        for dir_ in lib_dirs:
-            fdir = pathlib.Path(dir_)
-            if fdir.exists():
-                fpath = fdir / (prefix+f"{library}"+ext)
-                if fpath.exists():
-                    print(f"\t{fpath}")
-                    found += 1
-    if found == 0:
-        print("None")
-    return found
-
-# default roots for library dirs
-unix_roots = ["/usr", "/usr/local"]
-win_roots = ["C:/Program Files/iapws"]
-user_roots = [os.path.expanduser("~")+"/iapws", os.path.expanduser("~")+"/.local"]
-all_roots = unix_roots + win_roots + user_roots
-
-DEFAULT_INCLUDE_DIRS = get_default_dirs("include")
-DEFAULT_LIB_DIRS = get_default_dirs("lib")
-
-
-# Set dirs for iapws library
-cfg_dict = {"IAPWS": {"libraries": "iapws",
-                       "include_dirs": DEFAULT_INCLUDE_DIRS,
-                       "library_dirs": DEFAULT_LIB_DIRS}}
-
-cfg_default = configparser.RawConfigParser()
-cfg_default.read_dict(cfg_dict)
-
-# if package config present
-fpath_site = pathlib.Path("site.cfg")
-fpath_pyiapws_site = pathlib.Path(os.path.expanduser("~")) / "pyiapws-site.cfg"
-fpath = None
-if fpath_site.exists():
-    fpath = fpath_site
-if fpath_pyiapws_site.exists():
-    fpath = fpath_pyiapws_site
-
-cfg_user = get_custom_cfg(fpath)
-cfg_default.update(cfg_user)
-
-iapws_include_dirs = cfg_default["IAPWS"]["include_dirs"].split(",")
-iapws_library_dirs = cfg_default["IAPWS"]["library_dirs"].split(",")
-iapws_libraries = cfg_default["IAPWS"]["libraries"].split(",")
-
 if __name__ == "__main__":
-
-    search_headers(iapws_include_dirs, iapws_libraries)
-    search_libraries(iapws_library_dirs, iapws_libraries, static=False)
-    search_libraries(iapws_library_dirs, iapws_libraries, static=True)
 
     mod_ext = Extension(name="pyiapws.g704",
                                          sources=["./pyiapws/iapws_g704.c"],
-                                         libraries=iapws_libraries,
-                                         library_dirs=iapws_library_dirs,
-                                         include_dirs=iapws_include_dirs)
+                                         extra_objects=["./pyiapws/libiapws.dylib"])
     setup(name=mod.__package_name__,
         version=mod.__version__,
         maintainer=mod.__maintainer__,
@@ -142,10 +24,10 @@ if __name__ == "__main__":
         url='https://milanskocic.github.io/pyiapws/index.html',
         download_url='https://github.com/MilanSkocic/pyiapws',
         packages=find_packages(),
-        include_package_data=True,
-        python_requires='>=3.7',
+        include_package_data=False,
+        python_requires='>=3.8',
         install_requires=pathlib.Path("requirements.txt").read_text(encoding="utf-8").split('\n'),
-        classifiers=["Development Status :: 4 - Beta",
+        classifiers=["Development Status :: 5 - Stable",
                     "Intended Audience :: Science/Research",
                     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"],
         ext_modules=[mod_ext]

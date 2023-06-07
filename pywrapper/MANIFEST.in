@@ -1,10 +1,11 @@
 # sdist
-include INSTALL.TXT
+
+
+include INSTALL.rst
 include LICENSE.TXT
 include MANIFEST.in
 include README.rst
 include requirements.txt
-include site.cfg.example
 
-# bdist
-recursive-include pyiapws *.dll
+# bdist if package_data=True 
+recursive-include pyiapws *.c *.h *.f90 *.a

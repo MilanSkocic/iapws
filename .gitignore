@@ -28,4 +28,5 @@ __pycache__
 
 .DS_Store
 
-sphinx/doxygen/xml/
+pywrapper/pyiapws/*.h
+pywrapper/pyiapws/*.a
