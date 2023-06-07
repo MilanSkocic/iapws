@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     mod_ext = Extension(name="pyiapws.g704",
                                          sources=["./pyiapws/iapws_g704.c"],
-                                         extra_objects=["./pyiapws/libiapws.dylib"])
+                                         extra_objects=["-liapws"])
     setup(name=mod.__package_name__,
         version=mod.__version__,
         maintainer=mod.__maintainer__,
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         url='https://milanskocic.github.io/pyiapws/index.html',
         download_url='https://github.com/MilanSkocic/pyiapws',
         packages=find_packages(),
-        include_package_data=False,
+        include_package_data=True,
         python_requires='>=3.8',
         install_requires=pathlib.Path("requirements.txt").read_text(encoding="utf-8").split('\n'),
         classifiers=["Development Status :: 5 - Stable",

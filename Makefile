@@ -10,23 +10,25 @@ all: $(LIBNAME)
 
 $(LIBNAME): build
 	cp $(shell find ./build -type f -name lib$(LIBNAME).a) $(BUILD_DIR)
-	cp $(BUILD_DIR)/lib$(LIBNAME).a $(PYW_MOD_DIR)/
 	cp $(INCLUDE_DIR)/$(LIBNAME)*.h $(PYW_MOD_DIR)/
 
 build: clean
 	fpm build
 
 shared: shared_$(PLATFORM)
-	cp $(BUILD_DIR)/lib$(LIBNAME).dylib $(PYW_MOD_DIR)/
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).so $(PYW_MOD_DIR)/ | true
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).dylib $(PYW_MOD_DIR)/ | true
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll $(PYW_MOD_DIR)/ | true
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll.a $(PYW_MOD_DIR)/ | true
 
 shared_linux: $(LIBNAME)
-	gfortran -shared -static -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
+	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
 shared_darwin: $(LIBNAME)
 	gfortran -dynamiclib $(FPM_LDFLAGS) -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a -Wl,-noall_load
 
 shared_windows: $(LIBNAME)
-	gfortran -shared -static -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
+	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
 clean:
 	fpm clean --all
