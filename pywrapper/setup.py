@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
     mod_ext = Extension(name="pyiapws.g704",
                                          sources=["./pyiapws/iapws_g704.c"],
+                                         library_dirs=["./pyiapws"],
                                          extra_objects=["-liapws"])
     setup(name=mod.__package_name__,
         version=mod.__version__,
