@@ -1,25 +1,25 @@
 iapw
 ==============
 
-.. image:: ../../../media/logo-iapws.png
+.. image:: ../../../../media/logo-iapws.png
   :width: 200
   :align: center
 
-.. include:: ../../../README.rst
+.. include:: ../../../../README.rst
   :start-after: readme_inclusion_start
   :end-before: readme_inclusion_end
 
 How to install
 ^^^^^^^^^^^^^^^^^
 
-.. include:: ../../../INSTALL.rst
+.. include:: ../../../../INSTALL.rst
 
 Dependencies
 ^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../REQUIREMENTS.txt
+.. literalinclude:: ../../../../REQUIREMENTS.txt
 
 License
 ^^^^^^^^^^^^^^^^^
 
-:download:`GNU General Public License v3 (GPLv3) <../../../LICENSE.txt>`
+:download:`GNU General Public License v3 (GPLv3) <../../../../LICENSE.txt>`
