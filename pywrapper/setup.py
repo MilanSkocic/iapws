@@ -9,7 +9,10 @@ spec = importlib.util.spec_from_file_location('version', './pyiapws/version.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
-extra_objects = ["./pyiapws/libiapws.a", "-lm", "-lgfortran"]
+extra_objects = None
+
+if platform.system() == "Linux":
+    extra_objects = ["./pyiapws/libiapws.a", "-lm", "-lgfortran"]
 if platform.system() == "Windows":
     extra_objects = ["./pyiapws/libiapws.a", "./pyiapws/libgfortran.dll.a", "./pyiapws/libgcc.a"]
 if platform.system() == "Darwin":
