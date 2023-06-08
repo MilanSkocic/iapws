@@ -12,6 +12,8 @@ spec.loader.exec_module(mod)
 extra_objects = ["./pyiapws/libiapws.a", "-lm", "-lgfortran"]
 if platform.system() == "Windows":
     extra_objects = ["./pyiapws/libiapws.a", "./pyiapws/libgfortran.dll.a", "./pyiapws/libgcc.a"]
+if platform.system() == "Darwin":
+    extra_objects = ["./pyiapws/libiapws.a", "-static-libgfortran", "-static-libquadmath", "-static-libgcc"]
 
 if __name__ == "__main__":
 
