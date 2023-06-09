@@ -16,7 +16,7 @@ if platform.system() == "Linux":
 if platform.system() == "Windows":
     extra_objects = ["./pyiapws/libiapws.a", "./pyiapws/libgfortran.dll.a", "./pyiapws/libgcc.a"]
 if platform.system() == "Darwin":
-    extra_objects = ["./pyiapws/libiapws.a", "./pyiapws/libgfortran.5.dylib", "./pyiapws/libquadmath.0.dylib", "./pyiapws/libgcc_s.1.1.dylib"]
+    extra_objects = ["./pyiapws/libiapws.a", "-static-libgfortran", "-static-libquadmath", "-static-libgcc"]
 
 if __name__ == "__main__":
 
