@@ -11,7 +11,7 @@ all: $(LIBNAME)
 $(LIBNAME): build
 	cp $(shell find ./build -type f -name lib$(LIBNAME).a) $(BUILD_DIR)
 	cp $(INCLUDE_DIR)/$(LIBNAME)*.h $(PYW_MOD_DIR)/
-	cp $(BUILD_DIR)/lib$(LIBNAME)*.a $(PYW_MOD_DIR)/
+	cp $(BUILD_DIR)/lib$(LIBNAME).a $(PYW_MOD_DIR)/
 
 build: clean
 	fpm build
@@ -26,6 +26,8 @@ shared_darwin: $(LIBNAME)
 
 shared_windows: $(LIBNAME)
 	gfortran -shared -static -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll $(PYW_MOD_DIR)/ | true
+	cp -f $(BUILD_DIR)/lib$(LIBNAME).dll.a $(PYW_MOD_DIR)/ | true
 
 clean:
 	fpm clean --all
