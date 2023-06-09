@@ -10,6 +10,8 @@ with additional options:
 On windows, `msys2 <https://www.msys2.org>`_ needs to be installed and use 
 the mingw64 or mingw32 terminals.
 
+On Darwin, the `gcc <https://formulae.brew.sh/formula/gcc>`_ toolchain needs to be installed.
+
 Build: the configuration file will set all the environmental variables necessary for the compilation
 
 .. code-block:: bash
@@ -35,17 +37,8 @@ Uninstall
 
     make uninstall
 
-If a shared is needed:
+If a shared library is needed:
 
 .. code-block:: bash
 
     make shared
-
-Then, if you need to build to Python wrapper from sources
-
-.. code-block:: bash
-
-    cd pywrapper
-    export CC=gfortran # on macOS, you need to export CC as gfortran for correct linking
-    python setup.py build_ext --inplace
-
