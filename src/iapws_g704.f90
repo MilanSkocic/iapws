@@ -1,8 +1,5 @@
-!> @file
-!! @brief Module for IAPWS G7_04 
-
-!> @brief Module for IAPWS G7-04
 module iapws_g704
+    !! Module for IAPWS G7-04
     use iso_fortran_env
     use ieee_arithmetic
     implicit none
@@ -13,7 +10,8 @@ integer(int32), parameter :: ngas_H2O = 14
 integer(int32), parameter :: ngas_D2O = 7
 
 type :: iapws_g704_gas_t
-    character(len=:), allocatable :: gas
+    !! Derived type containing a allocatable string for representing a gas.
+    character(len=:), allocatable :: gas !! Gas
 end type
 type(iapws_g704_gas_t), allocatable, target :: f_gases(:)
 
@@ -35,6 +33,7 @@ real(real64), parameter :: q_H2O = -0.023767d0
 !> solvent coefficient for kd in heavywater
 real(real64), parameter :: q_D2O = -0.024552d0
 
+!! ABC coefficients for gases in water.
 type :: abc_t
     character(len=lengas) :: gas
     real(real64) :: A
@@ -329,19 +328,21 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
 
 end function
 
-!> @brief Compute the henry constant for a given temperature.
-!! @param[in] T Temperature in °C as 1d-array.
-!! @param[in] gas Gas.
-!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @param[out] k Henry constant as 1d-array. Filled with NaNs if gas not found.
 pure subroutine iapws_g704_kh(T, gas, heavywater, k)
+    !! Compute the henry constant for a given temperature.
     implicit none
-    !! arguments
+    
+    ! arguments
     real(real64), intent(in) :: T(:)
+        !! Temperature in °C.
     character(len=*), intent(in) :: gas
+        !! Gas.
     integer(int32), intent(in) :: heavywater
+        !! Flag if D2O (1) is used or H2O(0).
     real(real64), intent(out) :: k(:)
-    !! variables
+        !! Henry constant. Filled with NaNs if gas not found.
+    
+    ! variables
     integer(int32) :: i
     
     if(heavywater > 0)then
@@ -362,19 +363,21 @@ pure subroutine iapws_g704_kh(T, gas, heavywater, k)
 
 end subroutine
 
-!> @brief Compute the vapor-liquid constant for a given temperature. 
-!! @param[in] T Temperature in °C as 1d-array.
-!! @param[in] gas Gas.
-!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @param[out] k Vapor-liquid constant as 1d-array. Filled with NaNs if gas not found.
 pure subroutine iapws_g704_kd(T, gas, heavywater, k)
+    !! Compute the vapor-liquid constant for a given temperature. 
     implicit none
-    !! arguments
+    
+    ! arguments
     real(real64), intent(in) :: T(:)
+        !! Temperature in °C.
     character(len=*), intent(in) :: gas
+        !! Gas.
     integer(int32), intent(in) :: heavywater
+        !! Flag if D2O (1) is used or H2O(0).
     real(real64), intent(out) :: k(:)
-    !! variables
+        !! Vapor-liquid constant. Filled with NaNs if gas not found.
+    
+    ! variables
     integer(int32) :: i
     
     if(heavywater > 0)then
@@ -395,15 +398,15 @@ pure subroutine iapws_g704_kd(T, gas, heavywater, k)
 
 end subroutine
 
-!> @brief Returns the number of gases.
-!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @return n Number of gases.
 pure function iapws_g704_ngases(heavywater)result(n)
+    !! Returns the number of gases.
     implicit none
+    
     ! arguments
     integer(int32), intent(in) :: heavywater
-    ! return
+        !! Flag if D2O (1) is used or H2O(0).
     integer(int32) :: n
+        !! Number of gases.
 
     if(heavywater > 0)then
         n = ngas_D2O
@@ -412,16 +415,17 @@ pure function iapws_g704_ngases(heavywater)result(n)
     endif
 end function
 
-!> @brief Returns the available gases.
-!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @return gases Available gases.
 function iapws_g704_gases(heavywater)result(gases)
+    !! Returns the available gases.
     implicit none
+
     ! arguments
     integer(int32), intent(in) :: heavywater
-    ! return
+        !! Flag if D2O (1) is used or H2O(0).
     type(iapws_g704_gas_t), pointer :: gases(:)
-    !variables
+        !! Available gases.
+    
+    ! variables
     integer(int32) :: i, n
 
     if(allocated(f_gases))then
