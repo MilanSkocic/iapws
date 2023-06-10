@@ -22,7 +22,7 @@ shared_linux: $(LIBNAME)
 	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
 shared_darwin: $(LIBNAME)
-	gfortran -dynamiclib -static-libgfortran -static-libquadmath -static-libgcc -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a -Wl,-noall_load
+	gfortran -dynamiclib -install_name lib$(LIBNAME) -static-libgfortran -static-libquadmath -static-libgcc -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a -Wl,-noall_load
 
 shared_windows: $(LIBNAME)
 	gfortran -shared -static -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
