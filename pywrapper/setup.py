@@ -14,15 +14,16 @@ extra_objects = None
 if platform.system() == "Linux":
     extra_objects = ["./pyiapws/libiapws.a", "-lm", "-lgfortran"]
 if platform.system() == "Windows":
-    extra_objects = ["./pyiapws/libiapws.dll.a"]
+    extra_objects = ["./pyiapws/libiapws.a", "./pyiapws/libgfortran.dll.a", "./pyiapws/libgcc.a"]
 if platform.system() == "Darwin":
     extra_objects = ["./pyiapws/libiapws.a", "-static-libgfortran", "-static-libquadmath", "-static-libgcc"]
 
 if __name__ == "__main__":
 
     mod_ext = Extension(name="pyiapws.g704",
-                                         sources=["./pyiapws/iapws_g704.c"],
-                                         extra_objects=extra_objects)
+                        sources=["./pyiapws/iapws_g704.c"],
+                        extra_objects=extra_objects)
+    
     setup(name=mod.__package_name__,
         version=mod.__version__,
         maintainer=mod.__maintainer__,
