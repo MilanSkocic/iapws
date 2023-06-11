@@ -5,6 +5,8 @@ Summary
 --------
 
 * New structure with modules corresponding to the IAPWS papers.
+* Compatible with fpm.
+* fpm module naming convention.
 * API break for iapws_g704_kh and iapws_g704_kd functions:
    * only 1d-arrays as inputs in Fortran and C API.
    * only objects with buffer protocol as inputs in python wrapper.
