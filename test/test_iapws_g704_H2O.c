@@ -71,7 +71,7 @@ int main(int argc, char **argv){
     int ngas = 14;
     int nT = 4;
 
-    printf("***** Test kH in water *****\n");
+    printf("***** C Test kH in water *****\n");
 
     printf("%5s\t", "Gas");
     for(i=0; i<nT; i++){
@@ -94,11 +94,11 @@ int main(int argc, char **argv){
         printf("\n");
     }
     
-    printf("***** Test kd in water *****\n");
+    printf("***** C Test kd in water *****\n");
     
     printf("%5s\t", "Gas");
     for(i=0; i<nT; i++){
-        printf("%23.0f\t", T_K[i]);
+        printf("%26.0f\t", T_K[i]);
     }
     printf("\n");
     for(j=0; j<ngas; j++){
@@ -107,7 +107,7 @@ int main(int argc, char **argv){
             T_C = T_K[i] - 273.15;
             iapws_g704_capi_kd(&T_C, gases[j], D2O, &kd, strlen(gases[j]), 1);
             diff = roundn(log(kd) - ref_kd[j][i], 4);
-            printf("%+7.4f/%+7.4f/%+7.4f\t", log(kd), ref_kd[j][i], log(kd) - ref_kd[j][i]);
+            printf("%0+8.4f/%0+8.4f/%0+8.4f\t", log(kd), ref_kd[j][i], log(kd) - ref_kd[j][i]);
             if(diff != 0.0){
                 return 1;
             }

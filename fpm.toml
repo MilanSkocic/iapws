@@ -36,5 +36,17 @@ name = "c_test_gases_str"
 main = "test_iapws_g704_gases_str.c"
 
 [[test]]
+name = "f_test_ngases"
+main = "test_iapws_g704_ngases.f90"
+
+[[test]]
 name = "c_test_ngases"
 main = "test_iapws_g704_ngases.c"
+
+[[test]]
+name = "c_test_H2O"
+main = "test_iapws_g704_H2O.c"
+
+[[test]]
+name = "c_test_D2O"
+main = "test_iapws_g704_D2O.c"
