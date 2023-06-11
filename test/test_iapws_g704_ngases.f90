@@ -1,6 +1,7 @@
 program test_iapws_g704_ngases
     use iso_fortran_env
     use iapws_g704
+    implicit none
 
     integer(int32) :: value
     integer(int32) :: expected

@@ -44,6 +44,10 @@ name = "c_test_ngases"
 main = "test_iapws_g704_ngases.c"
 
 [[test]]
+name = "f_test_H2O"
+main = "test_iapws_g704_H2O.f90"
+
+[[test]]
 name = "c_test_H2O"
 main = "test_iapws_g704_H2O.c"
 
