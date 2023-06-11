@@ -1,8 +1,5 @@
-!> @file
-!! @brief C API for the IAPWS module.
-
-!> @brief C API for the IAPWS module.
 module iapws_g704_capi
+    !! C API for the IAPWS module.
     use iso_fortran_env
     use iso_c_binding
     use iapws_g704

@@ -1,8 +1,5 @@
-!> @file iapws.f90
-!! @brief IAPWS Library
-
-!! @brief Main module for the IAPWS library.
 module iapws
+    !! Main module for the IAPWS library.
     use iapws_g704
     
 
