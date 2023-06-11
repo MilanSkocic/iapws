@@ -24,23 +24,25 @@ module iapws_g704_capi
 
 contains
 
-!> @brief Compute the henry constant for a given temperature.
-!! @param[in] T Temperature in °C as 1d-array.
-!! @param[in] gas Gas.
-!! @param[in] heavywater Flag if D2O (1) is used or H2O(0).
-!! @param[in] k Henry constant as 1d-array. Filled with NaNs if gas not found.
-!! @param[in] size_gas Size of the gas string.
-!! @param[in] size_T Size of the T and k 1d-arrays.
 subroutine iapws_g704_capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
+    !! Compute the henry constant for a given temperature.
     implicit none
-    !! arguments
+    
+    ! arguments
     type(c_ptr), value :: T
+        !! Temperature in °C.
     type(c_ptr), intent(in), value :: gas
+        !! Gas.
     integer(c_int), intent(in), value :: heavywater 
+        !! Flag if D2O (1) is used or H2O(0).
     type(c_ptr), intent(in), value :: k
+        !! Henry constant. Filled with NaNs if gas not found.
     integer(c_int), intent(in), value :: size_gas
+        !! Size of the gas string.
     integer(c_size_t), intent(in), value :: size_T
-    !! local variables
+        !! Size of T and k.
+    
+    ! variables
     character, pointer, dimension(:) :: c2f_gas
     real(real64), pointer :: f_T(:)
     character(len=size_gas) :: f_gas
