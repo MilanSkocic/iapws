@@ -10,5 +10,6 @@ extern void iapws_g704_capi_kh(double *T, char *gas, int heavywater, double *k, 
 extern void iapws_g704_capi_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T);
 extern int iapws_g704_capi_ngases(int heavywater);
 extern char **iapws_g704_capi_gases(int heavywater);
+extern char *iapws_g704_capi_gases2(int heavywater);
 
 #endif

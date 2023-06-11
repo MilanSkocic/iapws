@@ -14,6 +14,7 @@ type :: iapws_g704_gas_t
     character(len=:), allocatable :: gas !! Gas
 end type
 type(iapws_g704_gas_t), allocatable, target :: f_gases(:)
+character(len=:), allocatable, target :: f_gases_str
 
 !> Absolute temperature in KELVIN 
 real(real64), parameter ::  T_KELVIN = 273.15d0 
@@ -126,7 +127,7 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 public :: iapws_g704_gas_t
 public :: iapws_g704_kh, iapws_g704_kd
 public :: iapws_g704_ngases
-public :: iapws_g704_gases
+public :: iapws_g704_gases, iapws_g704_gases2
 
 contains
 
@@ -416,7 +417,7 @@ pure function iapws_g704_ngases(heavywater)result(n)
 end function
 
 function iapws_g704_gases(heavywater)result(gases)
-    !! Returns the available gases.
+    !! Returns the list of available gases.
     implicit none
 
     ! arguments
@@ -454,6 +455,49 @@ function iapws_g704_gases(heavywater)result(gases)
         enddo
     endif
     gases => f_gases
+end function
+
+function iapws_g704_gases2(heavywater)result(gases)
+    !! Returns the available gases as a string.
+    implicit none
+
+    ! arguments
+    integer(int32), intent(in) :: heavywater
+        !! Flag if D2O (1) is used or H2O(0).
+    character(len=:), pointer :: gases
+        !! Available gases
+
+    ! variables
+    integer(int32) :: i, j, k, ngas
+    type(iapws_g704_gas_t), pointer :: f_gases(:)
+    
+    f_gases => iapws_g704_gases(heavywater)
+    ngas = size(f_gases)
+
+    k = 0
+    do i=1, ngas
+        k = k + len(f_gases(i)%gas)
+    enddo
+
+    if(allocated(f_gases_str))then
+        deallocate(f_gases_str)
+    endif
+    allocate(character(len=k+ngas) :: f_gases_str)
+
+    i = 1
+    j = 1
+    k = 1
+    do i=1, ngas
+        do j=1, len(f_gases(i)%gas)
+            f_gases_str(k:k) = f_gases(i)%gas(j:j)
+            k = k + 1
+        enddo
+        f_gases_str(k:k) = achar(10)
+        k = k + 1
+    enddo
+
+    gases => f_gases_str
+
 end function
 
 end module

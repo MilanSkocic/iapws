@@ -22,6 +22,10 @@ PyDoc_STRVAR(g704_gases_doc,
 "gases(heavywater: bool) --> tuple"
 "Get the available gases.");
 
+PyDoc_STRVAR(g704_gases2_doc,
+"gases(heavywater: bool) --> str"
+"Get the available gases as a string.");
+
 static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, gas is a string, heavywater is a boolean.";
 static const char ERR_MSG_T_DIM[] = "T must be a 1d-array of floats.";
 static const char ERR_MSG_T_TYPE[] = "T must be a 1d-array of floats.";
@@ -134,11 +138,27 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
     return tuple;
 }
 
+static PyObject *g704_gases2(PyObject *self, PyObject *args){
+    
+    int heavywater;
+    char *gases;
+    PyObject *py_gases;
+
+    if(!PyArg_ParseTuple(args, "p", &heavywater)){
+        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
+        return NULL;
+    }
+    gases = iapws_g704_capi_gases2(heavywater);
+    py_gases = PyUnicode_FromString(gases);
+    return py_gases;
+}
+
 static PyMethodDef myMethods[] = {
     {"kh", (PyCFunction) g704_kh, METH_VARARGS, g704_kh_doc},
     {"kd", (PyCFunction) g704_kd, METH_VARARGS, g704_kd_doc},
     {"ngases", (PyCFunction) g704_ngases, METH_VARARGS, g704_ngases_doc},
     {"gases", (PyCFunction) g704_gases, METH_VARARGS, g704_gases_doc},
+    {"gases2", (PyCFunction) g704_gases2, METH_VARARGS, g704_gases2_doc},
     { NULL, NULL, 0, NULL }
 };
 
