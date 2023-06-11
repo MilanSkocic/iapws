@@ -14,7 +14,7 @@ Welcome to iapws documentation!
 
 .. only:: html
 
-   Indices and tables
+   Search
    ==================
 
    * :ref:`search`
