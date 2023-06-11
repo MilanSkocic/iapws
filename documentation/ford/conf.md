@@ -21,7 +21,7 @@ md_extensions: markdown.extensions.toc
                markdown.extensions.smarty
 ---
 
-![iapws](../../../../../media/logo-iapws.png)
+![iapws](../_images/logo-iapws.png)
 
 This is the documentation of the Fortran code. 
 
