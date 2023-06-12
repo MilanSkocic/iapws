@@ -10,11 +10,11 @@ int main(void){
     printf("***** C Test gases str in water *****\n");
     heavywater = 0;
     value = iapws_g704_capi_gases2(heavywater);
-    printf("%s", value);
+    printf("%s\n", value);
     
     printf("***** C Test gases str in heavywater *****\n");
     heavywater = 1;
     value = iapws_g704_capi_gases2(heavywater);
-    printf("%s", value);
+    printf("%s\n", value);
     
 }

@@ -492,7 +492,7 @@ function iapws_g704_gases2(heavywater)result(gases)
             f_gases_str(k:k) = f_gases(i)%gas(j:j)
             k = k + 1
         enddo
-        f_gases_str(k:k) = achar(10)
+        f_gases_str(k:k) = ","
         k = k + 1
     enddo
 

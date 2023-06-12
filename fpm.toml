@@ -48,6 +48,10 @@ name = "f_test_H2O"
 main = "test_iapws_g704_H2O.f90"
 
 [[test]]
+name = "f_test_D2O"
+main = "test_iapws_g704_D2O.f90"
+
+[[test]]
 name = "c_test_H2O"
 main = "test_iapws_g704_H2O.c"
 
