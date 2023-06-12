@@ -56,7 +56,7 @@ do i=1, ngas
     print *, " "
     do j=1, nT
         if(diff(j) /= 0.0d0)then
-            print "(A, A5, A F4.0)", "Error in ", gases(i), " at ", T_K(j)
+            print "(A, A5, A, F4.0)", "Error in ", gases(i), " at ", T_K(j)
             stop 1
         endif
     enddo
@@ -77,7 +77,7 @@ do i=1, ngas
     print *, " "
     do j=1, nT
         if(diff(j) /= 0.0d0)then
-            print "(A, A5, A F4.0)", "Error in ", gases(i), " at ", T_K(j)
+            print "(A, A5, A, F4.0)", "Error in ", gases(i), " at ", T_K(j)
             stop 1
         endif
     enddo
