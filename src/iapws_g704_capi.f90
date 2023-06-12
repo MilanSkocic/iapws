@@ -167,6 +167,7 @@ function iapws_g704_capi_gases2(heavywater)bind(C)result(gases)
     allocate(character(len=len(f_gases_str)) :: c_gases_str)
 
     c_gases_str = f_gases_str
+    c_gases_str(len(f_gases_str):len(f_gases_str)) = c_null_char
 
     gases = c_loc(c_gases_str)
 
