@@ -28,6 +28,10 @@ name = "example_in_c"
 main = "example_in_c.c"
 
 [[test]]
+name = "test_g704"
+main = "test_g704.f90"
+
+[[test]]
 name = "f_test_gases_str"
 main = "test_iapws_g704_gases_str.f90"
 
