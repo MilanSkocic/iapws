@@ -12,6 +12,7 @@ program test_iapws_g704_H2O
     real(real64) :: kd(nT)
     real(real64) :: diff(nT)
     integer(int32) :: i, j
+    integer(int32) :: D2O = 0
 
 
 ! data copied directly from PDF of the paper
@@ -59,7 +60,7 @@ print "(A3, 4F23.0)", "Gas", T_K
 
 do i=1, ngas
     T_C = T_K - 273.15
-    call iapws_g704_kh(T_C, gases(i), 0, kh)
+    call iapws_g704_kh(T_C, gases(i), D2O, kh)
     kh = log(kh/1000d0)
     diff = kh(:) - ref_kh(i,:)
     diff = roundn(diff, 4)
@@ -69,7 +70,7 @@ do i=1, ngas
     print *, " "
     do j=1, nT
         if(diff(j) /= 0.0d0)then
-            print "(A, A5, F4.0)", "Error in", gases(i), T_K(j)
+            print "(A, A5, A, F4.0)", "Error for ", gases(i), " at ", T_K(j)
             stop 1
         endif
     enddo
@@ -80,7 +81,7 @@ print "(A3, 4F23.0)", "Gas", T_K
 
 do i=1, ngas
     T_C = T_K - 273.15
-    call iapws_g704_kd(T_C, gases(i), 0, kd)
+    call iapws_g704_kd(T_C, gases(i), D2O, kd)
     kd = log(kd)
     diff = kd(:) - ref_kd(i,:)
     diff = roundn(diff, 4)
@@ -90,7 +91,7 @@ do i=1, ngas
     print *, " "
     do j=1, nT
         if(diff(j) /= 0.0d0)then
-            print "(A, A5, F4.0)", "Error in", gases(i), T_K(j)
+            print "(A, A5, A, F4.0)", "Error for ", gases(i), " at ", T_K(j)
             stop 1
         endif
     enddo

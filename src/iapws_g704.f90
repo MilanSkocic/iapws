@@ -495,7 +495,7 @@ function iapws_g704_gases2(heavywater)result(gases)
         f_gases_str(k:k) = ","
         k = k + 1
     enddo
-
+    f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
     gases => f_gases_str
 
 end function

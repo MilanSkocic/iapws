@@ -2,6 +2,8 @@
 #include <string.h>
 #include <math.h>
 #include "iapws_g704.h"
+#define ngas 7
+#define nT 4
 
  /**
  * @brief Round with n decimals
@@ -44,64 +46,84 @@ static double ref_kd[7][4] = {{15.2802, 10.4217, 7.0674, 3.9539},
 static char *gases[] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
 static double T_K[4] = {300.0, 400.0, 500.0, 600.0};
 
-int main(int argc, char **argv){
+int main(void){
 
-    if(argc > 1){
-        printf("%s\n", argv[1]);
-    }
-
-    double T_C;
-    double kh = 0.0;
-    double kd = 0.0;
+    double T_C[nT] = {0.0, 0.0, 0.0, 0.0};
+    double kh[nT] = {0.0, 0.0, 0.0, 0.0};
+    double kd[nT] = {0.0, 0.0, 0.0, 0.0};
+    double diff[nT] = {0.0, 0.0, 0.0, 0.0};
     int D2O = 1;
-    double diff;
     int i, j;
-    int ngas = 7;
-    int nT = 4;
 
-    printf("***** Test kH in heavywater *****\n");
+    printf("***** C Test kH in heavywater *****\n");
 
-    printf("%5s\t", "Gas");
+    printf("%5s", "Gas");
     for(i=0; i<nT; i++){
-        printf("%23.0f\t", T_K[i]);
+        T_C[i] = T_K[i] - 273.15;
+        printf("%23.0f", T_K[i]);
     }
     printf("\n");
 
     for(j=0; j<ngas; j++){
-        printf("%5s\t", gases[j]);
-        for(i=0;i<4;i++){
-            T_C = T_K[i] - 273.15;
-            iapws_g704_capi_kh(&T_C, gases[j], D2O, &kh, strlen(gases[j]), 1);
-            kh /= 1000.0;
-            diff = roundn(log(kh) - ref_kh[j][i], 4);
-            printf("%+7.4f/%+7.4f/%+7.4f\t", log(kh), ref_kh[j][i], log(kh) - ref_kh[j][i]);
-            if(diff != 0.0){
+        printf("%5s", gases[j]);
+        iapws_g704_capi_kh(T_C, gases[j], D2O, kh, strlen(gases[j]), nT);
+        for(i=0;i<nT;i++){
+            kh[i] = kh[i] / 1000.0;
+            kh[i] = log(kh[i]);
+            diff[i] = roundn(kh[i] - ref_kh[j][i], 4);
+        }
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", kh[i]);
+        }
+        printf("\n%5s", gases[j]);
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", ref_kh[j][i]);
+        }
+        printf("\n%5s", gases[j]);
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", diff[i]);
+        }
+        for(i=0; i<nT; i++){
+            if(diff[i] != 0.0){
                 return 1;
             }
         }
-        printf("\n");
+        printf("\n\n");
     }
     
-    printf("***** Test kd in heavywater *****\n");
-
-    printf("%5s\t", "Gas");
+    printf("***** C Test kd in heavywater *****\n");
+    
+    printf("%5s", "Gas");
     for(i=0; i<nT; i++){
-        printf("%23.0f\t", T_K[i]);
+        T_C[i] = T_K[i] - 273.15;
+        printf("%23.0f", T_K[i]);
     }
     printf("\n");
-
     for(j=0; j<ngas; j++){
-        printf("%5s\t", gases[j]);
-        for(i=0;i<4;i++){
-            T_C = T_K[i] - 273.15;
-            iapws_g704_capi_kd(&T_C, gases[j], D2O, &kd, strlen(gases[j]), 1);
-            diff = roundn(log(kd) - ref_kd[j][i], 4);
-            printf("%+7.4f/%+7.4f/%+7.4f\t", log(kd), ref_kd[j][i], log(kd) - ref_kd[j][i]);
-            if(diff != 0.0){
+        printf("%5s", gases[j]);
+        iapws_g704_capi_kd(T_C, gases[j], D2O, kd, strlen(gases[j]), nT);
+        for(i=0;i<nT;i++){
+            kd[i] = log(kd[i]);
+            diff[i] = roundn(kd[i] - ref_kd[j][i], 4);
+        }
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", kd[i]);
+        }
+        printf("\n%5s", gases[j]);
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", ref_kd[j][i]);
+        }
+        printf("\n%5s", gases[j]);
+        for(i=0; i<nT; i++){
+            printf("%+23.4f", diff[i]);
+        }
+        for(i=0; i<nT; i++){
+            if(diff[i] != 0.0){
                 return 1;
             }
         }
-        printf("\n");
+        printf("\n\n");
     }
+
     return 0;
 }

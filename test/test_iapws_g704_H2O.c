@@ -2,7 +2,8 @@
 #include <string.h>
 #include <math.h>
 #include "iapws_g704.h"
-
+#define ngas 14
+#define nT 4
  /**
  * @brief Round with n decimals
  * @param x Value to be rounded
@@ -59,8 +60,6 @@ static double T_K[4] = {300.0, 400.0, 500.0, 600.0};
 
 int main(void){
 
-    const int ngas = 14;
-    const int nT = 4;
     double T_C[nT] = {0.0, 0.0, 0.0, 0.0};
     double kh[nT] = {0.0, 0.0, 0.0, 0.0};
     double kd[nT] = {0.0, 0.0, 0.0, 0.0};
@@ -90,7 +89,7 @@ int main(void){
         }
         printf("\n%5s", gases[j]);
         for(i=0; i<nT; i++){
-            printf("%+23.4f", ref_kh[i]);
+            printf("%+23.4f", ref_kh[j][i]);
         }
         printf("\n%5s", gases[j]);
         for(i=0; i<nT; i++){
@@ -124,7 +123,7 @@ int main(void){
         }
         printf("\n%5s", gases[j]);
         for(i=0; i<nT; i++){
-            printf("%+23.4f", ref_kd[i]);
+            printf("%+23.4f", ref_kd[j][i]);
         }
         printf("\n%5s", gases[j]);
         for(i=0; i<nT; i++){
