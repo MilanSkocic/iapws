@@ -74,7 +74,11 @@ subroutine test_gases()
     heavywater = 0
     gases_list_H2O => iapws_g704_gases(heavywater)
     do i=1, 14
-        diff_gas_H2O(i) = gases_list_H2O(i)%gas == expected_gases_H2O(i)
+        if(gases_list_H2O(i)%gas == expected_gases_H2O(i))then
+            diff_gas_H2O(i) = 1
+        else
+            diff_gas_H2O(i) = 0
+        endif
     enddo
     if(sum(diff_gas_H2O)== size(diff_gas_H2O))then
         write(*, "(A)", advance="yes") "OK"
@@ -91,7 +95,11 @@ subroutine test_gases()
     heavywater = 1
     gases_list_D2O => iapws_g704_gases(heavywater)
     do i=1, 7
-        diff_gas_D2O(i) = gases_list_D2O(i)%gas == expected_gases_D2O(i)
+        if(gases_list_D2O(i)%gas == expected_gases_D2O(i))then
+            diff_gas_D2O(i) = 1
+        else
+            diff_gas_D2O(i) = 0
+        endif
     enddo
     if(sum(diff_gas_D2O)== size(diff_gas_D2O))then
         write(*, "(A)", advance="yes") "OK"
@@ -190,9 +198,9 @@ subroutine test_kh()
             expected = ref_kh_H2O(i, j)
             diff = value - expected
             diff = roundn(diff, 4)
-            if(diff /= 0.0d0)then
+            if(diff > tiny(0.0d0))then
                 write(*, "(A)", advance="yes") "Failed"
-                write(*, "(4X, A, X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
+                write(*, "(4X, A, 1X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
                 gases_H2O(i), T_K(j), value, "/", expected, "/", diff
                 stop 1
             endif
@@ -209,9 +217,9 @@ subroutine test_kh()
             expected = ref_kh_D2O(i, j)
             diff = value - expected
             diff = roundn(diff, 4)
-            if(diff /= 0.0d0)then
+            if(diff > tiny(0.0d0))then
                 write(*, "(A)", advance="yes") "Failed"
-                write(*, "(4X, A, X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
+                write(*, "(4X, A, 1X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
                 gases_D2O(i), T_K(j), value, "/", expected, "/", diff
                 stop 1
             endif
