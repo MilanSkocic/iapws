@@ -30,3 +30,7 @@ main = "example_in_c.c"
 [[test]]
 name = "test_g704"
 main = "test_g704.f90"
+
+[[test]]
+name = "test_g704_capi"
+main = "test_g704_capi.c"

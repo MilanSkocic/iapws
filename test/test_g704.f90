@@ -9,6 +9,7 @@ program test_g704
     call test_gases()
     call test_gases2()
     call test_kh()
+    call test_kd()
 
 contains
 
@@ -21,6 +22,25 @@ pure elemental function roundn(x, n)result(r)
 
     fac = 10**n
     r = nint(x*fac, kind=kind(x)) / fac
+end function
+
+ function assertEqual(x1, x2, n)result(r)
+    implicit none
+    real(real64), intent(in) :: x1
+    real(real64), intent(in) :: x2
+    integer(int32), intent(in) :: n
+    logical :: r
+
+    real(real64) :: fac
+    real(real64) :: ix1
+    real(real64) :: ix2
+    
+    fac = 10**n
+    ix1 = nint(x1 * fac, kind=kind(n))
+    ix2 = nint(x2 * fac, kind=kind(n))
+    r = ix1 == ix2
+
+
 end function
 
 subroutine test_ngases()
@@ -155,7 +175,6 @@ subroutine test_kh()
     real(real64) :: diff
     integer(int32) :: heavywater
     real(real64) :: kh(nT)
-    real(real64) :: kd(nT)
     integer(int32) :: i, j
     real(real64) :: T_K(4) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
     real(real64) :: T_C(4) 
@@ -198,7 +217,7 @@ subroutine test_kh()
             expected = ref_kh_H2O(i, j)
             diff = value - expected
             diff = roundn(diff, 4)
-            if(diff > tiny(0.0d0))then
+            if(.not. assertEqual(diff, 0.0d0, 4))then
                 write(*, "(A)", advance="yes") "Failed"
                 write(*, "(4X, A, 1X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
                 gases_H2O(i), T_K(j), value, "/", expected, "/", diff
@@ -217,7 +236,7 @@ subroutine test_kh()
             expected = ref_kh_D2O(i, j)
             diff = value - expected
             diff = roundn(diff, 4)
-            if(diff > tiny(0.0d0))then
+            if(.not. assertEqual(diff, 0.0d0, 4))then
                 write(*, "(A)", advance="yes") "Failed"
                 write(*, "(4X, A, 1X, F7.4, 4X, SP, F7.4, A1, F7.4, A1, F7.4)", advance="yes") &
                 gases_D2O(i), T_K(j), value, "/", expected, "/", diff
@@ -230,6 +249,85 @@ end subroutine
 
 subroutine test_kd()
     implicit none
+
+    integer(int32), parameter :: nT = 4
+    integer(int32), parameter :: ngas_H2O = 14
+    integer(int32), parameter :: ngas_D2O = 7
+    real(real64) :: value
+    real(real64) :: expected
+    real(real64) :: diff
+    integer(int32) :: heavywater
+    real(real64) :: kd(nT)
+    integer(int32) :: i, j
+    real(real64) :: T_K(4) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
+    real(real64) :: T_C(4) 
+    character(len=5) :: gases_H2O(ngas_H2O) = &
+    [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"]
+    character(len=5) :: gases_D2O(ngas_D2O) = &
+    [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"]
+    
+    real(real64) :: ref_kd_H2O(ngas_H2O,nT) = &
+    transpose(reshape([15.2250d0, 10.4364d0, 6.9971d0, 3.8019d0,&
+                              15.0743d0, 10.6379d0, 7.4116d0, 4.2308d0,&
+                              13.9823d0, 10.0558d0, 6.9869d0, 3.9861d0,&
+                              13.3968d0, 9.7362d0, 6.8371d0, 3.9654d0,&
+                              12.8462d0, 9.4268d0, 6.3639d0, 3.3793d0,&
+                              14.5286d0, 10.1484d0, 6.8948d0, 3.7438d0,&
+                              14.7334d0, 10.6221d0, 7.2923d0, 4.0333d0,&
+                              14.0716d0, 10.1676d0, 6.9979d0, 3.8707d0,&
+                              14.3276d0, 10.2573d0, 7.1218d0, 4.0880d0,&
+                              10.8043d0, 7.7705d0, 5.2123d0, 2.7293d0,&
+                              9.6846d0, 6.5840d0, 4.2781d0, 2.2200d0,&
+                              13.9659d0, 10.0819d0, 6.8559d0, 3.7238d0,&
+                              13.7063d0, 10.1510d0, 6.8453d0, 3.6493d0,&
+                              15.7067d0, 11.9887d0, 8.5550d0, 4.9599d0], shape=[nT, ngas_H2O]))
+    
+    real(real64) :: ref_kd_D2O(ngas_D2O,nT) = &
+    transpose(reshape([15.2802d0, 10.4217d0, 7.0674d0, 3.9539d0,&
+                              15.1473d0, 10.5331d0, 7.3435d0, 4.2800d0,&
+                              14.0517d0, 10.0632d0, 6.9498d0,3.9094d0,&
+                              13.5042d0, 9.7854d0, 6.8035d0, 3.8160d0,&
+                              12.9782d0, 9.4648d0, 6.3074d0, 3.1402d0,&
+                              14.3520d0, 10.0178d0, 6.6975d0, 3.5590d0,&
+                              14.0646d0, 10.1013d0, 6.9021d0, 3.8126d0], shape=[nT, ngas_D2O]))
+    T_C = T_K - 273.15d0
+    write(*, "(4X, A)", advance="no") "kd in water..."
+    heavywater = 0
+    do i=1, ngas_H2O
+        call iapws_g704_kd(T_C, gases_H2O(i), heavywater, kd)
+        do j=1, nT
+            value  = log(kd(j))
+            expected = ref_kd_H2O(i, j)
+            diff = value - expected
+            diff = roundn(diff, 4)
+            if(.not. assertEqual(diff, 0.0d0, 4))then
+                write(*, "(A)", advance="yes") "Failed"
+                write(*, "(4X, A, 1X, F8.4, 4X, SP, F8.4, A1, F8.4, A1, F8.4)", advance="yes") &
+                gases_H2O(i), T_K(j), value, "/", expected, "/", diff
+                stop 1
+            endif
+        enddo    
+    enddo
+    write(*, "(A)", advance="yes") "OK"
+    
+    write(*, "(4X, A)", advance="no") "kd in heavyater..."
+    heavywater = 1
+    do i=1, ngas_D2O
+        call iapws_g704_kd(T_C, gases_D2O(i), heavywater, kd)
+        do j=1, nT
+            value  = log(kd(j))
+            expected = ref_kd_D2O(i, j)
+            diff = value - expected
+            diff = roundn(diff, 4)
+            if(.not. assertEqual(diff, 0.0d0, 4))then
+                write(*, "(A)", advance="yes") "Failed"
+                write(*, "(4X, A, 1X, F8.4, 4X, SP, F8.4, A1, F8.4, A1, F8.4)", advance="yes") &
+                gases_D2O(i), T_K(j), value, "/", expected, "/", diff
+                stop 1
+            endif
+        enddo    
+    enddo
+    write(*, "(A)", advance="yes") "OK"
 end subroutine
 
 end program
