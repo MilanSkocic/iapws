@@ -234,11 +234,31 @@ void test_kd(void){
 
 }
 
+void test_isnull_terminated(void){
+    char *gases;
+    int heavywater;
+    int i, n;
+
+    printf("    %s", "is null terminated in water...");
+    heavywater = 0;
+    gases = iapws_g704_capi_gases2(heavywater);
+    n = strlen(gases);
+    if((gases[n] == '\0') & (gases[n-1] == '6')){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s\n", gases);
+        exit(1);
+    }
+
+}
+
 int main(void){
 
     printf("%s\n", "***** TESTING C API CODE FOR G704 *****");
     test_ngases();
     test_gases();
+    test_isnull_terminated();
     test_gases2();
     test_kh();
     test_kd();

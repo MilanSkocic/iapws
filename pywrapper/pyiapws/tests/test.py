@@ -45,23 +45,33 @@ class TestkD(unittest.TestCase):
 
 class TestArrayFailure(unittest.TestCase):
     @unittest.expectedFailure
-    def test_kh(self):
+    def test_kh_failure(self):
         x = np.zeros(shape=(5, 2))
         y = pyiapws.g704.kh(x, "He", False)
 
     @unittest.expectedFailure
-    def test_kd(self):
+    def test_kd_failure(self):
         x = np.zeros(shape=(5, 2))
         y = pyiapws.g704.kd(x, "He", False)
 
 
 class TestGases(unittest.TestCase):
-    def test_ngas_H2O(self):
+    def test_ngases_H2O(self):
         value = pyiapws.g704.ngases(0)
         expected = 14
         self.assertEqual(value, expected)
     
-    def test_ngas_D2O(self):
+    def test_ngases_D2O(self):
         value = pyiapws.g704.ngases(1)
         expected = 7
+        self.assertEqual(value, expected)
+
+    def test_gases_H2O(self):
+        expected = "He,Ne,Ar,Kr,Xe,H2,N2,O2,CO,CO2,H2S,CH4,C2H6,SF6"
+        value = pyiapws.g704.gases2(0)
+        self.assertEqual(value, expected)
+    
+    def test_gases_D2O(self):
+        expected = "He,Ne,Ar,Kr,Xe,D2,CH4"
+        value = pyiapws.g704.gases2(1)
         self.assertEqual(value, expected)

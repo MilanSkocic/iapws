@@ -133,7 +133,7 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
     gases = iapws_g704_capi_gases(heavywater);
     tuple = PyTuple_New((Py_ssize_t) ngas);
     for(i=0; i<ngas; i++){
-        PyTuple_SET_ITEM(tuple, i, PyUnicode_FromString(gases[i]));
+        PyTuple_SET_ITEM(tuple, i, PyUnicode_FromFormat("%s", gases[i]));
     }
     return tuple;
 }
@@ -149,7 +149,7 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
         return NULL;
     }
     gases = iapws_g704_capi_gases2(heavywater);
-    py_gases = PyUnicode_FromString(gases);
+    py_gases = PyUnicode_FromFormat("%s", gases);
     return py_gases;
 }
 
