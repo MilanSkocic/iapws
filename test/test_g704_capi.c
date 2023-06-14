@@ -69,7 +69,9 @@ void test_gases(void){
     char *expected_gases_H2O[14] = {"He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"};
     char *expected_gases_D2O[7] = {"He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"};
     char **gases_list_H2O;
+    char **gases_list_D2O;
     int diff_gas_H2O[14] = {0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0};
+    int diff_gas_D2O[7] = {0, 0, 0, 0, 0, 0 ,0};
     int s=0;
     
     printf("    %s", "gases in water...");
@@ -82,6 +84,7 @@ void test_gases(void){
             diff_gas_H2O[i] = 0;
         }
     }
+    s=0;
     for(i=0; i<14; i++){
         s = s + diff_gas_H2O[i];
     }
@@ -92,14 +95,152 @@ void test_gases(void){
         for(i=0; i<14; i++){
             printf("    %s    %s    %d\n", gases_list_H2O[i], expected_gases_H2O[i], diff_gas_H2O[i]);
         }
+        exit(1);
+    }
+    
+    printf("    %s", "gases in heavywater...");
+    heavywater = 1;
+    gases_list_D2O = iapws_g704_capi_gases(heavywater);
+    for(i=0; i<7; i++){
+        if(strcmp(gases_list_D2O[i], expected_gases_D2O[i]) == 0){
+            diff_gas_D2O[i] = 1;
+        }else{
+            diff_gas_D2O[i] = 0;
+        }
+    }
+    s=0;
+    for(i=0; i<7; i++){
+        s = s + diff_gas_D2O[i];
+    }
+    if(s == 7){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        for(i=0; i<7; i++){
+            printf("    %s    %s    %d\n", gases_list_D2O[i], expected_gases_D2O[i], diff_gas_D2O[i]);
+        }
+        exit(1);
     }
 }
 
+void test_gases2(void){
+
+    int heavywater;
+    char expected_gases_str_H2O[] = "He,Ne,Ar,Kr,Xe,H2,N2,O2,CO,CO2,H2S,CH4,C2H6,SF6";
+    char expected_gases_str_D2O[] = "He,Ne,Ar,Kr,Xe,D2,CH4";
+    char *gases_str;
+
+    printf("    %s", "gases2 in water...");
+    heavywater = 0;
+    gases_str = iapws_g704_capi_gases2(heavywater);
+    if(strcmp(gases_str, expected_gases_str_H2O)==0){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s\n", gases_str);
+        printf("    %s\n", expected_gases_str_H2O);
+    }
+    
+    printf("    %s", "gases2 in heavywater...");
+    heavywater = 1;
+    gases_str = iapws_g704_capi_gases2(heavywater);
+    if(strcmp(gases_str, expected_gases_str_D2O)==0){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s\n", gases_str);
+        printf("    %s\n", expected_gases_str_D2O);
+    }
+
+}
+
+void test_kh(void){
+    
+    // test only one value to check that C API works
+    // all values are tested in the Fortran test
+    int heavywater;
+    double value;
+    double expected;
+    double diff;
+    double T = 300.0 - 273.15;
+
+    printf("    %s", "kh in water...");
+    heavywater = 0;
+    expected = 2.6576;
+    iapws_g704_capi_kh(&T, "He", heavywater, &value, 2, 1);
+    value = log(value / 1000.0);
+    diff = value - expected;
+    if(assertEqual(diff, 0.0, 4)){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s %+3.0f    %+7.4f/%+7.4f/%+7.4f\n", "He", T+273.15, value, expected, diff);
+        exit(1);
+    }
+    
+    printf("    %s", "kh in heavywater...");
+    heavywater = 1;
+    expected = 2.5756;
+    iapws_g704_capi_kh(&T, "He", heavywater, &value, 2, 1);
+    value = log(value / 1000.0);
+    diff = value - expected;
+    if(assertEqual(diff, 0.0, 4)){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s %+3.0f    %+7.4f/%+7.4f/%+7.4f\n", "He", T+273.15, value, expected, diff);
+        exit(1);
+    }
+
+}
+
+void test_kd(void){
+    
+    // test only one value to check that C API works
+    // all values are tested in the Fortran test
+    int heavywater;
+    double value;
+    double expected;
+    double diff;
+    double T = 300.0 - 273.15;
+
+    printf("    %s", "kd in water...");
+    heavywater = 0;
+    expected = 15.2250;
+    iapws_g704_capi_kd(&T, "He", heavywater, &value, 2, 1);
+    value = log(value);
+    diff = value - expected;
+    if(assertEqual(diff, 0.0, 4)){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s %+3.0f    %+7.4f/%+7.4f/%+7.4f\n", "He", T+273.15, value, expected, diff);
+        exit(1);
+    }
+    
+    printf("    %s", "kd in heavywater...");
+    heavywater = 1;
+    expected = 15.2802;
+    iapws_g704_capi_kd(&T, "He", heavywater, &value, 2, 1);
+    value = log(value);
+    diff = value - expected;
+    if(assertEqual(diff, 0.0, 4)){
+        printf("%s\n", "OK");
+    }else{
+        printf("%s\n", "Failed");
+        printf("    %s %+3.0f    %+7.4f/%+7.4f/%+7.4f\n", "He", T+273.15, value, expected, diff);
+        exit(1);
+    }
+
+}
 
 int main(void){
 
     printf("%s\n", "***** TESTING C API CODE FOR G704 *****");
     test_ngases();
     test_gases();
+    test_gases2();
+    test_kh();
+    test_kd();
     return EXIT_SUCCESS;
 }
