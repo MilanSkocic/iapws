@@ -4,7 +4,7 @@ else
 	install_dir=$(DEFAULT_INSTALL_DIR)
 endif
 
-.PHONY: all clean install uninstall copy_h
+.PHONY: all clean install uninstall copy_h copy_a shared_linux shared_windows shared_darwin
 
 all: $(LIBNAME)
 
@@ -18,13 +18,13 @@ shared: shared_$(PLATFORM)
 shared_linux:
 	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
-shared_darwin: $(LIBNAME)
+shared_darwin: 
 	gfortran -dynamiclib -install_name lib$(LIBNAME) -static-libgfortran -static-libquadmath -static-libgcc -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a -Wl,-noall_load
 
-shared_windows: $(LIBNAME)
+shared_windows: 
 	gfortran -shared -static -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
-copy_a: build
+copy_a:
 	cp $(shell find ./build -type f -name lib$(LIBNAME).a) $(BUILD_DIR)
 
 copy_h: 
