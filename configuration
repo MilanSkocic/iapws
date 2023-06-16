@@ -20,7 +20,6 @@ DEFAULT_INSTALL_DIR="$HOME/.local"
 PLATFORM="linux"
 
 if [[ "$OSTYPE" == "msys" ]]; then
-    opt="-O0"
     DEFAULT_INSTALL_DIR="${APPDATA//\\//}/local"
     PLATFORM="windows"
 fi
