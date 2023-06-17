@@ -17,15 +17,19 @@ print(f"Gas={gas}\tT={T[0]}C\tkh={k[0]:+10.4f}\n")
 
 # Get and print the available gases
 heavywater = False
-gases = pyiapws.g704.gases(heavywater)
+gases_list = pyiapws.g704.gases(heavywater)
+gases_str = pyiapws.g704.gases2(heavywater)
 ngas = pyiapws.g704.ngases(heavywater)
 print(f"Gases in H2O: {ngas:}")
-for gas in gases:
+print(gases_str)
+for gas in gases_list:
     print(gas)
 
 heavywater = True
-gases = pyiapws.g704.gases(heavywater)
+gases_list = pyiapws.g704.gases(heavywater)
+gases_str = pyiapws.g704.gases2(heavywater)
 ngas = pyiapws.g704.ngases(heavywater)
 print(f"Gases in D2O: {ngas:}")
-for gas in gases:
+print(gases_str)
+for gas in gases_list:
     print(gas)

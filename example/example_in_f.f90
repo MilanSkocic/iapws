@@ -6,7 +6,8 @@ program example_in_f
     real(real64) :: T(1), kh(1), kd(1)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
-    type(iapws_g704_gas_t), pointer :: gases(:)
+    type(iapws_g704_gas_t), pointer :: gases_list(:)
+    character(len=:), pointer :: gases_str
 
     ! Compute kh and kd in H2O
     T(1) = 25.0d0
@@ -19,20 +20,24 @@ program example_in_f
     ! Get and print available gases
     heavywater = 0
     ngas = iapws_g704_ngases(heavywater)
-    gases => null()
-    gases => iapws_g704_gases(heavywater)
+    gases_list => null()
+    gases_list => iapws_g704_gases(heavywater)
+    gases_str => iapws_g704_gases2(heavywater)
     print *, "Gases in H2O: ", ngas
+    print *, gases_str
     do i=1, ngas
-        print *, gases(i)%gas
+        print *, gases_list(i)%gas
     enddo
     
     heavywater = 1
     ngas = iapws_g704_ngases(heavywater)
-    gases => null()
-    gases => iapws_g704_gases(heavywater)
+    gases_list => null()
+    gases_list => iapws_g704_gases(heavywater)
+    gases_str => iapws_g704_gases2(heavywater)
     print *, "Gases in D2O: ", ngas
+    print *, gases_str
     do i=1, ngas
-        print *, gases(i)%gas
+        print *, gases_list(i)%gas
     enddo
 
 end program

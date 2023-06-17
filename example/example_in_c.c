@@ -7,7 +7,8 @@ int main(void){
     double T = 25.0; /* in C*/
     char *gas = "O2";
     double kh, kd;
-    char **gases;
+    char **gases_list;
+    char *gases_str;
     int ngas;
     int i;
     int heavywater = 0;
@@ -21,18 +22,22 @@ int main(void){
 
     /* Get and print the available gases */
     ngas = iapws_g704_capi_ngases(heavywater);
-    gases = iapws_g704_capi_gases(heavywater);
+    gases_list = iapws_g704_capi_gases(heavywater);
+    gases_str = iapws_g704_capi_gases2(heavywater);
     printf("Gases in H2O: %d\n", ngas);
+    printf("%s\n", gases_str);
     for(i=0; i<ngas; i++){
-        printf("%s\n", gases[i]);
+        printf("%s\n", gases_list[i]);
     }
     
     heavywater = 1;
     ngas = iapws_g704_capi_ngases(heavywater);
-    gases = iapws_g704_capi_gases(heavywater);
+    gases_list = iapws_g704_capi_gases(heavywater);
+    gases_str = iapws_g704_capi_gases2(heavywater);
     printf("Gases in D2O: %d\n", ngas);
+    printf("%s\n", gases_str);
     for(i=0; i<ngas; i++){
-        printf("%s\n", gases[i]);
+        printf("%s\n", gases_list[i]);
     }
 
     return 0;
