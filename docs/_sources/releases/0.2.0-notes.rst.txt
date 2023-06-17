@@ -1,0 +1,43 @@
+iapws 0.2.0 Release Note
+==================================
+
+Summary
+--------
+
+* New structure with modules corresponding to the IAPWS papers.
+* Compatible with fpm.
+* fpm module naming convention.
+* API break for iapws_g704_kh and iapws_g704_kd functions:
+   * only 1d-arrays as inputs in Fortran and C API.
+   * only objects with buffer protocol as inputs in python wrapper.
+   * python wrappers return memoryviews.
+* New functions:
+   * providing the number of gases in H2O and D2O
+   * providing the list of gases in H2O and D2O.
+* Cleanup old app code not needed anymore.
+* Fix memory allocation in pywrapper.
+* Completed parameters and tests for heavywater.
+* Documentation improvements:
+   * Fortran sources are literaly included in the documentation due to the lack of 
+     support for Fortran in sphinx.
+   * Add conversion equations from molar fractions to solubilities.
+   * Add plots for visualizing kh and kd.
+
+Download
+----------
+
+`iapws <https://github.com/MilanSkocic/iapws/releases>`_
+
+`pyiapws <https://pypi.org/project/pyiapws>`_
+
+
+Contributors
+---------------
+
+Milan Skocic
+
+
+Commits
+--------
+
+Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/0.1.1...0.2.0

@@ -12,10 +12,9 @@ Welcome to iapws documentation!
    references/index.rst
 
 
+.. only:: html
 
-Indices and tables
-==================
+   Search
+   ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   * :ref:`search`
