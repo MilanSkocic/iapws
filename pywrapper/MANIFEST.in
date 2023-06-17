@@ -7,5 +7,9 @@ include MANIFEST.in
 include README.rst
 include requirements.txt
 
-# bdist if package_data=True 
-recursive-include pyiapws *.c *.h *.f90 *.a *.dll.a *.dll *.dylib *.so
+include pyiapws/*.c
+include pyiapws/*.h
+include pyiapws/libiapws.so
+include pyiapws/libiapws.dylib
+include pyiapws/libiapws.dll
+include pyiapws/libiapws.dll.a

@@ -1,9 +1,18 @@
 shopt -s expand_aliases
-source ~/.bashrc
+if [[ "$OSTYPE" == "linux"* ]];then
+    source ~/.bashrc
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]];then
+    source ~/.bash_profile
+fi
 
 rm -r build
 rm -r dist
+rm -r *egg-info
 rm ./pyiapws/g704*.so
+
+py311 setup.py sdist
 
 py37 setup.py build_ext --inplace
 py38 setup.py build_ext --inplace
