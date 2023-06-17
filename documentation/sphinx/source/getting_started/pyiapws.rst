@@ -8,7 +8,7 @@ pyiapws
 How to install
 ^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../../pywrapper/INSTALL.txt
+.. include:: ../../../../pywrapper/INSTALL.rst
     :language: bash
 
 Dependencies

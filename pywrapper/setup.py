@@ -44,6 +44,7 @@ if __name__ == "__main__":
         author_email=mod.__author_email__,
         description=mod.__package_name__,
         long_description=pathlib.Path("README.rst").read_text(encoding="utf-8"),
+        long_description_content_type="text/x-rst",
         url='https://milanskocic.github.io/pyiapws/index.html',
         download_url='https://github.com/MilanSkocic/pyiapws',
         packages=find_packages(),
