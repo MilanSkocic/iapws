@@ -15,15 +15,15 @@ PyDoc_STRVAR(g704_kd_doc,
 "Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 PyDoc_STRVAR(g704_ngases_doc,
-"gases(heavywater: bool) --> int"
+"gases(heavywater: bool) --> int\n\n"
 "Get the number of available gases.");
 
 PyDoc_STRVAR(g704_gases_doc,
-"gases(heavywater: bool) --> tuple"
+"gases(heavywater: bool) --> tuple\n\n"
 "Get the available gases.");
 
 PyDoc_STRVAR(g704_gases2_doc,
-"gases(heavywater: bool) --> str"
+"gases(heavywater: bool) --> str\n\n"
 "Get the available gases as a string.");
 
 static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, gas is a string, heavywater is a boolean.";
