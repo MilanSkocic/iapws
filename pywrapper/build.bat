@@ -1,7 +1,9 @@
 rd /s /q build
 rd /s /q dist
-rd /s /q *egg-info
+rd /s /q pyiapws.egg-info
 del .\pyiapws\*.pyd
+
+py -3.11 setup.py sdist
 
 py -3.8 setup.py build_ext --inplace
 py -3.9 setup.py build_ext --inplace
