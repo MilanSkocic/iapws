@@ -1,46 +1,37 @@
-Create build directory
+A Makefile is provided, which uses `fpm <https://fpm.fortran-lang.org/en/index.html>`_, for building the library.
+
+On windows, `msys2 <https://www.msys2.org>`_ needs to be installed.
+
+On Darwin, the `gcc <https://formulae.brew.sh/formula/gcc>`_ toolchain needs to be installed.
+
+Build: the configuration file will set all the environmental variables necessary for the compilation
 
 .. code-block:: bash
 
-    $ mkdir build
-    $ d build
-
-Generate a makefile
-
-* On Unix-like OS: 
-
-.. code-block:: bash
-
-    cmake -G "Unix Makefiles" -S .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/path/to/folder
-
-* On windows with MSYS2: 
-
-.. code-block:: bash
-
-    cmake -G "Unix Makefiles" -S .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/path/to/folder
-
-* On windows with ifort and msvc: 
-
-.. code-block:: bash
-    
-    cmake -G "NMake Makefiles" -S .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/path/to/folder
-
-
-
-Build
-
-.. code-block:: bash
-    
-    cmake --build . 
+    source configuration
+    make
 
 Run tests
 
 .. code-block:: bash
     
-    ctest
+    fpm test
 
 Install
     
 .. code-block:: bash
     
-    cmake --install .
+    make install
+
+Uninstall
+
+.. code-block:: bash
+
+    make uninstall
+
+If building the python wrapper is needed:
+
+.. code-block:: bash
+
+    cd pywrapper
+    python setup.py bdist_wheel

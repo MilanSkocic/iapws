@@ -1,10 +1,15 @@
 # sdist
-include INSTALL.TXT
+
+
+include INSTALL.rst
 include LICENSE.TXT
 include MANIFEST.in
 include README.rst
 include requirements.txt
-include site.cfg.example
 
-# bdist
-recursive-include pyiapws *.dll
+include pyiapws/*.c
+include pyiapws/*.h
+include pyiapws/libiapws.so
+include pyiapws/libiapws.dylib
+include pyiapws/libiapws.dll
+include pyiapws/libiapws.dll.a
