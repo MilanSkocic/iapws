@@ -25,7 +25,6 @@ if platform.system() == "Darwin":
     libraries = ["iapws"]
     library_dirs = ["./pyiapws"]
     runtime_library_dirs = ["@loader_path"]
-    #extra_objects = ["./pyiapws/libiapws.a", "-static-libgfortran", "-static-libquadmath", "-static-libgcc"]
 
 if __name__ == "__main__":
 
