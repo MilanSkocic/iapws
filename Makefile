@@ -11,7 +11,7 @@ all: $(LIBNAME)
 $(LIBNAME): build copy_h copy_a shared copy_shared
 
 build: clean
-	fpm build
+	fpm build --profile=release
 
 shared: shared_$(PLATFORM)
 
