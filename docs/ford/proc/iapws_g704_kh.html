@@ -78,88 +78,174 @@
   <div class="row">
     <h1>iapws_g704_kh
       <small>Subroutine</small>
+      
     </h1>
-    <div class="row">
-  <div class="col-lg-12">
-<div class="well well-sm">
-  <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     <li><i class="fa fa-list-ol"></i>
-       <a data-toggle="tooltip"
-    data-placement="bottom" data-html="true"
-    title="11.8% of total for procedures.">23 statements</a>
-     </li> 
-    <li><i class="fa fa-code"></i><a href="../src/iapws_g704.f90"> Source File</a></li>
-  </ul>
-  <ol class="breadcrumb in-well text-right">
-     <li><a href='../sourcefile/iapws_g704.f90.html'>iapws_g704.f90</a></li>
-     <li><a href='../module/iapws_g704.html'>iapws_g704</a></li>
-     <li class="active">iapws_g704_kh</li>
-  </ol>
-</div>
-</div>
-</div>
-<script>
-  $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-  })
-</script>
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title="11.8% of total for procedures.">23 statements</a>
+          </li>
+
+            <li id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/iapws_g704.f90"> Source File</a>
+            </li>
+        </ul>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/iapws_g704.f90.html'>iapws_g704.f90</a></li>
+              <li><a href='../module/iapws_g704.html'>iapws_g704</a></li>
+          <li class="active">iapws_g704_kh</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
 
   </div>
   
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-    <div id="sidebar">
-  <h3>Contents</h3>
- 
-<em>None</em>
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-</div>
+
+  </div>
 
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public pure subroutine iapws_g704_kh(T, gas, heavywater, k)</h2>
+    <h2>public pure subroutine iapws_g704_kh(T, gas, heavywater, k)  
+</h2>
     
 
     <p>Compute the henry constant for a given temperature.</p>
 
     <h3>Arguments</h3>
-      <table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
-<tbody>
-<tr>
-  <td><span class="anchor" id="variable-t~4"></span>real(kind=real64),</td>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~3"></span>
+              real(kind=real64),
+            </td>
 <td>intent(in)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>T</strong>(:)</td><td><p>Temperature in °C.</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-gas~5"></span>character(len=*),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong>(:)</td>
+            <td>
+                <p>Temperature in °C.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gas"></span>
+              character(len=*),
+            </td>
 <td>intent(in)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>gas</strong></td><td><p>Gas.</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-heavywater~9"></span>integer(kind=int32),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>gas</strong></td>
+            <td>
+                <p>Gas.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-heavywater~4"></span>
+              integer(kind=int32),
+            </td>
 <td>intent(in)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>heavywater</strong></td><td><p>Flag if D2O (1) is used or H2O(0).</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-k~4"></span>real(kind=real64),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>heavywater</strong></td>
+            <td>
+                <p>Flag if D2O (1) is used or H2O(0).</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-k"></span>
+              real(kind=real64),
+            </td>
 <td>intent(out)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>k</strong>(:)</td><td><p>Henry constant. Filled with NaNs if gas not found.</p></td>
-</tr>
-</tbody>
-</table>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>k</strong>(:)</td>
+            <td>
+                <p>Henry constant. Filled with NaNs if gas not found.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
 
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
-      <h3>Contents</h3>
- 
-<em>None</em>
+        <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
 
     </section>
     <br class="visible-xs visible-sm hidden-md">
@@ -189,7 +275,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-06-17T08:01:44.268812           </p>
+ on 2023-06-19T06:09:18.847047           </p>
         </div>
       </div>
       <br>
