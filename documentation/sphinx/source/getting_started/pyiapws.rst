@@ -9,7 +9,6 @@ How to install
 ^^^^^^^^^^^^^^^
 
 .. include:: ../../../../pywrapper/INSTALL.rst
-    :language: bash
 
 Dependencies
 ^^^^^^^^^^^^^^^
