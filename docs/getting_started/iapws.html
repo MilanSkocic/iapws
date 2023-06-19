@@ -51,17 +51,8 @@
 It also provides a API for the C language. The formulas are taken from <a class="reference external" href="http://iapws.org">http://iapws.org</a>.</p>
 <section id="how-to-install">
 <h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this heading">¶</a></h2>
-<p>A Makefile is provided which uses <a class="reference external" href="https://fpm.fortran-lang.org/en/index.html">fpm</a> for building the library
-with additional options:</p>
-<ul class="simple">
-<li><p>compile the source generator and generate the sources</p></li>
-<li><p>copy needed sources into the python wrapper folder</p></li>
-<li><p>build a shared library</p></li>
-<li><p>install the C headers</p></li>
-<li><p>uninstall the library and headers</p></li>
-</ul>
-<p>On windows, <a class="reference external" href="https://www.msys2.org">msys2</a> needs to be installed and use
-the mingw64 or mingw32 terminals.</p>
+<p>A Makefile is provided, which uses <a class="reference external" href="https://fpm.fortran-lang.org/en/index.html">fpm</a>, for building the library.</p>
+<p>On windows, <a class="reference external" href="https://www.msys2.org">msys2</a> needs to be installed.</p>
 <p>On Darwin, the <a class="reference external" href="https://formulae.brew.sh/formula/gcc">gcc</a> toolchain needs to be installed.</p>
 <p>Build: the configuration file will set all the environmental variables necessary for the compilation</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> configuration
