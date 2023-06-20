@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>iapw &#8212; iapws 0.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -55,25 +55,25 @@ It also provides a API for the C language. The formulas are taken from <a class=
 <p>On windows, <a class="reference external" href="https://www.msys2.org">msys2</a> needs to be installed.</p>
 <p>On Darwin, the <a class="reference external" href="https://formulae.brew.sh/formula/gcc">gcc</a> toolchain needs to be installed.</p>
 <p>Build: the configuration file will set all the environmental variables necessary for the compilation</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> configuration
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>configuration
 make
 </pre></div>
 </div>
 <p>Run tests</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fpm <span class="nb">test</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fpm<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
 <p>Install</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install
 </pre></div>
 </div>
 <p>Uninstall</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make uninstall
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>uninstall
 </pre></div>
 </div>
 <p>If building the python wrapper is needed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> pywrapper
-python setup.py bdist_wheel
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>pywrapper
+python<span class="w"> </span>setup.py<span class="w"> </span>bdist_wheel
 </pre></div>
 </div>
 </section>
@@ -119,7 +119,7 @@ python setup.py bdist_wheel
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2023 Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.0.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
     </div>
   </body>
 </html>

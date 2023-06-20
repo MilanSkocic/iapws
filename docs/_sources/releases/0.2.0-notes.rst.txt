@@ -39,4 +39,4 @@ Milan Skocic
 Commits
 --------
 
-Full Changelog: https://github.com/MilanSkocic/pyiapws/compare/0.1.1...0.2.0
+Full Changelog: https://github.com/MilanSkocic/iapws/compare/0.1.1...0.2.0
