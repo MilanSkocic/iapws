@@ -51,7 +51,7 @@ if __name__ == "__main__":
         package_data={"pyiapws": ["libiapws.*"]},
         python_requires='>=3.8',
         install_requires=pathlib.Path("requirements.txt").read_text(encoding="utf-8").split('\n'),
-        classifiers=["Development Status :: 5 - Prodcution/Stable",
+        classifiers=["Development Status :: 5 - Production/Stable",
                     "Intended Audience :: Science/Research",
                     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"],
         ext_modules=[mod_ext]
