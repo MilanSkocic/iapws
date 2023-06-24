@@ -27,7 +27,7 @@ subroutine iapws_g704_capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
     implicit none
     
     ! arguments
-    type(c_ptr), value :: T
+    type(c_ptr), intent(in), value :: T
         !! Temperature in °C.
     type(c_ptr), intent(in), value :: gas
         !! Gas.
@@ -62,7 +62,7 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     implicit none
     
     ! arguments
-    type(c_ptr), value :: T
+    type(c_ptr), intent(in), value :: T
         !! Temperature in °C.
     type(c_ptr), intent(in), value :: gas
         !! Gas.
