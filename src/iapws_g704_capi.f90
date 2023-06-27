@@ -27,18 +27,18 @@ subroutine iapws_g704_capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
     implicit none
     
     ! arguments
-    type(c_ptr), intent(in), value :: T
+    integer(c_int), intent(in), value :: size_gas
+        !! Size of the gas string.
+    integer(c_size_t), intent(in), value :: size_T
+        !! Size of T and k.
+    real(c_double), intent(in) :: T(size_T)
         !! Temperature in °C.
     type(c_ptr), intent(in), value :: gas
         !! Gas.
     integer(c_int), intent(in), value :: heavywater 
         !! Flag if D2O (1) is used or H2O(0).
-    type(c_ptr), intent(in), value :: k
+    real(c_double), intent(inout) :: k(size_T)
         !! Henry constant. Filled with NaNs if gas not found.
-    integer(c_int), intent(in), value :: size_gas
-        !! Size of the gas string.
-    integer(c_size_t), intent(in), value :: size_T
-        !! Size of T and k.
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
@@ -48,13 +48,11 @@ subroutine iapws_g704_capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
     integer(int32) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
-    call c_f_pointer(T, f_T, shape=[size_T])
-    call c_f_pointer(k, f_k, shape=[size_T])
 
     do i=1, size_gas
         f_gas(i:i) = c2f_gas(i)
     enddo
-    call iapws_g704_kh(f_T, f_gas, heavywater, f_k)    
+    call iapws_g704_kh(T, f_gas, heavywater, k)    
 end subroutine
 
 subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
@@ -62,18 +60,18 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     implicit none
     
     ! arguments
-    type(c_ptr), intent(in), value :: T
+    integer(c_size_t), intent(in), value :: size_T
+        !! Size of T and k.
+    integer(c_int), intent(in), value :: size_gas
+        !! Size of the gas string.
+    real(c_double), intent(in) :: T(size_T)
         !! Temperature in °C.
     type(c_ptr), intent(in), value :: gas
         !! Gas.
     integer(c_int), intent(in), value :: heavywater 
         !! Flag if D2O (1) is used or H2O(0).
-    type(c_ptr), intent(in), value :: k
+    real(c_double), intent(inout) :: k(size_T)
         !! Vapor-liquid constant. Filled with NaNs if gas not found.
-    integer(c_int), intent(in), value :: size_gas
-        !! Size of the gas string.
-    integer(c_size_t), intent(in), value :: size_T
-        !! Size of T and k.
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
@@ -83,13 +81,11 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     integer(int32) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
-    call c_f_pointer(T, f_T, shape=[size_T])
-    call c_f_pointer(k, f_k, shape=[size_T])
 
     do i=1, size_gas
         f_gas(i:i) = c2f_gas(i)
     enddo
-    call iapws_g704_kd(f_T, f_gas, heavywater, f_k)    
+    call iapws_g704_kd(T, f_gas, heavywater, k)    
 end subroutine
 
 pure function iapws_g704_capi_ngases(heavywater)bind(C)result(n)
