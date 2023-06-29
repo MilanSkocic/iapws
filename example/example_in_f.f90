@@ -1,6 +1,6 @@
 program example_in_f
     use iso_fortran_env
-    use iapws_g704
+    use iapws__g704
     implicit none
     integer(int32) :: i, ngas
     real(real64) :: T(1), kh(1), kd(1)

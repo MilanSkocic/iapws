@@ -1,6 +1,6 @@
 program test_g704
     use iso_fortran_env
-    use iapws_g704
+    use iapws__g704
     implicit none
 
     print "(A)", "***** TESTING FORTRAN CODE FOR G704 *****"

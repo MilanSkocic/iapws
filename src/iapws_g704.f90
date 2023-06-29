@@ -1,4 +1,4 @@
-module iapws_g704
+module iapws__g704
     !! Module for IAPWS G7-04
     use iso_fortran_env
     use ieee_arithmetic
