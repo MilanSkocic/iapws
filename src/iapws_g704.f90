@@ -469,14 +469,14 @@ function iapws_g704_gases2(heavywater)result(gases)
 
     ! variables
     integer(int32) :: i, j, k, ngas
-    type(iapws_g704_gas_t), pointer :: f_gases(:)
+    type(iapws_g704_gas_t), pointer :: f_gases_list(:)
     
-    f_gases => iapws_g704_gases(heavywater)
-    ngas = size(f_gases)
+    f_gases_list => iapws_g704_gases(heavywater)
+    ngas = size(f_gases_list)
 
     k = 0
     do i=1, ngas
-        k = k + len(f_gases(i)%gas)
+        k = k + len(f_gases_list(i)%gas)
     enddo
 
     if(allocated(f_gases_str))then
@@ -488,8 +488,8 @@ function iapws_g704_gases2(heavywater)result(gases)
     j = 1
     k = 1
     do i=1, ngas
-        do j=1, len(f_gases(i)%gas)
-            f_gases_str(k:k) = f_gases(i)%gas(j:j)
+        do j=1, len(f_gases_list(i)%gas)
+            f_gases_str(k:k) = f_gases_list(i)%gas(j:j)
             k = k + 1
         enddo
         f_gases_str(k:k) = ","
