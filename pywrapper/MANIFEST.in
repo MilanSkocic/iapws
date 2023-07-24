@@ -9,7 +9,4 @@ include requirements.txt
 
 include pyiapws/*.c
 include pyiapws/*.h
-include pyiapws/libiapws.so
-include pyiapws/libiapws.dylib
-include pyiapws/libiapws.dll
-include pyiapws/libiapws.dll.a
+include pyiapws/libiapws.*
