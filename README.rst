@@ -14,6 +14,14 @@ It also provides a API for the C language. The formulas are taken from http://ia
 For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
 technical report R7-97. 
 
+To use `iapws` within your `fpm <https://github.com/fortran-lang/fpm>`_ project,
+add the following to your `fpm.toml` file:
+
+.. code-block::
+
+    [dependencies]
+    rklib = { git="https://github.com/MilanSkocic/iapws.git" }
+
 
 Installation
 =================
