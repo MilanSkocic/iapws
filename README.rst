@@ -20,7 +20,7 @@ add the following to your `fpm.toml` file:
 .. code-block::
 
     [dependencies]
-    rklib = { git="https://github.com/MilanSkocic/iapws.git" }
+    iapws = { git="https://github.com/MilanSkocic/iapws.git" }
 
 
 Installation
