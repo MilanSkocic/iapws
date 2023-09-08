@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pyiapws
 
+print(pyiapws.__version__)
 
 style = {"marker":".", "ls":"", "ms":2}
 T_KELVIN = 273.15
