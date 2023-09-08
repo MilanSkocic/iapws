@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>IAPWS G7-04 &#8212; iapws 0.2.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    <title>IAPWS G7-04 &#8212; iapws 0.2.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=7ea05869" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/documentation_options.js?v=37f418d5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -34,7 +33,7 @@
         <li class="right" >
           <a href="index.html" title="IAPWS - Theoretical background"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.2.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">IAPWS - Theoretical background</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">IAPWS G7-04</a></li> 
       </ul>
@@ -45,21 +44,21 @@
           <div class="body" role="main">
             
   <section id="iapws-g7-04">
-<h1>IAPWS G7-04<a class="headerlink" href="#iapws-g7-04" title="Permalink to this heading">¶</a></h1>
+<h1>IAPWS G7-04<a class="headerlink" href="#iapws-g7-04" title="Link to this heading">¶</a></h1>
 <p>The computation is based on the parameters provided by the IAPWS 2004 <span id="id1">[<a class="reference internal" href="../references/index.html#id4" title="IAPWS. Guideline on the Henry's Constant and Vapor-Liquid Distribution Constant for Gases in H\textsubscript 2O and D\textsubscript 2O at High Temperatures. Technical Report G7-04, IAPWS, Kyoto, Japan, 2004.">1</a>]</span>.</p>
 <section id="henry-contant-kh">
-<h2>Henry Contant: kh<a class="headerlink" href="#henry-contant-kh" title="Permalink to this heading">¶</a></h2>
+<h2>Henry Contant: kh<a class="headerlink" href="#henry-contant-kh" title="Link to this heading">¶</a></h2>
 <p>The Henry constant <img class="math" src="../_images/math/e97052bb6fed48da8b4e12328ce0c890780e44a9.png" alt="kH"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kh">Eq.1</a>.
 <img class="math" src="../_images/math/ffbfb1be94728ccddf2d8877eef911c5e6fc6cd4.png" alt="k_H"/> is expressed in MPa.</p>
 <div class="math" id="equation-eq-iapws-kh">
-<p><span class="eqno">(1)<a class="headerlink" href="#equation-eq-iapws-kh" title="Permalink to this equation">¶</a></span><img src="../_images/math/036fd6d2be6a1347316dcf1e5e202270d708fca8.png" alt="k_H = \lim_{x_2 \rightarrow 0} f_2/x_2"/></p>
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-eq-iapws-kh" title="Link to this equation">¶</a></span><img src="../_images/math/036fd6d2be6a1347316dcf1e5e202270d708fca8.png" alt="k_H = \lim_{x_2 \rightarrow 0} f_2/x_2"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/8bba708bfd9e1df2575d817c79ab6ae0139b20c6.png" alt="f_2"/>: liquid-phase fugacity</p></li>
 <li><p><img class="math" src="../_images/math/b7bda214149c6fe0d7c6c494b0c896805bf51262.png" alt="x_2"/>: mole fraction of the solute</p></li>
 </ul>
 <p>The Henry’s constant <img class="math" src="../_images/math/ffbfb1be94728ccddf2d8877eef911c5e6fc6cd4.png" alt="k_H"/> is given as a function of temperature by:</p>
 <div class="math" id="equation-eq-iapws-lnkh">
-<p><span class="eqno">(2)<a class="headerlink" href="#equation-eq-iapws-lnkh" title="Permalink to this equation">¶</a></span><img src="../_images/math/c1cae8cabfd7360430bf2220c2bd717db87d9614.png" alt="\ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau"/></p>
+<p><span class="eqno">(2)<a class="headerlink" href="#equation-eq-iapws-lnkh" title="Link to this equation">¶</a></span><img src="../_images/math/c1cae8cabfd7360430bf2220c2bd717db87d9614.png" alt="\ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/045f714bd70e021b2406e0439db8d07728df28fe.png" alt="\tau = 1-T_R"/></p></li>
 <li><p><img class="math" src="../_images/math/ee10016037cad9575a47e6d7a44dbc867d96ecfc.png" alt="T_R = T/T_{c1}"/></p></li>
@@ -70,42 +69,42 @@ and from the correlation of Harvey and Lemmon  for <img class="math" src="../_im
 </ul>
 <p>Both equations have the form:</p>
 <div class="math" id="equation-eq-iapws-pstar">
-<p><span class="eqno">(3)<a class="headerlink" href="#equation-eq-iapws-pstar" title="Permalink to this equation">¶</a></span><img src="../_images/math/bd2681c96d49c252ac2c7ac31fe3ab11af959859.png" alt="\ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}"/></p>
+<p><span class="eqno">(3)<a class="headerlink" href="#equation-eq-iapws-pstar" title="Link to this equation">¶</a></span><img src="../_images/math/bd2681c96d49c252ac2c7ac31fe3ab11af959859.png" alt="\ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for  <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and 5 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/></p></li>
 <li><p><img class="math" src="../_images/math/ca28b53554b735e9d40e96303676a4a6450f340a.png" alt="p_{c1}"/> is the critical pressure of the solvent recommended by IAPWS <span id="id5">[<a class="reference internal" href="../references/index.html#id5" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, Lucerne, Switzerland, 2007.">2</a>]</span></p></li>
 </ul>
 </section>
 <section id="vapor-liquid-distribution-constant-kd">
-<h2>Vapor-Liquid Distribution Constant: kd<a class="headerlink" href="#vapor-liquid-distribution-constant-kd" title="Permalink to this heading">¶</a></h2>
+<h2>Vapor-Liquid Distribution Constant: kd<a class="headerlink" href="#vapor-liquid-distribution-constant-kd" title="Link to this heading">¶</a></h2>
 <p>The liquid-vapor distribution constant <img class="math" src="../_images/math/1ce400c34295480d5eeed6c2f4a0c01de811df7c.png" alt="kD"/> is defined as shown in equation <a class="reference internal" href="#equation-eq-iapws-kd">Eq.4</a>.
 <img class="math" src="../_images/math/edd4359a33019e2ad319666dae51160aac14cf8c.png" alt="K_D"/> is adimensional.</p>
 <div class="math" id="equation-eq-iapws-kd">
-<p><span class="eqno">(4)<a class="headerlink" href="#equation-eq-iapws-kd" title="Permalink to this equation">¶</a></span><img src="../_images/math/b259f8a66b0588bc7a12cfa6261ea2233b91e7b7.png" alt="k_D = \lim_{x_2 \rightarrow 0} y_2/x_2"/></p>
+<p><span class="eqno">(4)<a class="headerlink" href="#equation-eq-iapws-kd" title="Link to this equation">¶</a></span><img src="../_images/math/b259f8a66b0588bc7a12cfa6261ea2233b91e7b7.png" alt="k_D = \lim_{x_2 \rightarrow 0} y_2/x_2"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/b7bda214149c6fe0d7c6c494b0c896805bf51262.png" alt="x_2"/>: mole fraction of the solute</p></li>
 <li><p><img class="math" src="../_images/math/f5f424471e1f942a67eedbdbb512954c4e722fe8.png" alt="y_2"/> is the vapor-phase solute mole fraction in equilibrium with the liquid</p></li>
 </ul>
 <p>The vapor-liquid distribution constant <cite>k_D</cite> is given as a function of temperature by:</p>
 <div class="math" id="equation-eq-iapws-lnkd">
-<p><span class="eqno">(5)<a class="headerlink" href="#equation-eq-iapws-lnkd" title="Permalink to this equation">¶</a></span><img src="../_images/math/9a21aec4ba10d1512718b78998b101e3a15d8e5e.png" alt="\ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)"/></p>
+<p><span class="eqno">(5)<a class="headerlink" href="#equation-eq-iapws-lnkd" title="Link to this equation">¶</a></span><img src="../_images/math/9a21aec4ba10d1512718b78998b101e3a15d8e5e.png" alt="\ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/a5fa84b363f309ebc8fe7db38304541732c7de9a.png" alt="q"/> : -0.023767 for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and -0.024552 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>.</p></li>
 <li><p><img class="math" src="../_images/math/349f39ce1b19cbb1ec1db2d0d4e9db0daf86f905.png" alt="f(\tau)"/> <span id="id6">[<a class="reference internal" href="../references/index.html#id6" title="Wolfgang Wagner and A. Pruss. International Equations for the Saturation Properties of Ordinary Water Substance. Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.">3</a>]</span> for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/>  and <span id="id7">[<a class="reference internal" href="../references/index.html#id2" title="R. Fernandez-Prini, J.L. Alvarez, and A.H. Harvey. Henry's Constants and Vapor–Liquid Distribution Constants for Gaseous Solutes in H2O and D2O at High Temperatures. Journal of Physical Chemistry Reference Data, 32(2):903–916, 2003.">5</a>]</span> for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>.</p></li>
 </ul>
 <p>In both cases, <img class="math" src="../_images/math/349f39ce1b19cbb1ec1db2d0d4e9db0daf86f905.png" alt="f(\tau)"/> has the following form:</p>
 <div class="math" id="equation-eq-iapws-ftau">
-<p><span class="eqno">(6)<a class="headerlink" href="#equation-eq-iapws-ftau" title="Permalink to this equation">¶</a></span><img src="../_images/math/718c43e384adc07a88378d28a2e9b8dbbf831535.png" alt="f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}"/></p>
+<p><span class="eqno">(6)<a class="headerlink" href="#equation-eq-iapws-ftau" title="Link to this equation">¶</a></span><img src="../_images/math/718c43e384adc07a88378d28a2e9b8dbbf831535.png" alt="f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}"/></p>
 </div><ul class="simple">
 <li><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> is 6 for <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and 4 for <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/></p></li>
 </ul>
 </section>
 <section id="molar-fractions">
-<h2>Molar fractions<a class="headerlink" href="#molar-fractions" title="Permalink to this heading">¶</a></h2>
+<h2>Molar fractions<a class="headerlink" href="#molar-fractions" title="Link to this heading">¶</a></h2>
 <p>The molar fractions <img class="math" src="../_images/math/b7bda214149c6fe0d7c6c494b0c896805bf51262.png" alt="x_2"/> and <img class="math" src="../_images/math/f5f424471e1f942a67eedbdbb512954c4e722fe8.png" alt="y_2"/> can be expressed from the
 equations <a class="reference internal" href="#equation-eq-iapws-kh">Eq.1</a> and <a class="reference internal" href="#equation-eq-iapws-kd">Eq.4</a> as shown in <a class="reference internal" href="#equation-eq-iapws-molar-frac">Eq.7</a>.</p>
 <div class="math" id="equation-eq-iapws-molar-frac">
-<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq-iapws-molar-frac" title="Permalink to this equation">¶</a></span><img src="../_images/math/bb032e40c31c39815e3ca9d844e2ababda7059f3.png" alt="x_2 = \frac{f_2}{k_H}\\
+<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq-iapws-molar-frac" title="Link to this equation">¶</a></span><img src="../_images/math/bb032e40c31c39815e3ca9d844e2ababda7059f3.png" alt="x_2 = \frac{f_2}{k_H}\\
 \frac{x_2}{f_2} = \frac{1}{k_H}\\
 y_2 = \frac{k_D}{k_H} \cdot f_2 \\
 \frac{y_2}{f_2} = \frac{k_D}{k_H}"/></p>
@@ -113,17 +112,17 @@ y_2 = \frac{k_D}{k_H} \cdot f_2 \\
 <img class="math" src="../_images/math/b7bda214149c6fe0d7c6c494b0c896805bf51262.png" alt="x_2"/> and <img class="math" src="../_images/math/f5f424471e1f942a67eedbdbb512954c4e722fe8.png" alt="y_2"/> are then expressed per
 unit of pressure as shown in equation <a class="reference internal" href="#equation-eq-iapws-molar-frac-simple">Eq.8</a> .</p>
 <div class="math" id="equation-eq-iapws-molar-frac-simple">
-<p><span class="eqno">(8)<a class="headerlink" href="#equation-eq-iapws-molar-frac-simple" title="Permalink to this equation">¶</a></span><img src="../_images/math/e4d713f619d94afa02db0303305cbd55896b5d0b.png" alt="x_2 = \frac{1}{k_H}\\
+<p><span class="eqno">(8)<a class="headerlink" href="#equation-eq-iapws-molar-frac-simple" title="Link to this equation">¶</a></span><img src="../_images/math/e4d713f619d94afa02db0303305cbd55896b5d0b.png" alt="x_2 = \frac{1}{k_H}\\
 y_2 = \frac{k_D}{k_H}"/></p>
 </div><p>The molar fractions can be converted to solubilties in ppm or cm3/kg as shown in equation <a class="reference internal" href="#equation-eq-conversion">Eq.9</a>
 by considering dilute solutions. <img class="math" src="../_images/math/ed38fa24f1c94891bd312012aab3f6673be3eb83.png" alt="X"/> is the considered gas and the solvent is either <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/>
 or <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>.</p>
 <div class="math" id="equation-eq-conversion">
-<p><span class="eqno">(9)<a class="headerlink" href="#equation-eq-conversion" title="Permalink to this equation">¶</a></span><img src="../_images/math/ee423da3aced7f3589ecbe50124d8563a558c5a6.png" alt="S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6
+<p><span class="eqno">(9)<a class="headerlink" href="#equation-eq-conversion" title="Link to this equation">¶</a></span><img src="../_images/math/ee423da3aced7f3589ecbe50124d8563a558c5a6.png" alt="S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6
 
 S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]"/></p>
 </div><section id="available-gases">
-<h3>Available gases<a class="headerlink" href="#available-gases" title="Permalink to this heading">¶</a></h3>
+<h3>Available gases<a class="headerlink" href="#available-gases" title="Link to this heading">¶</a></h3>
 <p><img class="math" src="../_images/math/5f1155afca054166ee4e920640699305c28ec250.png" alt="kh"/> and <img class="math" src="../_images/math/71b2c726f13efbb24229a93562a08659cac42815.png" alt="kd"/> can be computed for the following gases:</p>
 <ul class="simple">
 <li><p>in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6</p></li>
@@ -131,19 +130,19 @@ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}
 </ul>
 </section>
 <section id="plots">
-<h3>Plots<a class="headerlink" href="#plots" title="Permalink to this heading">¶</a></h3>
+<h3>Plots<a class="headerlink" href="#plots" title="Link to this heading">¶</a></h3>
 <p>The evolution of <img class="math" src="../_images/math/5f1155afca054166ee4e920640699305c28ec250.png" alt="kh"/> in <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>, between 0°C and 360°C, are shown in figures
 <a class="reference internal" href="#fig-kh-h2o"><span class="std std-numref">Fig. 1</span></a> and <a class="reference internal" href="#fig-kh-d2o"><span class="std std-numref">Fig. 2</span></a>.</p>
 <figure class="align-center" id="id8">
 <span id="fig-kh-h2o"></span><a class="reference internal image-reference" href="../_images/g704_kh_H2O.png"><img alt="kh in H2O" src="../_images/g704_kh_H2O.png" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">kh in H2O</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">kh in H2O</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id9">
 <span id="fig-kh-d2o"></span><a class="reference internal image-reference" href="../_images/g704_kh_D2O.png"><img alt="kh in D2O" src="../_images/g704_kh_D2O.png" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">kh in D2O</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">kh in D2O</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The evolution of <img class="math" src="../_images/math/71b2c726f13efbb24229a93562a08659cac42815.png" alt="kd"/> in <img class="math" src="../_images/math/f28f4009320819a367c478c28cc9d8830bbe360e.png" alt="H_2O"/> and <img class="math" src="../_images/math/7802b612c189390a4580013c0fb78e98618b1552.png" alt="D_2O"/>, between 0°C and 360°C, are shown in figures
@@ -151,13 +150,13 @@ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}
 <figure class="align-center" id="id10">
 <span id="fig-kd-h2o"></span><a class="reference internal image-reference" href="../_images/g704_kd_H2O.png"><img alt="kd in H2O" src="../_images/g704_kd_H2O.png" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">kh in H2O</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">kh in H2O</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id11">
 <span id="fig-kd-d2o"></span><a class="reference internal image-reference" href="../_images/g704_kd_D2O.png"><img alt="kd in D2O" src="../_images/g704_kd_D2O.png" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">kd in D2O</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">kd in D2O</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -185,14 +184,14 @@ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}
         <li class="right" >
           <a href="index.html" title="IAPWS - Theoretical background"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">iapws 0.2.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >IAPWS - Theoretical background</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">IAPWS G7-04</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023 Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    &#169; Copyright 2023 Milan Skocic.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

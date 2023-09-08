@@ -1,4 +1,4 @@
-module iapws_g704
+module iapws__g704
     !! Module for IAPWS G7-04
     use iso_fortran_env
     use ieee_arithmetic
@@ -16,45 +16,51 @@ end type
 type(iapws_g704_gas_t), allocatable, target :: f_gases(:)
 character(len=:), allocatable, target :: f_gases_str
 
-real(real64), parameter ::  T_KELVIN = 273.15d0 !! Absolute temperature in K. 
+!> Absolute temperature in KELVIN 
+real(real64), parameter ::  T_KELVIN = 273.15d0 
 
 !! Parameters from IAPWS G7-04 
-real(real64), parameter ::  Tc1_H2O = 647.096d0 !! Critical temperature of water in K.
-real(real64), parameter ::  pc1_H2O = 22.064d0 !! Critical pressure of water in K.
-real(real64), parameter ::  Tc1_D2O = 643.847d0 !! Critical temperature of heavywater in MPa. 
-real(real64), parameter ::  pc1_D2O = 21.671d0  !! Critical pressure of heavywater in MPa. 
+!> critical temperature of water in K
+real(real64), parameter ::  Tc1_H2O = 647.096d0 
+!> critical pressure of the water in K
+real(real64), parameter ::  pc1_H2O = 22.064d0 
+!> critical temperature of heavy water MPa 
+real(real64), parameter ::  Tc1_D2O = 643.847d0 
+!> critical pressure of heavywater MPa 
+real(real64), parameter ::  pc1_D2O = 21.671d0 
 
-real(real64), parameter :: q_H2O = -0.023767d0 !! Solvent coefficient for kd in water.
-real(real64), parameter :: q_D2O = -0.024552d0 !! Solvent coefficient for kd in heavywater.
+!> solvent coefficient for kd in water
+real(real64), parameter :: q_H2O = -0.023767d0
+!> solvent coefficient for kd in heavywater
+real(real64), parameter :: q_D2O = -0.024552d0
 
+!! ABC coefficients for gases in water.
 type :: abc_t
-    !! ABC coefficients for gases in water.
-    character(len=lengas) :: gas !! Gas.
-    real(real64) :: A !! A
-    real(real64) :: B !! B
-    real(real64) :: C !! C
+    character(len=lengas) :: gas
+    real(real64) :: A
+    real(real64) :: B
+    real(real64) :: C
 end type
 
 type :: efgh_t
-    !! EFGH coefficients for gases in heavywater.
-    character(len=lengas) :: gas !! Gas
-    real(real64) :: E !! E
-    real(real64) :: F !! F
-    real(real64) :: G !! G
-    real(real64) :: H !! H
+    character(len=lengas) :: gas
+    real(real64) :: E
+    real(real64) :: F
+    real(real64) :: G
+    real(real64) :: H
 end type
 
-!! ai and bi coefficients for water
+!> ai and bi coefficients for water
 real(real64), dimension(6, 2), parameter :: aibi_H2O = reshape([&
 -7.85951783d0, 1.84408259d0, -11.78664970d0, 22.68074110d0, -15.96187190d0, 1.80122502d0,&
 1.000d0, 1.500d0, 3.000d0, 3.500d0, 4.000d0, 7.500d0], [6,2])
 
-!! ai and bi coefficients for heavywater
+!> ai and bi coefficients for heavywater
 real(real64), dimension(5, 2), parameter :: aibi_D2O = reshape([&
 -7.8966570d0, 24.7330800d0, -27.8112800d0,  9.3559130d0, -9.2200830d0, &
 1.00d0, 1.89d0, 2.00d0, 3.00d0, 3.60d0], [5, 2])
 
-!! ABC constants water.
+!> ABC constants water.
 type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
     [abc_t("He", -3.52839d0, 7.12983d0, 4.47770d0),&
      abc_t("Ne", -3.18301d0, 5.31448d0, 5.43774d0),&
@@ -71,7 +77,7 @@ type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
      abc_t("C2H6", -19.67563d0, 4.51222d0, 20.62567d0),&
      abc_t("SF6", -16.56118d0, 2.15289d0, 20.35440d0)]
 
-!! ABC constants for heavywater
+!> ABC constants for heavywater
 type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
     [abc_t("He", -0.72643d0, 7.02134d0, 2.04433d0),&
      abc_t("Ne", -0.91999d0, 5.65327d0, 3.17247d0),&
@@ -81,17 +87,17 @@ type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
      abc_t("D2", -5.33843d0, 6.15723d0, 6.53046d0),&
      abc_t("CH4", -10.01915d0, 4.73368d0, 11.75711d0)]
 
-!! ci and di coefficients for water
+!> ci and di coefficients for water
 real(real64), dimension(6, 2), parameter :: cidi_H2O = reshape([&
 1.99274064d0, 1.09965342d0, -0.510839303d0, -1.75493479d0, -45.5170352d0, -6.7469445d5,&
 1.0d0/3.0d0, 2.0d0/3.0d0, 5.0d0/3.0d0, 16.0d0/3.0d0, 43.0d0/3.0d0, 110.0d0/3.0d0], [6,2])
 
-!! ci and di coefficients for heavywater
+!> ci and di coefficients for heavywater
 real(real64), dimension(4, 2), parameter :: cidi_D2O = reshape([&
 2.7072d0, 0.58662d0, -1.3069d0, -45.663d0, &
 0.374d0, 1.45d0, 2.6d0, 12.3d0], [4,2])
 
-!! EFGH constants for water
+!> EFGH constants for water
 type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
 [efgh_t("He", 2267.4082d0, -2.9616d0, -3.2604d0, 7.8819d0),&
  efgh_t("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0),&
@@ -108,7 +114,7 @@ type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
  efgh_t("C2H6", 2143.8121d0, 6.8859d0, -12.6084d0, 0.0d0),&
  efgh_t("SF6", 2871.7265d0, -66.7556d0, 229.7191d0, -172.7400d0)]
 
- !! EFGH constants for heavywater
+ !> EFGH constants for heavywater
 type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 [efgh_t("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257), &
  efgh_t("Ne", 2439.6677d0, -93.4934d0, 330.7783d0, -243.0100d0),&
@@ -125,21 +131,17 @@ public :: iapws_g704_gases, iapws_g704_gases2
 
 contains
 
+!> @brief Find the index of the gas in the ABC table.
+!! @param[in] gas Gas.
+!! @param[in] abc ABC table.
 pure function findgas_abc(gas, abc)result(value)
-    !! Find the index of the gas in the ABC table.
     implicit none
-    
-    ! arguments
+    !! arguments
     character(len=*), intent(in) :: gas
-        !! Gas.
     type(abc_t), dimension(:), intent(in) :: abc
-        !! ABC table.
-    
-    ! returns
+    !! returns
     integer(int32) :: value
-        !! Index value.
-    
-    ! local variables
+    !! local variables
     integer(int32) :: i
 
     value = 0
@@ -152,20 +154,17 @@ pure function findgas_abc(gas, abc)result(value)
     end do
 end function
 
+!> @brief Find the index of the gas in the ABC table.
+!! @param[in] gas Gas.
+!! @param[in] efgh ABC table.
 pure function findgas_efgh(gas, efgh)result(value)
-    !! Find the index of the gas in the ABC table.
     implicit none
-    
-    ! arguments
+    !! arguments
     character(len=*), intent(in) :: gas
-        !! Gas.
     type(efgh_t), dimension(:), intent(in) :: efgh
-        !! EFGH table.
-    
-    ! returns
+    !! returns
     integer(int32) :: value
-    
-    ! local variables
+    !! local variables
     integer(int32) :: i
 
     value = 0
@@ -179,18 +178,12 @@ pure function findgas_efgh(gas, efgh)result(value)
 end function
 
 pure elemental function f_p1star_H2O(T)result(value)
-    !! Compute p1* in water.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
-    
-    ! return
+    !! return
     real(real64) :: value
-        !! p1*
-    
-    ! variables
+    !! variables
     real(real64) :: Tr
     real(real64) :: tau
 
@@ -200,18 +193,12 @@ pure elemental function f_p1star_H2O(T)result(value)
 end function
 
 pure elemental function f_p1star_D2O(T)result(value)
-    !! Compute p1* in heavywater.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
-    
-    ! return
+    !! return
     real(real64) :: value
-        !! p1*
-    
-    ! variables
+    !! variables
     real(real64) :: Tr
     real(real64) :: tau
 
@@ -221,20 +208,12 @@ pure elemental function f_p1star_D2O(T)result(value)
 end function
 
 pure elemental function f_kh_p1star_H2O(T, abc)result(value)
-    !! Compute kh/p1* in water.
-    implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(abc_t), intent(in) :: abc
-        !! ABC table.
-    
-    ! return 
+    !! return 
     real(real64) :: value
-        !! kh/p1*.
-    
-    ! variables
+    !! variables
     real(real64) :: Tr
     real(real64) :: tau
 
@@ -244,20 +223,12 @@ pure elemental function f_kh_p1star_H2O(T, abc)result(value)
 end function
 
 pure elemental function f_kh_p1star_D2O(T, abc)result(value)
-    !! Compute kh/p1* in heavywater.
-    implicit none
-
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(abc_t), intent(in) :: abc
-        !! ABC table.
-    
-    ! return 
+    !! return 
     real(real64) :: value
-        !! kh/p1*.
-    
-    ! variables
+    !! variables
     real(real64) :: Tr
     real(real64) :: tau
 
@@ -267,84 +238,51 @@ pure elemental function f_kh_p1star_D2O(T, abc)result(value)
 end function
 
 pure elemental function ft_H2O(tau)result(value)
-    !! Compute f(tau) in water.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: tau
-        !! tau.
-    
-    ! return
+    !! return
     real(real64) :: value
-        !! f(tau).
-
     value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
 end function
 
 pure elemental function ft_D2O(tau)result(value)
-    !! Compute f(tau) in heavywater.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: tau
-        !! tau.
-    
-    ! return
+    !! return
     real(real64) :: value
-        !! f(tau).
-    
     value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
 end function
 
 pure elemental function f_kh_H2O(T, abc)result(value)
-    !! Compute kh in water.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(abc_t), intent(in) :: abc
-        !! ABC table.
-    
-    ! returns
+    !! returns
     real(real64) :: value
-        !! kh.
-    
     value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
 end function
 
 pure elemental function f_kh_D2O(T, abc)result(value)
-    !! Compute kh in heavywater.
     implicit none
-    
-    ! arguments
+    !! arguments
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(abc_t), intent(in) :: abc
-        !! ABC table.
-    
-    ! returns
+    !! returns
     real(real64) :: value
-        !! kh.
-    
     value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
 end function
 
 pure elemental function f_kd_H2O(T, efgh) result(value)
-    !! Compute kd in water.
     implicit none
-    
-    ! arguments 
+    !! arguments 
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(efgh_t), intent(in) :: efgh
-        !! EFGH table.
-    
-    ! returns
+    !! returns
     real(real64) :: value
-        !! kd.
-    
-    ! local variables
+    !! local variables
     real(real64) :: Tr
     real(real64) :: tau
     real(real64) :: p1
@@ -365,20 +303,13 @@ pure elemental function f_kd_H2O(T, efgh) result(value)
 end function
 
 pure elemental function f_kd_D2O(T, efgh) result(value)
-    !! Compute kd in heavywater.
     implicit none
-    
-    ! arguments 
+    !! arguments 
     real(real64), intent(in) :: T
-        !! Temperature in °C.
     type(efgh_t), intent(in) :: efgh
-        !! EFGH table.
-    
-    ! returns
+    !! returns
     real(real64) :: value
-        !! kd.
-    
-    ! local variables
+    !! local variables
     real(real64) :: Tr
     real(real64) :: tau
     real(real64) :: p1
@@ -538,14 +469,14 @@ function iapws_g704_gases2(heavywater)result(gases)
 
     ! variables
     integer(int32) :: i, j, k, ngas
-    type(iapws_g704_gas_t), pointer :: f_gases(:)
+    type(iapws_g704_gas_t), pointer :: f_gases_list(:)
     
-    f_gases => iapws_g704_gases(heavywater)
-    ngas = size(f_gases)
+    f_gases_list => iapws_g704_gases(heavywater)
+    ngas = size(f_gases_list)
 
     k = 0
     do i=1, ngas
-        k = k + len(f_gases(i)%gas)
+        k = k + len(f_gases_list(i)%gas)
     enddo
 
     if(allocated(f_gases_str))then
@@ -557,8 +488,8 @@ function iapws_g704_gases2(heavywater)result(gases)
     j = 1
     k = 1
     do i=1, ngas
-        do j=1, len(f_gases(i)%gas)
-            f_gases_str(k:k) = f_gases(i)%gas(j:j)
+        do j=1, len(f_gases_list(i)%gas)
+            f_gases_str(k:k) = f_gases_list(i)%gas(j:j)
             k = k + 1
         enddo
         f_gases_str(k:k) = ","
