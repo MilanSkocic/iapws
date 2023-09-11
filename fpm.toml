@@ -34,3 +34,7 @@ main = "test_g704.f90"
 [[test]]
 name = "test_g704_capi"
 main = "test_g704_capi.c"
+
+[[test]]
+name = "test_r797"
+main = "test_r797.f90"
