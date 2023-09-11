@@ -23,9 +23,10 @@ real(real64), parameter :: r1_ps = 16.53d0
 real(real64), parameter :: r1_ts = 1386.0d0
 
 !! IJn_r1f
-real(real64) :: IJn_r1f(1, 3) = transpose(reshape(&
-[0.0d0, -2.0d0, 0.146d0], &
-[3, 1]))
+real(real64) :: IJn_r1f(2, 3) = transpose(reshape(&
+[0.0d0, -2.0d0, 0.146d0, &
+0.0d0, -1.0d0, -0.84548187169114d0], &
+[3, 2]))
 
 contains
 
