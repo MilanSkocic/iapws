@@ -84,7 +84,7 @@ static PyObject *kx(char k, PyObject *args){
         }else if(buffer->ndim>1){
             PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
             return NULL;
-        else if(buffer->ndim==0){
+        }else if(buffer->ndim==0){
             PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
             return NULL;
         }else{
