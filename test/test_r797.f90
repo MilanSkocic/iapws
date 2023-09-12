@@ -50,6 +50,8 @@ subroutine test_regon1_v()
     write(*, "(4X, A)", advance="no") "region 1 v..."
 
     expected = 0.100215168d-2
+    P = 3.0d0
+    T = 300.0d0
     value = iapws_r797_v(P, T-273.15d0);
     diff = value - expected;
     if(diff /= 0)then
