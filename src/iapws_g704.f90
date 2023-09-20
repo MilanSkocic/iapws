@@ -2,6 +2,7 @@ module iapws__g704
     !! Module for IAPWS G7-04
     use iso_fortran_env
     use ieee_arithmetic
+    use iapws__r283
     implicit none
     private
 
@@ -19,15 +20,10 @@ character(len=:), allocatable, target :: f_gases_str
 !> Absolute temperature in KELVIN 
 real(real64), parameter ::  T_KELVIN = 273.15d0 
 
-!! Parameters from IAPWS G7-04 
-!> critical temperature of water in K
-real(real64), parameter ::  Tc1_H2O = 647.096d0 
-!> critical pressure of the water in K
-real(real64), parameter ::  pc1_H2O = 22.064d0 
-!> critical temperature of heavy water MPa 
-real(real64), parameter ::  Tc1_D2O = 643.847d0 
-!> critical pressure of heavywater MPa 
-real(real64), parameter ::  pc1_D2O = 21.671d0 
+real(real64), parameter ::  Tc1_H2O = iapws_r283_Tc_H2O
+real(real64), parameter ::  pc1_H2O = iapws_r283_pc_H2O
+real(real64), parameter ::  Tc1_D2O = iapws_r283_Tc_D2O
+real(real64), parameter ::  pc1_D2O = iapws_r283_pc_D2O
 
 !> solvent coefficient for kd in water
 real(real64), parameter :: q_H2O = -0.023767d0

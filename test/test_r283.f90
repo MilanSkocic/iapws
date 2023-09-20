@@ -1,10 +1,11 @@
-program test_r797
+program test_r283
     use iso_fortran_env
-    use iapws__r797
+    use iapws__r283
     implicit none
 
-    print "(A)", "***** TESTING FORTRAN CODE FOR R797 *****"
-    ! call test_regon1_v()
+    print "(A)", "***** TESTING FORTRAN CODE FOR R283 *****"
+    call test_Tc_H2O()
+    call test_Tc_D2O()
 
 contains
 
@@ -38,21 +39,17 @@ end function
 
 end function
 
-subroutine test_regon1_v()
+subroutine test_Tc_H2O()
     implicit none 
 
     real(real64) :: value
     real(real64) :: expected
     real(real64) :: diff
-    real(real64) :: T
-    real(real64) :: P
     
-    write(*, "(4X, A)", advance="no") "region 1 v..."
+    write(*, "(4X, A)", advance="no") "Tc in H2O..."
 
-    expected = 0.100215168d-2
-    P = 3.0d0
-    T = 300.0d0
-    value = iapws_r797_v(P, T-273.15d0);
+    expected = 647.096d0
+    value = iapws_r283_Tc_H2O 
     diff = value - expected;
     if(diff /= 0)then
         write(*, "(A)", advance="yes") "Failed"
@@ -62,4 +59,26 @@ subroutine test_regon1_v()
         write(*, "(A)", advance="yes") "OK"
     endif
 end subroutine
+
+subroutine test_Tc_D2O()
+    implicit none 
+
+    real(real64) :: value
+    real(real64) :: expected
+    real(real64) :: diff
+    
+    write(*, "(4X, A)", advance="no") "Tc in H2O..."
+
+    expected = 643.847d0
+    value = iapws_r283_Tc_D2O 
+    diff = value - expected;
+    if(diff /= 0)then
+        write(*, "(A)", advance="yes") "Failed"
+        write(*, "(4X, ES23.16, A1, ES23.16, A1, ES23.16)", advance="yes") value, "/", expected, "/", diff
+        stop 1
+    else
+        write(*, "(A)", advance="yes") "OK"
+    endif
+end subroutine
+
 end program

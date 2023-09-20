@@ -1,5 +1,5 @@
 module iapws__g704_capi
-    !! C API for the IAPWS module.
+    !! C API for the G704 module.
     use iso_fortran_env
     use iso_c_binding
     use iapws__g704
