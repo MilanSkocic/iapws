@@ -34,3 +34,17 @@ and the molar mass of ordinary water [5, 6]. The values of the critical paramete
 * :math:`\rho _c = 322\ kg.m^{-3}` (4)
 
 are from the corresponding IAPWS release [7].
+
+
+Auxiliary Equation for the Boundary between Regions 2 and 3
+-------------------------------------------------------------
+
+.. math::
+    :label: eq_B23_P
+
+    \pi = n_1 + n_2 \theta + n_3 \theta ^2
+
+.. math::
+    :label: eq_B23_T
+    
+    \theta = n_4 + \left( \frac{\pi - n_5}{n_3} \right)^{1/2}
