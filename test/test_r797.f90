@@ -4,7 +4,7 @@ program test_r797
     implicit none
 
     print "(A)", "***** TESTING FORTRAN CODE FOR R797 *****"
-    ! call test_regon1_v()
+    call test_regon1_v()
 
 contains
 
