@@ -42,9 +42,7 @@ subroutine iapws_g704_capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
-    real(real64), pointer :: f_T(:)
     character(len=size_gas) :: f_gas
-    real(real64), pointer :: f_k(:)
     integer(int32) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
@@ -75,9 +73,7 @@ subroutine iapws_g704_capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
-    real(real64), pointer :: f_T(:)
     character(len=size_gas) :: f_gas
-    real(real64), pointer :: f_k(:)
     integer(int32) :: i
 
     call c_f_pointer(gas, c2f_gas, shape=[size_gas])
