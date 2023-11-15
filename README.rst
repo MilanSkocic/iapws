@@ -3,6 +3,8 @@ Introduction
 
 .. image:: ./media/logo-iapws.png
     :width: 200
+   
+.. image:: https://github.com/MilanSkocic/iapws/actions/workflows/ci.yml/badge.svg?branch=main
 
 .. readme_inclusion_start
 
