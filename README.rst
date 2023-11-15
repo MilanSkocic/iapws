@@ -1,11 +1,14 @@
+.. |cidev| image:: https://github.com/MilanSkocic/iapws/actions/workflows/ci.yml/badge.svg?branch=dev
+.. |cimain| image:: https://github.com/MilanSkocic/iapws/actions/workflows/ci.yml/badge.svg?branch=main
+
+dev |cidev| / main |cimain|
+
 Introduction
 ================
 
 .. image:: ./media/logo-iapws.png
     :width: 200
    
-.. image:: https://github.com/MilanSkocic/iapws/actions/workflows/ci.yml/badge.svg?branch=main
-
 .. readme_inclusion_start
 
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
