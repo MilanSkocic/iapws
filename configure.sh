@@ -13,15 +13,15 @@ PLATFORM="linux"
 
 IFS='-'
 tmp=$(gcc -dumpmachine)
-read -a tmp_arr <<< "$tmp"
-ARCH="${tmp_arr[0]}"
+read -A tmp_arr <<< "$tmp"
+ARCH="${tmp_arr[1]}"
 
 IFS="="
 while read -r line; do
     # Reading line by line
     if [[ $line == "version"* ]] then
-        read -a tmp_arr <<< "$line"
-        VERSION=${tmp_arr[1]:2:5}
+        read -A tmp_arr <<< "$line"
+        VERSION=${tmp_arr[2]:2:5}
         break
     fi
 done < "fpm.toml"
