@@ -23,7 +23,7 @@ Fortran
     .. literalinclude:: ../../../../src/iapws_g704.f90
         :language: Fortran
     
-    * `iapws_g704.f90`: C API for the IAPWS module.
+    * `iapws_g704_capi.f90`: C API for the IAPWS module.
     
     .. literalinclude:: ../../../../src/iapws_g704_capi.f90
         :language: Fortran
