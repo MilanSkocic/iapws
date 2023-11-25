@@ -29,6 +29,12 @@ if __name__ == "__main__":
                         library_dirs=library_dirs,
                         runtime_library_dirs=runtime_library_dirs,
                         extra_objects=extra_objects)
+    mod_ext = Extension(name="pyiapws.r283",
+                        sources=["./pyiapws/iapws_r283.c"],
+                        libraries=libraries,
+                        library_dirs=library_dirs,
+                        runtime_library_dirs=runtime_library_dirs,
+                        extra_objects=extra_objects)
     
     setup(ext_modules=[mod_ext])
     

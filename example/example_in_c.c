@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-#include "iapws_g704.h"
+#include "iapws.h"
 
 int main(void){
 
