@@ -6,7 +6,7 @@
 #ifndef IAPWS_R283_H
 #define IAPWS_R283_H
 
-#if _MSC_VER
+#if _MSC_VER || __MINGW32__ || __MINGW64__
 #define ADD_IMPORT __declspec(dllimport)
 #else
 #define ADD_IMPORT
