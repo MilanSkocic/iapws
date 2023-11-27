@@ -1,4 +1,4 @@
-r"""Tests"""
+r"""Tests G704."""
 import unittest
 from .. import g704
 import numpy as np
@@ -6,8 +6,8 @@ import numpy as np
 T_KELVIN = 273.15
 
 class TestkH(unittest.TestCase):
-    r"""Test pyiawps library."""
-    def test_H2O(self):
+    r"""Test module G704 from pyiawps library."""
+    def test_kh_H2O(self):
         T = np.asarray((300.0-T_KELVIN,))
         m = g704.kh(T, "He", False)
         k = np.asarray(m)
@@ -15,7 +15,7 @@ class TestkH(unittest.TestCase):
         expected = 2.6576
         self.assertAlmostEqual(value, expected, places=4)
     
-    def test_D2O(self):
+    def test_kh_D2O(self):
         T = np.asarray((300.0-T_KELVIN,))
         m = g704.kh(T, "He", True)
         k = np.asarray(m)
@@ -26,7 +26,7 @@ class TestkH(unittest.TestCase):
 
 class TestkD(unittest.TestCase):
     r"""Test pyiawps library."""
-    def test_H2O(self):
+    def test_kd_H2O(self):
         T = np.asarray((300.0-T_KELVIN,))
         m = g704.kd(T, "He", False)
         k = np.asarray(m)
@@ -34,7 +34,7 @@ class TestkD(unittest.TestCase):
         expected = 15.2250
         self.assertAlmostEqual(value, expected, places=4)
     
-    def test_D2O(self):
+    def test_kd_D2O(self):
         T = np.asarray((300.0-T_KELVIN,))
         m = g704.kd(T, "He", True)
         k = np.asarray(m)

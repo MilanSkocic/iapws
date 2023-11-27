@@ -12,13 +12,13 @@
 #define ADD_IMPORT
 #endif
 
-ADD_IMPORT const double iapws_r283_capi_Tc_H2O; 
-ADD_IMPORT const double iapws_r283_capi_Tc_D2O;
+ADD_IMPORT extern const double iapws_r283_capi_Tc_H2O; 
+ADD_IMPORT extern const double iapws_r283_capi_Tc_D2O;
 
-ADD_IMPORT const double iapws_r283_capi_pc_H2O;
-ADD_IMPORT const double iapws_r283_capi_pc_D2O;
+ADD_IMPORT extern const double iapws_r283_capi_pc_H2O;
+ADD_IMPORT extern const double iapws_r283_capi_pc_D2O;
 
-ADD_IMPORT const double iapws_r283_capi_rhoc_H2O;
-ADD_IMPORT const double iapws_r283_capi_rhoc_D2O;
+ADD_IMPORT extern const double iapws_r283_capi_rhoc_H2O;
+ADD_IMPORT extern const double iapws_r283_capi_rhoc_D2O;
 
 #endif

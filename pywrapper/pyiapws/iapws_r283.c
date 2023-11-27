@@ -45,10 +45,10 @@ PyMODINIT_FUNC PyInit_r283(void)
     Py_INCREF(v);
     
     v = PyFloat_FromDouble(iapws_r283_capi_rhoc_H2O);
-    PyDict_SetItemString(d, "rho_H2O", v);
+    PyDict_SetItemString(d, "rhoc_H2O", v);
     Py_INCREF(v);
     v = PyFloat_FromDouble(iapws_r283_capi_rhoc_D2O);
-    PyDict_SetItemString(d, "rho_D2O", v);
+    PyDict_SetItemString(d, "rhoc_D2O", v);
     Py_INCREF(v);
     
 
