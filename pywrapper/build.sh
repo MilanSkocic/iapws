@@ -11,6 +11,7 @@ rm -r build
 rm -r dist
 rm -r *egg-info
 rm ./pyiapws/g704*.so
+rm ./pyiapws/r283*.so
 
 py311 setup.py sdist
 
