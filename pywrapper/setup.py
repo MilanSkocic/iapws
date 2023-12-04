@@ -24,13 +24,13 @@ if platform.system() == "Darwin":
 if __name__ == "__main__":
 
     mod_g704 = Extension(name="pyiapws.g704",
-                        sources=["./pyiapws/iapws_g704.c"],
+                        sources=["./pyiapws/cpy_iapws_g704.c"],
                         libraries=libraries,
                         library_dirs=library_dirs,
                         runtime_library_dirs=runtime_library_dirs,
                         extra_objects=extra_objects)
     mod_r283 = Extension(name="pyiapws.r283",
-                        sources=["./pyiapws/iapws_r283.c"],
+                        sources=["./pyiapws/cpy_iapws_r283.c"],
                         libraries=libraries,
                         library_dirs=library_dirs,
                         runtime_library_dirs=runtime_library_dirs,

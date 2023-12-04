@@ -20,7 +20,7 @@ program generator
     write(output_unit, "(A)", advance="NO") "Opening files..."
     
     ! FORTRAN
-    fpath = root//"/src/ciaaw_version.f90"
+    fpath = root//"/src/"//trim(name)//"_version.f90"
     inquire(file=fpath, exist=exist)
     if(exist)then
         open(file=fpath, newunit=unit, status="old")
@@ -29,7 +29,7 @@ program generator
     open(file=fpath, newunit=ffortran, status="new", action="write")
     
     ! C API
-    fpath = root // "/src/ciaaw_version_capi.f90"
+    fpath = root // "/src/"//trim(name)//"_version_capi.f90"
     inquire(file=fpath, exist=exist)
     if(exist)then
         open(file=fpath, newunit=unit, status="old")
@@ -38,7 +38,7 @@ program generator
     open(file=fpath, newunit=ffortran_capi, status="new", action="write")
 
     ! C HEADER
-    fpath = root//"/include/ciaaw_version.h"
+    fpath = root//"/include/"//trim(name)//"_version.h"
     inquire(file=fpath, exist=exist)
     if(exist)then
         open(file=fpath, newunit=unit, status="old")

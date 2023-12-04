@@ -2,7 +2,7 @@
 #include <Python.h>
 #include <stdio.h>
 #include <string.h>
-#include "iapws_r283.h"
+#include "iapws.h"
 
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_r283 module of the Fortran iapws library.");
 
