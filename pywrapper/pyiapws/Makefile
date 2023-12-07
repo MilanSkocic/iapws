@@ -1,4 +1,5 @@
 FILES=*.h *.a *.so *.dylib *.dll *.dll.a *.pyd
+FILES=*.h *.a *.so *.dylib *.dll *.dll.a *.pyd
 
 clean: 
 	rm -f $(FILES)

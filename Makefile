@@ -6,17 +6,17 @@ endif
 
 .PHONY: clean install uninstall copy_h copy_a shared_linux shared_windows shared_darwin
 
-all: $(LIBNAME)
+all: clean $(LIBNAME)
 
 $(LIBNAME): build copy_a shared copy_h copy_shared
 
 generator:
-	make -C ./srcgen/version
+	make -C srcgen generator
 
-build: clean generator
+build: generator
 	fpm build --profile=release
 
-build_debug: clean generator
+build_debug: generator
 	fpm build --profile=debug
 
 test: build
@@ -36,13 +36,13 @@ shared: shared_$(PLATFORM)
 copy_shared: copy_shared_$(PLATFORM)
 
 shared_linux:
-	gfortran -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
+	$(FC) -shared -o $(BUILD_DIR)/lib$(LIBNAME).so -Wl,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
 shared_darwin: 
-	gfortran -dynamiclib -install_name @rpath/lib$(LIBNAME).dylib $(FPM_LDFLAGS) -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a
+	$(FC) -dynamiclib -install_name @rpath/lib$(LIBNAME).dylib $(FPM_LDFLAGS) -o $(BUILD_DIR)/lib$(LIBNAME).dylib -Wl,-all_load $(BUILD_DIR)/lib$(LIBNAME).a
 
 shared_windows: 
-	gfortran -shared $(FPM_LDFLAGS) -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
+	$(FC) -shared $(FPM_LDFLAGS) -o $(BUILD_DIR)/lib$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/lib$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/lib$(LIBNAME).a -Wl,--no-whole-archive
 
 copy_a:
 	cp -f $(shell find ./build -type f -name lib$(LIBNAME).a) $(BUILD_DIR)
@@ -68,7 +68,7 @@ copy_shared_windows:
 clean:
 	fpm clean --all
 	rm -f src/*.mod
-	make -C srcgen/version clean
+	make -C srcgen clean
 	make -C $(PYW_MOD_DIR) clean
 
 install: install_dirs install_$(PLATFORM)
