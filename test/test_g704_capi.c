@@ -3,30 +3,9 @@
 #include <math.h>
 #include <string.h>
 #include "iapws_g704.h"
+#include "common.h"
 
 
-static double roundn(double x, int n){
-    double fac;
-    double rounded_x;
-    fac = pow(10, n);
-    rounded_x = round(x*fac)/fac;
-    return rounded_x;
-}
-
-static int assertEqual(double x1, double x2, int n){
-    int r;
-
-    double fac;
-    double ix1, ix2;
-
-    fac = pow(10, n);
-    ix1 = round(x1 * fac);
-    ix2 = round(x2 * fac);
-
-    r = ix1 == ix2;
-
-    return r;
-}
 
 void test_ngases(void){
 

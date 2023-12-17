@@ -1,5 +1,6 @@
 program test_g704
     use iso_fortran_env
+    use test__common
     use iapws__g704
     implicit none
 
@@ -12,36 +13,6 @@ program test_g704
     call test_kd()
 
 contains
-
-pure elemental function roundn(x, n)result(r)
-    implicit none
-    real(real64), intent(in) :: x
-    integer(int32), intent(in) :: n
-    real(real64) :: r
-    real(real64) :: fac
-
-    fac = 10**n
-    r = nint(x*fac, kind=kind(x)) / fac
-end function
-
- function assertEqual(x1, x2, n)result(r)
-    implicit none
-    real(real64), intent(in) :: x1
-    real(real64), intent(in) :: x2
-    integer(int32), intent(in) :: n
-    logical :: r
-
-    real(real64) :: fac
-    real(real64) :: ix1
-    real(real64) :: ix2
-    
-    fac = 10**n
-    ix1 = nint(x1 * fac, kind=kind(n))
-    ix2 = nint(x2 * fac, kind=kind(n))
-    r = ix1 == ix2
-
-
-end function
 
 subroutine test_ngases()
     implicit none 

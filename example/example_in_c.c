@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-#include "iapws_g704.h"
+#include "iapws.h"
 
 int main(void){
 
@@ -13,6 +13,19 @@ int main(void){
     int i;
     int heavywater = 0;
     
+    printf("%s\n", "########################## IAPWS R2-83 ##########################");
+    printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_capi_Tc_H2O, "K");
+    printf("%s %10.3f %s\n", "pc in H2O", iapws_r283_capi_pc_H2O, "MPa");
+    printf("%s %10.3f %s\n", "rhoc in H2O", iapws_r283_capi_rhoc_H2O, "kg/m3");
+    
+    printf("%s %10.3f %s\n", "Tc in D2O", iapws_r283_capi_Tc_D2O, "K");
+    printf("%s %10.3f %s\n", "pc in D2O", iapws_r283_capi_pc_D2O, "MPa");
+    printf("%s %10.3f %s\n", "rhoc in D2O", iapws_r283_capi_rhoc_D2O, "kg/m3");
+    
+    printf("\n");
+
+
+    printf("%s\n", "########################## IAPWS R2-83 ##########################");
     /* Compute kh and kd in H2O*/
     iapws_g704_capi_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
     printf("Gas=%s\tT=%fC\tkh=%+10.4f\n", gas, T, kh);

@@ -40,8 +40,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = "iapws"
-copyright = mod.__copyright__[14:]
-author = mod.__author__
+author = "M. Skocic"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -118,7 +117,7 @@ html_theme_options = {"nosidebar": True,
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = mod.__package_name__
+htmlhelp_basename = "iapws"
 
 
 # -- Options for LaTeX output ---------------------------------------------

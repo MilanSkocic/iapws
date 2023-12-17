@@ -1,3 +1,25 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "build"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyiapws"
+version = "0.2.2"
+authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
+description = "pyiapws: IAPWS for python."
+readme = "README.rst"
+requires-python = ">=3.8"
+license = {text = "GNU General Public License v3 (GPLv3)"}
+classifiers=["Development Status :: 5 - Production/Stable",
+             "Intended Audience :: Science/Research",
+             "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+
+[project.urls]
+Documentation = "https://milanskocic.github.io/iapws/index.html"
+Source = "https://github.com/MilanSkocic/iapws"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+pyiapws = ["libiapws.*"]

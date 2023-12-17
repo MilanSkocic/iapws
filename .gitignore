@@ -31,6 +31,8 @@ __pycache__
 
 .DS_Store
 
+*generator*
+
 pywrapper/pyiapws/*.h
 pywrapper/pyiapws/*.a
 pywrapper/pyiapws/*.dll

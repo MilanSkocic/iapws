@@ -1,6 +1,6 @@
 program example_in_f
     use iso_fortran_env
-    use iapws__g704
+    use iapws
     implicit none
     integer(int32) :: i, ngas
     real(real64) :: T(1), kh(1), kd(1)
@@ -9,6 +9,17 @@ program example_in_f
     type(iapws_g704_gas_t), pointer :: gases_list(:)
     character(len=:), pointer :: gases_str
 
+    print *, '########################## IAPWS R2-83 ##########################'
+    print "(a, f10.3, a)", "Tc in h2o=", iapws_r283_Tc_H2O, " k"
+    print "(a, f10.3, a)", "pc in h2o=", iapws_r283_pc_H2O, " mpa"
+    print "(a, f10.3, a)", "rhoc in h2o=", iapws_r283_rhoc_H2O, " kg/m3"
+    
+    print "(a, f10.3, a)", "Tc in D2O=", iapws_r283_tc_D2O, " k"
+    print "(a, f10.3, a)", "pc in D2O=", iapws_r283_pc_D2O, " mpa"
+    print "(a, f10.3, a)", "rhoc in D2O=", iapws_r283_rhoc_D2O, " kg/m3"
+    print *, ''
+
+    print *, '########################## IAPWS G7-04 ##########################'
     ! Compute kh and kd in H2O
     T(1) = 25.0d0
     call iapws_g704_kh(T, gas, heavywater, kh)

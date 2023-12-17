@@ -1,10 +1,10 @@
 IAPWS G7-04
 ==================
 
-The computation is based on the parameters provided by the IAPWS 2004 :cite:p:`iapws2004`.
+The computation is based on the parameters provided by the technical report G7-04 :cite:p:`iapws2004`.
 
 Henry Contant: kh
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 The Henry constant :math:`kH` is defined as shown in equation :eq:`eq_iapws_kH`.
 :math:`k_H` is expressed in MPa.
 
@@ -42,7 +42,7 @@ Both equations have the form:
 
 
 Vapor-Liquid Distribution Constant: kd
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------------
 
 The liquid-vapor distribution constant :math:`kD` is defined as shown in equation :eq:`eq_iapws_kD`.
 :math:`K_D` is adimensional.
@@ -76,7 +76,7 @@ In both cases, :math:`f(\tau)` has the following form:
 * :math:`n` is 6 for :math:`H_2O` and 4 for :math:`D_2O` 
 
 Molar fractions
-^^^^^^^^^^^^^^^^^
+------------------
 
 The molar fractions :math:`x_2` and :math:`y_2` can be expressed from the 
 equations :eq:`eq_iapws_kH` and :eq:`eq_iapws_kD` as shown in :eq:`eq_iapws_molar_frac`. 

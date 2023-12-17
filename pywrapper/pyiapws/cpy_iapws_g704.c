@@ -2,7 +2,7 @@
 #include <Python.h>
 #include <stdio.h>
 #include <string.h>
-#include "iapws_g704.h"
+#include "iapws.h"
 
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_g704 module of the Fortran iapws library.");
 
@@ -84,10 +84,9 @@ static PyObject *kx(char k, PyObject *args){
         }else if(buffer->ndim>1){
             PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
             return NULL;
-        else if(buffer->ndim==0){
+        }else if(buffer->ndim==0){
             PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
             return NULL;
-        }
         }else{
             newbuffer = newbuffer_like(buffer);
             fkx((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
