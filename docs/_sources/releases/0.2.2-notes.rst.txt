@@ -1,0 +1,29 @@
+iapws 0.2.2 Release Note
+==================================
+
+Summary
+--------
+
+* Implementation of report R283 for critical constants of water.
+* Switch to pyproject.toml for python wrapper.
+* Code refractoring and clean up.
+* Documentation update.
+
+Download
+----------
+
+`iapws <https://github.com/MilanSkocic/iapws/releases>`_
+
+`pyiapws <https://pypi.org/project/pyiapws>`_
+
+
+Contributors
+---------------
+
+Milan Skocic
+
+
+Commits
+--------
+
+Full Changelog: https://github.com/MilanSkocic/iapws/compare/0.2.1...0.2.2
