@@ -8,6 +8,9 @@ program example_in_f
     integer(int32) :: heavywater = 0
     type(iapws_g704_gas_t), pointer :: gases_list(:)
     character(len=:), pointer :: gases_str
+    
+    print *, '########################## IAPWS VERSION ##########################'
+    print *, "version ", iapws_version_version
 
     print *, '########################## IAPWS R2-83 ##########################'
     print "(a, f10.3, a)", "Tc in h2o=", iapws_r283_Tc_H2O, " k"
