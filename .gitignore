@@ -40,3 +40,4 @@ pywrapper/pyiapws/*.dll.a
 pywrapper/pyiapws/*.so
 pywrapper/pyiapws/*.dylib
 pywrapper/pyiapws/*.pyd
+pywrapper/wheelhouse/
