@@ -14,7 +14,7 @@ int main(void){
     int heavywater = 0;
     
     printf("%s\n", "########################## IAPWS VERSION ##########################");
-    printf("version %s\n", iapws_version_capi_version);
+    printf("version %s\n", capi_get_version());
     
     printf("%s\n", "########################## IAPWS R2-83 ##########################");
     printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_capi_Tc_H2O, "K");

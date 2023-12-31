@@ -10,7 +10,7 @@ program example_in_f
     character(len=:), pointer :: gases_str
     
     print *, '########################## IAPWS VERSION ##########################'
-    print *, "version ", iapws_version_version
+    print *, "version ", get_version()  
 
     print *, '########################## IAPWS R2-83 ##########################'
     print "(a, f10.3, a)", "Tc in h2o=", iapws_r283_Tc_H2O, " k"
