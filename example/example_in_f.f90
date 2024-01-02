@@ -17,7 +17,7 @@ program example_in_f
     print "(a, f10.3, a)", "pc in h2o=", pc_H2O, " mpa"
     print "(a, f10.3, a)", "rhoc in h2o=", rhoc_H2O, " kg/m3"
     
-    print "(a, f10.3, a)", "Tc in D2O=", tc_D2O, " k"
+    print "(a, f10.3, a)", "Tc in D2O=", Tc_D2O, " k"
     print "(a, f10.3, a)", "pc in D2O=", pc_D2O, " mpa"
     print "(a, f10.3, a)", "rhoc in D2O=", rhoc_D2O, " kg/m3"
     print *, ''
