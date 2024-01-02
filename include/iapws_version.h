@@ -10,6 +10,6 @@
 #else
 #define ADD_IMPORT
 #endif
-extern char* capi_get_version(void);
+extern char* iapws_get_version(void);
 #endif
 
