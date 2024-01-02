@@ -1,6 +1,6 @@
 r"""Tests G704."""
 import unittest
-from .. import g704
+from pyiapws import g704
 import numpy as np
 
 T_KELVIN = 273.15

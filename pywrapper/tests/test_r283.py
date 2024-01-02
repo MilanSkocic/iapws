@@ -1,6 +1,6 @@
 r"""Test R283"""
 import unittest
-from .. import r283
+from pyiapws import r283
 
 
 class TestH2O(unittest.TestCase):

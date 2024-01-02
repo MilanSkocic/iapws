@@ -1,6 +1,6 @@
 r"""Tests for version."""
 import unittest
-from ..version import __version__
+from pyiapws.version import __version__
 
 
 class TestVersion(unittest.TestCase):
