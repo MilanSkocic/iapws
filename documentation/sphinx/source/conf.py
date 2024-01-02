@@ -6,11 +6,6 @@ import sys, importlib.util
 sys.path.insert(0, os.path.abspath('../../../pywrapper/'))
 cautodoc_root = os.path.abspath('../../../pywrapper/')
 
-# Import only version.py file for extracting the version
-spec = importlib.util.spec_from_file_location('version', '../../../pywrapper/pyiapws/version.py')
-mod = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(mod)
-
 
 # -- General configuration ------------------------------------------------
 
@@ -47,7 +42,7 @@ author = "M. Skocic"
 # built documents.
 #
 # The short X.Y version.
-version = mod.__version__
+version = "0.2.2" 
 # The full version, including alpha/beta/rc tags.
 release = version
 

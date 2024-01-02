@@ -2,6 +2,9 @@ r"""Example in python"""
 import array
 import pyiapws
 
+print("########################## IAPWS VERSION ##########################")
+print(pyiapws.__version__)
+
 print("########################## IAPWS R2-83 ##########################")
 print("Tc in H2O", pyiapws.r283.Tc_H2O, "K")
 print("pc in H2O", pyiapws.r283.pc_H2O, "MPa")

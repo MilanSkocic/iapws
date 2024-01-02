@@ -13,6 +13,9 @@ int main(void){
     int i;
     int heavywater = 0;
     
+    printf("%s\n", "########################## IAPWS VERSION ##########################");
+    printf("version %s\n", capi_get_version());
+    
     printf("%s\n", "########################## IAPWS R2-83 ##########################");
     printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_capi_Tc_H2O, "K");
     printf("%s %10.3f %s\n", "pc in H2O", iapws_r283_capi_pc_H2O, "MPa");
@@ -25,7 +28,7 @@ int main(void){
     printf("\n");
 
 
-    printf("%s\n", "########################## IAPWS R2-83 ##########################");
+    printf("%s\n", "########################## IAPWS G7-04 ##########################");
     /* Compute kh and kd in H2O*/
     iapws_g704_capi_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
     printf("Gas=%s\tT=%fC\tkh=%+10.4f\n", gas, T, kh);

@@ -10,13 +10,10 @@ all: clean $(LIBNAME)
 
 $(LIBNAME): build copy_a shared copy_h copy_shared
 
-generator:
-	make -C srcgen generator
-
-build: generator
+build: 
 	fpm build --profile=release
 
-build_debug: generator
+build_debug: 
 	fpm build --profile=debug
 
 test: build
@@ -68,7 +65,6 @@ copy_shared_windows:
 clean:
 	fpm clean --all
 	rm -f src/*.mod
-	make -C srcgen clean
 	make -C $(PYW_MOD_DIR) clean
 
 install: install_dirs install_$(PLATFORM)
