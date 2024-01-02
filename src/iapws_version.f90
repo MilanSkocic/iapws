@@ -1,15 +1,15 @@
 module iapws__version
-!! Version
-use iso_fortran_env
-use iso_c_binding
-implicit none
-private
+    !! Version
+    use iso_fortran_env
+    use iso_c_binding
+    implicit none
+    private
 
-character(len=*), parameter :: version = "0.2.2"
-character(len=:), allocatable, target :: version_f
-character(len=:), allocatable, target :: version_c
+    character(len=*), parameter :: version = "0.2.2"
+    character(len=:), allocatable, target :: version_f
+    character(len=:), allocatable, target :: version_c
 
-public :: get_version
+    public :: get_version
 
 contains
 
