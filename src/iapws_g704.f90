@@ -19,10 +19,10 @@ character(len=:), allocatable, target :: f_gases_str
 
 real(real64), parameter ::  T_KELVIN = 273.15d0 !! Absolute temperature in KELVIN 
 
-real(real64), parameter ::  Tc1_H2O = iapws_r283_Tc_H2O
-real(real64), parameter ::  pc1_H2O = iapws_r283_pc_H2O
-real(real64), parameter ::  Tc1_D2O = iapws_r283_Tc_D2O
-real(real64), parameter ::  pc1_D2O = iapws_r283_pc_D2O
+real(real64), parameter ::  Tc1_H2O = Tc_H2O
+real(real64), parameter ::  pc1_H2O = pc_H2O
+real(real64), parameter ::  Tc1_D2O = Tc_D2O
+real(real64), parameter ::  pc1_D2O = pc_D2O
 
 real(real64), parameter :: q_H2O = -0.023767d0 !! solvent coefficient for kd in water
 real(real64), parameter :: q_D2O = -0.024552d0 !! solvent coefficient for kd in heavywater

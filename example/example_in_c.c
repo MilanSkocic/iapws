@@ -17,13 +17,13 @@ int main(void){
     printf("version %s\n", iapws_get_version());
     
     printf("%s\n", "########################## IAPWS R2-83 ##########################");
-    printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_capi_Tc_H2O, "K");
-    printf("%s %10.3f %s\n", "pc in H2O", iapws_r283_capi_pc_H2O, "MPa");
-    printf("%s %10.3f %s\n", "rhoc in H2O", iapws_r283_capi_rhoc_H2O, "kg/m3");
+    printf("%s %10.3f %s\n", "Tc in H2O", iapws_Tc_H2O, "K");
+    printf("%s %10.3f %s\n", "pc in H2O", iapws_pc_H2O, "MPa");
+    printf("%s %10.3f %s\n", "rhoc in H2O", iapws_rhoc_H2O, "kg/m3");
     
-    printf("%s %10.3f %s\n", "Tc in D2O", iapws_r283_capi_Tc_D2O, "K");
-    printf("%s %10.3f %s\n", "pc in D2O", iapws_r283_capi_pc_D2O, "MPa");
-    printf("%s %10.3f %s\n", "rhoc in D2O", iapws_r283_capi_rhoc_D2O, "kg/m3");
+    printf("%s %10.3f %s\n", "Tc in D2O", iapws_Tc_D2O, "K");
+    printf("%s %10.3f %s\n", "pc in D2O", iapws_pc_D2O, "MPa");
+    printf("%s %10.3f %s\n", "rhoc in D2O", iapws_rhoc_D2O, "kg/m3");
     
     printf("\n");
 

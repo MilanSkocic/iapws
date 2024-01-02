@@ -23,7 +23,7 @@ subroutine test_TcH2O(error)
     real(real64) :: value, expected
     
     expected = 647.096d0
-    value = iapws_r283_Tc_H2O
+    value = Tc_H2O
 
     call check(error, value, expected)
     if (allocated(error)) return
@@ -35,7 +35,7 @@ subroutine test_TcD2O(error)
     real(real64) :: value, expected
     
     expected = 643.847d0
-    value = iapws_r283_Tc_D2O
+    value = Tc_D2O
 
     call check(error, value, expected)
     if (allocated(error)) return
@@ -47,7 +47,7 @@ subroutine test_pcH2O(error)
     real(real64) :: value, expected
     
     expected = 22.064d0
-    value = iapws_r283_pc_H2O
+    value = pc_H2O
 
     call check(error, value, expected)
     if (allocated(error)) return
@@ -59,7 +59,7 @@ subroutine test_pcD2O(error)
     real(real64) :: value, expected
     
     expected = 21.671d0 
-    value = iapws_r283_pc_D2O
+    value = pc_D2O
 
     call check(error, value, expected)
     if (allocated(error)) return

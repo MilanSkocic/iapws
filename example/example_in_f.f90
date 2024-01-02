@@ -13,13 +13,13 @@ program example_in_f
     print *, "version ", get_version()  
 
     print *, '########################## IAPWS R2-83 ##########################'
-    print "(a, f10.3, a)", "Tc in h2o=", iapws_r283_Tc_H2O, " k"
-    print "(a, f10.3, a)", "pc in h2o=", iapws_r283_pc_H2O, " mpa"
-    print "(a, f10.3, a)", "rhoc in h2o=", iapws_r283_rhoc_H2O, " kg/m3"
+    print "(a, f10.3, a)", "Tc in h2o=", Tc_H2O, " k"
+    print "(a, f10.3, a)", "pc in h2o=", pc_H2O, " mpa"
+    print "(a, f10.3, a)", "rhoc in h2o=", rhoc_H2O, " kg/m3"
     
-    print "(a, f10.3, a)", "Tc in D2O=", iapws_r283_tc_D2O, " k"
-    print "(a, f10.3, a)", "pc in D2O=", iapws_r283_pc_D2O, " mpa"
-    print "(a, f10.3, a)", "rhoc in D2O=", iapws_r283_rhoc_D2O, " kg/m3"
+    print "(a, f10.3, a)", "Tc in D2O=", tc_D2O, " k"
+    print "(a, f10.3, a)", "pc in D2O=", pc_D2O, " mpa"
+    print "(a, f10.3, a)", "rhoc in D2O=", rhoc_D2O, " kg/m3"
     print *, ''
 
     print *, '########################## IAPWS G7-04 ##########################'
