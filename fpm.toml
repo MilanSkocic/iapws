@@ -1,5 +1,5 @@
 name = "iapws"
-version = "0.2.2" # version must be also updated in: sources, pyproject.toml and sphinx conf.py
+version = "0.3.0" # version must be also updated in: sources, pyproject.toml and sphinx conf.py
 license = "GNU General Public License v3 (GPLv3)"
 author = "Milan Skocic"
 maintainer = "milan.skocic@icloud.com"

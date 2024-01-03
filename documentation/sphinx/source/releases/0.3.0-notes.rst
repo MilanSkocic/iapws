@@ -1,0 +1,35 @@
+iapws 0.3.0 Release Note
+==================================
+
+Summary
+--------
+
+* API break: functions for the Fortran code were renamed: 
+   * They do not contain the package+module in the name for the sake of simplicity 
+   * The package is only added in the functions for the C API in order to have a namespace-like behavior.
+   * If needed for solving conflicts with other packages, the functions can be aliased.
+* Remove separate sources files for the C API code for each module.
+  Each module now contains the code for the C API.
+* Implement tests with the test-drive framework.
+* Add version extension in the pywrapper.
+* Implement version module with its getter.
+* Documentation update.
+
+Download
+----------
+
+`iapws <https://github.com/MilanSkocic/iapws/releases>`_
+
+`pyiapws <https://pypi.org/project/pyiapws>`_
+
+
+Contributors
+---------------
+
+Milan Skocic
+
+
+Commits
+--------
+
+Full Changelog: https://github.com/MilanSkocic/iapws/compare/0.2.2...0.3.0
