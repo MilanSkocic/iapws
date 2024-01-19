@@ -10,6 +10,7 @@ all: clean $(LIBNAME)
 
 $(LIBNAME): build copy_a shared copy_h copy_shared
 
+.PHONY: build build_debug
 build: 
 	fpm build --profile=release
 
@@ -18,7 +19,7 @@ build_debug:
 
 test: build
 	fpm test --profile=release
-	
+
 test_debug: build_debug
 	fpm test --profile=debug
 
