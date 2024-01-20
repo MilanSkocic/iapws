@@ -8,5 +8,5 @@ class TestVersion(unittest.TestCase):
 
     def test_version(self):
         value = __version__
-        expected = "0.2.2"
+        expected = "0.3.0"
         self.assertEqual(value, expected)
