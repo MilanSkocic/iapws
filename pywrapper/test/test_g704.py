@@ -3,6 +3,8 @@ import unittest
 from pyiapws import g704
 import numpy as np
 
+print(g704.__file__)
+
 T_KELVIN = 273.15
 
 class TestkH(unittest.TestCase):
