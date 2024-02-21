@@ -21,9 +21,12 @@ dist/
 *.obj
 *.o
 *.mod
+*.pyd
+*.dll.a
 *.a
 *.dll
 *.so
+*.dylib
 
 *.egg-info
 __pycache__
@@ -33,11 +36,11 @@ __pycache__
 
 *generator*
 
-pywrapper/src/*.h
-pywrapper/src/*.a
-pywrapper/src/*.dll
-pywrapper/src/*.dll.a
-pywrapper/src/*.so
-pywrapper/src/*.dylib
-pywrapper/src/*.pyd
+pywrapper/src/pyiapws/*.h
+pywrapper/src/pyiapws/*.a
+pywrapper/src/pyiapws/*.dll
+pywrapper/src/pyiapws/*.dll.a
+pywrapper/src/pyiapws/*.so
+pywrapper/src/pyiapws/*.dylib
+pywrapper/src/pyiapws/*.pyd
 pywrapper/wheelhouse/
