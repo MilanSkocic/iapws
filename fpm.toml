@@ -4,6 +4,10 @@ license = "GNU General Public License v3 (GPLv3)"
 author = "Milan Skocic"
 maintainer = "milan.skocic@icloud.com"
 copyright = "Copyright 2021-2024, Milan Skocic"
+description = "Water properties"
+categories  =["Science"]
+keywords = ["water", "iapws", "chemistry"]
+homepage = "https://milanskocic.github.io/iapws/index.html"
 
 [fortran]
 implicit-typing = false
