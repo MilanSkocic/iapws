@@ -1,6 +1,6 @@
 name = "iapws"
-version = "0.3.0" # version must be also updated in: sources, pyproject.toml and sphinx conf.py
-license = "GNU General Public License v3 (GPLv3)"
+version = "0.3.0" 
+license = "MIT"
 author = "Milan Skocic"
 maintainer = "milan.skocic@icloud.com"
 copyright = "Copyright 2021-2024, Milan Skocic"
@@ -34,5 +34,6 @@ main = "example_in_c.c"
 [[test]]
 name = "tester"
 main = "tester.f90"
+
 [test.dependencies]
 test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.4.0"}
