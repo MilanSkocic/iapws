@@ -17,6 +17,7 @@ bin/
 build/
 docs/build/
 dist/
+API-doc/
 .vscode/
 *.obj
 *.o
