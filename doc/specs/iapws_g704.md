@@ -1,10 +1,13 @@
-IAPWS G7-04
-==================
+---
+title: IPAWS G7-04
+---
+
+# IAPWS G7-04
 
 The computation is based on the parameters provided by the technical report G7-04 :cite:p:`iapws2004`.
 
-Henry Contant: kh
---------------------
+## Henry Contant: kh
+
 The Henry constant :math:`kH` is defined as shown in equation :eq:`eq_iapws_kH`.
 :math:`k_H` is expressed in MPa.
 
@@ -41,8 +44,7 @@ Both equations have the form:
 * :math:`p_{c1}` is the critical pressure of the solvent recommended by IAPWS :cite:p:`iapws2007`
 
 
-Vapor-Liquid Distribution Constant: kd
------------------------------------------
+## Vapor-Liquid Distribution Constant: kd
 
 The liquid-vapor distribution constant :math:`kD` is defined as shown in equation :eq:`eq_iapws_kD`.
 :math:`K_D` is adimensional.
@@ -75,8 +77,7 @@ In both cases, :math:`f(\tau)` has the following form:
 
 * :math:`n` is 6 for :math:`H_2O` and 4 for :math:`D_2O` 
 
-Molar fractions
-------------------
+## Molar fractions
 
 The molar fractions :math:`x_2` and :math:`y_2` can be expressed from the 
 equations :eq:`eq_iapws_kH` and :eq:`eq_iapws_kD` as shown in :eq:`eq_iapws_molar_frac`. 
@@ -110,51 +111,10 @@ or :math:`D_2O`.
     
     S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]
     
-Available gases
+## Available gases
 ------------------
 
 :math:`kh` and :math:`kd` can be computed for the following gases:
 
 * in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6
 * in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4
-
-Plots
-----------
-
-The evolution of :math:`kh` in :math:`H_2O` and :math:`D_2O`, between 0°C and 360°C, are shown in figures
-:numref:`fig_kh_H2O` and :numref:`fig_kh_D2O`.
-
-.. _fig_kh_H2O:
-.. figure:: ../media/g704_kh_H2O.png
-    :width: 400
-    :align: center
-    :alt: kh in H2O
-
-    kh in H2O
-
-.. _fig_kh_D2O:
-.. figure:: ../media/g704_kh_D2O.png
-    :width: 400
-    :align: center
-    :alt: kh in D2O
-
-    kh in D2O
-
-The evolution of :math:`kd` in :math:`H_2O` and :math:`D_2O`, between 0°C and 360°C, are shown in figures
-:numref:`fig_kd_H2O` and :numref:`fig_kd_D2O`.
-
-.. _fig_kd_H2O:
-.. figure:: ../media/g704_kd_H2O.png
-    :width: 400
-    :align: center
-    :alt: kd in H2O
-
-    kh in H2O
-
-.. _fig_kd_D2O:
-.. figure:: ../media/g704_kd_D2O.png
-    :width: 400
-    :align: center
-    :alt: kd in D2O
-
-    kd in D2O
