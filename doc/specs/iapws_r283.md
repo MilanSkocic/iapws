@@ -4,7 +4,7 @@ title: IAPWS R2-83
 
 # IAPWS R2-83
 
-The technical report R2-83 defines constants used for computing the water properties.
+The technical report [R2-83](../references.html) defines constants used for computing the water properties.
 
 ## In water
 

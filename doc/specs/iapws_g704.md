@@ -4,7 +4,7 @@ title: IPAWS G7-04
 
 # IAPWS G7-04
 
-The computation is based on the parameters provided by the technical report G7-04 :cite:p:`iapws2004`.
+The computation is based on the parameters provided by the technical report [G7-04](../references.html)
 
 ## Henry Contant: kh
 

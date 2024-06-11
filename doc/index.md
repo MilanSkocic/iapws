@@ -2,6 +2,6 @@
 title: Contributing and specs
 ---
 
-![Ipaws](../media/logo-iapws.png)
+![Ipaws](../media/logo.png)
 
 Water properties for Modern Fortran.
