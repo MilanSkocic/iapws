@@ -112,7 +112,6 @@ or :math:`D_2O`.
     S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]
     
 ## Available gases
-------------------
 
 :math:`kh` and :math:`kd` can be computed for the following gases:
 
