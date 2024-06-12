@@ -8,112 +8,83 @@ The computation is based on the parameters provided by the technical report [G7-
 
 ## Henry Contant: kh
 
-The Henry constant :math:`kH` is defined as shown in equation :eq:`eq_iapws_kH`.
-:math:`k_H` is expressed in MPa.
+The Henry constant \(kH\) is defined as shown in equation below.
+\(k_H\) is expressed in MPa.
 
-.. math::
-    :label: eq_iapws_kH
-
-    k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 
+$$ k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 $$
  
-* :math:`f_2`: liquid-phase fugacity
-* :math:`x_2`: mole fraction of the solute
+* \(f_2\): liquid-phase fugacity
+* \(x_2\): mole fraction of the solute
  
-The Henry's constant :math:`k_H` is given as a function of temperature by:
-
-.. math::
-    :label: eq_iapws_lnkH
+The Henry's constant \(k_H\) is given as a function of temperature by:
 
     \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau
 
-* :math:`\tau = 1-T_R`
-* :math:`T_R = T/T_{c1}`
-* :math:`T_{c1}`: critical temperature of the solvent as recommended by IAPWS :cite:p:`iapws2007`
-* :math:`p_1^*` is the vapor pressure of the solvent at the temperature of interest and 
-  is calculated from the correlation of Wagner and Pruss for :math:`H_2O` :cite:p:`wagner1993` 
-  and from the correlation of Harvey and Lemmon  for :math:`D_2O` :cite:p:`harvey2002`.
+* \(\tau = 1-T_R\)
+* \(T_R = T/T_{c1}\)
+* \(T_{c1}\): critical temperature of the solvent as recommended by IAPWS :cite:p:\)iapws2007\)
+* \(p_1^{*}\) is the vapor pressure of the solvent at the temperature of interest and 
+  is calculated from the correlation of [Wagner and Pruss for \(H_2O\)](../references.html) 
+  and from the correlation of [Harvey and Lemmon  for \(D_2O\)](../references).
 
 Both equations have the form: 
 
-.. math::
-    :label: eq_iapws_pstar
-    
-    \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i}
+$$ \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i} $$
 
-* :math:`n` is 6 for  :math:`H_2O` and 5 for :math:`D_2O`
-* :math:`p_{c1}` is the critical pressure of the solvent recommended by IAPWS :cite:p:`iapws2007`
+* \(n\) is 6 for  \(H_2O\) and 5 for \(D_2O\)
+* \(p_{c1}\) is the critical pressure of the solvent recommended by the report [R2-83](../references.html) 
 
 
 ## Vapor-Liquid Distribution Constant: kd
 
-The liquid-vapor distribution constant :math:`kD` is defined as shown in equation :eq:`eq_iapws_kD`.
-:math:`K_D` is adimensional.
+The liquid-vapor distribution constant \(kD\) is defined as shown in equation below.
+\(K_D\) is adimensional.
 
 
-.. math::
-    :label: eq_iapws_kD
+$$    k_D = \lim_{x_2 \rightarrow 0} y_2/x_2 $$
 
-    k_D = \lim_{x_2 \rightarrow 0} y_2/x_2 
+* \(x_2\): mole fraction of the solute
+* \(y_2\) is the vapor-phase solute mole fraction in equilibrium with the liquid
 
-* :math:`x_2`: mole fraction of the solute
-* :math:`y_2` is the vapor-phase solute mole fraction in equilibrium with the liquid
+The vapor-liquid distribution constant \(k_D\) is given as a function of temperature by:
 
-The vapor-liquid distribution constant `k_D` is given as a function of temperature by:
+$$    \ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right) $$
 
-.. math:: 
-    :label: eq_iapws_lnkD
+* \(q\) : -0.023767 for \(H_2O\) and -0.024552 for \(D_2O\).
+* \(f(\tau)\) [Wagner et al. for \(H_2O\)](../references)  and [fernandez-prini et al. for \(D_2O\)](../references.html)
 
-    \ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right)
-
-* :math:`q` : -0.023767 for :math:`H_2O` and -0.024552 for :math:`D_2O`.
-* :math:`f(\tau)` :cite:p:`wagner1993` for :math:`H_2O`  and :cite:p:`fernandez-prini2003` for :math:`D_2O`.
-
-In both cases, :math:`f(\tau)` has the following form:
+In both cases, \(f(\tau)\) has the following form:
     
-.. math::
-    :label: eq_iapws_ftau
-    
-    f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i}
+$$ f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i} $$
 
-* :math:`n` is 6 for :math:`H_2O` and 4 for :math:`D_2O` 
+* \(n\) is 6 for \(H_2O\) and 4 for \(D_2O\) 
 
 ## Molar fractions
 
-The molar fractions :math:`x_2` and :math:`y_2` can be expressed from the 
-equations :eq:`eq_iapws_kH` and :eq:`eq_iapws_kD` as shown in :eq:`eq_iapws_molar_frac`. 
+The molar fractions \(x_2\) and \(y_2\) as following: 
 
-.. math::
-    :label: eq_iapws_molar_frac
+$$    x_2 = \frac{f_2}{k_H} $$
+$$ \frac{x_2}{f_2} = \frac{1}{k_H} $$
+$$ y_2 = \frac{k_D}{k_H} \cdot f_2 $$
+$$ \frac{y_2}{f_2} = \frac{k_D}{k_H} $$
 
-    x_2 = \frac{f_2}{k_H}\\
-    \frac{x_2}{f_2} = \frac{1}{k_H}\\
-    y_2 = \frac{k_D}{k_H} \cdot f_2 \\
-    \frac{y_2}{f_2} = \frac{k_D}{k_H}
+By fixing \(f_2\) at 1.0 it comes that the molar fractions 
+\(x_2\) and \(y_2\) are then expressed per 
+unit of pressure as shown in the following equation .
 
-By fixing :math:`f_2` at 1.0 it comes that the molar fractions 
-:math:`x_2` and :math:`y_2` are then expressed per 
-unit of pressure as shown in equation :eq:`eq_iapws_molar_frac_simple` .
+$$ x_2 = \frac{1}{k_H} $$
+$$ y_2 = \frac{k_D}{k_H} $$
 
-.. math::
-    :label: eq_iapws_molar_frac_simple
-    
-    x_2 = \frac{1}{k_H}\\
-    y_2 = \frac{k_D}{k_H}
+The molar fractions can be converted to solubilties in ppm or cm3/kg by considering dilute solutions. 
+\(X\) is the considered gas and the solvent is either \(H_2O\) or \(D_2O\).
 
-The molar fractions can be converted to solubilties in ppm or cm3/kg as shown in equation :eq:`eq_conversion`
-by considering dilute solutions. :math:`X` is the considered gas and the solvent is either :math:`H_2O`
-or :math:`D_2O`.
 
-.. math:: 
-    :label: eq_conversion
-
-    S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6
-    
-    S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}]
+$$ S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6 $$    
+$$ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}] $$
     
 ## Available gases
 
-:math:`kh` and :math:`kd` can be computed for the following gases:
+\(kh\) and \(kd\) can be computed for the following gases:
 
 * in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6
 * in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4
