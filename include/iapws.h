@@ -1,10 +1,6 @@
-/**
- * @file iapws.h
- * @brief Main C header for the IAPWS library.
- */
-#ifndef IAPWS_H
-#define IAPWS_H
-#include "iapws_version.h"
-#include "iapws_g704.h"
-#include "iapws_r283.h"
+#ifndef CIAPWS_H
+#define CIAPWS_H
+#include "ciapws_version.h"
+#include "ciapws_g704.h"
+#include "ciapws_r283.h"
 #endif

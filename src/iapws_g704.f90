@@ -1,7 +1,7 @@
 module iapws__g704
     !! Module for IAPWS G7-04
-    use iso_fortran_env
-    use ieee_arithmetic
+    use stdlib_kinds, only: dp, int32
+    use ieee_arithmetic, only: ieee_value, ieee_quiet_nan
     use iapws__r283
     implicit none
     private
@@ -10,118 +10,118 @@ integer(int32), parameter :: lengas = 5
 integer(int32), parameter :: ngas_H2O = 14
 integer(int32), parameter :: ngas_D2O = 7
 
-type :: iapws_g704_gas_t
+type :: gas_type
     !! Derived type containing a allocatable string for representing a gas.
     character(len=:), allocatable :: gas !! Gas
 end type
-type(iapws_g704_gas_t), allocatable, target :: f_gases(:)
+type(gas_type), allocatable, target :: f_gases(:)
 character(len=:), allocatable, target :: f_gases_str
 
-real(real64), parameter ::  T_KELVIN = 273.15d0 !! Absolute temperature in KELVIN 
+real(dp), parameter ::  T_KELVIN = 273.15_dp !! Absolute temperature in KELVIN 
 
-real(real64), parameter ::  Tc1_H2O = Tc_H2O
-real(real64), parameter ::  pc1_H2O = pc_H2O
-real(real64), parameter ::  Tc1_D2O = Tc_D2O
-real(real64), parameter ::  pc1_D2O = pc_D2O
+real(dp), parameter ::  Tc1_H2O = Tc_H2O
+real(dp), parameter ::  pc1_H2O = pc_H2O
+real(dp), parameter ::  Tc1_D2O = Tc_D2O
+real(dp), parameter ::  pc1_D2O = pc_D2O
 
-real(real64), parameter :: q_H2O = -0.023767d0 !! solvent coefficient for kd in water
-real(real64), parameter :: q_D2O = -0.024552d0 !! solvent coefficient for kd in heavywater
+real(dp), parameter :: q_H2O = -0.023767_dp !! solvent coefficient for kd in water
+real(dp), parameter :: q_D2O = -0.024552_dp !! solvent coefficient for kd in heavywater
 
 !! ABC coefficients for gases in water.
 type :: abc_t
     character(len=lengas) :: gas !! Gas
-    real(real64) :: A !! A Column
-    real(real64) :: B !! B Column
-    real(real64) :: C !! C Column
+    real(dp) :: A !! A Column
+    real(dp) :: B !! B Column
+    real(dp) :: C !! C Column
 end type
 
 !! EFGH coefficients for gases in heavywater.
 type :: efgh_t
     character(len=lengas) :: gas !! Gas
-    real(real64) :: E !! E Column
-    real(real64) :: F !! F Column
-    real(real64) :: G !! G Column
-    real(real64) :: H !! H Column
+    real(dp) :: E !! E Column
+    real(dp) :: F !! F Column
+    real(dp) :: G !! G Column
+    real(dp) :: H !! H Column
 end type
 
 !! ai and bi coefficients for water
-real(real64), dimension(6, 2), parameter :: aibi_H2O = reshape([&
--7.85951783d0, 1.84408259d0, -11.78664970d0, 22.68074110d0, -15.96187190d0, 1.80122502d0,&
-1.000d0, 1.500d0, 3.000d0, 3.500d0, 4.000d0, 7.500d0], [6,2])
+real(dp), dimension(6, 2), parameter :: aibi_H2O = reshape([&
+-7.85951783_dp, 1.84408259_dp, -11.78664970_dp, 22.68074110_dp, -15.96187190_dp, 1.80122502_dp,&
+1.000_dp, 1.500_dp, 3.000_dp, 3.500_dp, 4.000_dp, 7.500_dp], [6,2])
 
 !! ai and bi coefficients for heavywater
-real(real64), dimension(5, 2), parameter :: aibi_D2O = reshape([&
--7.8966570d0, 24.7330800d0, -27.8112800d0,  9.3559130d0, -9.2200830d0, &
-1.00d0, 1.89d0, 2.00d0, 3.00d0, 3.60d0], [5, 2])
+real(dp), dimension(5, 2), parameter :: aibi_D2O = reshape([&
+-7.8966570_dp, 24.7330800_dp, -27.8112800_dp,  9.3559130_dp, -9.2200830_dp, &
+1.00_dp, 1.89_dp, 2.00_dp, 3.00_dp, 3.60_dp], [5, 2])
 
 !! ABC constants water.
 type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
-    [abc_t("He", -3.52839d0, 7.12983d0, 4.47770d0),&
-     abc_t("Ne", -3.18301d0, 5.31448d0, 5.43774d0),&
-     abc_t("Ar", -8.40954d0, 4.29587d0, 10.52779d0),&
-     abc_t("Kr", -8.97358d0, 3.61508d0, 11.29963d0),&
-     abc_t("Xe", -14.21635d0, 4.00041d0, 15.60999d0),&
-     abc_t("H2", -4.73284d0, 6.08954d0, 6.06066d0),&
-     abc_t("N2", -9.67578d0, 4.72162d0, 11.70585d0),&
-     abc_t("O2", -9.44833d0, 4.43822d0, 11.42005d0),&
-     abc_t("CO", -10.52862d0, 5.13259d0, 12.01421d0),&
-     abc_t("CO2", -8.55445d0, 4.01195d0, 9.52345d0),&
-     abc_t("H2S", -4.51499d0, 5.23538d0, 4.42126d0),&
-     abc_t("CH4", -10.44708d0, 4.66491d0, 12.12986d0),&
-     abc_t("C2H6", -19.67563d0, 4.51222d0, 20.62567d0),&
-     abc_t("SF6", -16.56118d0, 2.15289d0, 20.35440d0)]
+    [abc_t("He", -3.52839_dp, 7.12983_dp, 4.47770_dp),&
+     abc_t("Ne", -3.18301_dp, 5.31448_dp, 5.43774_dp),&
+     abc_t("Ar", -8.40954_dp, 4.29587_dp, 10.52779_dp),&
+     abc_t("Kr", -8.97358_dp, 3.61508_dp, 11.29963_dp),&
+     abc_t("Xe", -14.21635_dp, 4.00041_dp, 15.60999_dp),&
+     abc_t("H2", -4.73284_dp, 6.08954_dp, 6.06066_dp),&
+     abc_t("N2", -9.67578_dp, 4.72162_dp, 11.70585_dp),&
+     abc_t("O2", -9.44833_dp, 4.43822_dp, 11.42005_dp),&
+     abc_t("CO", -10.52862_dp, 5.13259_dp, 12.01421_dp),&
+     abc_t("CO2", -8.55445_dp, 4.01195_dp, 9.52345_dp),&
+     abc_t("H2S", -4.51499_dp, 5.23538_dp, 4.42126_dp),&
+     abc_t("CH4", -10.44708_dp, 4.66491_dp, 12.12986_dp),&
+     abc_t("C2H6", -19.67563_dp, 4.51222_dp, 20.62567_dp),&
+     abc_t("SF6", -16.56118_dp, 2.15289_dp, 20.35440_dp)]
 
 !! ABC constants for heavywater
 type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
-    [abc_t("He", -0.72643d0, 7.02134d0, 2.04433d0),&
-     abc_t("Ne", -0.91999d0, 5.65327d0, 3.17247d0),&
-     abc_t("Ar", -7.17725d0, 4.48177d0, 9.31509d0),&
-     abc_t("Kr", -8.47059d0, 3.91580d0, 10.69433d0),&
-     abc_t("Xe", -14.46485d0, 4.42330d0, 15.60919d0),&
-     abc_t("D2", -5.33843d0, 6.15723d0, 6.53046d0),&
-     abc_t("CH4", -10.01915d0, 4.73368d0, 11.75711d0)]
+    [abc_t("He", -0.72643_dp, 7.02134_dp, 2.04433_dp),&
+     abc_t("Ne", -0.91999_dp, 5.65327_dp, 3.17247_dp),&
+     abc_t("Ar", -7.17725_dp, 4.48177_dp, 9.31509_dp),&
+     abc_t("Kr", -8.47059_dp, 3.91580_dp, 10.69433_dp),&
+     abc_t("Xe", -14.46485_dp, 4.42330_dp, 15.60919_dp),&
+     abc_t("D2", -5.33843_dp, 6.15723_dp, 6.53046_dp),&
+     abc_t("CH4", -10.01915_dp, 4.73368_dp, 11.75711_dp)]
 
 !! ci and di coefficients for water
-real(real64), dimension(6, 2), parameter :: cidi_H2O = reshape([&
-1.99274064d0, 1.09965342d0, -0.510839303d0, -1.75493479d0, -45.5170352d0, -6.7469445d5,&
-1.0d0/3.0d0, 2.0d0/3.0d0, 5.0d0/3.0d0, 16.0d0/3.0d0, 43.0d0/3.0d0, 110.0d0/3.0d0], [6,2])
+real(dp), dimension(6, 2), parameter :: cidi_H2O = reshape([&
+1.99274064_dp, 1.09965342_dp, -0.510839303_dp, -1.75493479_dp, -45.5170352_dp, -6.7469445d5,&
+1.0_dp/3.0_dp, 2.0_dp/3.0_dp, 5.0_dp/3.0_dp, 16.0_dp/3.0_dp, 43.0_dp/3.0_dp, 110.0_dp/3.0_dp], [6,2])
 
 !! ci and di coefficients for heavywater
-real(real64), dimension(4, 2), parameter :: cidi_D2O = reshape([&
-2.7072d0, 0.58662d0, -1.3069d0, -45.663d0, &
-0.374d0, 1.45d0, 2.6d0, 12.3d0], [4,2])
+real(dp), dimension(4, 2), parameter :: cidi_D2O = reshape([&
+2.7072_dp, 0.58662_dp, -1.3069_dp, -45.663_dp, &
+0.374_dp, 1.45_dp, 2.6_dp, 12.3_dp], [4,2])
 
 !! EFGH constants for water
 type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
-[efgh_t("He", 2267.4082d0, -2.9616d0, -3.2604d0, 7.8819d0),&
- efgh_t("Ne", 2507.3022d0, -38.6955d0, 110.3992d0, -71.9096d0),&
- efgh_t("Ar", 2310.5463d0, -46.7034d0, 160.4066d0, -118.3043d0),&
- efgh_t("Kr", 2276.9722d0, -61.1494d0, 214.0117d0, -159.0407d0),&
- efgh_t("Xe", 2022.8375d0, 16.7913d0, -61.2401d0, 41.9236d0),&
- efgh_t("H2", 2286.4159d0, 11.3397d0, -70.7279d0, 63.0631d0),&
- efgh_t("N2", 2388.8777d0, -14.9593d0, 42.0179d0, -29.4396d0),&
- efgh_t("O2", 2305.0674d0, -11.3240d0, 25.3224d0, -15.6449d0),&
- efgh_t("CO", 2346.2291d0, -57.6317d0, 204.5324d0, -152.6377d0),&
- efgh_t("CO2", 1672.9376d0, 28.1751d0, -112.4619d0, 85.3807d0),&
- efgh_t("H2S", 1319.1205d0, 14.1571d0, -46.8361d0, 33.2266d0),&
- efgh_t("CH4", 2215.6977d0, -0.1089d0, -6.6240d0, 4.6789d0),&
- efgh_t("C2H6", 2143.8121d0, 6.8859d0, -12.6084d0, 0.0d0),&
- efgh_t("SF6", 2871.7265d0, -66.7556d0, 229.7191d0, -172.7400d0)]
+[efgh_t("He", 2267.4082_dp, -2.9616_dp, -3.2604_dp, 7.8819_dp),&
+ efgh_t("Ne", 2507.3022_dp, -38.6955_dp, 110.3992_dp, -71.9096_dp),&
+ efgh_t("Ar", 2310.5463_dp, -46.7034_dp, 160.4066_dp, -118.3043_dp),&
+ efgh_t("Kr", 2276.9722_dp, -61.1494_dp, 214.0117_dp, -159.0407_dp),&
+ efgh_t("Xe", 2022.8375_dp, 16.7913_dp, -61.2401_dp, 41.9236_dp),&
+ efgh_t("H2", 2286.4159_dp, 11.3397_dp, -70.7279_dp, 63.0631_dp),&
+ efgh_t("N2", 2388.8777_dp, -14.9593_dp, 42.0179_dp, -29.4396_dp),&
+ efgh_t("O2", 2305.0674_dp, -11.3240_dp, 25.3224_dp, -15.6449_dp),&
+ efgh_t("CO", 2346.2291_dp, -57.6317_dp, 204.5324_dp, -152.6377_dp),&
+ efgh_t("CO2", 1672.9376_dp, 28.1751_dp, -112.4619_dp, 85.3807_dp),&
+ efgh_t("H2S", 1319.1205_dp, 14.1571_dp, -46.8361_dp, 33.2266_dp),&
+ efgh_t("CH4", 2215.6977_dp, -0.1089_dp, -6.6240_dp, 4.6789_dp),&
+ efgh_t("C2H6", 2143.8121_dp, 6.8859_dp, -12.6084_dp, 0.0_dp),&
+ efgh_t("SF6", 2871.7265_dp, -66.7556_dp, 229.7191_dp, -172.7400_dp)]
 
  !! EFGH constants for heavywater
 type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
-[efgh_t("He", 2293.2474d0, -54.7707d0, 194.2924d0, -142.1257), &
- efgh_t("Ne", 2439.6677d0, -93.4934d0, 330.7783d0, -243.0100d0),&
- efgh_t("Ar", 2269.2352d0, -53.6321d0, 191.8421d0, -143.7659d0),&
- efgh_t("Kr", 2250.3857d0, -42.0835d0, 140.7656d0, -102.7592d0),&
- efgh_t("Xe", 2038.3656d0, 68.1228d0, -271.3390d0, 207.7984d0),& 
- efgh_t("D2", 2141.3214d0, -1.9696d0, 1.6136d0, 0.0d0),&
- efgh_t("CH4", 2216.0181d0, -40.7666d0, 152.5778d0, -117.7430d0)] 
+[efgh_t("He", 2293.2474_dp, -54.7707_dp, 194.2924_dp, -142.1257), &
+ efgh_t("Ne", 2439.6677_dp, -93.4934_dp, 330.7783_dp, -243.0100_dp),&
+ efgh_t("Ar", 2269.2352_dp, -53.6321_dp, 191.8421_dp, -143.7659_dp),&
+ efgh_t("Kr", 2250.3857_dp, -42.0835_dp, 140.7656_dp, -102.7592_dp),&
+ efgh_t("Xe", 2038.3656_dp, 68.1228_dp, -271.3390_dp, 207.7984_dp),& 
+ efgh_t("D2", 2141.3214_dp, -1.9696_dp, 1.6136_dp, 0.0_dp),&
+ efgh_t("CH4", 2216.0181_dp, -40.7666_dp, 152.5778_dp, -117.7430_dp)] 
     
-public :: iapws_g704_gas_t
-public :: iapws_g704_kh, iapws_g704_kd
-public :: iapws_g704_ngases
-public :: iapws_g704_gases, iapws_g704_gases2
+public :: gas_type
+public :: kh, kd
+public :: ngases
+public :: gases, gases2
 
 contains
 
@@ -172,13 +172,13 @@ end function
 pure elemental function f_p1star_H2O(T)result(value)
     !! Compute p1* in H2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
-    real(real64) :: value
+    real(dp) :: value
         !! p1* in MPa.
     
-    real(real64) :: Tr
-    real(real64) :: tau
+    real(dp) :: Tr
+    real(dp) :: tau
 
     Tr = (T+T_KELVIN)/Tc1_H2O
     tau = 1 - Tr
@@ -188,13 +188,13 @@ end function
 pure elemental function f_p1star_D2O(T)result(value)
     !! Compute p1* in D2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
-    real(real64) :: value
+    real(dp) :: value
         !! p1* in MPa.
     
-    real(real64) :: Tr
-    real(real64) :: tau
+    real(dp) :: Tr
+    real(dp) :: tau
 
     Tr = (T+T_KELVIN)/Tc1_D2O
     tau = 1 - Tr
@@ -204,45 +204,45 @@ end function
 pure elemental function f_kh_p1star_H2O(T, abc)result(value)
     !! Compute kh/p1* in H2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kH/p1* adimensional.
     
-    real(real64) :: Tr
-    real(real64) :: tau
+    real(dp) :: Tr
+    real(dp) :: tau
 
     Tr = (T+T_KELVIN)/Tc1_H2O
     tau = 1 - Tr
-    value = exp(abc%A/Tr + abc%B*(tau**0.355d0)/Tr + abc%C*exp(tau)*Tr**(-0.41d0))
+    value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function
 
 pure elemental function f_kh_p1star_D2O(T, abc)result(value)
     !! Compute kh/p1* in D2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kh/p1* adimensional.
     
-    real(real64) :: Tr
-    real(real64) :: tau
+    real(dp) :: Tr
+    real(dp) :: tau
 
     Tr = (T+T_KELVIN)/Tc1_D2O
     tau = 1 - Tr
-    value = exp(abc%A/Tr + abc%B*(tau**0.355d0)/Tr + abc%C*exp(tau)*Tr**(-0.41d0))
+    value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function
 
 pure elemental function ft_H2O(tau)result(value)
     !! Compute f(t) for H2O.
     implicit none
-    real(real64), intent(in) :: tau
+    real(dp), intent(in) :: tau
         !! tau = 1-T/Tr.
-    real(real64) :: value
+    real(dp) :: value
         !! f(t) is adimensional.
     value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
 end function
@@ -250,9 +250,9 @@ end function
 pure elemental function ft_D2O(tau)result(value)
     !! Compute f(t) for D2O.
     implicit none
-    real(real64), intent(in) :: tau
+    real(dp), intent(in) :: tau
         !! tau = 1-T/Tr.
-    real(real64) :: value
+    real(dp) :: value
         !! f(t) is adimensional.
     value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
 end function
@@ -260,11 +260,11 @@ end function
 pure elemental function f_kh_H2O(T, abc)result(value)
     !! Compute kH in H2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kH in MPa.
     value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
 end function
@@ -272,11 +272,11 @@ end function
 pure elemental function f_kh_D2O(T, abc)result(value)
     !! Compute kH in D2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kH in MPa.
     value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
 end function
@@ -284,27 +284,27 @@ end function
 pure elemental function f_kd_H2O(T, efgh) result(value)
     !! Compute kd in H2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(efgh_t), intent(in) :: efgh
         !! EFGH coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kD adimensional.
     
-    real(real64) :: Tr
-    real(real64) :: tau
-    real(real64) :: p1
-    real(real64) :: p2
-    real(real64) :: p3
-    real(real64) :: p4
+    real(dp) :: Tr
+    real(dp) :: tau
+    real(dp) :: p1
+    real(dp) :: p2
+    real(dp) :: p3
+    real(dp) :: p4
     
     Tr = (T+T_KELVIN)/Tc1_H2O
     tau  = 1-Tr
     
     p1 = q_H2O*efgh%F
     p2 = efgh%E/(T+T_KELVIN)*ft_H2O(tau)
-    p3 = (efgh%F + efgh%G*tau**(2.0d0/3.0d0) + efgh%H*tau)
-    p4 = exp(-T/100.0d0)
+    p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
+    p4 = exp(-T/100.0_dp)
 
     value = exp(p1 + p2 + p3 * p4)
 
@@ -313,44 +313,44 @@ end function
 pure elemental function f_kd_D2O(T, efgh) result(value)
     !! Compute kd in D2O.
     implicit none
-    real(real64), intent(in) :: T
+    real(dp), intent(in) :: T
         !! Temperature in °C.
     type(efgh_t), intent(in) :: efgh
         !! EFGH coefficients.
-    real(real64) :: value
+    real(dp) :: value
         !! kD adimensional.
     
-    real(real64) :: Tr
-    real(real64) :: tau
-    real(real64) :: p1
-    real(real64) :: p2
-    real(real64) :: p3
-    real(real64) :: p4
+    real(dp) :: Tr
+    real(dp) :: tau
+    real(dp) :: p1
+    real(dp) :: p2
+    real(dp) :: p3
+    real(dp) :: p4
     
     Tr = (T+T_KELVIN)/Tc1_D2O
     tau  = 1-Tr
     
     p1 = q_D2O*efgh%F
     p2 = efgh%E/(T+T_KELVIN)*ft_D2O(tau)
-    p3 = (efgh%F + efgh%G*tau**(2.0d0/3.0d0) + efgh%H*tau)
-    p4 = exp(-T/100.0d0)
+    p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
+    p4 = exp(-T/100.0_dp)
 
     value = exp(p1 + p2 + p3 * p4)
 
 end function
 
-pure subroutine iapws_g704_kh(T, gas, heavywater, k)
+pure subroutine kh(T, gas, heavywater, k)
     !! Compute the henry constant for a given temperature.
     implicit none
     
     ! arguments
-    real(real64), intent(in) :: T(:)
+    real(dp), intent(in) :: T(:)
         !! Temperature in °C.
     character(len=*), intent(in) :: gas
         !! Gas.
     integer(int32), intent(in) :: heavywater
         !! Flag if D2O (1) is used or H2O(0).
-    real(real64), intent(out) :: k(:)
+    real(dp), intent(out) :: k(:)
         !! Henry constant. Filled with NaNs if gas not found.
     
     ! variables
@@ -359,14 +359,14 @@ pure subroutine iapws_g704_kh(T, gas, heavywater, k)
     if(heavywater > 0)then
         i = findgas_abc(gas, abc_D2O)
         if(i==0)then
-            k = ieee_value(1.0d0, ieee_quiet_nan)
+            k = ieee_value(1.0_dp, ieee_quiet_nan)
         else
             k =  f_kh_D2O(T, abc_D2O(i))
         endif
     else
         i = findgas_abc(gas, abc_H2O)
         if(i==0)then
-            k = ieee_value(1.0d0, ieee_quiet_nan)
+            k = ieee_value(1.0_dp, ieee_quiet_nan)
         else
             k = f_kh_H2O(T, abc_H2O(i))
         endif
@@ -374,18 +374,18 @@ pure subroutine iapws_g704_kh(T, gas, heavywater, k)
 
 end subroutine
 
-pure subroutine iapws_g704_kd(T, gas, heavywater, k)
+pure subroutine kd(T, gas, heavywater, k)
     !! Compute the vapor-liquid constant for a given temperature. 
     implicit none
     
     ! arguments
-    real(real64), intent(in) :: T(:)
+    real(dp), intent(in) :: T(:)
         !! Temperature in °C.
     character(len=*), intent(in) :: gas
         !! Gas.
     integer(int32), intent(in) :: heavywater
         !! Flag if D2O (1) is used or H2O(0).
-    real(real64), intent(out) :: k(:)
+    real(dp), intent(out) :: k(:)
         !! Vapor-liquid constant. Filled with NaNs if gas not found.
     
     ! variables
@@ -394,14 +394,14 @@ pure subroutine iapws_g704_kd(T, gas, heavywater, k)
     if(heavywater > 0)then
         i = findgas_efgh(gas, efgh_D2O)
         if(i==0)then
-            k = ieee_value(1.0d0, ieee_quiet_nan)
+            k = ieee_value(1.0_dp, ieee_quiet_nan)
         else
             k =  f_kd_D2O(T, efgh_D2O(i))
         endif
     else
         i = findgas_efgh(gas, efgh_H2O)
         if(i==0)then
-            k = ieee_value(1.0d0, ieee_quiet_nan)
+            k = ieee_value(1.0_dp, ieee_quiet_nan)
         else
             k = f_kd_H2O(T, efgh_H2O(i))
         endif
@@ -409,7 +409,7 @@ pure subroutine iapws_g704_kd(T, gas, heavywater, k)
 
 end subroutine
 
-pure function iapws_g704_ngases(heavywater)result(n)
+pure function ngases(heavywater)result(n)
     !! Returns the number of gases.
     implicit none
     
@@ -426,14 +426,14 @@ pure function iapws_g704_ngases(heavywater)result(n)
     endif
 end function
 
-function iapws_g704_gases(heavywater)result(gases)
+function gases(heavywater)result(list_gases)
     !! Returns the list of available gases.
     implicit none
 
     ! arguments
     integer(int32), intent(in) :: heavywater
         !! Flag if D2O (1) is used or H2O(0).
-    type(iapws_g704_gas_t), pointer :: gases(:)
+    type(gas_type), pointer :: list_gases(:)
         !! Available gases.
     
     ! variables
@@ -464,24 +464,24 @@ function iapws_g704_gases(heavywater)result(gases)
             f_gases(i)%gas = trim(abc_H2O(i)%gas)
         enddo
     endif
-    gases => f_gases
+    list_gases => f_gases
 end function
 
-function iapws_g704_gases2(heavywater)result(gases)
+function gases2(heavywater)result(str_gases)
     !! Returns the available gases as a string.
     implicit none
 
     ! arguments
     integer(int32), intent(in) :: heavywater
         !! Flag if D2O (1) is used or H2O(0).
-    character(len=:), pointer :: gases
+    character(len=:), pointer :: str_gases
         !! Available gases
 
     ! variables
     integer(int32) :: i, j, k, ngas
-    type(iapws_g704_gas_t), pointer :: f_gases_list(:)
+    type(gas_type), pointer :: f_gases_list(:)
     
-    f_gases_list => iapws_g704_gases(heavywater)
+    f_gases_list => gases(heavywater)
     ngas = size(f_gases_list)
 
     k = 0
@@ -506,7 +506,7 @@ function iapws_g704_gases2(heavywater)result(gases)
         k = k + 1
     enddo
     f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
-    gases => f_gases_str
+    str_gases => f_gases_str
 
 end function
 

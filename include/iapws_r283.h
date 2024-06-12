@@ -1,10 +1,5 @@
-/**
- * @file iapws_r283.h
- * @brief C header for the module iapws_r283.
- */
-
-#ifndef IAPWS_R283_H
-#define IAPWS_R283_H
+#ifndef CIAPWS_R283_H
+#define CIAPWS_R283_H
 
 #if _MSC_VER
 #define ADD_IMPORT __declspec(dllimport)
@@ -12,13 +7,13 @@
 #define ADD_IMPORT
 #endif
 
-ADD_IMPORT extern const double iapws_Tc_H2O; 
-ADD_IMPORT extern const double iapws_Tc_D2O;
+ADD_IMPORT extern const double ciapws_Tc_H2O; 
+ADD_IMPORT extern const double ciapws_Tc_D2O;
 
-ADD_IMPORT extern const double iapws_pc_H2O;
-ADD_IMPORT extern const double iapws_pc_D2O;
+ADD_IMPORT extern const double ciapws_pc_H2O;
+ADD_IMPORT extern const double ciapws_pc_D2O;
 
-ADD_IMPORT extern const double iapws_rhoc_H2O;
-ADD_IMPORT extern const double iapws_rhoc_D2O;
+ADD_IMPORT extern const double ciapws_rhoc_H2O;
+ADD_IMPORT extern const double ciapws_rhoc_D2O;
 
 #endif
