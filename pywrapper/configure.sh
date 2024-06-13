@@ -1,16 +1,47 @@
-PYW_SRC="./src/py$HEADER_PREFIX"
-LIB_INCLUDE_DIR="../include"
-LIB_BUILD_DIR="../build"
+#!/bin/bash
+
+FNAME="iapws"
+CNAME="c$FNAME"
+PYNAME="py$FNAME"
+LIBNAME="lib$CNAME"
+PYW_SRC="./src/$PYNAME"
+LIB_INCLUDE_DIR="./$FNAME-capi/local/include"
+LIB_BUILD_DIR="./$FNAME-capi/local/lib"
 
 EXT=".so"
+PLATFORM="linux"
 
-LIBS=("libgfortran.5" "libquadmath.0" "libgcc_s.1.1")
-LIBSWINDOWS=("libwinpthread")
+LIBSDARWIN=("libgfortran.5" "libquadmath.0" "libgcc_s.1.1")
+LIBSWINDOWS=("libgfortran-5" "libquadmath-0" "libgcc_s_seh-1" "libwinpthread-1")
 
 ROOTLINUX=/usr/lib/
 ROOTDARWIN=/usr/local/opt/gcc/lib/gcc/current
 ROOTWINDOWS=/C/msys64/mingw64/bin
 ROOT=$ROOTLINUX
+
+
+if [[ "$OSTYPE" == "msys" ]]; then
+    PLATFORM="windows"
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]];then
+    PLATFORM="darwin"
+fi
+
+if [ "$PLATFORM" = "darwin" ]; then
+    ROOT=$ROOTDARWIN
+    EXT=".dylib"
+    LIBS=( "${LIBSDARWIN[@]}" )
+fi
+
+if [ "$PLATFORM" = "windows" ]; then
+    ROOT=$ROOTWINDOWS
+    EXT=".dll"
+    LIBS=( "${LIBSWINDOWS[@]}" )
+fi
+
+export PLATFORM
+echo "PLATFORM=" $PLATFORM
 
 export PYW_SRC
 echo "PYW_SRC=" $PYW_SRC
@@ -21,21 +52,10 @@ echo "LIB_INCLUDE_DIR=" $LIB_INCLUDE_DIR
 export LIB_BUILD_DIR
 echo "LIB_BUILD_DIR=" $LIB_BUILD_DIR
 
-
-if [ "$PLATFORM" = "darwin" ]; then
-    ROOT=$ROOTDARWIN
-    EXT=".dylib"
-fi
-
-if [ "$PLATFORM" = "windows" ]; then
-    ROOT=$ROOTWINDOWS
-    EXT=".dll"
-    LIBS+=$LIBSWINDOWS
-fi
-
 if ! [ -z $1 ]; then
     ROOT=$1
 fi
+
 
 # LIBRARY
 echo "$LIBNAME folder: $LIB_BUILD_DIR"
@@ -54,9 +74,9 @@ fi
 
 # C HEADERS
 echo "Include folder: $LIB_INCLUDE_DIR"
-for header in "$LIB_INCLUDE_DIR"/*; do
+for header in "$LIB_INCLUDE_DIR"/$CNAME*.h; do
    echo -n "    $header."
-   cp $LIB_INCLUDE_DIR/$header $PYW_SRC
+   cp $header $PYW_SRC
    echo  " Copied."
 done
 

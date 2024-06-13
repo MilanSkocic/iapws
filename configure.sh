@@ -1,5 +1,7 @@
+#!/bin/bash
+
 LIBNAME="libiapws"
-HEADER_PREFIX="iapws"
+NAME="iapws"
 
 # environment variables
 FC=gfortran
@@ -23,8 +25,8 @@ fi
 export LIBNAME
 echo "LIBNAME=" $LIBNAME
 
-export HEADER_PREFIX
-echo "HEADER_PREFIX=" $HEADER_PREFIX
+export NAME
+echo "NAME=" $NAME
 
 export PLATFORM
 echo "PLATFORM=" $PLATFORM
