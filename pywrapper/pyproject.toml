@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyiapws"
-version = "0.2.2"
+version = "0.3.0"
 authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
 description = "pyiapws: IAPWS for python."
 readme = "README.rst"
@@ -18,8 +18,11 @@ classifiers=["Development Status :: 5 - Production/Stable",
 Documentation = "https://milanskocic.github.io/iapws/index.html"
 Source = "https://github.com/MilanSkocic/iapws"
 
+[tool.setuptools]
+include-package-data = false
+
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 
 [tool.setuptools.package-data]
-pyiapws = ["libiapws.*"]
+pyiapws = ["libiapws.*", "libgfortran*", "libquadmath*", "libgcc_s*", "libwinpthread*"]

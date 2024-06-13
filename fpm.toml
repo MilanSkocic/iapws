@@ -1,9 +1,13 @@
 name = "iapws"
-version = "0.2.2"
-license = "GNU General Public License v3 (GPLv3)"
+version = "0.3.0" 
+license = "MIT"
 author = "Milan Skocic"
 maintainer = "milan.skocic@icloud.com"
-copyright = "Copyright 2023, Milan Skocic"
+copyright = "Copyright 2021-2024, Milan Skocic"
+description = "Water properties"
+categories  =["Science"]
+keywords = ["water", "iapws", "chemistry"]
+homepage = "https://milanskocic.github.io/iapws/index.html"
 
 [fortran]
 implicit-typing = false
@@ -14,7 +18,7 @@ source-form = "free"
 auto-executables = true
 auto-tests = true
 auto-examples = true
-module-naming = true
+module-naming = false
 
 [install]
 library = true
@@ -23,22 +27,16 @@ library = true
 name = "example_in_f"
 main = "example_in_f.f90"
 
-[[example]]
-name = "example_in_c"
-main = "example_in_c.c"
+#[[example]]
+#name = "example_in_c"
+#main = "example_in_c.c"
 
 [[test]]
-name = "test_r283"
-main = "test_r283.f90"
+name = "tester"
+main = "tester.f90"
 
-[[test]]
-name = "test_g704"
-main = "test_g704.f90"
+[dependencies]
+stdlib = "*"
 
-[[test]]
-name = "test_g704_capi"
-main = "test_g704_capi.c"
-
-# [[test]]
-# name = "test_r797"
-# main = "test_r797.f90"
+[test.dependencies]
+test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.4.0"}

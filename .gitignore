@@ -17,13 +17,17 @@ bin/
 build/
 docs/build/
 dist/
+API-doc/
 .vscode/
 *.obj
 *.o
 *.mod
+*.pyd
+*.dll.a
 *.a
 *.dll
 *.so
+*.dylib
 
 *.egg-info
 __pycache__
@@ -33,11 +37,11 @@ __pycache__
 
 *generator*
 
-pywrapper/pyiapws/*.h
-pywrapper/pyiapws/*.a
-pywrapper/pyiapws/*.dll
-pywrapper/pyiapws/*.dll.a
-pywrapper/pyiapws/*.so
-pywrapper/pyiapws/*.dylib
-pywrapper/pyiapws/*.pyd
+pywrapper/src/pyiapws/*.h
+pywrapper/src/pyiapws/*.a
+pywrapper/src/pyiapws/*.dll
+pywrapper/src/pyiapws/*.dll.a
+pywrapper/src/pyiapws/*.so
+pywrapper/src/pyiapws/*.dylib
+pywrapper/src/pyiapws/*.pyd
 pywrapper/wheelhouse/
