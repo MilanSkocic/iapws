@@ -25,7 +25,7 @@ test: build
 	fpm test --profile=$(btype)
 
 example: build
-	fpm run --profile=$(btype) --example example_in_f
+	fpm run --profile=$(btype) --example example_in_c
 
 copy_a: 
 	cp -f $(shell find ./build/gfortran* -type f -name $(LIBNAME).a) $(BUILD_DIR)
@@ -69,7 +69,6 @@ uninstall:
 	rm -f $(install_dir)/lib/$(LIBNAME).dll.a
 	rm -f $(install_dir)/lib/$(LIBNAME).dll
 	rm -f $(install_dir)/bin/$(LIBNAME).dll
-
 
 doc:
 	ford API-doc-FORD-file.md

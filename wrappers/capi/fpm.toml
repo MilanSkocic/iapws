@@ -28,12 +28,6 @@ library = true
 name = "example_in_c"
 main = "example_in_c.c"
 
-[[test]]
-name = "tester"
-main = "tester.f90"
-
 [dependencies]
 stdlib = "*"
-
-[test.dependencies]
-test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.4.0"}
+iapws={git="https://github.com/MilanSkocic/iapws"}
