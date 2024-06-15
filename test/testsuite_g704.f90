@@ -31,7 +31,7 @@ subroutine test_ngases_H2O(error)
     integer(int32) :: value, expected
     
     expected = 14
-    value = iapws_g704_ngases(0)
+    value = ngases(0)
 
     call check(error, value, expected)
     if (allocated(error)) return
@@ -44,7 +44,7 @@ subroutine test_ngases_D2O(error)
     integer(int32) :: value, expected
     
     expected = 7
-    value = iapws_g704_ngases(1)
+    value = ngases(1)
 
     call check(error, value, expected)
     if (allocated(error)) return
@@ -55,14 +55,14 @@ subroutine test_gases_H2O(error)
     type(error_type), allocatable, intent(out) :: error 
     
     character(len=5) :: value, expected
-    type(iapws_g704_gas_t), pointer :: gases_list(:)
+    type(gas_type), pointer :: gases_list(:)
     integer(int32), parameter :: n = 14
     integer(int32) :: i
     
     character(len=5) :: expected_gases(n) = &
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"]
     
-    gases_list => iapws_g704_gases(0)
+    gases_list => gases(0)
     
     do i=1, n
         value = gases_list(i)%gas
@@ -77,14 +77,14 @@ subroutine test_gases_D2O(error)
     type(error_type), allocatable, intent(out) :: error 
     
     character(len=5) :: value, expected
-    type(iapws_g704_gas_t), pointer :: gases_list(:)
+    type(gas_type), pointer :: gases_list(:)
     integer(int32), parameter :: n = 7
     integer(int32) :: i
     
     character(len=5) :: expected_gases(n) = &
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"]
     
-    gases_list => iapws_g704_gases(1)
+    gases_list => gases(1)
     
     do i=1, n
         value = gases_list(i)%gas
@@ -101,7 +101,7 @@ subroutine test_gases2_H2O(error)
     character(len=*), parameter :: expected = "He,Ne,Ar,Kr,Xe,H2,N2,O2,CO,CO2,H2S,CH4,C2H6,SF6"
     character(len=:), pointer :: value 
 
-    value => iapws_g704_gases2(0)
+    value => gases2(0)
     call check(error, value, expected)
     if (allocated(error)) return
 end subroutine
@@ -113,7 +113,7 @@ subroutine test_gases2_D2O(error)
     character(len=*), parameter :: expected = "He,Ne,Ar,Kr,Xe,D2,CH4"
     character(len=:), pointer :: value
 
-    value => iapws_g704_gases2(1)
+    value => gases2(1)
     call check(error, value, expected)
     if (allocated(error)) return
 end subroutine
@@ -152,7 +152,7 @@ subroutine test_kh_H2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call iapws_g704_kh(T_C, gases(i), heavywater, k)
+        call kh(T_C, gases(i), heavywater, k)
         do j=1, nT
             value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
             expected = nint(expected_khs(i, j) * 1d4) * 1d-4
@@ -189,7 +189,7 @@ subroutine test_kh_D2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call iapws_g704_kh(T_C, gases(i), heavywater, k)
+        call kh(T_C, gases(i), heavywater, k)
         do j=1, nT
             value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
             expected = nint(expected_khs(i, j) * 1d4) * 1d-4
@@ -233,7 +233,7 @@ subroutine test_kd_H2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call iapws_g704_kd(T_C, gases(i), heavywater, k)
+        call kd(T_C, gases(i), heavywater, k)
         do j=1, nT
             value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
             expected = nint(expected_khs(i, j) * 1d4) * 1d-4
@@ -270,7 +270,7 @@ subroutine test_kd_D2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call iapws_g704_kd(T_C, gases(i), heavywater, k)
+        call kd(T_C, gases(i), heavywater, k)
         do j=1, nT
             value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
             expected = nint(expected_khs(i, j) * 1d4) * 1d-4
