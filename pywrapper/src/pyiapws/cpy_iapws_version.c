@@ -1,6 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
-#include "iapws.h"
+#include "ciapws.h"
 
 
 PyDoc_STRVAR(module_docstring, "C extension for iapws version.");
