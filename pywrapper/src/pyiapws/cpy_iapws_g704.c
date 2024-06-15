@@ -60,10 +60,10 @@ static PyObject *kx(char k, PyObject *args){
 
     switch(k){
         case 'h':
-            fkx = &iapws_g704_capi_kh;
+            fkx = &iapws_g704_kh;
             break;
         case 'd':
-            fkx = &iapws_g704_capi_kd;
+            fkx = &iapws_g704_kd;
             break;
         default:
             fkx = NULL;
@@ -115,7 +115,7 @@ static PyObject *g704_ngases(PyObject *self, PyObject *args){
         PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
-    ngas = iapws_g704_capi_ngases(heavywater);
+    ngas = iapws_g704_ngases(heavywater);
     
     return Py_BuildValue("i", ngas);
 }
@@ -132,8 +132,8 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
         PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
-    ngas = iapws_g704_capi_ngases(heavywater);
-    gases = iapws_g704_capi_gases(heavywater);
+    ngas = iapws_g704_ngases(heavywater);
+    gases = iapws_g704_gases(heavywater);
     tuple = PyTuple_New((Py_ssize_t) ngas);
     for(i=0; i<ngas; i++){
         PyTuple_SET_ITEM(tuple, i, PyUnicode_FromFormat("%s", gases[i]));
@@ -151,7 +151,7 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
         PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
-    gases = iapws_g704_capi_gases2(heavywater);
+    gases = iapws_g704_gases2(heavywater);
     py_gases = PyUnicode_FromFormat("%s", gases);
     return py_gases;
 }
