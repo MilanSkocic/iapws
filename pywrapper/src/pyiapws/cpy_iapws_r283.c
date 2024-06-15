@@ -30,11 +30,11 @@ PyMODINIT_FUNC PyInit_r283(void)
     m = PyModule_Create(&r283);
     d = PyModule_GetDict(m);
 
-    v = PyFloat_FromDouble(iapws_Tc_H2O);
-    PyDict_SetItemString(d, "Tc_H2O", v);
+    v = PyFloat_FromDouble(iapws_tc_H2O);
+    PyDict_SetItemString(d, "tc_H2O", v);
     Py_INCREF(v);
-    v = PyFloat_FromDouble(iapws_Tc_D2O);
-    PyDict_SetItemString(d, "Tc_D2O", v);
+    v = PyFloat_FromDouble(iapws_tc_D2O);
+    PyDict_SetItemString(d, "tc_D2O", v);
     Py_INCREF(v);
     
     v = PyFloat_FromDouble(iapws_pc_H2O);
