@@ -1,4 +1,4 @@
-name = "iapws"
+name = "ciapws"
 version = "0.3.0" 
 license = "MIT"
 author = "Milan Skocic"
@@ -6,7 +6,7 @@ maintainer = "milan.skocic@icloud.com"
 copyright = "Copyright 2021-2024, Milan Skocic"
 description = "Water properties"
 categories  =["Science"]
-keywords = ["water", "iapws", "chemistry"]
+keywords = ["water", "ciapws", "chemistry"]
 homepage = "https://milanskocic.github.io/iapws-docs/index.html"
 
 [fortran]
@@ -23,9 +23,10 @@ module-naming = false
 [install]
 library = true
 
+
 [[example]]
-name = "example_in_f"
-main = "example_in_f.f90"
+name = "example_in_c"
+main = "example_in_c.c"
 
 [[test]]
 name = "tester"

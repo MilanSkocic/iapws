@@ -3,5 +3,4 @@ module iapws
     use iapws__version
     use iapws__g704
     use iapws__r283
-    use ciapws
 end module
