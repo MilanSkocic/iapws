@@ -1,5 +1,5 @@
 name = "iapws"
-version = "0.3.0" 
+version = "VERSION" 
 license = "MIT"
 author = "Milan Skocic"
 maintainer = "milan.skocic@icloud.com"
