@@ -3,7 +3,7 @@ project: iapws
 summary: IAPWS - Water properties
 project_github: https://github.com/MilanSkocic/iapws
 project_download: https://github.com/MilanSkocic/iapws/releases
-project_website: https://milanskocic.github.io/iapws-docs/index.html
+project_website: https://milanskocic.github.io/iapws/index.html
 author: Milan Skocic
 email: milan.skocic@icloud.com
 github: https://github.com/MilanSkocic

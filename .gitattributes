@@ -2,6 +2,7 @@
 *.fypp linguist-language=fortran
 
 doc/** linguist-documentation
+docs/** linguist-documentation
 example/** linguist-vendored
 include/** linguist-vendored
 capi/** linguist-vendored

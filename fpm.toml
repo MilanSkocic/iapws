@@ -7,7 +7,7 @@ copyright = "Copyright 2021-2024, Milan Skocic"
 description = "Water properties"
 categories  =["Science"]
 keywords = ["water", "iapws", "chemistry"]
-homepage = "https://milanskocic.github.io/iapws-docs/index.html"
+homepage = "https://milanskocic.github.io/iapws/index.html"
 
 [fortran]
 implicit-typing = false
