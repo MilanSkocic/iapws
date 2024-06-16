@@ -1,5 +1,7 @@
 *.f90 linguist-language=fortran
 *.fypp linguist-language=fortran
+*.sh linguist-detectable=false
+
 doc/** linguist-documentation
 example/** linguist-vendored
 include/** linguist-vendored
