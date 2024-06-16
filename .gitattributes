@@ -1,0 +1,8 @@
+*.f90 linguist-language=fortran
+*.fypp linguist-language=fortran
+doc/** linguist-documentation
+example/** linguist-vendored
+include/** linguist-vendored
+capi/** linguist-vendored
+pywrapper/** linguist-vendored
+
