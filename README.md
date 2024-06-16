@@ -2,6 +2,8 @@
 
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
 The formulas are taken from http://iapws.org. 
+C API allows usage from C, or can be used as a basis for other wrappers.
+Python wrapper allows easy usage from Python.
 
 For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
 technical report R7-97. 
@@ -13,13 +15,7 @@ add the following to your `fpm.toml` file:
 
     [dependencies]
     iapws = { git="https://github.com/MilanSkocic/iapws.git" }
-
-Optional thin wrappers allow usage of the library from other languages, e.g.:
-
-* [C wrapper](https://github.com/MilanSkocic/iapws-capi)
-* [Python wrapper](https://github.com/MilanSkocic/iapws-py)
-
-
+    
 
 # Dependencies
 
