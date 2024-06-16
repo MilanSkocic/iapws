@@ -12,7 +12,7 @@ endif
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
 
-.PHONY: build capi doc
+.PHONY: build capi doc docs
 
 all: $(LIBNAME)
 
