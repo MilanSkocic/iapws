@@ -1,5 +1,5 @@
-module ciapws__g704
-    !! Module for IAPWS G704 
+module capi__g704
+    !! Module for IAPWS G704 : C API.
     use iso_fortran_env
     use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
     use iapws__g704
@@ -16,13 +16,13 @@ module ciapws__g704
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    public :: ciapws_g704_kh, ciapws_g704_kd
-    public :: ciapws_g704_ngases
-    public :: ciapws_g704_gases
+    public :: capi_kh, capi_kd
+    public :: capi_ngases
+    public :: capi_gases
 
 contains
 
-subroutine ciapws_g704_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
+subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")
     !! Compute the henry constant for a given temperature.
     implicit none
     
@@ -53,7 +53,7 @@ subroutine ciapws_g704_kh(T, gas, heavywater, k, size_gas, size_T)bind(C)
     call kh(T, f_gas, heavywater, k)    
 end subroutine
 
-subroutine ciapws_g704_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
+subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
     !! Compute the vapor-liquid constant for a given temperature. 
     implicit none
     
@@ -84,7 +84,7 @@ subroutine ciapws_g704_kd(T, gas, heavywater, k, size_gas, size_T)bind(C)
     call kd(T, f_gas, heavywater, k)    
 end subroutine
 
-pure function ciapws_g704_ngases(heavywater)bind(C)result(n)
+pure function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
     !! Returns the number of gases.
     implicit none
     
@@ -97,7 +97,7 @@ pure function ciapws_g704_ngases(heavywater)bind(C)result(n)
     n = ngases(heavywater)
 end function
 
-function ciapws_g704_gases(heavywater)bind(C)result(list_gases)
+function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
     !! Returns the list of available gases.
     implicit none
 
@@ -139,7 +139,7 @@ function ciapws_g704_gases(heavywater)bind(C)result(list_gases)
     list_gases = c_loc(char_pp)
 end function
 
-function ciapws_g704_gases2(heavywater)bind(C)result(str_gases)
+function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gases)
     !! Returns the available gases as a string.
     implicit none
 

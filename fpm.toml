@@ -25,14 +25,19 @@ library = true
 
 [[example]]
 name = "example_in_f"
-main = "example_in_f.f90"
+main = "example.f90"
+
+[[example]]
+name = "example_in_c"
+main = "example.c"
+
+[dependencies]
+stdlib = "*"
 
 [[test]]
 name = "tester"
 main = "tester.f90"
 
-[dependencies]
-stdlib = "*"
-
 [test.dependencies]
 test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.4.0"}
+

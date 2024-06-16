@@ -22,8 +22,6 @@ if [[ "$OSTYPE" == "darwin"* ]];then
     PLATFORM="darwin"
 fi
 
-cp -f VERSION ./capi/
-
 export LIBNAME
 echo "LIBNAME=" $LIBNAME
 

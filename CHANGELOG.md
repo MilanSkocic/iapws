@@ -10,10 +10,6 @@
 * Add version extension in the pywrapper.
 * Implement version module with its getter.
 * Documentation update.
-* C API and Python wrapper moved to their own repositories.
-    * [C wrapper](https://github.com/MilanSkocic/iapws-capi)
-    * [Python wrapper](https://github.com/MilanSkocic/iapws-py)
-
 
 
 

@@ -1,5 +1,5 @@
-module ciapws__version
-    !! Version
+module capi__version
+    !! Version: C API.
     use iso_c_binding, only: c_null_char, c_ptr, c_loc
     use iapws__version
     implicit none
@@ -7,11 +7,11 @@ module ciapws__version
 
     character(len=:), allocatable, target :: version_c
 
-    public :: ciapws_get_version
+    public :: capi_get_version
 
 contains
 
-function ciapws_get_version()bind(c)result(cptr)
+function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
     !! Get the version.
     implicit none
     
@@ -31,4 +31,4 @@ function ciapws_get_version()bind(c)result(cptr)
     cptr = c_loc(version_c)
 end function
 
-end module ciapws__version
+end module capi__version

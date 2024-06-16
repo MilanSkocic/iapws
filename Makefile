@@ -12,7 +12,7 @@ endif
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
 
-.PHONY: build nist stdlib sources doc docs
+.PHONY: build capi doc
 
 all: $(LIBNAME)
 
@@ -26,6 +26,7 @@ test: build
 
 example: build
 	fpm run --profile=$(btype) --example example_in_f
+	fpm run --profile=$(btype) --example example_in_c
 
 copy_a: 
 	cp -f $(shell find ./build/gfortran* -type f -name $(LIBNAME).a) $(BUILD_DIR)
@@ -70,6 +71,12 @@ uninstall:
 	rm -f $(install_dir)/lib/$(LIBNAME).dll
 	rm -f $(install_dir)/bin/$(LIBNAME).dll
 
+clean:
+	fpm clean --all
+	rm -rf API-doc/*
+
+capi:
+	make -C capi
 
 doc:
 	ford API-doc-FORD-file.md
@@ -81,6 +88,3 @@ docs:
 logo:
 	make -C media
 
-clean:
-	fpm clean --all
-	rm -rf API-doc/*
