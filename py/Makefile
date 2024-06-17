@@ -56,7 +56,7 @@ clean:
 	rm -rf *.egg-info 
 	rm -rf __pycache__ 
 	rm -rf wheelhouse 
-	rm -rf $(PYW_SRC)/__pycache__
+	rm -rf $(PY_SRC)/__pycache__
 	
 cleanall: clean
 	

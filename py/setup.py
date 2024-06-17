@@ -11,7 +11,6 @@ runtime_library_dirs = None
 extra_objects = None
 ext = None
 
-
 if platform.system() == "Linux":
     libraries = [name]
     library_dirs = [f"./src/py{name:s}/lib/"]
@@ -38,7 +37,10 @@ files = [f"{name:s}.h"]
 for file in files:
     src = root_src / file
     dest = root_dest / file
-    shutil.copy(src, dest)
+    try:
+        shutil.copy(src, dest)
+    except:
+        print(f"{file:s} was not found.")
 
 print("Copying libs...")
 root_src = pathlib.Path(f"./src/py{name:s}/lib/")
