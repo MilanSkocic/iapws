@@ -44,6 +44,6 @@ py/src/pyiapws/*.so
 py/src/pyiapws/*.dylib
 py/src/pyiapws/*.pyd
 py/wheelhouse/
-py/src/bin/
-py/src/include/
-py/src/lib/
+py/src/pyiapws/bin/
+py/src/pyiapws/include/
+py/src/pyiapws/lib/
