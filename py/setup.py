@@ -98,6 +98,11 @@ if platform.system() == "Darwin":
     except subprocess.CalledProcessError:
         print(cmd + " was not successful.")
 
+version = None
+with open("./VERSION", "r") as f:
+    version = f.read().strip()
+
+
 if __name__ == "__main__":
 
     mod_g704 = Extension(name=f"py{name:s}.g704",
@@ -118,5 +123,6 @@ if __name__ == "__main__":
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
-    setup(ext_modules=[mod_g704, mod_r283, mod_version])
+    setup(version= version, 
+          ext_modules=[mod_g704, mod_r283, mod_version])
 

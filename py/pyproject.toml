@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyiapws"
-version = "0.3.0"
+dynamic = ["version"]
 authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
 description = "pyiapws: IAPWS for python."
 readme = "README.md"

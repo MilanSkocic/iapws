@@ -1,0 +1,8 @@
+include README.md 
+include LICENSE
+include VERSION
+include pyproject.toml
+include setup.py
+include src/pyiapws/*.c
+include src/pyiapws/*.h
+

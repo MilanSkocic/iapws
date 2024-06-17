@@ -31,6 +31,8 @@ if [[ "$OSTYPE" == "darwin"* ]];then
     LIBS=( "${LIBSDARWIN[@]}" )
 fi
 
+cp -f VERSION ./py/VERSION
+
 export LIBNAME
 echo "LIBNAME=" $LIBNAME
 

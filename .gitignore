@@ -36,13 +36,6 @@ __pycache__
 
 .DS_Store
 
-py/src/pyiapws/*.h
-py/src/pyiapws/*.a
-py/src/pyiapws/*.dll
-py/src/pyiapws/*.dll.a
-py/src/pyiapws/*.so
-py/src/pyiapws/*.dylib
-py/src/pyiapws/*.pyd
 py/wheelhouse/
 py/src/pyiapws/bin/
 py/src/pyiapws/include/
