@@ -92,3 +92,6 @@ for HEAVYWATER in (False, True):
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
+
+
+plt.show()
