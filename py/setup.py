@@ -83,7 +83,7 @@ for file in files:
         print(f"copying {str(src):s} -> {str(dest.parent):s}.")
         shutil.copy(src, dest)
         if platform.system() == "Darwin":
-            print(cmd)
+            print(f"changing rpath for {str(file):s}")
             subprocess.check_call(cmd)
     except subprocess.CalledProcessError:
         print(" ".join(cmd) + " was not successful.")
@@ -94,6 +94,7 @@ for file in files:
 if platform.system() == "Darwin":
     cmd = ["otool", "-L", f"./src/py{name:s}/lib{name:s}{ext[0]:s}"]
     try:
+        print(f"checking rpaths")
         subprocess.check_call(cmd)
     except subprocess.CalledProcessError:
         print(" ".join(cmd) + " was not successful.")
