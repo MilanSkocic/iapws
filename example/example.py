@@ -1,6 +1,6 @@
 r"""Example in python"""
 import sys
-sys.path.append("../src/")
+sys.path.append("../py/src/")
 import array
 import numpy as np
 import matplotlib.pyplot as plt
