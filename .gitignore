@@ -36,13 +36,14 @@ __pycache__
 
 .DS_Store
 
-*generator*
-
-pywrapper/src/pyiapws/*.h
-pywrapper/src/pyiapws/*.a
-pywrapper/src/pyiapws/*.dll
-pywrapper/src/pyiapws/*.dll.a
-pywrapper/src/pyiapws/*.so
-pywrapper/src/pyiapws/*.dylib
-pywrapper/src/pyiapws/*.pyd
-pywrapper/wheelhouse/
+py/src/pyiapws/*.h
+py/src/pyiapws/*.a
+py/src/pyiapws/*.dll
+py/src/pyiapws/*.dll.a
+py/src/pyiapws/*.so
+py/src/pyiapws/*.dylib
+py/src/pyiapws/*.pyd
+py/wheelhouse/
+py/bin/
+py/include/
+py/lib/
