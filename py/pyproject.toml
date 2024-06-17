@@ -7,7 +7,7 @@ name = "pyiapws"
 version = "0.3.0"
 authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
 description = "pyiapws: IAPWS for python."
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 classifiers=["Development Status :: 5 - Production/Stable",
@@ -15,8 +15,8 @@ classifiers=["Development Status :: 5 - Production/Stable",
              "License :: OSI Approved :: MIT License"]
 
 [project.urls]
-Documentation = "https://milanskocic.github.io/iapws-docs/index.html"
-Source = "https://github.com/MilanSkocic/iapws-py"
+Documentation = "https://milanskocic.github.io/iapws/index.html"
+Source = "https://github.com/MilanSkocic/iapws"
 
 [tool.setuptools]
 include-package-data = false
@@ -25,4 +25,4 @@ include-package-data = false
 where = ["src"]
 
 [tool.setuptools.package-data]
-pyiapws = ["libciapws.*", "libgfortran*", "libquadmath*", "libgcc_s*", "libwinpthread*"]
+pyiapws = ["libiapws.*", "libgfortran*", "libquadmath*", "libgcc_s*", "libwinpthread*"]

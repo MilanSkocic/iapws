@@ -1,12 +1,10 @@
 #!/bin/bash
 
-FNAME="iapws"
-CNAME="c$FNAME"
-PYNAME="py$FNAME"
-LIBNAME="lib$CNAME"
+PYNAME="py$NAME"
+LIBNAME="lib$NAME"
 PYW_SRC="./src/$PYNAME"
-LIB_INCLUDE_DIR="./$FNAME-capi/local/include"
-LIB_BUILD_DIR="./$FNAME-capi/local/lib"
+LIB_INCLUDE_DIR="../include"
+LIB_BUILD_DIR="../build"
 
 EXT=".so"
 PLATFORM="linux"
@@ -74,7 +72,7 @@ fi
 
 # C HEADERS
 echo "Include folder: $LIB_INCLUDE_DIR"
-for header in "$LIB_INCLUDE_DIR"/$CNAME*.h; do
+for header in "$LIB_INCLUDE_DIR"/$NAME*.h; do
    echo -n "    $header."
    cp $header $PYW_SRC
    echo  " Copied."

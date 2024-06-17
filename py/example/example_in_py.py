@@ -10,11 +10,11 @@ print("########################## IAPWS VERSION ##########################")
 print(pyiapws.__version__)
 
 print("########################## IAPWS R2-83 ##########################")
-print("Tc in H2O", pyiapws.r283.tc_H2O, "K")
+print("Tc in H2O", pyiapws.r283.Tc_H2O, "K")
 print("pc in H2O", pyiapws.r283.pc_H2O, "MPa")
 print("rhoc in H2O", pyiapws.r283.rhoc_H2O, "kg/m3")
 
-print("Tc in D2O", pyiapws.r283.tc_D2O, "K")
+print("Tc in D2O", pyiapws.r283.Tc_D2O, "K")
 print("pc in D2O", pyiapws.r283.pc_D2O, "MPa")
 print("rhoc in D2O", pyiapws.r283.rhoc_D2O, "kg/m3")
 

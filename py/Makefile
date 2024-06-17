@@ -60,10 +60,10 @@ clean:
 	
 cleanall: clean
 	
-	rm -f $(PYW_SRC)/$(HEADER_PREFIX)*.h 
-	rm -f $(PYW_SRC)/*.a 
-	rm -f $(PYW_SRC)/*.so 
-	rm -f $(PYW_SRC)/*.dylib 
-	rm -f $(PYW_SRC)/*.dll 
-	rm -f $(PYW_SRC)/*.dll.a 
-	rm -f $(PYW_SRC)/*.pyd
+	rm -f $(PY_SRC)/$(NAME)*.h 
+	rm -f $(PY_SRC)/*.a 
+	rm -f $(PY_SRC)/*.so 
+	rm -f $(PY_SRC)/*.dylib 
+	rm -f $(PY_SRC)/*.dll 
+	rm -f $(PY_SRC)/*.dll.a 
+	rm -f $(PY_SRC)/*.pyd
