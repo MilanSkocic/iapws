@@ -85,7 +85,7 @@ for file in files:
             cmd = ["install_name_tool", "-change", f"{str(src):s}", f"@loader_path/{src.name}", f"./src/py{name:s}/lib{name:s}{ext[0]:s}"]
             print(cmd)
             subprocess.check_call(cmd)
-    except CalledProcessError:
+    except subprocess.CalledProcessError:
         print(cmd + " was not successful.")
     except:
         print(f"{file:s} was not found.")
@@ -95,7 +95,7 @@ if platform.system() == "Darwin":
     try:
         cmd = ["otool", "-L", f"./src/py{name:s}/lib{name:s}{ext[0]:s}"]
         subprocess.check_call(cmd)
-    except CalledProcessError:
+    except subprocess.CalledProcessError:
         print(cmd + " was not successful.")
 
 if __name__ == "__main__":
