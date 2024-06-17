@@ -5,16 +5,6 @@ NAME="iapws"
 PYNAME="py$NAME"
 PY_SRC="./src/$PYNAME"
 
-# gfortran libraries
-LIBSDARWIN=("libgfortran.5" "libquadmath.0" "libgcc_s.1.1")
-LIBSWINDOWS=("libgfortran-5" "libquadmath-0" "libgcc_s_seh-1" "libwinpthread-1")
-LIBSLINUX=
-ROOTLINUX=/usr/lib/
-ROOTDARWIN=/usr/local/opt/gcc/lib/gcc/current
-ROOTWINDOWS=/C/msys64/mingw64/bin
-ROOT=$ROOTLINUX
-LIBS=$LIBSLINUX
-
 # environment variables
 FC=gfortran
 BUILD_DIR="./build"
@@ -74,27 +64,3 @@ echo "PY_SRC=" $PY_SRC
 export FC
 echo "FC=" $FC
 
-
-# GFORTRAN LIBRARIES
-echo "Gfortran libraries: $ROOT"
-for lib in ${LIBS[@]}; do
-    fpath=$ROOT/$lib$EXT
-    if [ -f "$fpath" ]; then
-        echo -n "   $fpath exists."
-        cp "$fpath" $PY_SRC
-        if [ "$PLATFORM" = "darwin" ]; then
-            install_name_tool -change "$fpath" "@loader_path/$lib$EXT" $PY_SRC/$LIBNAME$EXT
-            echo " Copied. Changed rpath in $LIBNAME$EXT."
-        else
-            echo " Copied."
-        fi
-    else
-        echo "   $fpath does not exist."
-    fi
-done
-
-
-if [ "$PLATFORM" = "darwin" ]; then
-    echo "Check rpaths:"
-    otool -L $PY_SRC/$LIBNAME$EXT
-fi
