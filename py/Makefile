@@ -67,3 +67,6 @@ cleanall: clean
 	rm -f $(PY_SRC)/*.dll 
 	rm -f $(PY_SRC)/*.dll.a 
 	rm -f $(PY_SRC)/*.pyd
+	rm -rf $(PY_SRC)/bin
+	rm -rf $(PY_SRC)/include
+	rm -rf $(PY_SRC)/lib
