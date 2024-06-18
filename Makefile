@@ -74,6 +74,7 @@ uninstall:
 
 clean:
 	fpm clean --all
+	make -C py clean
 	rm -rf API-doc/*
 
 capi:
