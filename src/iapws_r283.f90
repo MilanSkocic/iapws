@@ -1,5 +1,5 @@
 module iapws__r283
-    !! Module for IAPWS R283
+    !! Module for IAPWS R2-83.
     use stdlib_kinds, only: dp
     implicit none
     private

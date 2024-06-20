@@ -1,5 +1,5 @@
 module iapws__r797
-    !! Module for IAPWS R7-97
+    !! Module for IAPWS R7-97.
     use iso_fortran_env
     use ieee_arithmetic
     implicit none
