@@ -1,5 +1,5 @@
 module iapws__g704
-    !! Module for IAPWS G7-04
+    !! Module for IAPWS G7-04.
     use stdlib_kinds, only: dp, int32
     use ieee_arithmetic, only: ieee_value, ieee_quiet_nan
     use iapws__r283

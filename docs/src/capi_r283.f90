@@ -1,5 +1,5 @@
 module capi__r783
-    !! Module for IAPWS R283: C API.
+    !! Module for IAPWS R2-83: C API.
     use iso_c_binding, only: c_double
     use iapws__r283
     implicit none
