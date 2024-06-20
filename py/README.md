@@ -1,7 +1,7 @@
 # Introduction
 
 Python wrapper around the
-[Fortran iapws library](https://milanskocic.github.io/iapws-docs/index.html).
+[Fortran iapws library](https://milanskocic.github.io/iapws/index.html).
 The Fortran library does not need to be installed, the python wrapper embeds all needed dependencies for Windows and MacOS.
 On linux, you might have to install `libgfortran` if it is not distributed with your linux distribution. 
 

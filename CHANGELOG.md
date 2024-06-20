@@ -4,8 +4,7 @@
    * They do not contain the package+module in the name for the sake of simplicity 
    * The package is only added in the functions for the C API in order to have a namespace-like behavior.
    * If needed for solving conflicts with other packages, the functions can be aliased.
-* Remove separate sources files for the C API code for each module.
-  Each module now contains the code for the C API.
+* Separate sources files for the C API code for each module.
 * Implement tests with the test-drive framework.
 * Add version extension in the pywrapper.
 * Implement version module with its getter.
