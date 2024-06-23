@@ -36,7 +36,7 @@ if platform.system() == "Windows":
     LIBS = LIBSWINDOWS
 if platform.system() == "Darwin":
     libraries = [name]
-    library_dirs = [f"./src/py{name:s}/lib/"]
+    library_dirs = [f"./src/py{name:s}"]
     runtime_library_dirs = ["@loader_path"]
     ext = [".dylib"]
     ROOT = ROOTDARWIN
