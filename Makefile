@@ -12,7 +12,7 @@ endif
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
 
-.PHONY: build capi doc docs
+.PHONY: build doc docs clean logo
 
 all: $(LIBNAME)
 
@@ -77,9 +77,6 @@ clean:
 	make -C py clean
 	rm -rf API-doc/*
 
-capi:
-	make -C capi
-
 doc:
 	ford API-doc-FORD-file.md
 
@@ -90,3 +87,7 @@ docs:
 logo:
 	make -C media
 
+py: $(LIBNAME)
+	make install prefix=py/$(PY_SRC)
+	make -C py
+	
