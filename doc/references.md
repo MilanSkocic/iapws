@@ -8,6 +8,8 @@ title: References
 
 * IAPWS, “Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam,” Lucerne, Switzerland, R7-97, 2007.
 
+* IAPWS, “Revised Release on the IAPWS Formulation 1995 for the Thermodynamic Properties of Ordinary Water Substance for General and Scientific Use,” Praque, Czech Republic, R6-95, 2018.
+
 * Wolfgang Wagner and A. Pruss. "International Equations for the Saturation Properties of Ordinary Water Substance". Revised According to the International Temperature Scale of 1990. Addendum to J. Phys. Chem. Ref. Data 16, 893 (1987). Journal of Physical and Chemical Reference Data, 22(3):783–787, May 1993. doi:10.1063/1.555926.
 
 * Allan H. Harvey and Eric W. Lemmon. "Correlation for the Vapor Pressure of Heavy Water From the Triple Point to the Critical Point". Journal of Physical and Chemical Reference Data, 31(1):173–181, March 2002. doi:10.1063/1.1430231.
