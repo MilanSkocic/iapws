@@ -15,7 +15,7 @@ regions which cover the following range of validity:
 * \(273.15K < T < 1073.15K\) and \(p < 100MPa\) 
 * \(1073.15K < T < 2273.15K\) and  \(p < 50MPa\)
 
-![r787_refions](../../media/iapws_r797-regions.png)
+<img src="../../media/iapws_r797-regions.png" width="600px"/>
    
 
 # Reference constants

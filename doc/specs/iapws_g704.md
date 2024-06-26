@@ -91,8 +91,11 @@ $$ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{
 
 # Plots
 
-![kh_H2O](../../media/kh_H20.png)
-![kh_D2O](../../media/kh_D20.png)
-![kd_H2O](../../media/kd_H20.png)
-![kd_D2O](../../media/kd_D20.png)
+![kh_H2O](../../media/kh_H2O.png)
+
+![kh_D2O](../../media/kh_D2O.png)
+
+![kd_H2O](../../media/kd_H2O.png)
+
+![kd_D2O](../../media/kd_D2O.png)
 
