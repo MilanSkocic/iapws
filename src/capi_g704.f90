@@ -27,18 +27,12 @@ subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
     implicit none
     
     ! arguments
-    integer(c_int), intent(in), value :: size_gas
-        !! Size of the gas string.
-    integer(c_size_t), intent(in), value :: size_T
-        !! Size of T and k.
-    real(c_double), intent(in) :: T(size_T)
-        !! Temperature in °C.
-    type(c_ptr), intent(in), value :: gas
-        !! Gas.
-    integer(c_int), intent(in), value :: heavywater 
-        !! Flag if D2O (1) is used or H2O(0).
-    real(c_double), intent(inout) :: k(size_T)
-        !! Henry constant. Filled with NaNs if gas not found.
+    integer(c_int), intent(in), value :: size_gas !! Size of the gas string.
+    integer(c_size_t), intent(in), value :: size_T !! Size of T and k.
+    real(c_double), intent(in) :: T(size_T) !! Temperature in °C.
+    type(c_ptr), intent(in), value :: gas !! Gas.
+    integer(c_int), intent(in), value :: heavywater !! Flag if D2O (1) is used or H2O(0).
+    real(c_double), intent(inout) :: k(size_T) !! Henry constant. Filled with NaNs if gas not found.
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
@@ -58,18 +52,12 @@ subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
     implicit none
     
     ! arguments
-    integer(c_size_t), intent(in), value :: size_T
-        !! Size of T and k.
-    integer(c_int), intent(in), value :: size_gas
-        !! Size of the gas string.
-    real(c_double), intent(in) :: T(size_T)
-        !! Temperature in °C.
-    type(c_ptr), intent(in), value :: gas
-        !! Gas.
-    integer(c_int), intent(in), value :: heavywater 
-        !! Flag if D2O (1) is used or H2O(0).
-    real(c_double), intent(inout) :: k(size_T)
-        !! Vapor-liquid constant. Filled with NaNs if gas not found.
+    integer(c_size_t), intent(in), value :: size_T !! Size of T and k.
+    integer(c_int), intent(in), value :: size_gas !! Size of the gas string.
+    real(c_double), intent(in) :: T(size_T) !! Temperature in °C.
+    type(c_ptr), intent(in), value :: gas !! Gas.
+    integer(c_int), intent(in), value :: heavywater  !! Flag if D2O (1) is used or H2O(0).
+    real(c_double), intent(inout) :: k(size_T) !! Vapor-liquid constant. Filled with NaNs if gas not found.
     
     ! variables
     character, pointer, dimension(:) :: c2f_gas
