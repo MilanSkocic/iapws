@@ -340,18 +340,14 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
 end function
 
 pure subroutine kh(T, gas, heavywater, k)
-    !! Compute the henry constant for a given temperature.
+    !! Compute the henry constant kH for a given temperature.
     implicit none
     
     ! arguments
-    real(dp), intent(in) :: T(:)
-        !! Temperature in °C.
-    character(len=*), intent(in) :: gas
-        !! Gas.
-    integer(int32), intent(in) :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out) :: k(:)
-        !! Henry constant. Filled with NaNs if gas not found.
+    real(dp), intent(in) :: T(:) !! Temperature in °C.
+    character(len=*), intent(in) :: gas !! Gas.
+    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
+    real(dp), intent(out) :: k(:) !! Henry constant. Filled with NaNs if gas not found.
     
     ! variables
     integer(int32) :: i
@@ -375,18 +371,14 @@ pure subroutine kh(T, gas, heavywater, k)
 end subroutine
 
 pure subroutine kd(T, gas, heavywater, k)
-    !! Compute the vapor-liquid constant for a given temperature. 
+    !! Compute the vapor-liquid constant kd for a given temperature. 
     implicit none
     
     ! arguments
-    real(dp), intent(in) :: T(:)
-        !! Temperature in °C.
-    character(len=*), intent(in) :: gas
-        !! Gas.
-    integer(int32), intent(in) :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out) :: k(:)
-        !! Vapor-liquid constant. Filled with NaNs if gas not found.
+    real(dp), intent(in) :: T(:)             !! Temperature in °C.
+    character(len=*), intent(in) :: gas      !! Gas.
+    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
+    real(dp), intent(out) :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
     
     ! variables
     integer(int32) :: i

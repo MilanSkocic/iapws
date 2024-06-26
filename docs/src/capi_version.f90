@@ -16,8 +16,7 @@ function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
     implicit none
     
     ! Returns   
-    type(c_ptr) :: cptr
-        !! Pointer to version string.
+    type(c_ptr) :: cptr !! Pointer to version string.
 
     character(len=:), pointer :: fptr
     fptr => get_version() 

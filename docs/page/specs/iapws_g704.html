@@ -110,11 +110,21 @@
       </div>
 
     <div class="col-9" id='text'>
-      <h1 id="iapws-g7-04">IAPWS G7-04</h1>
+      <div class="toc">
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#henry-contant-kh">Henry Contant: kh</a></li>
+<li><a href="#vapor-liquid-distribution-constant-kd">Vapor-Liquid Distribution Constant: kd</a></li>
+<li><a href="#molar-fractions">Molar fractions</a></li>
+<li><a href="#available-gases">Available gases</a></li>
+<li><a href="#plots">Plots</a></li>
+</ul>
+</div>
+<h1 id="description">Description</h1>
 <p>The computation is based on the parameters provided by the technical report <a href="../references.html">G7-04</a></p>
-<h2 id="henry-contant-kh">Henry Contant: kh</h2>
-<p>The Henry constant <script type="math/tex">kH</script> is defined as shown in equation below.
-<script type="math/tex">k_H</script> is expressed in MPa.</p>
+<h1 id="henry-contant-kh">Henry Contant: kh</h1>
+<p>The Henry constant  is defined as shown in equation below.
+<a href="../../proc/kh.html">kh</a> is expressed in MPa.</p>
 <p>
 <script type="math/tex; mode=display"> k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 </script>
 </p>
@@ -124,10 +134,10 @@
 <li>
 <script type="math/tex">x_2</script>: mole fraction of the solute</li>
 </ul>
-<p>The Henry&rsquo;s constant <script type="math/tex">k_H</script> is given as a function of temperature by:</p>
-<div class="codehilite"><pre><span></span><code>\ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau
-</code></pre></div>
-
+<p>The Henry&rsquo;s constant <a href="../../proc/kh.html">kh</a> is given as a function of temperature by:</p>
+<p>
+<script type="math/tex; mode=display">  \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau </script>
+</p>
 <ul>
 <li>
 <script type="math/tex">\tau = 1-T_R</script>
@@ -136,7 +146,7 @@
 <script type="math/tex">T_R = T/T_{c1}</script>
 </li>
 <li>
-<script type="math/tex">T_{c1}</script>: critical temperature of the solvent as recommended by IAPWS :cite:p:)iapws2007)</li>
+<script type="math/tex">T_{c1}</script>: critical temperature of the solvent as recommended by <a href="../references.html">IAPWS</a>.</li>
 <li>
 <script type="math/tex">p_1^{*}</script> is the vapor pressure of the solvent at the temperature of interest and 
   is calculated from the correlation of <a href="../references.html">Wagner and Pruss for <script type="math/tex">H_2O</script></a> 
@@ -153,9 +163,9 @@
 <li>
 <script type="math/tex">p_{c1}</script> is the critical pressure of the solvent recommended by the report <a href="../references.html">R2-83</a> </li>
 </ul>
-<h2 id="vapor-liquid-distribution-constant-kd">Vapor-Liquid Distribution Constant: kd</h2>
-<p>The liquid-vapor distribution constant <script type="math/tex">kD</script> is defined as shown in equation below.
-<script type="math/tex">K_D</script> is adimensional.</p>
+<h1 id="vapor-liquid-distribution-constant-kd">Vapor-Liquid Distribution Constant: kd</h1>
+<p>The liquid-vapor distribution constant <a href="../../proc/kd.html">kd</a> is defined as shown in equation below.
+<a href="../../proc/kd.html">kd</a> is adimensional.</p>
 <p>
 <script type="math/tex; mode=display">    k_D = \lim_{x_2 \rightarrow 0} y_2/x_2 </script>
 </p>
@@ -165,7 +175,7 @@
 <li>
 <script type="math/tex">y_2</script> is the vapor-phase solute mole fraction in equilibrium with the liquid</li>
 </ul>
-<p>The vapor-liquid distribution constant <script type="math/tex">k_D</script> is given as a function of temperature by:</p>
+<p>The vapor-liquid distribution constant <a href="../../proc/kd.html">kd</a> is given as a function of temperature by:</p>
 <p>
 <script type="math/tex; mode=display">    \ln K_D =qF+ \frac{E}{T(K)}f(\tau)+(F+G\tau^{2/3} +H\tau) \exp \left( \frac{273.15 - T(K)}{100} \right) </script>
 </p>
@@ -185,7 +195,7 @@
 <script type="math/tex">n</script> is 6 for <script type="math/tex">H_2O</script> and 4 for <script type="math/tex">D_2O</script>
 </li>
 </ul>
-<h2 id="molar-fractions">Molar fractions</h2>
+<h1 id="molar-fractions">Molar fractions</h1>
 <p>The molar fractions <script type="math/tex">x_2</script> and <script type="math/tex">y_2</script> as following: </p>
 <p>
 <script type="math/tex; mode=display">    x_2 = \frac{f_2}{k_H} </script>
@@ -207,13 +217,23 @@ unit of pressure as shown in the following equation .</p>
 <br>
 <script type="math/tex; mode=display"> S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}] </script>
 </p>
-<h2 id="available-gases">Available gases</h2>
-<p>
-<script type="math/tex">kh</script> and <script type="math/tex">kd</script> can be computed for the following gases:</p>
+<h1 id="available-gases">Available gases</h1>
+<p><a href="../../proc/kh.html">kh</a> and <a href="../../proc/kd.html">kd</a> can be computed for the following gases:</p>
 <ul>
 <li>in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6</li>
 <li>in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4</li>
 </ul>
+<p>The available gases can be retrieved with</p>
+<ul>
+<li><a href="../../proc/gases.html">gases</a> which returns the available gases as a list.</li>
+<li><a href="../../proc/gases2.html">gases2</a> which return the available gases as a string.</li>
+<li><a href="../../proc/ngases.html">ngases</a> which returns the number of available gases.</li>
+</ul>
+<h1 id="plots">Plots</h1>
+<p><img alt="kh_H2O" src="../../media/kh_H2O.png"></p>
+<p><img alt="kh_D2O" src="../../media/kh_D2O.png"></p>
+<p><img alt="kd_H2O" src="../../media/kd_H2O.png"></p>
+<p><img alt="kd_D2O" src="../../media/kd_D2O.png"></p>
     </div>
   </div>
       <hr>
@@ -231,7 +251,7 @@ unit of pressure as shown in the following equation .</p>
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-06-23T09:01:21.534739             </p>
+ on 2024-06-26T07:02:47.187516             </p>
           </div>
         </div>
         <br>
