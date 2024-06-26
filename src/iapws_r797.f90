@@ -32,6 +32,20 @@ real(dp) :: IJn_r1f(9, 3) = transpose(reshape([&
 1.0_dp, -9.0_dp, -0.28319080123804d-3], &
 [3, 9]))
 
+!! n_r4: ni coefficients for region 4 (saturation line)
+real(dp) :: n_r4(10) = [  &
++0.11670521452767e4_dp,   &
+-0.72421316703206e6_dp,   &
+-0.1707384694009292e2_dp, &
++0.12020824702470e5_dp,   &
+-0.32325550322333e7_dp,   &
++0.14915108613530e2_dp,   &
+-0.48232657361591e4_dp,   &
++0.40511340542057e6_dp,   &
+-0.23855557567849_dp,     &
++0.65017534844798e3_dp,   &
+])
+
 contains
 
 pure elemental function gamma_(P, T)result(res)
