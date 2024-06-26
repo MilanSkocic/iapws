@@ -2,11 +2,11 @@
 title: IAPWS R2-83
 ---
 
-# IAPWS R2-83
+# Description
 
 The technical report [R2-83](../references.html) defines constants used for computing the water properties.
 
-## In water
+# In water
 
 $$ T_c = 647.096 K $$
 
@@ -15,7 +15,7 @@ $$ P_c = 22.064 MPa $$
 $$ \rho _c = 322 kg/m^3 $$
 
 
-## In heavywater
+# In heavywater
 
 $$ T_c = 643.847 K $$
 

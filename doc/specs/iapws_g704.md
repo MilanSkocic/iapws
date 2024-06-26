@@ -2,11 +2,11 @@
 title: IPAWS G7-04
 ---
 
-# IAPWS G7-04
+# Description
 
 The computation is based on the parameters provided by the technical report [G7-04](../references.html)
 
-## Henry Contant: kh
+# Henry Contant: kh
 
 The Henry constant \(kH\) is defined as shown in equation below.
 \(k_H\) is expressed in MPa.
@@ -18,7 +18,7 @@ $$ k_H = \lim_{x_2 \rightarrow 0} f_2/x_2 $$
  
 The Henry's constant \(k_H\) is given as a function of temperature by:
 
-    \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau
+$$  \ln \left( \frac{k_H}{p_1^*} \right) = A/T_R + \frac{B \cdot \tau^{0.355}}{T_R} + C \cdot T_R^{-0.41} \cdot \exp \tau $$
 
 * \(\tau = 1-T_R\)
 * \(T_R = T/T_{c1}\)
@@ -35,7 +35,7 @@ $$ \ln \left( p_1^{*}/p_{c1} \right) = T_R^{-1} \sum_{i=1}^{n}a_i \tau^{b_i} $$
 * \(p_{c1}\) is the critical pressure of the solvent recommended by the report [R2-83](../references.html) 
 
 
-## Vapor-Liquid Distribution Constant: kd
+# Vapor-Liquid Distribution Constant: kd
 
 The liquid-vapor distribution constant \(kD\) is defined as shown in equation below.
 \(K_D\) is adimensional.
@@ -59,7 +59,7 @@ $$ f(\tau) = \sum _{i=1} ^{n} c_i \cdot \tau ^{d_i} $$
 
 * \(n\) is 6 for \(H_2O\) and 4 for \(D_2O\) 
 
-## Molar fractions
+# Molar fractions
 
 The molar fractions \(x_2\) and \(y_2\) as following: 
 
@@ -82,9 +82,17 @@ The molar fractions can be converted to solubilties in ppm or cm3/kg by consider
 $$ S_{X}[mg.kg^{-1}.bar^{-1}] = x_2[bar^{-1}] \cdot \frac{M_{X}[g.mol^{-1}]}{M_{solvent}[g.mol^{-1}]} \cdot 10^6 $$    
 $$ S_{X}[cm3.kg^{-1}.bar^{-1}] = \frac{S_{X}[mg.kg^{-1}.bar^{-1}]}{M_{X}[g.mol^{-1}]} \cdot V_m[mol.L^{-1}] $$
     
-## Available gases
+# Available gases
 
 \(kh\) and \(kd\) can be computed for the following gases:
 
 * in water: He, Ne, Ar, Kr, Xe, H2, N2, O2, CO, CO2, H2S, CH4, C2H6, SF6
 * in heavywater: He, Ne, Ar, Kr, Xe, D2, CH4
+
+# Plots
+
+![kh_H2O](../../media/kh_H20.png)
+![kh_D2O](../../media/kh_D20.png)
+![kd_H2O](../../media/kd_H20.png)
+![kd_D2O](../../media/kd_D20.png)
+

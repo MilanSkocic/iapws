@@ -3,11 +3,11 @@ title: IAPWS R7-97
 ---
 
 
-# IAPWS R7-97
+# Description
 
 The computation is based on the parameters provided by the technical report [R7-97](../references.html).
 
-## Structure of the formulation
+# Structure of the formulation
 
 The R7-97 report consists of a set of equations for different 
 regions which cover the following range of validity:
@@ -18,7 +18,7 @@ regions which cover the following range of validity:
 ![r787_refions](../../media/iapws_r797-regions.png)
    
 
-## Reference constants
+# Reference constants
 
 The specific gas constant of ordinary water used for this formulation is
 
@@ -35,7 +35,7 @@ The values of the critical parameters
 are from the corresponding IAPWS release.
 
 
-## Auxiliary Equation for the Boundary between Regions 2 and 3
+# Auxiliary Equation for the Boundary between Regions 2 and 3
 
 $$ \pi = n_1 + n_2 \theta + n_3 \theta ^2 $$
 
