@@ -122,37 +122,51 @@ end function
 ! Region 4: Saturation line
 !--------------------------------------------------------------------------------------------------------------------------------
 pure elemental function r4_ps(Ts)result(value)
-    !! Compute the saturation-pressure line.
+    !! Compute the saturation-pressure line. Validity range 273.13 K (0°C) <= Ts <= 647.096 K (373.946°C).
     real(dp), intent(in) :: Ts    !! Saturation temperature in °C.
-    real(dp) :: value !! Saturation pressure in MPa at temperature T.
+    real(dp) :: value !! Saturation pressure in MPa at temperature Ts. Is nan if Ts is out of range.
 
-    real(dp) :: theta, Ts_K, A, B, C
+    real(dp) :: theta, T_K, Ts_K, A, B, C
+    
+    T_K = Ts + T_KELVIN
 
-    Ts_K = (Ts + T_KELVIN) / r4_Tstar
-    theta = Ts_K + r4_n(9) / (Ts_K - r4_n(10))
+    if(T_K < r4_Tmin)then
+        value = ieee_value(1.0_dp, ieee_quiet_nan)
+    else if(T_K > r4_Tmax)then
+        value = ieee_value(1.0_dp, ieee_quiet_nan)
+    else
+        Ts_K = T_K / r4_Tstar
+        theta = Ts_K + r4_n(9) / (Ts_K - r4_n(10))
 
-    A = theta**2           + r4_n(1) * theta + r4_n(2)
-    B = r4_n(3) * theta**2 + r4_n(4) * theta + r4_n(5)
-    C = r4_n(6) * theta**2 + r4_n(7) * theta + r4_n(8)
+        A = theta**2           + r4_n(1) * theta + r4_n(2)
+        B = r4_n(3) * theta**2 + r4_n(4) * theta + r4_n(5)
+        C = r4_n(6) * theta**2 + r4_n(7) * theta + r4_n(8)
+    
+        value = r4_Pstar  *( 2*C /(-B +(B**2-4*A*C)**(0.5_dp)))**(4.0_dp)
+    endif
 
-    value = r4_Pstar  *( 2*C /(-B +(B**2-4*A*C)**(0.5_dp)))**(4.0_dp)
 end function
 
 pure elemental function r4_Ts(ps)result(value)
-    !! Compute the saturation-pressure line.
+    !! Compute the saturation-pressure line. Validity range 611.213 Pa (6.11213 bar) <= ps <= 22.064 MPa (220.64 bar).
 
     real(dp), intent(in) :: ps    !! Saturation pressure in MPa.
-    real(dp) :: value !! Saturation temperature in °C at pressure ps.
-
-    value = 1.0_dp     
+    real(dp) :: value !! Saturation temperature in °C at pressure ps. Is nan if ps is out of range.
+    
+    if(ps < r4_pmin)then
+        value = ieee_value(1.0_dp, ieee_quiet_nan)
+    else if(ps > r4_pmax)then
+        value = ieee_value(1.0_dp, ieee_quiet_nan)
+    else
+        value = 1.0_dp     
+    endif
 end function
 
 pure subroutine psat(Ts, ps)
-    !! Compute the saturation pressure at temperature Ts.
-
+    !! Compute the saturation pressure at temperature Ts. 
     real(dp), intent(in) :: Ts(:) !! Saturation temperature in °C
-    real(dp), intent(out) :: ps(:)   !! Saturation pressure in MPa.
-
+    real(dp), intent(out) :: ps(:)   !! Saturation pressure in MPa. Filled with nan if out of validity range.
+    
     ps = r4_ps(Ts)
 
 end subroutine
