@@ -58,10 +58,17 @@ program example_in_f
     print *, '########################## IAPWS R7-97 ##########################'
     ! Compute ps from Ts.
     Ts(:) = [-1.0_dp, 25.0_dp, 100.0_dp, 200.0_dp, 300.0_dp, 360.0_dp, 374.0_dp]
+    Ts(:) = Ts(:) + 273.15_dp
     call psat(Ts, ps)
 
     do i=1, size(Ts)
-        print "(SP, F23.3, A3, 4X, F23.3, A3, F23.3, A3)", Ts(i), "°C", ps(i), "MPa", ps(i)*10.0_dp, "bar"
+        print "(SP, F23.3, A3, 4X, F23.3, A3, F23.3, A3)", Ts(i), "K", ps(i), "MPa", ps(i)*10.0_dp, "bar"
+    end do 
+
+    ! Compute Ts from ps
+    call Tsat(ps, Ts)
+    do i=1, size(Ts)
+        print "(SP, F23.3, A3, 4X, F23.3, A3, F23.3, A3)", Ts(i), "K", ps(i), "MPa", ps(i)*10.0_dp, "bar"
     end do 
 
 end program
