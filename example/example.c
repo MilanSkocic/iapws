@@ -55,6 +55,24 @@ int main(void){
     for(i=0; i<ngas; i++){
         printf("%s\n", gases_list[i]);
     }
+    
+    printf("%s\n", "########################## IAPWS R7-97 ##########################");
+    double Ts[7] =  {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0};
+    double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+    for(i=0; i<7; i++){
+        Ts[i] = Ts[i] + 273.15;
+    }
+    iapws_r797_psat(7, Ts, ps);
+
+    for(i=0; i<7; i++){
+        printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
+    }
+
+    iapws_r797_Tsat(7, ps, Ts);
+    for(i=0; i<7; i++){
+        printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
+    }
+
 
     return 0;
 }

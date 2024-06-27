@@ -75,7 +75,7 @@ for HEAVYWATER in (False, True):
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
-    fig.savefig(f"../media/{kname:s}_{solvent[HEAVYWATER]}.png", dpi=100, format="png")
+    fig.savefig(f"../media/g704-{kname:s}_{solvent[HEAVYWATER]}.png", dpi=100, format="png")
 
 print("Generating plot for kd")
 kname = "kd"
@@ -93,7 +93,39 @@ for HEAVYWATER in (False, True):
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
-    fig.savefig(f"../media/{kname:s}_{solvent[HEAVYWATER]}.png", dpi=100, format="png")
+    fig.savefig(f"../media/g704-{kname:s}_{solvent[HEAVYWATER]}.png", dpi=100, format="png")
+
+
+
+print("########################## IAPWS G7-04 ##########################")
+Ts = np.asarray([-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0])
+Ts = Ts + 273.15
+
+
+ps = np.asarray(pyiapws.r797.psat(Ts))
+for i in range(Ts.size): 
+    print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
+
+Ts = np.asarray(pyiapws.r797.Tsat(ps))
+for i in range(Ts.size): 
+    print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
+
+fig = plt.figure()
+ax = fig.add_subplot()
+ax.grid(visible=True, ls=':')
+ax.set_xlabel("Ts /K")
+ax.set_ylabel("ps /MPa")
+Ts = np.linspace(0.0, 370.0, 500)
+Ts = Ts + 273.15
+
+ps = np.asarray(pyiapws.r797.psat(Ts))
+ax.plot(Ts, ps, "r-", label="ps(Ts)")
+
+Ts = np.asarray(pyiapws.r797.Tsat(ps))
+ax.plot(Ts, ps, "b--", label="Ts(ps)")
+
+ax.legend()
+fig.savefig(f"../media/r797-r4.png", dpi=100, format="png")
 
 
 plt.show()
