@@ -83,7 +83,7 @@ $$ C = n_6 \theta ^2 + n_7 \theta + n_8 $$
 
 Range of validity: \(273.15 K \leq T \leq 647.096 K.
 
-## The saturation-temprature equation (Backward Equation)
+## The saturation-temperature equation (Backward Equation)
 
 The saturation-temperature solution of the quadratic equation reads
 
