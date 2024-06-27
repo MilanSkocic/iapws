@@ -120,6 +120,12 @@ if __name__ == "__main__":
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
+    mod_r797 = Extension(name=f"py{name:s}.r797",
+                         sources=[f"./src/py{name:s}/cpy_{name:s}_r797.c"],
+                         libraries=libraries,
+                         library_dirs=library_dirs,
+                         runtime_library_dirs=runtime_library_dirs,
+                         extra_objects=extra_objects)
     mod_version = Extension(name=f"py{name:s}.version",
                          sources=[f"./src/py{name:s}/cpy_{name:s}_version.c"],
                          libraries=libraries,
@@ -127,5 +133,5 @@ if __name__ == "__main__":
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
     setup(version= version, 
-          ext_modules=[mod_g704, mod_r283, mod_version])
+          ext_modules=[mod_g704, mod_r283, mod_r797, mod_version])
 
