@@ -5,17 +5,29 @@ The formulas are taken from http://iapws.org.
 C API allows usage from C, or can be used as a basis for other wrappers.
 Python wrapper allows easy usage from Python.
 
-For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
-technical report R7-97. 
+For now, I have implemented 
+
+- R2-83
+    - [x] Tc in H2O and D2O
+    - [x] pc in H2O and D2O
+    - [x] rhoc in H2O and D2O
+- G7-04 
+    - [x] kH
+    - [x] kD
+- R7-97
+    - [ ] Region 1
+    - [ ] Region 2
+    - [ ] Region 4
+    - [x] Region 4
+    - [ ] Region 5
 
 To use `iapws` within your `fpm <https://github.com/fortran-lang/fpm>`_ project,
 add the following to your `fpm.toml` file:
 
-.. code-block::
-
+```
     [dependencies]
     iapws = { git="https://github.com/MilanSkocic/iapws.git" }
-    
+```
 
 # Dependencies
 
