@@ -1,5 +1,5 @@
 module testsuite_g704
-    use iso_fortran_env
+    use stdlib_kinds, only: dp, int32
     use testdrive, only : new_unittest, unittest_type, error_type, check
     use iapws
     implicit none
@@ -127,11 +127,11 @@ subroutine test_kh_H2O(error)
     character(len=5), parameter :: gases(ngas) =&
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"]
     integer(int32), parameter :: heavywater = 0
-    real(real64) :: k(nT)
+    real(dp) :: k(nT)
 
-    real(real64) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
-    real(real64) :: T_C(nT) 
-    real(real64) :: expected_khs(ngas, nT) = &
+    real(dp) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
+    real(dp) :: T_C(nT) 
+    real(dp) :: expected_khs(ngas, nT) = &
     transpose(reshape([2.6576d0, 2.1660d0, 1.1973d0, -0.1993d0, &
                         2.5134d0, 2.3512d0, 1.5952d0, 0.4659d0,&
                         1.4061d0, 1.8079d0, 1.1536d0, 0.0423d0,&
@@ -147,16 +147,16 @@ subroutine test_kh_H2O(error)
                         1.1418d0, 1.8495d0, 0.8274d0, -0.8141d0,&
                         3.1445d0, 3.6919d0, 2.6749d0, 1.2402d0], shape=[nT, ngas]))
     integer(int32) :: i, j 
-    real(real64) :: value, expected
+    real(dp) :: value, expected
     
     T_C = T_K - 273.15d0
     
     do i=1, ngas
         call kh(T_C, gases(i), heavywater, k)
         do j=1, nT
-            value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
-            expected = nint(expected_khs(i, j) * 1d4) * 1d-4
-            call check(error, value, expected)
+            value  = log(k(j)/1000d0)
+            expected = expected_khs(i, j)
+            call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
         enddo    
     enddo
@@ -171,11 +171,11 @@ subroutine test_kh_D2O(error)
     character(len=5), parameter :: gases(ngas) =&
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"]
     integer(int32), parameter :: heavywater = 1
-    real(real64) :: k(nT)
+    real(dp) :: k(nT)
 
-    real(real64) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
-    real(real64) :: T_C(nT) 
-    real(real64) :: expected_khs(ngas, nT) = &
+    real(dp) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
+    real(dp) :: T_C(nT) 
+    real(dp) :: expected_khs(ngas, nT) = &
     transpose(reshape([2.5756d0, 2.1215d0, 1.2748d0, -0.0034d0,&
                         2.4421d0, 2.2525d0, 1.5554d0, 0.4664d0,&
                         1.3316d0, 1.7490d0, 1.1312d0, 0.0360d0,&
@@ -184,16 +184,16 @@ subroutine test_kh_D2O(error)
                         1.6594d0, 1.6762d0, 0.9042d0, -0.3665d0,&
                         1.3624d0, 1.7968d0, 1.0491d0, -0.2186d0], shape=[nT, ngas]))
     integer(int32) :: i, j 
-    real(real64) :: value, expected
+    real(dp) :: value, expected
     
     T_C = T_K - 273.15d0
     
     do i=1, ngas
         call kh(T_C, gases(i), heavywater, k)
         do j=1, nT
-            value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
-            expected = nint(expected_khs(i, j) * 1d4) * 1d-4
-            call check(error, value, expected)
+            value  = log(k(j)/1000d0)
+            expected = expected_khs(i, j)
+            call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
         enddo    
     enddo
@@ -208,11 +208,11 @@ subroutine test_kd_H2O(error)
     character(len=5), parameter :: gases(ngas) =&
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "H2", "N2", "O2", "CO", "CO2", "H2S", "CH4", "C2H6", "SF6"]
     integer(int32), parameter :: heavywater = 0
-    real(real64) :: k(nT)
+    real(dp) :: k(nT)
 
-    real(real64) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
-    real(real64) :: T_C(nT) 
-    real(real64) :: expected_khs(ngas, nT) = &
+    real(dp) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
+    real(dp) :: T_C(nT) 
+    real(dp) :: expected_khs(ngas, nT) = &
     transpose(reshape([15.2250d0, 10.4364d0, 6.9971d0, 3.8019d0,&
                               15.0743d0, 10.6379d0, 7.4116d0, 4.2308d0,&
                               13.9823d0, 10.0558d0, 6.9869d0, 3.9861d0,&
@@ -228,16 +228,16 @@ subroutine test_kd_H2O(error)
                               13.7063d0, 10.1510d0, 6.8453d0, 3.6493d0,&
                               15.7067d0, 11.9887d0, 8.5550d0, 4.9599d0], shape=[nT, ngas]))
     integer(int32) :: i, j 
-    real(real64) :: value, expected
+    real(dp) :: value, expected
     
     T_C = T_K - 273.15d0
     
     do i=1, ngas
         call kd(T_C, gases(i), heavywater, k)
         do j=1, nT
-            value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
-            expected = nint(expected_khs(i, j) * 1d4) * 1d-4
-            call check(error, value, expected)
+            value  = log(k(j)/1000d0)
+            expected = expected_khs(i, j)
+            call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
         enddo    
     enddo
@@ -252,11 +252,11 @@ subroutine test_kd_D2O(error)
     character(len=5), parameter :: gases(ngas) =&
     [character(len=5) :: "He", "Ne", "Ar", "Kr", "Xe", "D2", "CH4"]
     integer(int32), parameter :: heavywater = 1
-    real(real64) :: k(nT)
+    real(dp) :: k(nT)
 
-    real(real64) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
-    real(real64) :: T_C(nT) 
-    real(real64) :: expected_khs(ngas, nT) = &
+    real(dp) :: T_K(nT) = [300.0d0, 400.0d0, 500.0d0, 600.0d0]
+    real(dp) :: T_C(nT) 
+    real(dp) :: expected_khs(ngas, nT) = &
     transpose(reshape([15.2802d0, 10.4217d0, 7.0674d0, 3.9539d0,&
                               15.1473d0, 10.5331d0, 7.3435d0, 4.2800d0,&
                               14.0517d0, 10.0632d0, 6.9498d0,3.9094d0,&
@@ -265,16 +265,16 @@ subroutine test_kd_D2O(error)
                               14.3520d0, 10.0178d0, 6.6975d0, 3.5590d0,&
                               14.0646d0, 10.1013d0, 6.9021d0, 3.8126d0], shape=[nT, ngas]))
     integer(int32) :: i, j 
-    real(real64) :: value, expected
+    real(dp) :: value, expected
     
     T_C = T_K - 273.15d0
     
     do i=1, ngas
         call kd(T_C, gases(i), heavywater, k)
         do j=1, nT
-            value  = nint(log(k(j)/1000d0) * 1d4) * 1d-4
-            expected = nint(expected_khs(i, j) * 1d4) * 1d-4
-            call check(error, value, expected)
+            value  = log(k(j)/1000d0)
+            expected = expected_khs(i, j)
+            call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
         enddo    
     enddo

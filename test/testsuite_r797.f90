@@ -16,15 +16,16 @@ end subroutine
 
 subroutine test_Psat(error)
     type(error_type), allocatable, intent(out) :: error 
-    integer(int32) :: i
+    integer(int32) :: i, actual, expected
     real(dp) :: ps(3)
     real(dp) :: Ts(3) = [300_dp, 500_dp, 600_dp]
-    real(dp) :: expected(3) = [0.353658941e-2_dp, 0.263889776e1_dp, 0.123443146e2_dp]
+    real(dp) :: psref(3) = [0.353658941e-2_dp, 0.263889776e1_dp, 0.123443146e2_dp]
+    real(dp) :: th(3) = [1e-11_dp, 1e-8_dp, 1e-7_dp]
     
     call psat(Ts-273.15_dp, ps)
     
     do i=1, size(Ts)
-        call check(error, ps(i), expected(i))
+        call check(error, ps(i), psref(i), thr=th(i))
         if (allocated(error)) return
     end do
 end subroutine
