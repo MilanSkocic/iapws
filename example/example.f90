@@ -4,7 +4,7 @@ program example_in_f
     implicit none
     integer(int32) :: i, ngas
     real(dp) :: T(1), kh_res(1), kd_res(1)
-    real(dp) :: Ts(5), ps(5)
+    real(dp) :: Ts(7), ps(7)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
     type(gas_type), pointer :: gases_list(:)
@@ -57,7 +57,7 @@ program example_in_f
 
     print *, '########################## IAPWS R7-97 ##########################'
     ! Compute ps from Ts.
-    Ts(:) = [25.0_dp, 100.0_dp, 200.0_dp, 300.0_dp, 360.0_dp]
+    Ts(:) = [-1.0_dp, 25.0_dp, 100.0_dp, 200.0_dp, 300.0_dp, 360.0_dp, 374.0_dp]
     call psat(Ts, ps)
 
     do i=1, size(Ts)
