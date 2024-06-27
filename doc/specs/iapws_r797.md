@@ -67,7 +67,7 @@ and
 
 with \(p^*=1MPa\) and \(T^*=1K\) and \(n_i\) are coefficients.
 
-## The saturation-pressure equation (Basic Equation)
+## The saturation-pressure equation (Basic Equation): [[iapws__r797(module):psat(subroutine)]]
 
 The solution of the quadratic equation with regard to saturation pressure is as follows:
 
@@ -81,9 +81,9 @@ $$ B = n_3 \theta ^2 + n_4 \theta + n_5 $$
 
 $$ C = n_6 \theta ^2 + n_7 \theta + n_8 $$
 
-Range of validity: \(273.15 K \leq T \leq 647.096 K.
+Range of validity: \(273.15 K \leq T \leq 647.096 K\).
 
-## The saturation-temperature equation (Backward Equation)
+## The saturation-temperature equation (Backward Equation): [[iapws__r797(module):Tsat(subroutine)]]
 
 The saturation-temperature solution of the quadratic equation reads
 
