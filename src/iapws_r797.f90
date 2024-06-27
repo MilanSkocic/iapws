@@ -6,7 +6,7 @@ module iapws__r797
     implicit none
     private
 
-    public :: iapws_r797_v
+    public :: iapws_r797_v, psat, Tsat
 
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
@@ -62,8 +62,6 @@ real(dp), parameter :: r4_Tstar = 1_dp !! K
 real(dp), parameter :: r4_Pstar = 1_dp !! MPa
 !--------------------------------------------------------------------------------------------------------------------------------
 
-
-public :: psat, Tsat 
 
 contains
 
