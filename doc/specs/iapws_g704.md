@@ -99,11 +99,11 @@ The available gases can be retrieved with
 
 # Plots
 
-![kh_H2O](../../media/kh_H2O.png)
+![kh_H2O](../../media/g704-kh_H2O.png)
 
-![kh_D2O](../../media/kh_D2O.png)
+![kh_D2O](../../media/g704-kh_D2O.png)
 
-![kd_H2O](../../media/kd_H2O.png)
+![kd_H2O](../../media/g704-kd_H2O.png)
 
-![kd_D2O](../../media/kd_D2O.png)
+![kd_D2O](../../media/g704-kd_D2O.png)
 
