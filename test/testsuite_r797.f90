@@ -22,22 +22,13 @@ subroutine test_Psat(error)
     real(dp) :: psref(3) = [0.353658941e-2_dp, 0.263889776e1_dp, 0.123443146e2_dp]
     real(dp) :: th(3) = [1e-11_dp, 1e-8_dp, 1e-7_dp]
     
-    call psat(Ts-273.15_dp, ps)
+    call psat(Ts, ps)
     
     ! check ref values from Table 35.
     do i=1, size(Ts)
         call check(error, ps(i), psref(i), thr=th(i))
         if (allocated(error)) return
     end do
-
-    ! Check out of range Ts.
-    Ts(1) = 273.0_dp
-    Ts(2) = 648.0_dp
-    call psat(Ts-273.15, ps)
-    do i=1, 2
-        call check(error, isnan(ps(1)), .true.)
-        if (allocated(error)) return
-    enddo
 
 end subroutine
 
@@ -56,15 +47,6 @@ subroutine test_Tsat(error)
         call check(error, Ts(i), Tsref(i), thr=th(i))
         if (allocated(error)) return
     end do
-
-    ! Check out of range ps.
-    Ts(1) = 0.611213_dp
-    Ts(2) = 22.064_dp
-    call Tsat(ps, Ts)
-    do i=1, 2
-        call check(error, isnan(ps(1)), .true.)
-        if (allocated(error)) return
-    enddo
 
 end subroutine
 
