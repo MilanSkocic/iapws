@@ -1,9 +1,10 @@
 program example_in_f
-    use iso_fortran_env
+    use stdlib_kinds, only: dp, int32
     use iapws
     implicit none
     integer(int32) :: i, ngas
-    real(real64) :: T(1), kh_res(1), kd_res(1)
+    real(dp) :: T(1), kh_res(1), kd_res(1)
+    real(dp) :: Ts(5), ps(5)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
     type(gas_type), pointer :: gases_list(:)
@@ -53,5 +54,14 @@ program example_in_f
     do i=1, ngas
         print *, gases_list(i)%gas
     enddo
+
+    print *, '########################## IAPWS R7-97 ##########################'
+    ! Compute ps from Ts.
+    Ts(:) = [25.0_dp, 100.0_dp, 200.0_dp, 300.0_dp, 360.0_dp]
+    call psat(Ts, ps)
+
+    do i=1, size(Ts)
+        print "(SP, F23.3, A3, 4X, F23.3, A3, F23.3, A3)", Ts(i), "°C", ps(i), "MPa", ps(i)*10.0_dp, "bar"
+    end do 
 
 end program
