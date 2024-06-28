@@ -16,7 +16,7 @@ regions which cover the following range of validity:
 * \(273.15K < T < 1073.15K\) and \(p < 100MPa\) 
 * \(1073.15K < T < 2273.15K\) and  \(p < 50MPa\)
 
-<img src="../../media/iapws_r797-regions.png" width="600px"/>
+<img src="../../media/iapws_r797-regions.png" width="400px"/>
    
 
 
@@ -100,3 +100,7 @@ $$ F = n_1 \beta ^2 +n_4 \beta + n_7 $$
 $$ G = n_2 \beta ^2 + n_5 \beta + n_8 $$
 
 Range of validity: \(611.213Pa \leq p \leq 22.064MPa\)
+
+## Plot
+
+<img src="../../media/r797-r4.png" width="400px"/>
