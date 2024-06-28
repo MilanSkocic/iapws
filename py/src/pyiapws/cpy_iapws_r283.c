@@ -12,22 +12,22 @@ static PyMethodDef myMethods[] = {
 };
 
 // Our Module Definition struct
-static struct PyModuleDef r283 = {
+static struct PyModuleDef r283_ = {
     PyModuleDef_HEAD_INIT,
-    "r283",
+    "r283_",
     module_docstring,
     -1,
     myMethods
 };
 
 // Initializes our module using our above struct
-PyMODINIT_FUNC PyInit_r283(void)
+PyMODINIT_FUNC PyInit_r283_(void)
 {   
     PyObject *m;
     PyObject *d;
     PyObject *v;
 
-    m = PyModule_Create(&r283);
+    m = PyModule_Create(&r283_);
     d = PyModule_GetDict(m);
 
     v = PyFloat_FromDouble(iapws_r283_Tc_H2O);

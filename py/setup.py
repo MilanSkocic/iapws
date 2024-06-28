@@ -108,19 +108,19 @@ with open("./VERSION", "r") as f:
 
 if __name__ == "__main__":
 
-    mod_g704 = Extension(name=f"py{name:s}.g704",
+    mod_g704 = Extension(name=f"py{name:s}.g704_",
                          sources=[f"./src/py{name:s}/cpy_{name:s}_g704.c"],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
-    mod_r283 = Extension(name=f"py{name:s}.r283",
+    mod_r283 = Extension(name=f"py{name:s}.r283_",
                          sources=[f"./src/py{name:s}/cpy_{name:s}_r283.c"],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
-    mod_r797 = Extension(name=f"py{name:s}.r797",
+    mod_r797 = Extension(name=f"py{name:s}.r797_",
                          sources=[f"./src/py{name:s}/cpy_{name:s}_r797.c"],
                          libraries=libraries,
                          library_dirs=library_dirs,

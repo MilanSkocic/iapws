@@ -116,18 +116,18 @@ static PyMethodDef myMethods[] = {
 };
 
 // Our Module Definition struct
-static struct PyModuleDef r797 = {
+static struct PyModuleDef r797_ = {
     PyModuleDef_HEAD_INIT,
-    "r797",
+    "r797_",
     module_docstring,
     -1,
     myMethods
 };
 
 // Initializes our module using our above struct
-PyMODINIT_FUNC PyInit_r797(void)
+PyMODINIT_FUNC PyInit_r797_(void)
 {
-    return PyModule_Create(&r797);
+    return PyModule_Create(&r797_);
 }
 
 
