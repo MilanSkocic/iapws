@@ -1,8 +1,8 @@
 *.f90 linguist-language=fortran
 *.fypp linguist-language=fortran
 
-doc/** linguist-documentation
-docs/** linguist-documentation
+doc/** linguist-vendored
+docs/** linguist-vendored
 example/** linguist-vendored
 include/** linguist-vendored
 capi/** linguist-vendored
