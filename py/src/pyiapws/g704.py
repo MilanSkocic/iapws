@@ -68,8 +68,10 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     kd: float or 1d-array
         Adimensional liquid-vapor constant. 
     """
+    scalar = False
     if isinstance(T, (int, float)):
         T_ = np.asarray((T,), dtype="f8")
+        scalar = True
     elif isinstance(T, np.ndarray):
         if T.ndim == 1:
             T_ = np.asarray(T, dtype="f8")
@@ -83,7 +85,12 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
-    return g704_.kd(T_, gas_, heavywater_)
+    k = g704_.kd(T_, gas_, heavywater_)
+    
+    if scalar:
+        return k[0]
+    else:
+        return k
 
 
 def ngases(heavywater:bool=False)->int:

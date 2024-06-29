@@ -93,16 +93,16 @@ for HEAVYWATER in (False, True):
 
 
 
-print("########################## IAPWS G7-04 ##########################")
+print("########################## IAPWS R7-97 ##########################")
 Ts = np.asarray([-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0])
 Ts = Ts + 273.15
 
 
-ps = np.asarray(pyiapws.r797.psat(Ts))
+ps = pyiapws.r797.psat(Ts)
 for i in range(Ts.size): 
     print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
 
-Ts = np.asarray(pyiapws.r797.Tsat(ps))
+Ts = pyiapws.r797.Tsat(ps)
 for i in range(Ts.size): 
     print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
 
@@ -114,10 +114,10 @@ ax.set_ylabel("ps /MPa")
 Ts = np.linspace(0.0, 370.0, 500)
 Ts = Ts + 273.15
 
-ps = np.asarray(pyiapws.r797.psat(Ts))
+ps = pyiapws.r797.psat(Ts)
 ax.plot(Ts, ps, "r-", label="ps(Ts)")
 
-Ts = np.asarray(pyiapws.r797.Tsat(ps))
+Ts = pyiapws.r797.Tsat(ps)
 ax.plot(Ts, ps, "b--", label="Ts(ps)")
 
 ax.legend()
