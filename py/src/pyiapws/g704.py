@@ -1,10 +1,11 @@
 """IAPWS G704."""
+from typing import Union, List
 import numpy as np
 import array
 from . import g704_
 
 
-def kh(T: np.ndarray, gas: str, heavywater: bool=False):
+def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
     """
     Get the Henry constant for gas in H2O or D2O at T. 
     If gas not found returns NaNs.
@@ -48,7 +49,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False):
         return k
 
 
-def kd(T: np.ndarray, gas: str, heavywater: bool=False):
+def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
     """
     Get the vapor-liquid constant for gas in H2O or D2O at T. 
     If gas not found returns NaNs.
@@ -85,7 +86,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False):
     return g704_.kd(T_, gas_, heavywater_)
 
 
-def ngases(heavywater:bool=False):
+def ngases(heavywater:bool=False)->int:
     """
     Get the number of available gases.
     
@@ -102,7 +103,7 @@ def ngases(heavywater:bool=False):
     return g704_.ngases(heavywater)
 
 
-def gases(heavywater: bool=False):
+def gases(heavywater: bool=False)->List[str]:
     """
     Get the list of available gases.
 
@@ -119,7 +120,7 @@ def gases(heavywater: bool=False):
     return g704_.gases(heavywater)
 
 
-def gases2(heavywater: bool=False):
+def gases2(heavywater: bool=False)->str:
     """
     Get the available gases as a string.
 
