@@ -1,7 +1,7 @@
 """IAPWS G704."""
 from typing import Union, List
 import numpy as np
-import array
+from . import core
 from . import g704_
 
 
@@ -25,19 +25,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         Henry constant in MPa.
     """
     scalar = False
-    if isinstance(T, (int, float)):
-        T_ = np.asarray((T,), dtype="f8")
-        scalar = True
-    elif isinstance(T, np.ndarray):
-        if T.ndim == 1:
-            T_ = np.asarray(T, dtype="f8")
-        else:
-            raise TypeError("T must be a 1d-array of floats.")
-    elif isinstance(T, array.array):
-        T_ = np.asarray(T, dtype="f8")
-    else:
-        raise TypeError("T must be a 1d-array of floats.")
-    
+    T_ = core.cast_ndarray(T)
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
@@ -69,18 +57,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         Adimensional liquid-vapor constant. 
     """
     scalar = False
-    if isinstance(T, (int, float)):
-        T_ = np.asarray((T,), dtype="f8")
-        scalar = True
-    elif isinstance(T, np.ndarray):
-        if T.ndim == 1:
-            T_ = np.asarray(T, dtype="f8")
-        else:
-            raise TypeError("T must be a 1d-array of floats.")
-    elif isinstance(T, array.array):
-        T_ = np.asarray(T, dtype="f8")
-    else:
-        raise TypeError("T must be a 1d-array of floats.")
+    T_ = core.cast_ndarray(T)
     
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
