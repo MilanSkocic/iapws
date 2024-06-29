@@ -26,12 +26,10 @@ T = array.array("d", (25.0,))
 
 # Compute kh and kd in H2O
 heavywater = False
-m = pyiapws.g704.kh(T, "O2", heavywater)
-k = array.array("d", m)
+k = pyiapws.g704.kh(T, "O2", heavywater)
 print(f"Gas={gas}\tT={T[0]}C\tkh={k[0]:+10.4f}\n")
 
-m = pyiapws.g704.kd(T, "O2", heavywater)
-k = array.array("d", m)
+k = pyiapws.g704.kd(T, "O2", heavywater)
 print(f"Gas={gas}\tT={T[0]}C\tkh={k[0]:+10.4f}\n")
 
 # Get and print the available gases
@@ -70,8 +68,7 @@ for HEAVYWATER in (False, True):
     ax.set_ylabel("ln (kh/1GPa)")
     gases = pyiapws.g704.gases(HEAVYWATER)
     for gas in gases:
-        k_m = pyiapws.g704.kh(T, gas, HEAVYWATER)
-        k = np.asarray(k_m) / 1000.0
+        k = pyiapws.g704.kh(T, gas, HEAVYWATER) / 1000.0
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
@@ -88,8 +85,7 @@ for HEAVYWATER in (False, True):
     ax.set_ylabel("ln kd")
     gases = pyiapws.g704.gases(HEAVYWATER)
     for gas in gases:
-        k_m = pyiapws.g704.kd(T, gas, HEAVYWATER)
-        k = np.asarray(k_m)
+        k = pyiapws.g704.kd(T, gas, HEAVYWATER)
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
