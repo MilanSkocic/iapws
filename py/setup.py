@@ -126,7 +126,7 @@ if __name__ == "__main__":
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
-    mod_version = Extension(name=f"py{name:s}.version",
+    mod_version = Extension(name=f"py{name:s}.version_",
                          sources=[f"./src/py{name:s}/cpy_{name:s}_version.c"],
                          libraries=libraries,
                          library_dirs=library_dirs,
