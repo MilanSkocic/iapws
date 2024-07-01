@@ -1,3 +1,16 @@
+# Version 0.4.0
+
+* Implementation of the region 4 in R7-97.
+* Add dependency to numpy for python wrapper.
+* Add pure python modules for encapsulating C extensions.
+* Refractoring and code cleaning.
+* Documentation update.
+
+**Note releases**
+
+
+
+
 # Version 0.3.0
 
 * API break: functions for the Fortran code were renamed: 
