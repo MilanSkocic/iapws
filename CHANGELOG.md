@@ -7,7 +7,7 @@
 * Refractoring and code cleaning.
 * Documentation update.
 
-**Note releases**
+**Not released yet**
 
 
 
