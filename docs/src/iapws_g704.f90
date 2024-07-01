@@ -173,14 +173,14 @@ pure elemental function f_p1star_H2O(T)result(value)
     !! Compute p1* in H2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     real(dp) :: value
         !! p1* in MPa.
     
     real(dp) :: Tr
     real(dp) :: tau
 
-    Tr = (T+T_KELVIN)/Tc1_H2O
+    Tr = T/Tc1_H2O
     tau = 1 - Tr
     value = exp(1/(Tr) * sum(aibi_H2O(:,1)*tau**(aibi_H2O(:,2)))) * pc1_H2O
 end function
@@ -189,14 +189,14 @@ pure elemental function f_p1star_D2O(T)result(value)
     !! Compute p1* in D2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     real(dp) :: value
         !! p1* in MPa.
     
     real(dp) :: Tr
     real(dp) :: tau
 
-    Tr = (T+T_KELVIN)/Tc1_D2O
+    Tr = T/Tc1_D2O
     tau = 1 - Tr
     value = exp(1/(Tr) * sum(aibi_D2O(:,1)*tau**(aibi_D2O(:,2)))) * pc1_D2O
 end function
@@ -205,7 +205,7 @@ pure elemental function f_kh_p1star_H2O(T, abc)result(value)
     !! Compute kh/p1* in H2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
     real(dp) :: value
@@ -214,7 +214,7 @@ pure elemental function f_kh_p1star_H2O(T, abc)result(value)
     real(dp) :: Tr
     real(dp) :: tau
 
-    Tr = (T+T_KELVIN)/Tc1_H2O
+    Tr = T/Tc1_H2O
     tau = 1 - Tr
     value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function
@@ -223,7 +223,7 @@ pure elemental function f_kh_p1star_D2O(T, abc)result(value)
     !! Compute kh/p1* in D2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
     real(dp) :: value
@@ -232,7 +232,7 @@ pure elemental function f_kh_p1star_D2O(T, abc)result(value)
     real(dp) :: Tr
     real(dp) :: tau
 
-    Tr = (T+T_KELVIN)/Tc1_D2O
+    Tr = T/Tc1_D2O
     tau = 1 - Tr
     value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function
@@ -261,7 +261,7 @@ pure elemental function f_kh_H2O(T, abc)result(value)
     !! Compute kH in H2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
     real(dp) :: value
@@ -273,7 +273,7 @@ pure elemental function f_kh_D2O(T, abc)result(value)
     !! Compute kH in D2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(abc_t), intent(in) :: abc
         !! ABC coefficients.
     real(dp) :: value
@@ -285,7 +285,7 @@ pure elemental function f_kd_H2O(T, efgh) result(value)
     !! Compute kd in H2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(efgh_t), intent(in) :: efgh
         !! EFGH coefficients.
     real(dp) :: value
@@ -302,7 +302,7 @@ pure elemental function f_kd_H2O(T, efgh) result(value)
     tau  = 1-Tr
     
     p1 = q_H2O*efgh%F
-    p2 = efgh%E/(T+T_KELVIN)*ft_H2O(tau)
+    p2 = efgh%E/T*ft_H2O(tau)
     p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
     p4 = exp(-T/100.0_dp)
 
@@ -314,7 +314,7 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
     !! Compute kd in D2O.
     implicit none
     real(dp), intent(in) :: T
-        !! Temperature in °C.
+        !! Temperature in K.
     type(efgh_t), intent(in) :: efgh
         !! EFGH coefficients.
     real(dp) :: value
@@ -327,11 +327,11 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
     real(dp) :: p3
     real(dp) :: p4
     
-    Tr = (T+T_KELVIN)/Tc1_D2O
+    Tr = T/Tc1_D2O
     tau  = 1-Tr
     
     p1 = q_D2O*efgh%F
-    p2 = efgh%E/(T+T_KELVIN)*ft_D2O(tau)
+    p2 = efgh%E/T*ft_D2O(tau)
     p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
     p4 = exp(-T/100.0_dp)
 
@@ -344,7 +344,7 @@ pure subroutine kh(T, gas, heavywater, k)
     implicit none
     
     ! arguments
-    real(dp), intent(in) :: T(:) !! Temperature in °C.
+    real(dp), intent(in) :: T(:) !! Temperature in K.
     character(len=*), intent(in) :: gas !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
     real(dp), intent(out) :: k(:) !! Henry constant. Filled with NaNs if gas not found.
@@ -375,7 +375,7 @@ pure subroutine kd(T, gas, heavywater, k)
     implicit none
     
     ! arguments
-    real(dp), intent(in) :: T(:)             !! Temperature in °C.
+    real(dp), intent(in) :: T(:)             !! Temperature in K.
     character(len=*), intent(in) :: gas      !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
     real(dp), intent(out) :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
