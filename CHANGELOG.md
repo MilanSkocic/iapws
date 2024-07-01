@@ -1,6 +1,7 @@
 # Version 0.4.0
 
 * Implementation of the region 4 in R7-97.
+* API break for kh and kd in g704. The temperature must be provided in Kelvin instead of degrees Celsius.
 * Add dependency to numpy for python wrapper.
 * Add pure python modules for encapsulating C extensions.
 * Refractoring and code cleaning.
