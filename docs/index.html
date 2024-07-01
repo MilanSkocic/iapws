@@ -93,13 +93,32 @@
 The formulas are taken from http://iapws.org. 
 C API allows usage from C, or can be used as a basis for other wrappers.
 Python wrapper allows easy usage from Python.</p>
-<p>For now, I have implemented the technical report G7-04 for gas solubility. I plan to implement the 
-technical report R7-97. </p>
+<p>For now, I have implemented </p>
+<ul>
+<li>R2-83<ul>
+<li>[x] Tc in H2O and D2O</li>
+<li>[x] pc in H2O and D2O</li>
+<li>[x] rhoc in H2O and D2O</li>
+</ul>
+</li>
+<li>G7-04 <ul>
+<li>[x] kH</li>
+<li>[x] kD</li>
+</ul>
+</li>
+<li>R7-97<ul>
+<li>[ ] Region 1</li>
+<li>[ ] Region 2</li>
+<li>[ ] Region 4</li>
+<li>[x] Region 4</li>
+<li>[ ] Region 5</li>
+</ul>
+</li>
+</ul>
 <p>To use <code>iapws</code> within your <code>fpm &lt;https://github.com/fortran-lang/fpm&gt;</code>_ project,
 add the following to your <code>fpm.toml</code> file:</p>
-<p>.. code-block::</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span>
-<span class="na">iapws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{ git=&quot;https://github.com/MilanSkocic/iapws.git&quot; }</span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="o">[</span><span class="n">dependencies</span><span class="o">]</span>
+<span class="w">    </span><span class="n">iapws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="n">git</span><span class="o">=</span><span class="ss">&quot;https://github.com/MilanSkocic/iapws.git&quot;</span><span class="w"> </span><span class="err">}</span>
 </code></pre></div>
 
 <h1 id="dependencies">Dependencies</h1>
@@ -161,7 +180,7 @@ stdlib&gt;=0.5
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Source Files</h3>
-              <ul><li><a href='sourcefile/capi.f90.html'>capi.f90</a></li><li><a href='sourcefile/capi_g704.f90.html'>capi_g704.f90</a></li><li><a href='sourcefile/capi_r283.f90.html'>capi_r283.f90</a></li><li><a href='sourcefile/capi_version.f90.html'>capi_version.f90</a></li><li><a href='sourcefile/iapws.f90.html'>iapws.f90</a></li><li><a href='sourcefile/iapws_g704.f90.html'>iapws_g704.f90</a></li><li><a href='sourcefile/iapws_r283.f90.html'>iapws_r283.f90</a></li><li><a href='sourcefile/iapws_r797.f90.html'>iapws_r797.f90</a></li><li><a href='sourcefile/iapws_version.f90.html'>iapws_version.f90</a></li></ul>
+              <ul><li><a href='sourcefile/capi.f90.html'>capi.f90</a></li><li><a href='sourcefile/capi_g704.f90.html'>capi_g704.f90</a></li><li><a href='sourcefile/capi_r283.f90.html'>capi_r283.f90</a></li><li><a href='sourcefile/capi_r797.f90.html'>capi_r797.f90</a></li><li><a href='sourcefile/capi_version.f90.html'>capi_version.f90</a></li><li><a href='sourcefile/iapws.f90.html'>iapws.f90</a></li><li><a href='sourcefile/iapws_g704.f90.html'>iapws_g704.f90</a></li><li><a href='sourcefile/iapws_r283.f90.html'>iapws_r283.f90</a></li><li><a href='sourcefile/iapws_r797.f90.html'>iapws_r797.f90</a></li><li><a href='sourcefile/iapws_version.f90.html'>iapws_version.f90</a></li></ul>
             </div>
             <div>
               <ul>
@@ -172,7 +191,7 @@ stdlib&gt;=0.5
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Modules</h3>
-              <ul><li><a href='module/capi.html'>capi</a></li><li><a href='module/capi__g704.html'>capi__g704</a></li><li><a href='module/capi__r783.html'>capi__r783</a></li><li><a href='module/capi__version.html'>capi__version</a></li><li><a href='module/iapws.html'>iapws</a></li><li><a href='module/iapws__g704.html'>iapws__g704</a></li><li><a href='module/iapws__r283.html'>iapws__r283</a></li><li><a href='module/iapws__r797.html'>iapws__r797</a></li><li><a href='module/iapws__version.html'>iapws__version</a></li></ul>
+              <ul><li><a href='module/capi.html'>capi</a></li><li><a href='module/capi__g704.html'>capi__g704</a></li><li><a href='module/capi__r783.html'>capi__r783</a></li><li><a href='module/capi__r797.html'>capi__r797</a></li><li><a href='module/capi__version.html'>capi__version</a></li><li><a href='module/iapws.html'>iapws</a></li><li><a href='module/iapws__g704.html'>iapws__g704</a></li><li><a href='module/iapws__r283.html'>iapws__r283</a></li><li><a href='module/iapws__r797.html'>iapws__r797</a></li><li><a href='module/iapws__version.html'>iapws__version</a></li></ul>
             </div>
             <div>
               <ul>
@@ -183,7 +202,7 @@ stdlib&gt;=0.5
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Procedures</h3>
-              <ul><li><a href='proc/capi_gases.html'>capi_gases</a></li><li><a href='proc/capi_get_version.html'>capi_get_version</a></li><li><a href='proc/capi_kd.html'>capi_kd</a></li><li><a href='proc/capi_kh.html'>capi_kh</a></li><li><a href='proc/capi_ngases.html'>capi_ngases</a></li><li><a href='proc/gases.html'>gases</a></li><li><a href='proc/gases2.html'>gases2</a></li><li><a href='proc/get_version.html'>get_version</a></li><li><a href='proc/iapws_r797_v.html'>iapws_r797_v</a></li><li><a href='proc/kd.html'>kd</a></li></ul>
+              <ul><li><a href='proc/capi_gases.html'>capi_gases</a></li><li><a href='proc/capi_get_version.html'>capi_get_version</a></li><li><a href='proc/capi_kd.html'>capi_kd</a></li><li><a href='proc/capi_kh.html'>capi_kh</a></li><li><a href='proc/capi_ngases.html'>capi_ngases</a></li><li><a href='proc/capi_psat.html'>capi_psat</a></li><li><a href='proc/capi_tsat.html'>capi_Tsat</a></li><li><a href='proc/gases.html'>gases</a></li><li><a href='proc/gases2.html'>gases2</a></li><li><a href='proc/get_version.html'>get_version</a></li></ul>
             </div>
             <div>
               <ul>
@@ -218,7 +237,7 @@ stdlib&gt;=0.5
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-06-26T07:02:47.187516             </p>
+ on 2024-07-01T06:43:47.220695             </p>
           </div>
         </div>
         <br>

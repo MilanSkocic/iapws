@@ -10,7 +10,7 @@
     <meta name="author" content="Milan Skocic" >
     <link rel="icon" href="../favicon.png">
 
-    <title>capi_kd &ndash; iapws</title>
+    <title>Tsat &ndash; iapws</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -63,7 +63,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>capi_kd
+    <h1>Tsat
       <small>Subroutine</small>
       
     </h1>
@@ -75,21 +75,21 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 7.1% of total for procedures.">17 statements</a>
+                 title=" 2.1% of total for procedures.">5 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/capi_g704.f90"> Source File</a>
+              <a href="../src/iapws_r797.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/capi_g704.f90.html'>capi_g704.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/capi__g704.html'>capi__g704</a></li>
-            <li class="breadcrumb-item active" aria-current="page">capi_kd</li>
+                <li class="breadcrumb-item"><a href='../sourcefile/iapws_r797.f90.html'>iapws_r797.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/iapws__r797.html'>iapws__r797</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tsat</li>
           </ol>
         </nav>
       </div>
@@ -134,11 +134,12 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T) bind(C,name="iapws_g704_kd")  
+    <h2>public pure subroutine Tsat(ps, Ts)  
 </h2>
     
 
-    <p>Compute the vapor-liquid constant for a given temperature. </p>
+    <p>Compute the saturation temperature at pressure ps.
+Validity range 611.213 Pa &lt;= ps &lt;= 22.064 MPa.</p>
 
 
     <h3>Arguments</h3>
@@ -154,92 +155,32 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~15"></span>
-              real(kind=c_double),
+              <span class="anchor" id="variable-ps~3"></span>
+              real(kind=dp),
             </td>
 <td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>T</strong>(size_T)</td>
+            <td><strong>ps</strong>(:)</td>
             <td>
-                <p>Temperature in °C.</p>
+                <p>Saturation pressure in MPa.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-gas~10"></span>
-              type(c_ptr),
+              <span class="anchor" id="variable-ts~3"></span>
+              real(kind=dp),
             </td>
-<td>intent(in),</td>
-              <td></td>            <td>
-              value
-            </td>
-            <td>::</td>
-            <td><strong>gas</strong></td>
-            <td>
-                <p>Gas.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-heavywater~7"></span>
-              integer(kind=c_int),
-            </td>
-<td>intent(in),</td>
-              <td></td>            <td>
-              value
-            </td>
-            <td>::</td>
-            <td><strong>heavywater</strong></td>
-            <td>
-                <p>Flag if D2O (1) is used or H2O(0).</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-k~5"></span>
-              real(kind=c_double),
-            </td>
-<td>intent(inout)</td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>k</strong>(size_T)</td>
+            <td><strong>Ts</strong>(:)</td>
             <td>
-                <p>Vapor-liquid constant. Filled with NaNs if gas not found.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-size_gas~2"></span>
-              integer(kind=c_int),
-            </td>
-<td>intent(in),</td>
-              <td></td>            <td>
-              value
-            </td>
-            <td>::</td>
-            <td><strong>size_gas</strong></td>
-            <td>
-                <p>Size of the gas string.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-size_t~2"></span>
-              integer(kind=c_size_t),
-            </td>
-<td>intent(in),</td>
-              <td></td>            <td>
-              value
-            </td>
-            <td>::</td>
-            <td><strong>size_T</strong></td>
-            <td>
-                <p>Size of T and k.</p>
+                <p>Saturation temperature in K. Filled with nan if out of validity range.</p>
             </td>
         </tr>
     </tbody>
@@ -248,7 +189,7 @@
     <br>
     <div class="card">
       <div class="card-header">
-  <h3 class="card-title">Calls</h3>
+  <h3 class="card-title">Called by</h3>
       </div>
       <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -256,39 +197,39 @@
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 11.0.0 (0)
  -->
-<!-- Title: proc~~capi_kd~~CallsGraph Pages: 1 -->
-<svg id="proccapi_kdCallsGraph" width="152pt" height="32pt"
- viewBox="0.00 0.00 152.00 31.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~capi_kd~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 27.52)">
-<title>proc~~capi_kd~~CallsGraph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-27.52 148,-27.52 148,4 -4,4"/>
-<!-- proc~capi_kd -->
-<g id="proc~~capi_kd~~CallsGraph_node1" class="node">
-<title>proc~capi_kd</title>
-<polygon fill="none" stroke="black" points="54,-23.52 0,-23.52 0,0 54,0 54,-23.52"/>
-<text text-anchor="middle" x="27" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50">capi_kd</text>
+<!-- Title: proc~~tsat~~CalledByGraph Pages: 1 -->
+<svg id="proctsatCalledByGraph" width="155pt" height="32pt"
+ viewBox="0.00 0.00 154.52 31.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~tsat~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 27.52)">
+<title>proc~~tsat~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-27.52 150.52,-27.52 150.52,4 -4,4"/>
+<!-- proc~tsat -->
+<g id="proc~~tsat~~CalledByGraph_node1" class="node">
+<title>proc~tsat</title>
+<polygon fill="none" stroke="black" points="146.52,-23.52 92.52,-23.52 92.52,0 146.52,0 146.52,-23.52"/>
+<text text-anchor="middle" x="119.52" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50">Tsat</text>
 </g>
-<!-- proc~kd -->
-<g id="proc~~capi_kd~~CallsGraph_node2" class="node">
-<title>proc~kd</title>
-<g id="a_proc~~capi_kd~~CallsGraph_node2"><a xlink:href="../proc/kd.html" xlink:title="kd">
-<polygon fill="#d9534f" stroke="#d9534f" points="144,-23.52 90,-23.52 90,0 144,0 144,-23.52"/>
-<text text-anchor="middle" x="117" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">kd</text>
+<!-- proc~capi_tsat -->
+<g id="proc~~tsat~~CalledByGraph_node2" class="node">
+<title>proc~capi_tsat</title>
+<g id="a_proc~~tsat~~CalledByGraph_node2"><a xlink:href="../proc/capi_tsat.html" xlink:title="capi_Tsat">
+<polygon fill="#d9534f" stroke="#d9534f" points="56.52,-23.52 0,-23.52 0,0 56.52,0 56.52,-23.52"/>
+<text text-anchor="middle" x="28.26" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">capi_Tsat</text>
 </a>
 </g>
 </g>
-<!-- proc~capi_kd&#45;&gt;proc~kd -->
-<g id="proc~~capi_kd~~CallsGraph_edge1" class="edge">
-<title>proc~capi_kd&#45;&gt;proc~kd</title>
-<path fill="none" stroke="#ff0000" d="M54.4,-11.76C61.89,-11.76 70.18,-11.76 78.2,-11.76"/>
-<polygon fill="#ff0000" stroke="#ff0000" points="78.1,-15.26 88.1,-11.76 78.1,-8.26 78.1,-15.26"/>
+<!-- proc~capi_tsat&#45;&gt;proc~tsat -->
+<g id="proc~~tsat~~CalledByGraph_edge1" class="edge">
+<title>proc~capi_tsat&#45;&gt;proc~tsat</title>
+<path fill="none" stroke="#ff0000" d="M57.01,-11.76C64.58,-11.76 72.9,-11.76 80.91,-11.76"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="80.79,-15.26 90.79,-11.76 80.79,-8.26 80.79,-15.26"/>
 </g>
 </g>
 </svg>
 </div>          <div>
-            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
           </div>
-          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
