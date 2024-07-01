@@ -25,12 +25,12 @@ program example_in_f
 
     print *, '########################## IAPWS G7-04 ##########################'
     ! Compute kh and kd in H2O
-    T(1) = 25.0d0
+    T(1) = 25.0_dp + 273.15_dp
     call kh(T, gas, heavywater, kh_res)
-    print "(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F10.4)", "Gas=", gas, "T=", T, "C", "kh=", kh_res
+    print "(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F10.4)", "Gas=", gas, "T=", T, "K", "kh=", kh_res
     
     call kd(T, gas, heavywater, kd_res)
-    print "(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F15.4)", "Gas=", gas, "T=", T, "C", "kh=", kd_res
+    print "(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP, F15.4)", "Gas=", gas, "T=", T, "K", "kh=", kd_res
 
     ! Get and print available gases
     heavywater = 0

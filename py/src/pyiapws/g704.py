@@ -13,7 +13,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     Parameters
     ----------
     T: int, float or 1d-array.
-        Temperature in °C.
+        Temperature in K.
     gas: str    
         Gas.
     heavywater: bool
@@ -45,7 +45,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     Parameters
     ----------
     T: int, float, or 1d-array.
-        Temperature in °C.
+        Temperature in K.
     gas: str    
         Gas.
     heavywater: bool

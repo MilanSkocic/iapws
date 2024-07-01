@@ -4,7 +4,7 @@
 
 int main(void){
 
-    double T = 25.0; /* in C*/
+    double T = 25.0 + 273.15; /* in C*/
     char *gas = "O2";
     double kh, kd;
     char **gases_list;
@@ -31,10 +31,10 @@ int main(void){
     printf("%s\n", "########################## IAPWS G7-04 ##########################");
     /* Compute kh and kd in H2O*/
     iapws_g704_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
-    printf("Gas=%s\tT=%fC\tkh=%+10.4f\n", gas, T, kh);
+    printf("Gas=%s\tT=%fK\tkh=%+10.4f\n", gas, T, kh);
     
     iapws_g704_kd(&T, gas, heavywater, &kd, strlen(gas), 1);
-    printf("Gas=%s\tT=%fC\tkd=%+15.4f\n", gas, T, kd);
+    printf("Gas=%s\tT=%fK\tkd=%+15.4f\n", gas, T, kd);
 
     /* Get and print the available gases */
     ngas = iapws_g704_ngases(heavywater);

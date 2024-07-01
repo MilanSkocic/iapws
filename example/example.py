@@ -22,15 +22,15 @@ print("")
 
 print("########################## IAPWS G7-04 ##########################")
 gas  = "O2"
-T = array.array("d", (25.0,))
+T = array.array("d", (25.0+273.15,))
 
 # Compute kh and kd in H2O
 heavywater = False
 k = pyiapws.g704.kh(T, "O2", heavywater)
-print(f"Gas={gas}\tT={T[0]}C\tkh={k[0]:+10.4f}\n")
+print(f"Gas={gas}\tT={T[0]}K\tkh={k[0]:+10.4f}\n")
 
 k = pyiapws.g704.kd(T, "O2", heavywater)
-print(f"Gas={gas}\tT={T[0]}C\tkh={k[0]:+10.4f}\n")
+print(f"Gas={gas}\tT={T[0]}K\tkd={k[0]:+10.4f}\n")
 
 # Get and print the available gases
 heavywater = False
@@ -53,7 +53,7 @@ for gas in gases_list:
 
 style = {"marker":".", "ls":"", "ms":2}
 T_KELVIN = 273.15
-T = np.linspace(0.0, 360.0, 1000)
+T = np.linspace(0.0, 360.0, 1000) + 273.15
 
 solvent = {True: "D2O", False: "H2O"}
 

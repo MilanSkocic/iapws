@@ -152,7 +152,7 @@ subroutine test_kh_H2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call kh(T_C, gases(i), heavywater, k)
+        call kh(T_K, gases(i), heavywater, k)
         do j=1, nT
             value  = log(k(j)/1000d0)
             expected = expected_khs(i, j)
@@ -189,7 +189,7 @@ subroutine test_kh_D2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call kh(T_C, gases(i), heavywater, k)
+        call kh(T_K, gases(i), heavywater, k)
         do j=1, nT
             value  = log(k(j)/1000d0)
             expected = expected_khs(i, j)
@@ -233,7 +233,7 @@ subroutine test_kd_H2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call kd(T_C, gases(i), heavywater, k)
+        call kd(T_K, gases(i), heavywater, k)
         do j=1, nT
             value  = log(k(j)/1000d0)
             expected = expected_khs(i, j)
@@ -270,7 +270,7 @@ subroutine test_kd_D2O(error)
     T_C = T_K - 273.15d0
     
     do i=1, ngas
-        call kd(T_C, gases(i), heavywater, k)
+        call kd(T_K, gases(i), heavywater, k)
         do j=1, nT
             value  = log(k(j)/1000d0)
             expected = expected_khs(i, j)
