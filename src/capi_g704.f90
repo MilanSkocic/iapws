@@ -1,4 +1,4 @@
-module capi__g704
+module iapws__capi_g704
     !! Module for IAPWS G704 : C API.
     use iso_fortran_env
     use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
@@ -153,4 +153,4 @@ function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gase
 
 end function
 
-end module
+end module iapws__capi_g704

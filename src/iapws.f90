@@ -4,5 +4,5 @@ module iapws
     use iapws__g704
     use iapws__r283
     use iapws__r797
-    use capi
+    use iapws__capi
 end module

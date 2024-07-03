@@ -1,4 +1,4 @@
-module capi__version
+module iapws__capi_version
     !! Version: C API.
     use iso_c_binding, only: c_null_char, c_ptr, c_loc
     use iapws__version
@@ -30,4 +30,4 @@ function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
     cptr = c_loc(version_c)
 end function
 
-end module capi__version
+end module iapws__capi_version
