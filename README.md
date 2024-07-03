@@ -21,7 +21,7 @@ For now, I have implemented
     - [x] Region 4
     - [ ] Region 5
 
-To use `iapws` within your `fpm <https://github.com/fortran-lang/fpm>`_ project,
+To use `iapws` within your [fpm](https://github.com/fortran-lang/fpm) project,
 add the following to your `fpm.toml` file:
 
 ```
