@@ -62,7 +62,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
-    k = g704_.kd(T_, gas_, heavywater_)
+    k = np.asarray(g704_.kd(T_, gas_, heavywater_))
     
     if scalar:
         return k[0]

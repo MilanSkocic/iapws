@@ -16,11 +16,8 @@ def cast_ndarray(X):
     X_: 1d-array
         Numpy ndarray of rank 1.
     """
-
-    scalar = False
     if isinstance(X, (int, float)):
         X_ = np.asarray((X,), dtype="f8")
-        scalar = Xrue
     elif isinstance(X, np.ndarray):
         if X.ndim == 1:
             X_ = np.asarray(X, dtype="f8")
