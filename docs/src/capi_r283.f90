@@ -1,4 +1,4 @@
-module capi__r783
+module iapws__capi_r783
     !! Module for IAPWS R2-83: C API.
     use iso_c_binding, only: c_double
     use iapws__r283
@@ -21,4 +21,4 @@ module capi__r783
               capi_rhoc_H2O, &
               capi_rhoc_D2O
 
-end module
+end module iapws__capi_r783

@@ -1,4 +1,4 @@
-module capi__r797
+module iapws__capi_r797
     use stdlib_kinds, only: dp, int32
     use iso_c_binding, only: c_double, c_int, c_size_t
     use iapws__r797
@@ -31,4 +31,4 @@ pure subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
 
 end subroutine
 
-end module
+end module iapws__capi_r797
