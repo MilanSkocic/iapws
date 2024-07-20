@@ -128,14 +128,11 @@ contains
 pure function findgas_abc(gas, abc)result(value)
     !! Find the index of the gas in the ABC table.
     implicit none
-    character(len=*), intent(in) :: gas
-        !! Gas.
-    type(abc_t), dimension(:), intent(in) :: abc
-        !! ABC table.
-    integer(int32) :: value
-        !! index of the gas.
+
+    character(len=*), intent(in) :: gas          !! Gas.
+    type(abc_t), dimension(:), intent(in) :: abc !! ABC table.
+    integer(int32) :: value                      !! index of the gas.
     
-    !! local variables
     integer(int32) :: i
 
     value = 0
@@ -151,12 +148,11 @@ end function
 pure function findgas_efgh(gas, efgh)result(value)
     !! Find the index of the gas in the ABC table.
     implicit none
-    character(len=*), intent(in) :: gas
-        !! Gas.
-    type(efgh_t), dimension(:), intent(in) :: efgh
-        !! EFGH table.
-    integer(int32) :: value
-        !! index of gas.
+
+    character(len=*), intent(in) :: gas            !! Gas.
+    type(efgh_t), dimension(:), intent(in) :: efgh !! EFGH table.
+    integer(int32) :: value                        !! index of gas.
+    
     integer(int32) :: i
 
     value = 0
@@ -172,10 +168,9 @@ end function
 pure elemental function f_p1star_H2O(T)result(value)
     !! Compute p1* in H2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    real(dp) :: value
-        !! p1* in MPa.
+
+    real(dp), intent(in) :: T !! Temperature in K.
+    real(dp) :: value         !! p1* in MPa.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -188,10 +183,9 @@ end function
 pure elemental function f_p1star_D2O(T)result(value)
     !! Compute p1* in D2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    real(dp) :: value
-        !! p1* in MPa.
+
+    real(dp), intent(in) :: T !! Temperature in K.
+    real(dp) :: value         !! p1* in MPa.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -204,12 +198,10 @@ end function
 pure elemental function f_kh_p1star_H2O(T, abc)result(value)
     !! Compute kh/p1* in H2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(abc_t), intent(in) :: abc
-        !! ABC coefficients.
-    real(dp) :: value
-        !! kH/p1* adimensional.
+
+    real(dp), intent(in) :: T      !! Temperature in K.
+    type(abc_t), intent(in) :: abc !! ABC coefficients.
+    real(dp) :: value              !! kH/p1* adimensional.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -222,12 +214,10 @@ end function
 pure elemental function f_kh_p1star_D2O(T, abc)result(value)
     !! Compute kh/p1* in D2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(abc_t), intent(in) :: abc
-        !! ABC coefficients.
-    real(dp) :: value
-        !! kh/p1* adimensional.
+
+    real(dp), intent(in) :: T      !! Temperature in K.
+    type(abc_t), intent(in) :: abc !! ABC coefficients.
+    real(dp) :: value              !! kh/p1* adimensional.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -240,56 +230,48 @@ end function
 pure elemental function ft_H2O(tau)result(value)
     !! Compute f(t) for H2O.
     implicit none
-    real(dp), intent(in) :: tau
-        !! tau = 1-T/Tr.
-    real(dp) :: value
-        !! f(t) is adimensional.
+
+    real(dp), intent(in) :: tau !! tau = 1-T/Tr.
+    real(dp) :: value           !! f(t) is adimensional.
     value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
 end function
 
 pure elemental function ft_D2O(tau)result(value)
     !! Compute f(t) for D2O.
     implicit none
-    real(dp), intent(in) :: tau
-        !! tau = 1-T/Tr.
-    real(dp) :: value
-        !! f(t) is adimensional.
+
+    real(dp), intent(in) :: tau !! tau = 1-T/Tr.
+    real(dp) :: value           !! f(t) is adimensional.
     value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
 end function
 
 pure elemental function f_kh_H2O(T, abc)result(value)
     !! Compute kH in H2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(abc_t), intent(in) :: abc
-        !! ABC coefficients.
-    real(dp) :: value
-        !! kH in MPa.
+
+    real(dp), intent(in) :: T      !! Temperature in K.
+    type(abc_t), intent(in) :: abc !! ABC coefficients.
+    real(dp) :: value              !! kH in MPa.
     value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
 end function
 
 pure elemental function f_kh_D2O(T, abc)result(value)
     !! Compute kH in D2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(abc_t), intent(in) :: abc
-        !! ABC coefficients.
-    real(dp) :: value
-        !! kH in MPa.
+
+    real(dp), intent(in) :: T      !! Temperature in K.
+    type(abc_t), intent(in) :: abc !! ABC coefficients.
+    real(dp) :: value              !! kH in MPa.
     value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
 end function
 
 pure elemental function f_kd_H2O(T, efgh) result(value)
     !! Compute kd in H2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(efgh_t), intent(in) :: efgh
-        !! EFGH coefficients.
-    real(dp) :: value
-        !! kD adimensional.
+
+    real(dp), intent(in) :: T        !! Temperature in K.
+    type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
+    real(dp) :: value                !! kD adimensional.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -313,12 +295,10 @@ end function
 pure elemental function f_kd_D2O(T, efgh) result(value)
     !! Compute kd in D2O.
     implicit none
-    real(dp), intent(in) :: T
-        !! Temperature in K.
-    type(efgh_t), intent(in) :: efgh
-        !! EFGH coefficients.
-    real(dp) :: value
-        !! kD adimensional.
+
+    real(dp), intent(in) :: T        !! Temperature in K.
+    type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
+    real(dp) :: value                !! kD adimensional.
     
     real(dp) :: Tr
     real(dp) :: tau
@@ -343,13 +323,11 @@ pure subroutine kh(T, gas, heavywater, k)
     !! Compute the henry constant kH for a given temperature.
     implicit none
     
-    ! arguments
     real(dp), intent(in) :: T(:) !! Temperature in K.
     character(len=*), intent(in) :: gas !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
     real(dp), intent(out) :: k(:) !! Henry constant. Filled with NaNs if gas not found.
     
-    ! variables
     integer(int32) :: i
     
     if(heavywater > 0)then
@@ -374,13 +352,11 @@ pure subroutine kd(T, gas, heavywater, k)
     !! Compute the vapor-liquid constant kd for a given temperature. 
     implicit none
     
-    ! arguments
     real(dp), intent(in) :: T(:)             !! Temperature in K.
     character(len=*), intent(in) :: gas      !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
     real(dp), intent(out) :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
     
-    ! variables
     integer(int32) :: i
     
     if(heavywater > 0)then
@@ -405,11 +381,8 @@ pure function ngases(heavywater)result(n)
     !! Returns the number of gases.
     implicit none
     
-    ! arguments
-    integer(int32), intent(in) :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    integer(int32) :: n
-        !! Number of gases.
+    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
+    integer(int32) :: n                      !! Number of gases.
 
     if(heavywater > 0)then
         n = ngas_D2O
