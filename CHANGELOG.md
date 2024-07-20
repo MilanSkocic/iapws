@@ -7,9 +7,6 @@
 * Refractoring and code cleaning.
 * Documentation update.
 
-**Not released yet**
-
-
 
 
 # Version 0.3.0
@@ -23,6 +20,7 @@
 * Add version extension in the pywrapper.
 * Implement version module with its getter.
 * Documentation update.
+
 
 
 # Version 0.2.2
