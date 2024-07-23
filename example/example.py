@@ -64,7 +64,7 @@ for HEAVYWATER in (False, True):
     fig = plt.figure()
     ax = fig.add_subplot()
     ax.grid(visible=True, ls=':')
-    ax.set_xlabel("T /°C")
+    ax.set_xlabel("T /°K")
     ax.set_ylabel("ln (kh/1GPa)")
     gases = pyiapws.g704.gases(HEAVYWATER)
     for gas in gases:
@@ -81,7 +81,7 @@ for HEAVYWATER in (False, True):
     fig = plt.figure()
     ax = fig.add_subplot()
     ax.grid(visible=True, ls=':')
-    ax.set_xlabel("T /°C")
+    ax.set_xlabel("T /°K")
     ax.set_ylabel("ln kd")
     gases = pyiapws.g704.gases(HEAVYWATER)
     for gas in gases:
