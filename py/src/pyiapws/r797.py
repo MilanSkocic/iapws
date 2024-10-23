@@ -19,8 +19,7 @@ def psat(Ts):
     ps: float or 1d-array
         Saturation pressure in MPa. Is NaN if Ts is out of range of validity.
     """
-    scalar = False
-    Ts_ = core.cast_ndarray(Ts)
+    Ts_, scalar = core.cast_ndarray(Ts)
     ps = np.asarray( r797_.psat(Ts_) )
 
     if scalar:
@@ -44,8 +43,7 @@ def Tsat(ps):
     Ts: float or 1d-array
         Saturation temperatur in K. Is NaN if Ts is out of range of validity.
     """
-    scalar = False
-    ps_ = core.cast_ndarray(ps)
+    ps_, scalar = core.cast_ndarray(ps)
     Ts = np.asarray( r797_.Tsat(ps_) )
 
     if scalar:
