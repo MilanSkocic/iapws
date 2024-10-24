@@ -31,7 +31,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     k = np.asarray( _g704.kh(T_, gas_, heavywater_) )
 
     if scalar:
-        return k[0]
+        return float(k[0])
     else:
         return k
 
@@ -62,7 +62,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     k = np.asarray(_g704.kd(T_, gas_, heavywater_))
     
     if scalar:
-        return k[0]
+        return float(k[0])
     else:
         return k
 
@@ -115,4 +115,4 @@ def gases2(heavywater: bool=False)->str:
     gases: str
         Available gases as comma separated string.
     """
-    return _g704.gases(bool(heavywater))
+    return _g704.gases2(bool(heavywater))
