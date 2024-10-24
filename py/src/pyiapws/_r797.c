@@ -1,8 +1,5 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
-#include <stdio.h>
-#include <string.h>
-#include "iapws.h"
+#include "_core.h"
 
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_r797 module of the Fortran iapws library.");
 
@@ -13,23 +10,6 @@ PyDoc_STRVAR(r797_psat_doc,
 PyDoc_STRVAR(r797_Tsat_doc, 
 "Tsat(ps: array-like) --> mview \n\n"
 "Get the saturation-temperature line. If gas not found returns NaNs");
-
-
-static Py_buffer newbuffer_like(Py_buffer *buffer){
-    Py_buffer newbuffer;
-    newbuffer.buf = PyMem_Malloc(buffer->len);
-    newbuffer.obj = NULL;
-    newbuffer.len = buffer->len;
-    newbuffer.readonly = buffer->readonly;
-    newbuffer.itemsize = buffer->itemsize;
-    newbuffer.format = buffer->format;
-    newbuffer.ndim = buffer->ndim;
-    newbuffer.shape = buffer->shape;
-    newbuffer.strides = buffer->strides;
-    newbuffer.suboffsets = NULL;
-
-    return newbuffer;
-}
 
 
 static PyObject *r797_psat(PyObject *self, PyObject *args){

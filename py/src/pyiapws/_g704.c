@@ -1,8 +1,5 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
-#include <stdio.h>
-#include <string.h>
-#include "iapws.h"
+#include "_core.h"
 
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_g704 module of the Fortran iapws library.");
 
@@ -30,21 +27,6 @@ static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, 
 static const char ERR_MSG_T_DIM[] = "T must be a 1d-array of floats.";
 static const char ERR_MSG_T_TYPE[] = "T must be a 1d-array of floats.";
 
-static Py_buffer newbuffer_like(Py_buffer *buffer){
-    Py_buffer newbuffer;
-    newbuffer.buf = PyMem_Malloc(buffer->len);
-    newbuffer.obj = NULL;
-    newbuffer.len = buffer->len;
-    newbuffer.readonly = buffer->readonly;
-    newbuffer.itemsize = buffer->itemsize;
-    newbuffer.format = buffer->format;
-    newbuffer.ndim = buffer->ndim;
-    newbuffer.shape = buffer->shape;
-    newbuffer.strides = buffer->strides;
-    newbuffer.suboffsets = NULL;
-
-    return newbuffer;
-}
 
 static PyObject *kx(char k, PyObject *args){
     
