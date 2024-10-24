@@ -16,7 +16,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         Temperature in K.
     gas: str    
         Gas.
-    heavywater: bool
+    heavywater: bool, optional.
         Flag for indicating if solvent is heavywater (True) or water (False). Default to False.
 
     Returns
@@ -47,7 +47,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         Temperature in K.
     gas: str    
         Gas.
-    heavywater: bool
+    heavywater: bool, optional.
         Flag for indicating if solvent is heavywater (True) or water (False). Default to False.
     
     Returns
