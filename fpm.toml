@@ -39,5 +39,5 @@ name = "tester"
 main = "tester.f90"
 
 [test.dependencies]
-test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.4.0"}
+test-drive = {git="https://github.com/fortran-lang/test-drive", tag="v0.5.0"}
 
