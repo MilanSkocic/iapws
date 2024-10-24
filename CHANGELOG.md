@@ -1,3 +1,14 @@
+# Version 0.5.0
+
+* Drop suppoert for python 3.8 and add support for python 3.13.
+* Code cleaning in python C extensions.
+* Code refractoring in pure python modules for encapsulating C extensions.
+* Documentation update.
+
+
+**Not released**
+
+
 # Version 0.4.0
 
 * Implementation of the region 4 in R7-97.
