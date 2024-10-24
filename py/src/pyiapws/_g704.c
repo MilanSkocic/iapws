@@ -4,11 +4,11 @@
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws_g704 module of the Fortran iapws library.");
 
 PyDoc_STRVAR(g704_kh_doc, 
-"kh(T: array, gas: str, heavywater :bool) --> mview \n\n"
+"kh(T: array-like, gas: str, heavywater :bool) --> mview \n\n"
 "Get the Henry constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 PyDoc_STRVAR(g704_kd_doc, 
-"kd(T: array, gas, heavywater: bool) --> mview \n\n"
+"kd(T: array-like, gas, heavywater: bool) --> mview \n\n"
 "Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
 
 PyDoc_STRVAR(g704_ngases_doc,
@@ -22,10 +22,6 @@ PyDoc_STRVAR(g704_gases_doc,
 PyDoc_STRVAR(g704_gases2_doc,
 "gases(heavywater: bool) --> str\n\n"
 "Get the available gases as a string.");
-
-static const char ERR_MSG_PARSING[] = "T is an object with the buffer protocol, gas is a string, heavywater is a boolean.";
-static const char ERR_MSG_T_DIM[] = "T must be a 1d-array of floats.";
-static const char ERR_MSG_T_TYPE[] = "T must be a 1d-array of floats.";
 
 
 static PyObject *kx(char k, PyObject *args){
@@ -52,33 +48,15 @@ static PyObject *kx(char k, PyObject *args){
     }
     
     if(!PyArg_ParseTuple(args, "Osp", &T_obj, &gas, &heavywater)){
-        PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
         return NULL;
     }
 
-    if(PyObject_CheckBuffer(T_obj)==1){
-        mview = PyMemoryView_FromObject(T_obj);
-        buffer = PyMemoryView_GET_BUFFER(mview);
-        
-        if(strcmp(buffer->format, "d")!=0){
-            PyErr_SetString(PyExc_TypeError, ERR_MSG_T_TYPE);
-            return NULL;
-        }else if(buffer->ndim>1){
-            PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
-            return NULL;
-        }else if(buffer->ndim==0){
-            PyErr_SetString(PyExc_TypeError, ERR_MSG_T_DIM);
-            return NULL;
-        }else{
-            newbuffer = newbuffer_like(buffer);
-            fkx((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
-            new_mview = PyMemoryView_FromBuffer(&newbuffer);
-            return new_mview;
-        }
-    }else{
-        PyErr_SetString(PyExc_TypeError, ERR_MSG_PARSING);
-        return NULL;
-    }
+    mview = PyMemoryView_FromObject(T_obj);
+    buffer = PyMemoryView_GET_BUFFER(mview);
+    newbuffer = newbuffer_like(buffer);
+    fkx((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
+    new_mview = PyMemoryView_FromBuffer(&newbuffer);
+    return new_mview;
 }
 
 static PyObject *g704_kh(PyObject *self, PyObject *args){
@@ -94,7 +72,6 @@ static PyObject *g704_ngases(PyObject *self, PyObject *args){
     int ngas;
     
     if(!PyArg_ParseTuple(args, "p", &heavywater)){
-        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
     ngas = iapws_g704_ngases(heavywater);
@@ -111,7 +88,6 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
     PyObject *tuple;
 
     if(!PyArg_ParseTuple(args, "p", &heavywater)){
-        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
     ngas = iapws_g704_ngases(heavywater);
@@ -130,7 +106,6 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
     PyObject *py_gases;
 
     if(!PyArg_ParseTuple(args, "p", &heavywater)){
-        PyErr_SetString(PyExc_TypeError, "heavywater is a boolean.");
         return NULL;
     }
     gases = iapws_g704_gases2(heavywater);

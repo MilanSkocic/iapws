@@ -56,7 +56,6 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         Adimensional liquid-vapor constant. 
     """
     T_, scalar = core.cast_ndarray(T)
-    
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
@@ -82,7 +81,7 @@ def ngases(heavywater:bool=False)->int:
     n: int
         Number of available gases in water or heavywater.
     """
-    return _g704.ngases(heavywater)
+    return _g704.ngases(bool(heavywater))
 
 
 def gases(heavywater: bool=False)->List[str]:
@@ -99,7 +98,7 @@ def gases(heavywater: bool=False)->List[str]:
     gases: list of str
         List of available gases.
     """
-    return _g704.gases(heavywater)
+    return _g704.gases(bool(heavywater))
 
 
 def gases2(heavywater: bool=False)->str:
@@ -116,4 +115,4 @@ def gases2(heavywater: bool=False)->str:
     gases: str
         Available gases as comma separated string.
     """
-    return _g704.gases(heavywater)
+    return _g704.gases(bool(heavywater))
