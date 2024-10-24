@@ -2,7 +2,7 @@
 from typing import Union, List
 import numpy as np
 from . import core
-from . import g704_
+from . import _g704
 
 
 def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
@@ -28,7 +28,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
-    k = np.asarray( g704_.kh(T_, gas_, heavywater_) )
+    k = np.asarray( _g704.kh(T_, gas_, heavywater_) )
 
     if scalar:
         return k[0]
@@ -60,7 +60,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
-    k = np.asarray(g704_.kd(T_, gas_, heavywater_))
+    k = np.asarray(_g704.kd(T_, gas_, heavywater_))
     
     if scalar:
         return k[0]
@@ -82,7 +82,7 @@ def ngases(heavywater:bool=False)->int:
     n: int
         Number of available gases in water or heavywater.
     """
-    return g704_.ngases(heavywater)
+    return _g704.ngases(heavywater)
 
 
 def gases(heavywater: bool=False)->List[str]:
@@ -99,7 +99,7 @@ def gases(heavywater: bool=False)->List[str]:
     gases: list of str
         List of available gases.
     """
-    return g704_.gases(heavywater)
+    return _g704.gases(heavywater)
 
 
 def gases2(heavywater: bool=False)->str:
@@ -116,4 +116,4 @@ def gases2(heavywater: bool=False)->str:
     gases: str
         Available gases as comma separated string.
     """
-    return g704_.gases(heavywater)
+    return _g704.gases(heavywater)
