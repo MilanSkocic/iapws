@@ -3,7 +3,7 @@ module iapws__version
     implicit none
     private
 
-    character(len=*), parameter :: version = "0.4.0"
+    character(len=*), parameter :: version = "0.5.0"
     character(len=:), allocatable, target :: version_f
 
     public :: get_version
