@@ -107,27 +107,29 @@ with open("./VERSION", "r") as f:
 
 
 if __name__ == "__main__":
+    
+    core_src = f"./src/py{name:s}/_core.c"
 
     mod_g704 = Extension(name=f"py{name:s}._g704",
-                         sources=[f"./src/py{name:s}/_g704.c"],
+                         sources=[f"./src/py{name:s}/_g704.c", core_src],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
     mod_r283 = Extension(name=f"py{name:s}._r283",
-                         sources=[f"./src/py{name:s}/_r283.c"],
+                         sources=[f"./src/py{name:s}/_r283.c", core_src],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
     mod_r797 = Extension(name=f"py{name:s}._r797",
-                         sources=[f"./src/py{name:s}/_r797.c"],
+                         sources=[f"./src/py{name:s}/_r797.c", core_src],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
     mod_version = Extension(name=f"py{name:s}._version",
-                         sources=[f"./src/py{name:s}/_version.c"],
+                         sources=[f"./src/py{name:s}/_version.c", core_src],
                          libraries=libraries,
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
