@@ -323,10 +323,10 @@ pure subroutine kh(T, gas, heavywater, k)
     !! Compute the henry constant kH for a given temperature.
     implicit none
     
-    real(dp), intent(in) :: T(:) !! Temperature in K.
+    real(dp), intent(in), contiguous :: T(:) !! Temperature in K.
     character(len=*), intent(in) :: gas !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out) :: k(:) !! Henry constant. Filled with NaNs if gas not found.
+    real(dp), intent(out), contiguous :: k(:) !! Henry constant. Filled with NaNs if gas not found.
     
     integer(int32) :: i
     
@@ -352,10 +352,10 @@ pure subroutine kd(T, gas, heavywater, k)
     !! Compute the vapor-liquid constant kd for a given temperature. 
     implicit none
     
-    real(dp), intent(in) :: T(:)             !! Temperature in K.
+    real(dp), intent(in), contiguous :: T(:)             !! Temperature in K.
     character(len=*), intent(in) :: gas      !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out) :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
+    real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
     
     integer(int32) :: i
     
