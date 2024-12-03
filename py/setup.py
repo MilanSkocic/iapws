@@ -134,6 +134,12 @@ if __name__ == "__main__":
                          library_dirs=library_dirs,
                          runtime_library_dirs=runtime_library_dirs,
                          extra_objects=extra_objects)
+    mod = Extension(name=f"py{name:s}._iapws",
+                         sources=[f"./src/py{name:s}/_iapws.c"],
+                         libraries=libraries,
+                         library_dirs=library_dirs,
+                         runtime_library_dirs=runtime_library_dirs,
+                         extra_objects=extra_objects)
     setup(version= version, 
-          ext_modules=[mod_g704, mod_r283, mod_r797, mod_version])
+          ext_modules=[mod])
 

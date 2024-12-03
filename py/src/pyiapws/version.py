@@ -1,4 +1,2 @@
 """Version."""
-
-"""Version."""
-from ._version import __version__
+from ._iapws import __version__

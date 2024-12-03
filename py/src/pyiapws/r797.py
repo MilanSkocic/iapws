@@ -1,7 +1,7 @@
 """IAPWS R797"""
 import numpy as np
 from . import core
-from . import _r797
+from . import _iapws
 
 
 def psat(Ts):
@@ -20,7 +20,7 @@ def psat(Ts):
         Saturation pressure in MPa. Is NaN if Ts is out of range of validity.
     """
     Ts_, scalar = core.cast_ndarray(Ts)
-    ps = np.asarray( _r797.psat(Ts_) )
+    ps = np.asarray( _iapws.psat(Ts_) )
 
     if scalar:
         return ps[0]
@@ -44,7 +44,7 @@ def Tsat(ps):
         Saturation temperatur in K. Is NaN if Ts is out of range of validity.
     """
     ps_, scalar = core.cast_ndarray(ps)
-    Ts = np.asarray( _r797.Tsat(ps_) )
+    Ts = np.asarray( _iapws.Tsat(ps_) )
 
     if scalar:
         return Ts[0]
