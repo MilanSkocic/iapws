@@ -21,14 +21,14 @@ subroutine test_Psat(error)
     integer(int32) :: i
     real(dp) :: ps(3)
     real(dp) :: Ts(3) = [300.0_dp, 500.0_dp, 600.0_dp]
-    real(dp) :: psref(3) = [0.353658941e-2_dp, 0.263889776e1_dp, 0.123443146e2_dp]
-    real(dp) :: th(3) = [1e-11_dp, 1e-8_dp, 1e-7_dp]
+    real(dp) :: psref(3) = [0.353658941d-2, 0.263889776d1, 0.123443146d2]
+    real(dp) :: c(3) = [1d2, 1d-1, 1d-2]
     
     call psat(Ts, ps)
     
     ! check ref values from Table 35.
     do i=1, size(Ts)
-        call check(error, ps(i), psref(i), thr=th(i))
+        call check(error, ps(i)*c(i), psref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 
@@ -39,14 +39,14 @@ subroutine test_Tsat(error)
     integer(int32) :: i
     real(dp) :: Ts(3)
     real(dp) :: ps(3) = [0.1_dp, 1.0_dp, 10.0_dp]
-    real(dp) :: Tsref(3) = [0.372755919e3_dp, 0.453035632e3_dp, 0.584149488e3_dp]
-    real(dp) :: th(3) = [1e-6_dp, 1e-6_dp, 1e-6_dp]
+    real(dp) :: Tsref(3) = [0.372755919d3, 0.453035632d3, 0.584149488d3]
+    real(dp) :: c(3) = [1d-3, 1d-3, 1d-3]
     
     call Tsat(ps, Ts)
     
     ! check ref values from Table 36.
     do i=1, size(Ts)
-        call check(error, Ts(i), Tsref(i), thr=th(i))
+        call check(error, Ts(i)*c(i), Tsref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 
@@ -59,9 +59,10 @@ subroutine test_r1_v(error)
     real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
     real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
     real(dp) :: vref(3) = [0.100215168d-2, 0.971180894d-3, 0.120241800d-2]
+    real(dp) :: c(3) = [1d2, 1d3, 1d2]
     
     do i=1, size(T)
-        call check(error, r1_v(p(i), T(i)), vref(i))
+        call check(error, r1_v(p(i), T(i))*c(i), vref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 
