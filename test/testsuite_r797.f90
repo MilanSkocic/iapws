@@ -11,7 +11,9 @@ contains
 
 subroutine collect_suite_r797(testsuite)
     type(unittest_type), allocatable, intent(out) :: testsuite(:)
-    testsuite = [new_unittest("Psat", test_Psat), new_unittest("Tsat", test_Tsat)]
+    testsuite = [new_unittest("Psat", test_Psat), &
+                 new_unittest("Tsat", test_Tsat), &
+                 new_unittest("r1_v", test_r1_v)]
 end subroutine
 
 subroutine test_Psat(error)
@@ -45,6 +47,21 @@ subroutine test_Tsat(error)
     ! check ref values from Table 36.
     do i=1, size(Ts)
         call check(error, Ts(i), Tsref(i), thr=th(i))
+        if (allocated(error)) return
+    end do
+
+end subroutine
+
+
+subroutine test_r1_v(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: vref(3) = [0.100215168d-2, 0.971180894d-3, 0.120241800d-2]
+    
+    do i=1, size(T)
+        call check(error, r1_v(p(i), T(i)), vref(i))
         if (allocated(error)) return
     end do
 
