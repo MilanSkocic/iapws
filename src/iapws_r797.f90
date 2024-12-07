@@ -132,7 +132,7 @@ pure elemental function r1_gp(p, T)result(res)
     tau = r1_Ts/T
     pi = p/r1_ps
 
-    res = sum(-r1_IJn_g(:,3)*r1_IJn_g(:,1)*(7.1-pi)**(r1_IJn_g(:,1)-1.0_dp) * (tau-1.222_dp)**(r1_IJn_g(:,2)))
+    res = sum(-r1_IJn_g(:,3)*r1_IJn_g(:,1)*(7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * (tau-1.222_dp)**(r1_IJn_g(:,2)))
 
 end function
 
@@ -150,9 +150,10 @@ pure elemental function r1_v(p, T)result(res)
     real(dp) :: pi
 
     pi = p/r1_ps
-    res = R*T/p * pi * r1_gp(p,T)
+    res = R*T/p * pi * r1_gp(p,T) * 1d-3 ! RT/p is in L/kg.
     
 end function
+
 !--------------------------------------------------------------------------------------------------------------------------------
 
 
