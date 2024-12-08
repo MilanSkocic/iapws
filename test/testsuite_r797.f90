@@ -13,7 +13,10 @@ subroutine collect_suite_r797(testsuite)
     type(unittest_type), allocatable, intent(out) :: testsuite(:)
     testsuite = [new_unittest("Psat", test_Psat), &
                  new_unittest("Tsat", test_Tsat), &
-                 new_unittest("r1_v", test_r1_v)]
+                 new_unittest("r1_v", test_r1_v), &
+                 new_unittest("r1_u", test_r1_u), &
+                 new_unittest("r1_h", test_r1_h) &
+                 ]
 end subroutine
 
 subroutine test_Psat(error)
@@ -52,20 +55,46 @@ subroutine test_Tsat(error)
 
 end subroutine
 
-
 subroutine test_r1_v(error)
     type(error_type), allocatable, intent(out) :: error 
     integer(int32) :: i
     real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
     real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
-    real(dp) :: vref(3) = [0.100215168d-2, 0.971180894d-3, 0.120241800d-2]
+    real(dp) :: ref(3) = [0.100215168d-2, 0.971180894d-3, 0.120241800d-2]
     real(dp) :: c(3) = [1d2, 1d3, 1d2]
     
     do i=1, size(T)
-        call check(error, r1_v(p(i), T(i))*c(i), vref(i)*c(i), thr=1d-9)
+        call check(error, r1_v(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
+end subroutine
 
+subroutine test_r1_u(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: ref(3) = [0.112324818d3, 0.106448356d3, 0.971934985d3]
+    real(dp) :: c(3) = [1d-3, 1d-3, 1d-3]
+    
+    do i=1, size(T)
+        call check(error, r1_u(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
+end subroutine
+
+subroutine test_r1_h(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: ref(3) = [0.115331273d3, 0.184142828d3, 0.975542239d3]
+    real(dp) :: c(3) = [1d-3, 1d-3, 1d-3]
+    
+    do i=1, size(T)
+        call check(error, r1_h(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
 end subroutine
 
 end module

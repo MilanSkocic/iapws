@@ -6,8 +6,8 @@ module iapws__r797
     implicit none
     private
 
-    public :: psat, Tsat, r1_v
-
+    public :: r1_v, r1_u, r1_h
+    public :: psat, Tsat
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
 real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
@@ -111,7 +111,8 @@ pure elemental function r1_g(p, T)result(res)
     tau = r1_Ts/T
     pi = p/r1_ps
     
-    res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * (tau-1.222_dp)**r1_IJn_g(:, 2))
+    res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * &
+                             (tau-1.222_dp)**r1_IJn_g(:, 2))
 
 end function
 
@@ -132,7 +133,96 @@ pure elemental function r1_gp(p, T)result(res)
     tau = r1_Ts/T
     pi = p/r1_ps
 
-    res = sum(-r1_IJn_g(:,3)*r1_IJn_g(:,1)*(7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * (tau-1.222_dp)**(r1_IJn_g(:,2)))
+    res = sum(-r1_IJn_g(:,3) * r1_IJn_g(:,1)*(7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * &
+                                             (tau-1.222_dp)**r1_IJn_g(:,2))
+
+end function
+
+pure elemental function r1_gt(p, T)result(res)
+    !! Compute gamma_tau for region 1.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    ! results
+    real(dp) :: res
+
+    ! variables
+    real(dp) :: pi
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    pi = p/r1_ps
+
+    res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * & 
+              r1_IJn_g(:,2) * (tau-1.222_dp)**(r1_IJn_g(:,2)-1.0_dp))
+
+end function
+
+pure elemental function r1_gpp(p, T)result(res)
+    !! Compute gamma_pipi for region 1.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    ! results
+    real(dp) :: res
+
+    ! variables
+    real(dp) :: pi
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    pi = p/r1_ps
+
+    res = sum(r1_IJn_g(:,3) * r1_IJn_g(:,1) * (r1_IJn_g(:,1)-1.0_dp) * (7.1_dp-pi)**(r1_IJn_g(:,1)-2.0_dp) * &
+                                                                       (tau-1.222_dp)**r1_IJn_g(:,2))
+
+end function
+
+pure elemental function r1_gtt(p, T)result(res)
+    !! Compute gamma_tautau for region 1.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    ! results
+    real(dp) :: res
+
+    ! variables
+    real(dp) :: pi
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    pi = p/r1_ps
+
+    res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * & 
+              r1_IJn_g(:,2) * (r1_IJn_g(:,2)-1.0_dp) * (tau-1.222_dp)**(r1_IJn_g(:,2)-2.0_dp))
+
+end function
+
+pure elemental function r1_gpt(p, T)result(res)
+    !! Compute gamma_pitau for region 1.
+    
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    !results
+    real(dp) :: res
+    
+    !variables
+    real(dp) :: pi
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    pi = p/r1_ps
+    
+    res = sum(-r1_IJn_g(:,3) * r1_IJn_g(:,1) * (7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * &
+                               r1_IJn_g(:,2) * (tau-1.222_dp)**(r1_IJn_g(:, 2)-1.0_dp))
 
 end function
 
@@ -153,6 +243,44 @@ pure elemental function r1_v(p, T)result(res)
     res = R*T/p * pi * r1_gp(p,T) * 1d-3 ! RT/p is in L/kg.
     
 end function
+
+pure elemental function r1_u(p, T)result(res)
+    !! Compute the specific internal energy u in m3/kg.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: pi, tau
+
+    pi = p/r1_ps
+    tau = r1_Ts/T
+    res = R*T * (tau * r1_gt(p,T) - pi * r1_gp(p,T))
+    
+end function
+
+pure elemental function r1_h(p, T)result(res)
+    !! Compute the specific enthalpie h in kJ/kg.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    res = R*T * tau * r1_gt(p,T)
+    
+end function
+
 
 !--------------------------------------------------------------------------------------------------------------------------------
 
