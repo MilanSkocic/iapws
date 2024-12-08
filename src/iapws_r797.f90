@@ -6,7 +6,7 @@ module iapws__r797
     implicit none
     private
 
-    public :: r1_v, r1_u, r1_h
+    public :: r1_v, r1_u, r1_s, r1_h
     public :: psat, Tsat
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
@@ -263,6 +263,24 @@ pure elemental function r1_u(p, T)result(res)
     
 end function
 
+pure elemental function r1_s(p, T)result(res)
+    !! Compute the specific enthropy h in kJ/kg/K.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    res = R * (tau * r1_gt(p,T) - r1_g(p,T))
+    
+end function
+
 pure elemental function r1_h(p, T)result(res)
     !! Compute the specific enthalpie h in kJ/kg.
 
@@ -280,6 +298,7 @@ pure elemental function r1_h(p, T)result(res)
     res = R*T * tau * r1_gt(p,T)
     
 end function
+
 
 
 !--------------------------------------------------------------------------------------------------------------------------------

@@ -15,6 +15,7 @@ subroutine collect_suite_r797(testsuite)
                  new_unittest("Tsat", test_Tsat), &
                  new_unittest("r1_v", test_r1_v), &
                  new_unittest("r1_u", test_r1_u), &
+                 new_unittest("r1_s", test_r1_s), &
                  new_unittest("r1_h", test_r1_h) &
                  ]
 end subroutine
@@ -79,6 +80,20 @@ subroutine test_r1_u(error)
     
     do i=1, size(T)
         call check(error, r1_u(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
+end subroutine
+
+subroutine test_r1_s(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: ref(3) = [0.392294792d0, 0.368563852d0, 0.258041912d1]
+    real(dp) :: c(3) = [1d0, 1d0, 1d-1]
+    
+    do i=1, size(T)
+        call check(error, r1_s(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 end subroutine
