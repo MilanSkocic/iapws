@@ -6,7 +6,7 @@ module iapws__r797
     implicit none
     private
 
-    public :: r1_v, r1_u, r1_s, r1_h
+    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
     public :: psat, Tsat
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
@@ -299,7 +299,65 @@ pure elemental function r1_h(p, T)result(res)
     
 end function
 
+pure elemental function r1_cp(p, T)result(res)
+    !! Compute the specific isobaric heat capacity cp in kJ/kg/K.
 
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    res = -R * tau**2.0_dp * r1_gtt(p,T)
+    
+end function
+
+pure elemental function r1_cv(p, T)result(res)
+    !! Compute the specific isochoric heat capacity cp in kJ/kg/K.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    res = R * ( -tau**2.0_dp * r1_gtt(p,T) + (r1_gp(p,T)-tau*r1_gpt(p,T))**2.0_dp/r1_gpp(p,T) )
+    
+end function
+
+pure elemental function r1_w(p, T)result(res)
+    !! Compute the speed of sound w in m/s.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: T !! Temperature in K.
+
+    ! results
+    real(dp) :: res
+   
+    ! variables
+    real(dp) :: tau
+
+    tau = r1_Ts/T
+    ! RT is kJ.kg-1 = 10^3 J.kg-1
+    ! 1J = 1kg.m2.s-2
+    ! RT in 10^3 m2.s-2.
+    res = 1d3*R*T * ( r1_gp(p,T)**2.0_dp / & 
+                ( (r1_gp(p,T)-tau*r1_gpt(p,T))**2.0_dp / (tau**2.0_dp*r1_gtt(p,T)) - r1_gpp(p,T) ) &
+                )
+    res = sqrt(res) ! in m.s-1
+    
+end function
 
 !--------------------------------------------------------------------------------------------------------------------------------
 

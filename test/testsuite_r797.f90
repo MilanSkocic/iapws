@@ -16,7 +16,9 @@ subroutine collect_suite_r797(testsuite)
                  new_unittest("r1_v", test_r1_v), &
                  new_unittest("r1_u", test_r1_u), &
                  new_unittest("r1_s", test_r1_s), &
-                 new_unittest("r1_h", test_r1_h) &
+                 new_unittest("r1_h", test_r1_h), &
+                 new_unittest("r1_cp", test_r1_cp), &
+                 new_unittest("r1_w", test_r1_w) &
                  ]
 end subroutine
 
@@ -108,6 +110,34 @@ subroutine test_r1_h(error)
     
     do i=1, size(T)
         call check(error, r1_h(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
+end subroutine
+
+subroutine test_r1_cp(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: ref(3) = [0.417301218d1, 0.401008987d1, 0.465580682d1]
+    real(dp) :: c(3) = [1d-1, 1d-1, 1d-1]
+    
+    do i=1, size(T)
+        call check(error, r1_cp(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
+end subroutine
+
+subroutine test_r1_w(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: ref(3) = [0.150773921d4, 0.163469054d4, 0.124071337d4]
+    real(dp) :: c(3) = [1d-4, 1d-4, 1d-4]
+    
+    do i=1, size(T)
+        call check(error, r1_w(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 end subroutine
