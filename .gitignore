@@ -23,6 +23,7 @@ API-doc/
 *.obj
 *.o
 *.mod
+*.mod*
 *.pyd
 *.dll.a
 *.a
