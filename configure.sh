@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NAME="ecx"
+export NAME="iapws"
 export LIBNAME="lib$NAME"
 export PYNAME="py$NAME"
 export PY_SRC="./src/$PYNAME"
