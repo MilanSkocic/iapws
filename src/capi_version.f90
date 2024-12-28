@@ -1,7 +1,7 @@
 module iapws__capi_version
     !! Version: C API.
     use iso_c_binding, only: c_null_char, c_ptr, c_loc
-    use iapws__version
+    use iapws__api
     implicit none
     private
 

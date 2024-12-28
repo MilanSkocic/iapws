@@ -5,4 +5,5 @@ module iapws
     use iapws__r283
     use iapws__r797
     use iapws__capi
+    use iapws__api
 end module
