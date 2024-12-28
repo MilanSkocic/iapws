@@ -1,16 +1,5 @@
 # ---------------------------------------------------------------------
 # CONFIGURATION
-ifeq ($(PLATFORM), windows)
-	PY=py -
-endif
-ifeq ($(PLATFORM), linux)
-	PY=python
-	AW=auditwheel repair --plat manylinux_2_31_x86_64 ./dist/*.whl
-endif
-ifeq ($(PLATFORM), darwin)
-	PY=python
-endif
-
 SETUP=setup.py pyproject.toml
 # ---------------------------------------------------------------------
 
@@ -19,13 +8,13 @@ SETUP=setup.py pyproject.toml
 # TARGETS
 .PHONY: package test clean
 
-all: package test
+all: package
 # ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
 # COMPILATION
-package: python3.13 python3.12 python3.11 python3.10 python3.9
+package: python3.9 python3.10 python3.11 python3.12 python3.13
 
 python3.13: $(SETUP)
 	@echo "########### PYTHON 3.13 ##########"
@@ -59,7 +48,7 @@ python3.9: $(SETUP)
 	$(PY)3.9 -m build --no-isolation --wheel
 	@echo "#################################"
 
-test: test3.13 test3.12 test3.10 test3.9
+test: test3.9 test3.10 test3.11 test3.12 test3.13
 
 test3.13: 
 	$(PY)3.13 -m pytest -v
@@ -94,7 +83,4 @@ clean:
 	rm -f $(PY_SRC)/*.dll 
 	rm -f $(PY_SRC)/*.dll.a 
 	rm -f $(PY_SRC)/*.pyd
-	rm -rf $(PY_SRC)/bin
-	rm -rf $(PY_SRC)/include
-	rm -rf $(PY_SRC)/lib
 # ---------------------------------------------------------------------
