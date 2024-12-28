@@ -1,14 +1,28 @@
 #!/bin/bash
 
-export NAME="iapws"
+export NAME=$(cat fpm.toml | grep -m 1 "name =" | awk -F '=' '{print $2}' | sed -E 's/[ "]//g')
+export VERSION=$(tr -d '\r' < VERSION | tr -d '\n')
 export LIBNAME="lib$NAME"
 export PYNAME="py$NAME"
 export PY_SRC="./src/$PYNAME"
+export AW="auditwheel repair --plat manylinux_2_35_x86_64 ./dist/*.whl"
+
+echo -n $VERSION > ./py/VERSION
+
+mod=$NAME
+f="./src/"$mod"_version.f90"
+echo "module "$mod"__version"           > $f
+echo "    !! Version"                   >> $f
+echo "    implicit none"                >> $f
+echo "    private"                      >> $f
+echo "    character(len=*), parameter, public :: version = \"$VERSION\"" >> $f
+echo "end module "$mod"__version" >> $f
 
 # environment variables
 export FC=gfortran
 export CC=gcc
 export PY=python
+export PYGEN=python
 export BUILD_DIR="./build"
 export INCLUDE_DIR="./include"
 export FPM_FFLAGS="-std=f2008 -pedantic -Wall -Wextra"
@@ -31,10 +45,14 @@ export LIBS="${LIBSLINUX[@]}"
 if [[ "$OSTYPE" == "msys" ]]; then
     DEFAULT_INSTALL_DIR="${APPDATA//\\//}/local"
     PLATFORM="windows"
+    ARCH=$MSYSTEM_CARCH
     ROOT=$(dirname $(where gfortran))"\\"
     EXT=".dll"
     LIBS=( "${LIBSWINDOWS[@]}" )
     PY="py -"
+    PYGEN="py"
+    FPM_LDFLAGS="-static"
+    AW=""
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]];then
@@ -42,10 +60,17 @@ if [[ "$OSTYPE" == "darwin"* ]];then
     ROOT="/usr/local/opt/gcc/lib/gcc/current/"
     EXT=".dylib"
     LIBS=( "${LIBSDARWIN[@]}" )
+    FPM_LDFLAGS="-static-libgfortran -static-libquadmath -static-libgcc"
+    AW=""
 fi
 
-echo "LIBNAME=" $LIBNAME
+if [[ "$VERSION" == *"dev"* ]]; then
+    export VERSION=$(git rev-parse --short HEAD)
+fi
+
 echo "NAME=" $NAME
+echo "LIBNAME=" $LIBNAME
+echo "VERSION=" $VERSION
 
 echo "PLATFORM=" $PLATFORM
 echo "ARCH=" $ARCH
@@ -63,9 +88,9 @@ echo "PYNAME=" $PYNAME
 echo "FC=" $FC
 echo "CC=" $CC
 echo "PY=" $PY
+echo "AW=" $AW
 
 echo "LIBS=" ${LIBS[@]}
 echo "ROOT=" $ROOT
 
-cp -vf VERSION ./py/VERSION
 cp -vf LICENSE ./py/LICENSE
