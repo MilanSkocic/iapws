@@ -74,7 +74,6 @@ uninstall:
 
 clean:
 	fpm clean --all
-	make -C py clean
 	rm -rf API-doc/*
 
 doc:
@@ -86,8 +85,3 @@ docs:
 
 logo:
 	make -C media
-
-py: $(LIBNAME)
-	make install prefix=py/$(PY_SRC)
-	make -C py
-	
