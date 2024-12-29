@@ -1,10 +1,23 @@
-module iapws__capi_g704
-    !! Module for IAPWS G704 : C API.
-    use iso_fortran_env
+module iapws__capi
+    !! C API.
     use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
-    use iapws__g704
+    use iapws__common
+    use iapws__api
     implicit none
-    private
+    
+    ! ------------------------------------------------------------------------------
+    ! R283
+    real(c_double), protected, bind(C, name="iapws_r283_Tc_H2O") :: capi_Tc_H2O = Tc_H2O !! Critical temperature for H2O in K
+    real(c_double), protected, bind(C, name="iapws_r283_Tc_D2O") :: capi_Tc_D2O = Tc_D2O !! Critical temperature for D2O in K
+
+    real(c_double), protected, bind(C, name="iapws_r283_pc_H2O") :: capi_pc_H2O = pc_H2O !! Critical pressure for H2O in MPa
+    real(c_double), protected, bind(C, name="iapws_r283_pc_D2O") :: capi_pc_D2O = pc_D2O !! Critical pressure for D2O in MPa
+
+    real(c_double), protected, bind(C, name="iapws_r283_rhoc_H2O") :: capi_rhoc_H2O = rhoc_H2O !! Critical density for H2O in kg.m-3
+    real(c_double), protected, bind(C, name="iapws_r283_rhoc_D2O") :: capi_rhoc_D2O = rhoc_D2O !! Critical density for D2O in kg.m-3
+    ! ------------------------------------------------------------------------------
+    
+    character(len=:), allocatable, target :: version_c
     
     type, bind(C) :: c_char_p
         type(c_ptr) :: p
@@ -16,12 +29,43 @@ module iapws__capi_g704
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    public :: capi_kh, capi_kd
-    public :: capi_ngases
-    public :: capi_gases
+    public :: capi_get_version
+
+    public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
+
+    public :: capi_psat, capi_Tsat
+
+    public :: capi_kh, capi_kd, capi_ngases, capi_gases
 
 contains
 
+
+! ------------------------------------------------------------------------------
+! VERSION 
+function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
+    !! Get the version.
+    implicit none
+    
+    ! Returns   
+    type(c_ptr) :: cptr !! Pointer to version string.
+
+    character(len=:), pointer :: fptr
+    fptr => get_version() 
+
+    if(allocated(version_c))then
+        deallocate(version_c)
+    endif
+    allocate(character(len=len(fptr)+1) :: version_c)
+
+    version_c = fptr // c_null_char
+    cptr = c_loc(version_c)
+end function
+! ------------------------------------------------------------------------------
+
+
+
+! ------------------------------------------------------------------------------
+! G704
 subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")
     !! Compute the henry constant for a given temperature.
     implicit none
@@ -152,5 +196,38 @@ function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gase
     str_gases = c_loc(c_gases_str)
 
 end function
+! ------------------------------------------------------------------------------
 
-end module iapws__capi_g704
+
+
+! ------------------------------------------------------------------------------
+! R797
+pure subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
+    !! C API. 
+    !! Compute the saturation pressure at temperature Ts. 
+    !! Validity range 273.13 K <= Ts <= 647.096 K.
+
+    integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
+    real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
+    real(c_double), intent(out) :: ps(N)          !! Saturation pressure in MPa. Filled with nan if out of validity range.
+
+    call psat(Ts, ps)
+
+end subroutine
+
+pure subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
+    !! C API.
+    !! Compute the saturation temperature at pressure ps.
+    !! Validity range 611.213 Pa <= ps <= 22.064 MPa.
+    
+    integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
+    real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
+    real(c_double), intent(out) ::  Ts(N)         !! Saturation temperature in K. Filled with nan if out of validity range.
+    
+    call Tsat(ps, Ts)
+
+end subroutine
+! ------------------------------------------------------------------------------
+
+
+end module iapws__capi

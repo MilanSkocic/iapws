@@ -1,13 +1,12 @@
 module iapws__r797
     !! Module for IAPWS R7-97: Not fully implemented - under development.
-    use stdlib_kinds, only: dp
-    use ieee_arithmetic
+    use iapws__common
     use iapws__r283, only: Tc_H2O, pc_H2O, rhoc_H2O
     implicit none
     private
 
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
-    public :: psat, Tsat
+    public :: r4_ps, r4_Ts
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
 real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
@@ -389,7 +388,6 @@ pure elemental function r4_ps(Ts)result(value)
     
         value = r4_Pstar  *( 2*C /(-B +(B**2-4*A*C)**(0.5_dp)))**(4.0_dp)
     endif
-
 end function
 
 pure elemental function r4_Ts(ps)result(value)
@@ -414,29 +412,6 @@ pure elemental function r4_Ts(ps)result(value)
         value = r4_Tstar * (r4_n(10) + D - ((r4_n(10)+D)**2.0_dp - 4.0_dp*(r4_n(9)+r4_n(10)*D))**0.5_dp) / 2.0_dp
     endif
 end function
-
-pure subroutine psat(Ts, ps)
-    !! Compute the saturation pressure at temperature Ts. 
-    !! Validity range 273.13 K <= Ts <= 647.096 K.
-
-    real(dp), intent(in), contiguous :: Ts(:)  !! Saturation temperature in K.
-    real(dp), intent(out), contiguous :: ps(:) !! Saturation pressure in MPa. Filled with nan if out of validity range.
-    
-    ps = r4_ps(Ts)
-
-end subroutine
-
-pure subroutine Tsat(ps, Ts)
-    !! Compute the saturation temperature at pressure ps.
-    !! Validity range 611.213 Pa <= ps <= 22.064 MPa.
-
-    real(dp), intent(in), contiguous :: ps(:)  !! Saturation pressure in MPa.
-    real(dp), intent(out), contiguous :: Ts(:) !! Saturation temperature in K. Filled with nan if out of validity range.
-
-    Ts = r4_Ts(ps)
-
-end subroutine
-
 !--------------------------------------------------------------------------------------------------------------------------------
 
 
