@@ -1,6 +1,6 @@
 module iapws__api
-    !! API
-    !! See [specs](../page/specs/api.html)
+    !! API.
+    !! See [specs](../page/specs/api.html).
     use iapws__common
     use iapws__version
     use iapws__r283
@@ -10,14 +10,14 @@ module iapws__api
     
     character(len=:), allocatable, target :: version_f
 
-    public :: get_version
+    public :: get_version                                                       !! VERSION
 
-    public :: kh, kd, gases, gases2, ngases, gas_type
+    public :: kh, kd, gases, gases2, ngases, gas_type                           !! G704
 
-    public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
+    public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O                !! R283
     
-    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
-    public :: psat, Tsat
+    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        !! R797
+    public :: psat, Tsat                                                        !! R797
     
 contains
 
@@ -36,6 +36,9 @@ function get_version()result(fptr)
     fptr => version_f    
 end function
 ! ------------------------------------------------------------------------------
+
+
+
 
 
 ! ------------------------------------------------------------------------------

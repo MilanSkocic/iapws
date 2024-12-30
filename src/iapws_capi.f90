@@ -1,5 +1,6 @@
 module iapws__capi
     !! C API.
+    !! See [specs](../pages/specs/capi.html).
     use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
     use iapws__common
     use iapws__api
