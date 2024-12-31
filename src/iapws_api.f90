@@ -68,7 +68,7 @@ pure subroutine Tsat(ps, Ts)
 
 end subroutine
 
-pure subroutine waterproperty(p, T, prop)result(res)
+pure subroutine waterproperty(p, T, prop, res)
     !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
     !! The adequate region is selected according to p and T.
     !! Returns NaN if no adequate region is found.
@@ -86,9 +86,7 @@ pure subroutine waterproperty(p, T, prop)result(res)
     real(dp), intent(in) :: p                 !! Pressure in MPa.
     real(dp), intent(in) :: T                 !! Pressure in K.
     character(len=*), intent(in) :: prop      !! Property
-
-    ! results
-    real(dp) :: res
+    real(dp), intent(out) :: res
 
     res = ieee_value(1.0_dp, ieee_quiet_nan)
 end subroutine
