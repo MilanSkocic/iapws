@@ -22,6 +22,10 @@ real(dp), parameter :: R = 0.461526_dp      !! Specific gas constant 0.461 526 k
 real(dp), parameter :: r1_ps = 16.53_dp !! p* in MPa.
 real(dp), parameter :: r1_Ts = 1386.0_dp !! T* in K.
 
+real(dp), parameter :: r1_Tmin = 273.15_dp  !! T in K.
+real(dp), parameter :: r1_Tmax = 623.15_dp  !! T in K.
+real(dp), parameter :: r1_pmax = 100.0_dp   !! p in MPa.
+
 real(dp), target :: r1_IJn_g(34, 3) = transpose(reshape([&
   +0.0_dp,  -2.0_dp, +0.14632971213167d0,   &
   +0.0_dp,  -1.0_dp, -0.84548187169114d0,   &
@@ -63,6 +67,28 @@ real(dp), target :: r1_IJn_g(34, 3) = transpose(reshape([&
 
 
 
+! Region 2
+!--------------------------------------------------------------------------------------------------------------------------------
+real(dp), parameter :: r2_T1min = 273.15_dp     !! T in K.
+real(dp), parameter :: r2_T1max = 623.15_dp     !! T in K.
+real(dp), parameter :: r2_T2min = r2_T1min      !! T in K.
+real(dp), parameter :: r2_T2max = 863.15_dp     !! T in K.
+real(dp), parameter :: r2_T3min = r2_T2min      !! T in K.
+real(dp), parameter :: r2_T3max = 1073.15_dp     !! T in K.
+real(dp), parameter :: r2_pmin = 0.000_dp       !! T in K.
+real(dp), parameter :: r2_pmax = 100.0_dp        !! T in K.
+!--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+! Region 3
+!--------------------------------------------------------------------------------------------------------------------------------
+real(dp), parameter :: r3_Tmin = 623.15_dp      !! T in K.
+real(dp), parameter :: r3_pmax = 100.0_dp        !! T in K.
+!--------------------------------------------------------------------------------------------------------------------------------
+
+
+
 ! Region 4: Saturation line
 !--------------------------------------------------------------------------------------------------------------------------------
 real(dp) :: r4_n(10) = [  &
@@ -88,7 +114,86 @@ real(dp), parameter :: r4_Pstar = 1_dp         !! p* MPa
 !--------------------------------------------------------------------------------------------------------------------------------
 
 
+
+
+! Region 5
+!--------------------------------------------------------------------------------------------------------------------------------
+real(dp), parameter :: r5_Tmin = 1073.15_dp     !! T in K.
+real(dp), parameter :: r5_Tmax = 2273.15_dp     !! T in K.
+real(dp), parameter :: r5_pmin = 0.000_dp       !! T in K.
+real(dp), parameter :: r5_pmax = 50.0_dp        !! T in K.
+!--------------------------------------------------------------------------------------------------------------------------------
+
+
+
 contains
+
+
+pure function find_region(p, T)result(res)
+    !! Find the corresponding region according to p and T.
+    !! Returns the number of the region (1 to 5) when found otherwise returns -1.
+    
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    !results
+    integer(int32) :: res
+
+    ! variables
+    real(dp) :: ps, p23, T23
+
+    res = -1
+
+    ! test region 1
+    if((T>=r1_Tmin) .and. (T<=r1_Tmax))then
+        ps=psat(T)
+        if((p>=ps) .and. (p<=r1_pmax))then
+            res = 1
+        end if
+    end if
+
+    ! test region 2
+    if((T>=r2_T1min) .and. (T<=r2_T2max))then
+        ps=psat(T)
+        if((p>r2_pmin) .and. (p<=ps))then
+            res = 2
+        end if
+    end if
+
+    if((T>=r2_T2min) .and (T<=r2_T2max))then
+        ! p23 = b23_p(T)
+        p23 = 100.0_dp ! to change after implementing the boundary equation between region 2 and 3.
+        if((p>r2_pmin) .and. (p<=p23))then
+            res = 2
+        end if
+    end if
+    
+    if((T>=r2_T3min) .and (T<=r2_T3max))then
+        if((p>r2_pmin) .and. (p<=r2_pmax))then
+            res = 2
+        end if
+    end if
+    
+    ! test Region 3
+    ! T23 = b23_T(p)
+    ! p23 = b23_p(T)
+    T23 = 1073.15_dp ! change after implementing b23 equation
+    p23 = 10.0_dp    ! change after implementing b23 equation
+    if((T>=r3_Tmin) .and (T<=T23))then
+        if((p>=p23) .and. (p<=r3_pmax))then
+            res = 3
+        end if
+    end if
+
+    
+    ! test region 5
+    if((T>=r5_Tmin) .and. (T<=r5_Tmax))then
+        if((p>=r5_pmin) .and. (p>=r5_pmax))
+            res = 5
+        end if
+    end if
+end function
 
 
 ! Region 1
@@ -229,7 +334,7 @@ pure elemental function r1_v(p, T)result(res)
     !! Compute the specific volume v in m3/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -247,7 +352,7 @@ pure elemental function r1_u(p, T)result(res)
     !! Compute the specific internal energy u in m3/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -266,7 +371,7 @@ pure elemental function r1_s(p, T)result(res)
     !! Compute the specific enthropy h in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -284,7 +389,7 @@ pure elemental function r1_h(p, T)result(res)
     !! Compute the specific enthalpie h in kJ/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -302,7 +407,7 @@ pure elemental function r1_cp(p, T)result(res)
     !! Compute the specific isobaric heat capacity cp in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -320,7 +425,7 @@ pure elemental function r1_cv(p, T)result(res)
     !! Compute the specific isochoric heat capacity cp in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -338,7 +443,7 @@ pure elemental function r1_w(p, T)result(res)
     !! Compute the speed of sound w in m/s.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in Mpa.
+    real(dp), intent(in) :: p !! pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -413,6 +518,8 @@ pure elemental function r4_Ts(ps)result(value)
     endif
 end function
 !--------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 end module
