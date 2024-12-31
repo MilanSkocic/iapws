@@ -147,7 +147,7 @@ pure function find_region(p, T)result(res)
 
     ! test region 1
     if((T>=r1_Tmin) .and. (T<=r1_Tmax))then
-        ps=psat(T)
+        ps=r4_ps(T)
         if((p>=ps) .and. (p<=r1_pmax))then
             res = 1
         end if
@@ -155,13 +155,13 @@ pure function find_region(p, T)result(res)
 
     ! test region 2
     if((T>=r2_T1min) .and. (T<=r2_T2max))then
-        ps=psat(T)
+        ps=r4_ps(T)
         if((p>r2_pmin) .and. (p<=ps))then
             res = 2
         end if
     end if
 
-    if((T>=r2_T2min) .and (T<=r2_T2max))then
+    if((T>=r2_T2min) .and. (T<=r2_T2max))then
         ! p23 = b23_p(T)
         p23 = 100.0_dp ! to change after implementing the boundary equation between region 2 and 3.
         if((p>r2_pmin) .and. (p<=p23))then
@@ -169,7 +169,7 @@ pure function find_region(p, T)result(res)
         end if
     end if
     
-    if((T>=r2_T3min) .and (T<=r2_T3max))then
+    if((T>=r2_T3min) .and. (T<=r2_T3max))then
         if((p>r2_pmin) .and. (p<=r2_pmax))then
             res = 2
         end if
@@ -180,7 +180,7 @@ pure function find_region(p, T)result(res)
     ! p23 = b23_p(T)
     T23 = 1073.15_dp ! change after implementing b23 equation
     p23 = 10.0_dp    ! change after implementing b23 equation
-    if((T>=r3_Tmin) .and (T<=T23))then
+    if((T>=r3_Tmin) .and. (T<=T23))then
         if((p>=p23) .and. (p<=r3_pmax))then
             res = 3
         end if
@@ -189,7 +189,7 @@ pure function find_region(p, T)result(res)
     
     ! test region 5
     if((T>=r5_Tmin) .and. (T<=r5_Tmax))then
-        if((p>=r5_pmin) .and. (p>=r5_pmax))
+        if((p>=r5_pmin) .and. (p>=r5_pmax))then
             res = 5
         end if
     end if
