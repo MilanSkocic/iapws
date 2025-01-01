@@ -2,6 +2,7 @@ module testsuite_r797
     use stdlib_kinds, only: dp, int32
     use testdrive, only : new_unittest, unittest_type, error_type, check
     use iapws
+    use iapws__r797
     implicit none
     private
     
@@ -11,7 +12,8 @@ contains
 
 subroutine collect_suite_r797(testsuite)
     type(unittest_type), allocatable, intent(out) :: testsuite(:)
-    testsuite = [new_unittest("Psat", test_Psat), &
+    testsuite = [new_unittest("find_region", test_find_region), &
+                 new_unittest("Psat", test_Psat), &
                  new_unittest("Tsat", test_Tsat), &
                  new_unittest("r1_v", test_r1_v), &
                  new_unittest("r1_u", test_r1_u), &
@@ -53,6 +55,19 @@ subroutine test_Tsat(error)
     ! check ref values from Table 36.
     do i=1, size(Ts)
         call check(error, Ts(i)*c(i), Tsref(i)*c(i), thr=1d-9)
+        if (allocated(error)) return
+    end do
+
+end subroutine
+
+subroutine test_find_region(error)
+    type(error_type), allocatable, intent(out) :: error 
+    integer(int32) :: i
+    real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
+    real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+   
+    do i=1, size(T)
+        call check(error, find_region(p(i),T(i)), 1)
         if (allocated(error)) return
     end do
 
