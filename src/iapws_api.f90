@@ -83,12 +83,17 @@ pure subroutine waterproperty(p, T, prop, res)
     !!     * w: speed of sound
 
     ! parameters
-    real(dp), intent(in) :: p                 !! Pressure in MPa.
-    real(dp), intent(in) :: T                 !! Pressure in K.
+    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
+    real(dp), intent(in) :: T(:)                 !! Pressure in K.
     character(len=*), intent(in) :: prop      !! Property
-    real(dp), intent(out) :: res
+    real(dp), intent(out) :: res(:)
+
+    ! variables
+    integer(int32) :: regions(size(p))
 
     res = ieee_value(1.0_dp, ieee_quiet_nan)
+    ! regions = find_region(p, T)
+
 end subroutine
 ! ------------------------------------------------------------------------------
 
