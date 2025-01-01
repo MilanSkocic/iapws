@@ -5,6 +5,7 @@ module iapws__r797
     implicit none
     private
 
+    public :: find_region
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
     public :: r4_ps, r4_Ts
     
@@ -71,9 +72,9 @@ real(dp), target :: r1_IJn_g(34, 3) = transpose(reshape([&
 !--------------------------------------------------------------------------------------------------------------------------------
 real(dp), parameter :: r2_T1min = 273.15_dp     !! T in K.
 real(dp), parameter :: r2_T1max = 623.15_dp     !! T in K.
-real(dp), parameter :: r2_T2min = r2_T1min      !! T in K.
+real(dp), parameter :: r2_T2min = r2_T1max      !! T in K.
 real(dp), parameter :: r2_T2max = 863.15_dp     !! T in K.
-real(dp), parameter :: r2_T3min = r2_T2min      !! T in K.
+real(dp), parameter :: r2_T3min = r2_T2max      !! T in K.
 real(dp), parameter :: r2_T3max = 1073.15_dp     !! T in K.
 real(dp), parameter :: r2_pmin = 0.000_dp       !! T in K.
 real(dp), parameter :: r2_pmax = 100.0_dp        !! T in K.
@@ -129,7 +130,7 @@ real(dp), parameter :: r5_pmax = 50.0_dp        !! T in K.
 contains
 
 
-pure function find_region(p, T)result(res)
+pure elemental function find_region(p, T)result(res)
     !! Find the corresponding region according to p and T.
     !! Returns the number of the region (1 to 5) when found otherwise returns -1.
     
@@ -144,18 +145,17 @@ pure function find_region(p, T)result(res)
     real(dp) :: ps, p23, T23
 
     res = -1
+    ps=r4_ps(T)
 
     ! test region 1
     if((T>=r1_Tmin) .and. (T<=r1_Tmax))then
-        ps=r4_ps(T)
         if((p>=ps) .and. (p<=r1_pmax))then
             res = 1
         end if
     end if
 
     ! test region 2
-    if((T>=r2_T1min) .and. (T<=r2_T2max))then
-        ps=r4_ps(T)
+    if((T>=r2_T1min) .and. (T<=r2_T1max))then
         if((p>r2_pmin) .and. (p<=ps))then
             res = 2
         end if
@@ -186,13 +186,13 @@ pure function find_region(p, T)result(res)
         end if
     end if
 
-    
     ! test region 5
     if((T>=r5_Tmin) .and. (T<=r5_Tmax))then
         if((p>=r5_pmin) .and. (p>=r5_pmax))then
             res = 5
         end if
     end if
+
 end function
 
 
