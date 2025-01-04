@@ -1,5 +1,5 @@
 r"""Tests for version."""
-from pyiapws.version import __version__
+from pyiapws import __version__
 
 def test_version():
     expected = None
