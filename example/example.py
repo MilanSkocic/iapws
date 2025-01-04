@@ -10,13 +10,13 @@ print("########################## IAPWS VERSION ##########################")
 print(pyiapws.__version__)
 
 print("########################## IAPWS R2-83 ##########################")
-print("Tc in H2O", pyiapws.r283.Tc_H2O, "K")
-print("pc in H2O", pyiapws.r283.pc_H2O, "MPa")
-print("rhoc in H2O", pyiapws.r283.rhoc_H2O, "kg/m3")
+print("Tc in H2O", pyiapws.Tc_H2O, "K")
+print("pc in H2O", pyiapws.pc_H2O, "MPa")
+print("rhoc in H2O", pyiapws.rhoc_H2O, "kg/m3")
 
-print("Tc in D2O", pyiapws.r283.Tc_D2O, "K")
-print("pc in D2O", pyiapws.r283.pc_D2O, "MPa")
-print("rhoc in D2O", pyiapws.r283.rhoc_D2O, "kg/m3")
+print("Tc in D2O", pyiapws.Tc_D2O, "K")
+print("pc in D2O", pyiapws.pc_D2O, "MPa")
+print("rhoc in D2O", pyiapws.rhoc_D2O, "kg/m3")
 
 print("")
 
@@ -26,26 +26,26 @@ T = array.array("d", (25.0+273.15,))
 
 # Compute kh and kd in H2O
 heavywater = False
-k = pyiapws.g704.kh(T, "O2", heavywater)
+k = pyiapws.kh(T, "O2", heavywater)
 print(f"Gas={gas}\tT={T[0]}K\tkh={k[0]:+10.4f}\n")
 
-k = pyiapws.g704.kd(T, "O2", heavywater)
+k = pyiapws.kd(T, "O2", heavywater)
 print(f"Gas={gas}\tT={T[0]}K\tkd={k[0]:+10.4f}\n")
 
 # Get and print the available gases
 heavywater = False
-gases_list = pyiapws.g704.gases(heavywater)
-gases_str = pyiapws.g704.gases2(heavywater)
-ngas = pyiapws.g704.ngases(heavywater)
+gases_list = pyiapws.gases(heavywater)
+gases_str = pyiapws.gases2(heavywater)
+ngas = pyiapws.ngases(heavywater)
 print(f"Gases in H2O: {ngas:}")
 print(gases_str)
 for gas in gases_list:
     print(gas)
 
 heavywater = True
-gases_list = pyiapws.g704.gases(heavywater)
-gases_str = pyiapws.g704.gases2(heavywater)
-ngas = pyiapws.g704.ngases(heavywater)
+gases_list = pyiapws.gases(heavywater)
+gases_str = pyiapws.gases2(heavywater)
+ngas = pyiapws.ngases(heavywater)
 print(f"Gases in D2O: {ngas:}")
 print(gases_str)
 for gas in gases_list:
@@ -66,9 +66,9 @@ for HEAVYWATER in (False, True):
     ax.grid(visible=True, ls=':')
     ax.set_xlabel("T /°K")
     ax.set_ylabel("ln (kh/1GPa)")
-    gases = pyiapws.g704.gases(HEAVYWATER)
+    gases = pyiapws.gases(HEAVYWATER)
     for gas in gases:
-        k = pyiapws.g704.kh(T, gas, HEAVYWATER) / 1000.0
+        k = pyiapws.kh(T, gas, HEAVYWATER) / 1000.0
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
@@ -83,9 +83,9 @@ for HEAVYWATER in (False, True):
     ax.grid(visible=True, ls=':')
     ax.set_xlabel("T /°K")
     ax.set_ylabel("ln kd")
-    gases = pyiapws.g704.gases(HEAVYWATER)
+    gases = pyiapws.gases(HEAVYWATER)
     for gas in gases:
-        k = pyiapws.g704.kd(T, gas, HEAVYWATER)
+        k = pyiapws.kd(T, gas, HEAVYWATER)
         ln_k = np.log(k)
         ax.plot(T, ln_k, label=gas, **style)
     ax.legend(ncol=3)
@@ -98,11 +98,11 @@ Ts = np.asarray([-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0])
 Ts = Ts + 273.15
 
 
-ps = pyiapws.r797.psat(Ts)
+ps = pyiapws.psat(Ts)
 for i in range(Ts.size): 
     print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
 
-Ts = pyiapws.r797.Tsat(ps)
+Ts = pyiapws.Tsat(ps)
 for i in range(Ts.size): 
     print(f"{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.")
 
@@ -114,10 +114,10 @@ ax.set_ylabel("ps /MPa")
 Ts = np.linspace(0.0, 370.0, 500)
 Ts = Ts + 273.15
 
-ps = pyiapws.r797.psat(Ts)
+ps = pyiapws.psat(Ts)
 ax.plot(Ts, ps, "r-", label="ps(Ts)")
 
-Ts = pyiapws.r797.Tsat(ps)
+Ts = pyiapws.Tsat(ps)
 ax.plot(Ts, ps, "b--", label="Ts(ps)")
 
 ax.legend()
