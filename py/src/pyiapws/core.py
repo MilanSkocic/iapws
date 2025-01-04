@@ -3,7 +3,7 @@ import array
 import numpy as np
 
 
-def cast_ndarray(X):
+def _cast_ndarray(X):
     """
     Cast X to numpy 1d-array.
 

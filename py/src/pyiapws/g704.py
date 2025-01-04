@@ -24,7 +24,7 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     kh: float or 1d-array
         Henry constant in MPa.
     """
-    T_, scalar = core.cast_ndarray(T)
+    T_, scalar = core._cast_ndarray(T)
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
@@ -55,7 +55,7 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
     kd: float or 1d-array
         Adimensional liquid-vapor constant. 
     """
-    T_, scalar = core.cast_ndarray(T)
+    T_, scalar = core._cast_ndarray(T)
     gas_ = str(gas)
     heavywater_  = bool(heavywater)
 
