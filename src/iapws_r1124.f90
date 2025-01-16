@@ -12,6 +12,8 @@ real(dp), parameter :: a2 = -24145.1  ! K^2(g.cm^{-3})^{-2/3}
 real(dp), parameter :: b0 = +0.813876 ! cm^3.g^{-1}
 real(dp), parameter :: b1 = -51.4471  ! K cm^3 g^{-1}
 real(dp), parameter :: b2 = -0.469920 ! cm^6.g^{-2}
+real(dp), parameter :: Tlim1 = 273.15 ! K
+real(dp), parameter :: Tlim2 = 1273.15! K
 
 contains
 
