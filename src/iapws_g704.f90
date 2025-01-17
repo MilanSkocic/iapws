@@ -319,13 +319,14 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
 end function
 
 pure subroutine kh(T, gas, heavywater, k)
-    !! Compute the henry constant kH for a given temperature.
+    !! Compute the henry constant kH in MPa for a given temperature.
+    !! The molar fraction in water is related to kH: \[x_2=1/kH\[. 
     implicit none
     
     real(dp), intent(in), contiguous :: T(:) !! Temperature in K.
     character(len=*), intent(in) :: gas !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:) !! Henry constant. Filled with NaNs if gas not found.
+    real(dp), intent(out), contiguous :: k(:) !! Henry constant in MPa. Filled with NaNs if gas not found.
     
     integer(int32) :: i
     
@@ -348,13 +349,14 @@ pure subroutine kh(T, gas, heavywater, k)
 end subroutine
 
 pure subroutine kd(T, gas, heavywater, k)
-    !! Compute the vapor-liquid constant kd for a given temperature. 
+    !! Compute the vapor-liquid constant kd for a given temperature.
+    !! The molar fraction in vapor in related to kd: \[ kd=y_2/x_2 \[
     implicit none
     
     real(dp), intent(in), contiguous :: T(:)             !! Temperature in K.
     character(len=*), intent(in) :: gas      !! Gas.
     integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant. Filled with NaNs if gas not found.
+    real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
     
     integer(int32) :: i
     
