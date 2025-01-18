@@ -20,6 +20,8 @@ For now, I have implemented
     - [ ] Region 3
     - [x] Region 4
     - [ ] Region 5
+- R11-24:
+    - [x] pKw
 
 To use `iapws` within your [fpm](https://github.com/fortran-lang/fpm) project,
 add the following to your `fpm.toml` file:
