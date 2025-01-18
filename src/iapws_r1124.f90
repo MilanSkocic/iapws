@@ -4,16 +4,18 @@ module iapws__r1124
     implicit none
     private
 
-integer(int32), parameter :: n = 6    ! Ion coordination number
-real(dp), parameter :: Mw = 18.015268 ! g.mol^{-1}
-real(dp), parameter :: a0 = -0.702132 ! -
-real(dp), parameter :: a1 = +8681.05  ! K
-real(dp), parameter :: a2 = -24145.1  ! K^2(g.cm^{-3})^{-2/3}
-real(dp), parameter :: b0 = +0.813876 ! cm^3.g^{-1}
-real(dp), parameter :: b1 = -51.4471  ! K cm^3 g^{-1}
-real(dp), parameter :: b2 = -0.469920 ! cm^6.g^{-2}
-real(dp), parameter :: Tlim1 = 273.15 ! K
-real(dp), parameter :: Tlim2 = 1273.15! K
+    integer(int32), parameter :: n = 6       ! Ion coordination number
+    real(dp), parameter :: Mw = 18.015268_dp ! g.mol^{-1}
+    real(dp), parameter :: a0 = -0.702132_dp ! -
+    real(dp), parameter :: a1 = +8681.05_dp  ! K
+    real(dp), parameter :: a2 = -24145.1_dp  ! K^2(g.cm^{-3})^{-2/3}
+    real(dp), parameter :: b0 = +0.813876_dp ! cm^3.g^{-1}
+    real(dp), parameter :: b1 = -51.4471_dp  ! K cm^3 g^{-1}
+    real(dp), parameter :: b2 = -0.469920_dp ! cm^6.g^{-2}
+    real(dp), parameter :: Tlim1 = 273.15_dp ! K
+    real(dp), parameter :: Tlim2 = 1273.15_dp! K
+
+    public :: pKw
 
 contains
 
@@ -27,7 +29,7 @@ pure elemental function Z(T, rhow)result(res)
     ! Returns
     real(dp) :: res               !! Empirical value of temperature and water density
 
-    Z = rhow * exp(a0 + a1/T + a2/T**2.0_dp*rhow**(2.0_dp/3.0_dp))
+    res = rhow * exp(a0 + a1/T + (a2/T**2.0_dp)*rhow**(2.0_dp/3.0_dp))
 end function
 
 pure elemental function pKwG(T)result(res)
@@ -38,7 +40,7 @@ pure elemental function pKwG(T)result(res)
 
     ! Returns
     real(dp) :: res
-    res = 0.61415 + 48251.33/T + 67707.93/T**2.0_dp + 10102100.0_dp/T**3.0_dp
+    res = 0.61415_dp + 48251.33_dp/T - 67707.93_dp/T**2.0_dp + 10102100.0_dp/T**3.0_dp
 
 end function
 
@@ -55,10 +57,10 @@ pure elemental function pKw(T, rhow)result(res)
 
     res = ieee_value(1.0_dp, ieee_quiet_nan)
 
-    if(T>=Tlim1) .and. (T<=Tlim2)then
-        res = -2*n* ( &
-        log10(1+Z(T, rhow)) - Z(T, rhow)/(Z(T, rhow)+1) * rhow *(b0+b1/T+b2*rhow) &
-        ) + pKwG(T) + 2*log10(Mw/1000.0_dp)
+    if((T>=Tlim1) .and. (T<=Tlim2))then
+        res = -2.0_dp*n* ( &
+        log10(1+Z(T, rhow)) - Z(T, rhow)/(Z(T, rhow)+1) * rhow * (b0 + b1/T + b2*rhow) &
+        ) + pKwG(T) + 2.0_dp*log10(Mw/1000.0_dp) 
     endif
 end function
 
