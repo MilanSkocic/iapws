@@ -320,7 +320,7 @@ end function
 
 pure subroutine kh(T, gas, heavywater, k)
     !! Compute the henry constant kH in MPa for a given temperature.
-    !! The molar fraction in water is related to kH: \[x_2=1/kH\[. 
+    !! The molar fraction in water is related to kH: x_2=1/kH. 
     implicit none
     
     real(dp), intent(in), contiguous :: T(:) !! Temperature in K.
