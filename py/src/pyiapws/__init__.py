@@ -201,3 +201,35 @@ def Tsat(ps):
         return Ts[0]
     else:
         return Ts
+
+
+# R1124
+def Kw(T: np.ndarray, rhow: np.ndarray):
+    """
+    Compute the ionization constant of water Kw.
+    Validity range 273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa.
+
+    Parameters
+    ----------
+    T: int, float or 1d-array.
+        Temperature in K.
+    rhow: int, float or 1d-array.
+        Mass density in g.cm-3.
+
+    Returns
+    -------
+    k: float or 1d-array
+        Ionization constant.
+    """
+    T_, T_scalar = _cast_ndarray(T)
+    rhow_, rhow_scalar = _cast_ndarray(rhow)
+
+    if T_scalar != rhow_scalar:
+        raise TypeError("T and rhow must be of same type: either scalars or arrays")
+    else:
+        k = _iapws.Kw(T_, rhow_)
+
+        if T_scalar and rhow_scalar:
+            return k[0]
+        else:
+            return k

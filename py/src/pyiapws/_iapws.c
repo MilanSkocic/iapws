@@ -29,6 +29,10 @@ PyDoc_STRVAR(g704_gases2_doc,
 "gases(heavywater: bool) --> str\n\n"
 "Get the available gases as a string.");
 
+/* R1124 Doc */
+PyDoc_STRVAR(r1124_Kw_doc, 
+"psat(T: array-like) --> mview \n\n"
+"Get the ionization constant.");
 
 /*Common function*/
 Py_buffer newbuffer_like(Py_buffer *buffer){
@@ -181,7 +185,38 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
     return py_gases;
 }
 
+/* R1124 */
+static PyObject *r1124_Kw(PyObject *self, PyObject *args){
+    
+    PyObject *T_obj;
+    PyObject *rho_obj;
 
+    PyObject *T_mview;
+    Py_buffer *T_buffer;
+    
+    PyObject *rho_mview;
+    Py_buffer *rho_buffer;
+
+    PyObject *new_mview;
+    Py_buffer newbuffer;
+    
+    if(!PyArg_ParseTuple(args, "OO", &T_obj, &rho_obj)){
+        return NULL;
+    }
+
+    T_mview = PyMemoryView_FromObject(T_obj);
+    T_buffer = PyMemoryView_GET_BUFFER(T_mview);
+    
+    rho_mview = PyMemoryView_FromObject(rho_obj);
+    rho_buffer = PyMemoryView_GET_BUFFER(rho_mview);
+
+    newbuffer = newbuffer_like(T_buffer);
+
+    iapws_r1124_Kw(T_buffer->shape[0], (double *) T_buffer->buf, (double *)rho_buffer->buf, (double *) newbuffer.buf);
+    new_mview = PyMemoryView_FromBuffer(&newbuffer);
+
+    return new_mview;
+}
 
 static PyMethodDef myMethods[] = {
     {"psat", (PyCFunction) r797_psat, METH_VARARGS, r797_psat_doc},
@@ -191,6 +226,7 @@ static PyMethodDef myMethods[] = {
     {"ngases", (PyCFunction) g704_ngases, METH_VARARGS, g704_ngases_doc},
     {"gases", (PyCFunction) g704_gases, METH_VARARGS, g704_gases_doc},
     {"gases2", (PyCFunction) g704_gases2, METH_VARARGS, g704_gases2_doc},
+    {"Kw", (PyCFunction) r1124_Kw, METH_VARARGS, r1124_Kw_doc},
     { NULL, NULL, 0, NULL }
 };
 static struct PyModuleDef _iapws = {PyModuleDef_HEAD_INIT, "_iapws", module_docstring, -1, myMethods};
