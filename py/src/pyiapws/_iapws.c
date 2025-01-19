@@ -7,18 +7,18 @@ PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws modules of the Fo
 /* R797 Doc */
 PyDoc_STRVAR(r797_psat_doc, 
 "psat(Ts: array-like) --> mview \n\n"
-"Get the saturation-pressure line. If gas not found returns NaNs");
+"Get the saturation-pressure line.");
 PyDoc_STRVAR(r797_Tsat_doc, 
 "Tsat(ps: array-like) --> mview \n\n"
-"Get the saturation-temperature line. If gas not found returns NaNs");
+"Get the saturation-temperature line.");
 
 /* G704 Doc */
 PyDoc_STRVAR(g704_kh_doc, 
 "kh(T: array-like, gas: str, heavywater :bool) --> mview \n\n"
-"Get the Henry constant for gas in H2O or D2O for T. If gas not found returns NaNs");
+"Get the Henry constant for gas in H2O or D2O for T.");
 PyDoc_STRVAR(g704_kd_doc, 
 "kd(T: array-like, gas, heavywater: bool) --> mview \n\n"
-"Get the vapor-liquid constant for gas in H2O or D2O for T. If gas not found returns NaNs");
+"Get the vapor-liquid constant for gas in H2O or D2O for T.");
 PyDoc_STRVAR(g704_ngases_doc,
 "gases(heavywater: bool) --> int\n\n"
 "Get the number of available gases.");
