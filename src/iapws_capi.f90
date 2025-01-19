@@ -233,4 +233,20 @@ end subroutine
 ! ------------------------------------------------------------------------------
 
 
+! ------------------------------------------------------------------------------
+! R1124
+pure subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
+    !! C API for [[iapws__api(module):kW(function)]].
+
+    ! arguments
+    integer(c_size_t), intent(in), value :: N     !! Size of T, rhow and k.
+    real(dp), intent(in) :: T(N)                  !! Temperature in K.
+    real(dp), intent(in) :: rhow(N)               !! Mass density in g.cm^{-3}.
+    real(dp), intent(out) :: k(N)                 !! Ionization constant. Filled with NaN if out of validity range. 
+
+    call Kw(T, rhow, k)
+    
+end subroutine
+! ------------------------------------------------------------------------------
+
 end module iapws__capi

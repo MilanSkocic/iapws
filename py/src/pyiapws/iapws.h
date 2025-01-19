@@ -30,4 +30,7 @@ extern void iapws_r797_psat(size_t N, double *Ts, double *ps);
 extern void iapws_r797_Tsat(size_t N, double *ps, double *Ts);
 
 
+
+extern void iapws_r1124_Kw(size_t N, double *T, double *rhow, double *k);
+
 #endif
