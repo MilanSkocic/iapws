@@ -236,7 +236,7 @@ end subroutine
 ! ------------------------------------------------------------------------------
 ! R1124
 pure subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
-    !! C API for [[iapws__api(module):Kw(function)]].
+    !! C API for [[iapws__api(module):Kw(subroutine)]].
 
     ! arguments
     integer(c_size_t), intent(in), value :: N     !! Size of T, rhow and k.
