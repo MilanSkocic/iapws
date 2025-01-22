@@ -27,7 +27,7 @@ contains
 ! ------------------------------------------------------------------------------
 ! VERSION
 function get_version()result(fptr)
-    !! Get the version
+    !! Returns the version
     implicit none
     character(len=:), pointer :: fptr    !! Fortran pointer to a string indicating the version..
 

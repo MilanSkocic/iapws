@@ -46,7 +46,7 @@ contains
 ! ------------------------------------------------------------------------------
 ! VERSION 
 function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
-    !! Get the version.
+    !! C API for [[iapws__api(module):get_version(function)]]
     implicit none
     
     ! Returns   
@@ -70,7 +70,7 @@ end function
 ! ------------------------------------------------------------------------------
 ! G704
 subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")
-    !! Compute the henry constant for a given temperature.
+    !! C API for [[iapws__g704(module):kh(subroutine)]]
     implicit none
     
     ! arguments
@@ -95,7 +95,7 @@ subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
 end subroutine
 
 subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
-    !! Compute the vapor-liquid constant for a given temperature. 
+    !! C API for [[iapws__g704(module):kd(subroutine)]]
     implicit none
     
     ! arguments
@@ -120,7 +120,7 @@ subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
 end subroutine
 
 pure function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
-    !! Returns the number of gases.
+    !! C API for [[iapws__g704(module):ngases(function)]]
     implicit none
     
     ! arguments
@@ -133,7 +133,7 @@ pure function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
 end function
 
 function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
-    !! Returns the list of available gases.
+    !! C API for [[iapws__g704(module):gases(function)]]
     implicit none
 
     ! arguments
@@ -175,7 +175,7 @@ function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases
 end function
 
 function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gases)
-    !! Returns the available gases as a string.
+    !! C API for [[iapws__g704(module):gases2(function)]]
     implicit none
 
     ! arguments
@@ -206,9 +206,7 @@ end function
 ! ------------------------------------------------------------------------------
 ! R797
 pure subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
-    !! C API. 
-    !! Compute the saturation pressure at temperature Ts. 
-    !! Validity range 273.13 K <= Ts <= 647.096 K.
+    !! C API for [[iapws__api(module):psat(subroutine)]].
 
     integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
     real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
@@ -219,9 +217,7 @@ pure subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
 end subroutine
 
 pure subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
-    !! C API.
-    !! Compute the saturation temperature at pressure ps.
-    !! Validity range 611.213 Pa <= ps <= 22.064 MPa.
+    !! C API for [[iapws__api(module):Tsat(subroutine)]].
     
     integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
     real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
