@@ -12,7 +12,7 @@ endif
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
 
-.PHONY: build doc docs clean logo
+.PHONY: build references doc docs clean logo
 
 all: $(LIBNAME)
 
@@ -76,7 +76,10 @@ clean:
 	fpm clean --all
 	rm -rf API-doc/*
 
-doc:
+references:
+	pandoc -t markdown_strict --citeproc --csl ase.csl _REFERENCES.md -o REFERENCES.md
+
+doc: references
 	ford API-doc-FORD-file.md
 
 docs:
