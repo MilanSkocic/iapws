@@ -57,7 +57,6 @@ pure subroutine psat(Ts, ps)
     real(dp), intent(out), contiguous :: ps(:) !! Saturation pressure in MPa. Filled with nan if out of validity range.
     
     ps = r4_ps(Ts)
-
 end subroutine
 
 pure subroutine Tsat(ps, Ts)
@@ -68,7 +67,6 @@ pure subroutine Tsat(ps, Ts)
     real(dp), intent(out), contiguous :: Ts(:) !! Saturation temperature in K. Filled with nan if out of validity range.
 
     Ts = r4_Ts(ps)
-
 end subroutine
 
 pure subroutine waterproperty(p, T, prop, res)
@@ -95,7 +93,6 @@ pure subroutine waterproperty(p, T, prop, res)
 
     res = ieee_value(1.0_dp, ieee_quiet_nan)
     ! regions = find_region(p, T)
-
 end subroutine
 ! ------------------------------------------------------------------------------
 
@@ -112,7 +109,6 @@ pure subroutine Kw(T, rhow, k)
     real(dp), intent(out) :: k(:)      !! Ionization constant. Filled with NaN if out of validity range. 
 
     k = 10**(-pKw(T, rhow))
-    
 end subroutine
 ! ------------------------------------------------------------------------------
 
