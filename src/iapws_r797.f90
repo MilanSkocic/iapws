@@ -192,7 +192,6 @@ pure elemental function find_region(p, T)result(res)
             res = 5
         end if
     end if
-
 end function
 
 
@@ -217,7 +216,6 @@ pure elemental function r1_g(p, T)result(res)
     
     res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * &
                              (tau-1.222_dp)**r1_IJn_g(:, 2))
-
 end function
 
 pure elemental function r1_gp(p, T)result(res)
@@ -239,7 +237,6 @@ pure elemental function r1_gp(p, T)result(res)
 
     res = sum(-r1_IJn_g(:,3) * r1_IJn_g(:,1)*(7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * &
                                              (tau-1.222_dp)**r1_IJn_g(:,2))
-
 end function
 
 pure elemental function r1_gt(p, T)result(res)
@@ -261,7 +258,6 @@ pure elemental function r1_gt(p, T)result(res)
 
     res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * & 
               r1_IJn_g(:,2) * (tau-1.222_dp)**(r1_IJn_g(:,2)-1.0_dp))
-
 end function
 
 pure elemental function r1_gpp(p, T)result(res)
@@ -283,7 +279,6 @@ pure elemental function r1_gpp(p, T)result(res)
 
     res = sum(r1_IJn_g(:,3) * r1_IJn_g(:,1) * (r1_IJn_g(:,1)-1.0_dp) * (7.1_dp-pi)**(r1_IJn_g(:,1)-2.0_dp) * &
                                                                        (tau-1.222_dp)**r1_IJn_g(:,2))
-
 end function
 
 pure elemental function r1_gtt(p, T)result(res)
@@ -305,7 +300,6 @@ pure elemental function r1_gtt(p, T)result(res)
 
     res = sum(r1_IJn_g(:,3) * (7.1_dp-pi)**r1_IJn_g(:,1) * & 
               r1_IJn_g(:,2) * (r1_IJn_g(:,2)-1.0_dp) * (tau-1.222_dp)**(r1_IJn_g(:,2)-2.0_dp))
-
 end function
 
 pure elemental function r1_gpt(p, T)result(res)
@@ -327,7 +321,6 @@ pure elemental function r1_gpt(p, T)result(res)
     
     res = sum(-r1_IJn_g(:,3) * r1_IJn_g(:,1) * (7.1_dp-pi)**(r1_IJn_g(:,1)-1.0_dp) * &
                                r1_IJn_g(:,2) * (tau-1.222_dp)**(r1_IJn_g(:, 2)-1.0_dp))
-
 end function
 
 pure elemental function r1_v(p, T)result(res)
@@ -345,7 +338,6 @@ pure elemental function r1_v(p, T)result(res)
 
     pi = p/r1_ps
     res = R*T/p * pi * r1_gp(p,T) * 1d-3 ! RT/p is in L/kg.
-    
 end function
 
 pure elemental function r1_u(p, T)result(res)
@@ -364,7 +356,6 @@ pure elemental function r1_u(p, T)result(res)
     pi = p/r1_ps
     tau = r1_Ts/T
     res = R*T * (tau * r1_gt(p,T) - pi * r1_gp(p,T))
-    
 end function
 
 pure elemental function r1_s(p, T)result(res)
@@ -382,7 +373,6 @@ pure elemental function r1_s(p, T)result(res)
 
     tau = r1_Ts/T
     res = R * (tau * r1_gt(p,T) - r1_g(p,T))
-    
 end function
 
 pure elemental function r1_h(p, T)result(res)
@@ -400,7 +390,6 @@ pure elemental function r1_h(p, T)result(res)
 
     tau = r1_Ts/T
     res = R*T * tau * r1_gt(p,T)
-    
 end function
 
 pure elemental function r1_cp(p, T)result(res)
@@ -418,7 +407,6 @@ pure elemental function r1_cp(p, T)result(res)
 
     tau = r1_Ts/T
     res = -R * tau**2.0_dp * r1_gtt(p,T)
-    
 end function
 
 pure elemental function r1_cv(p, T)result(res)
@@ -436,7 +424,6 @@ pure elemental function r1_cv(p, T)result(res)
 
     tau = r1_Ts/T
     res = R * ( -tau**2.0_dp * r1_gtt(p,T) + (r1_gp(p,T)-tau*r1_gpt(p,T))**2.0_dp/r1_gpp(p,T) )
-    
 end function
 
 pure elemental function r1_w(p, T)result(res)
@@ -460,7 +447,6 @@ pure elemental function r1_w(p, T)result(res)
                 ( (r1_gp(p,T)-tau*r1_gpt(p,T))**2.0_dp / (tau**2.0_dp*r1_gtt(p,T)) - r1_gpp(p,T) ) &
                 )
     res = sqrt(res) ! in m.s-1
-    
 end function
 
 !--------------------------------------------------------------------------------------------------------------------------------
