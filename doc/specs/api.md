@@ -40,7 +40,7 @@ The available gases can be retrieved with
  * [[iapws__g704(module):gases2(function)]] which return the available gases as a string.
  * [[iapws__g704(module):ngases(function)]] which returns the number of available gases.
 
-<img src="../../media/g704-kh_H2O.png" width=400px">
+<img src="../../media/g704-kh_H2O.png" width="400px">
 <img src="../../media/g704-kh_D2O.png" width="400px">
 <img src="../../media/g704-kd_H2O.png" width="400px">
 <img src="../../media/g704-kd_D2O.png" width="400px">
