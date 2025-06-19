@@ -1,3 +1,5 @@
+# ---------------------------------------------------------------------
+# CONFIGURATION
 ifneq ($(prefix), )
 	install_dir=$(prefix)
 else
@@ -11,13 +13,27 @@ else
 endif
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
+# ---------------------------------------------------------------------
 
+
+# ---------------------------------------------------------------------
+# TARGETS
 .PHONY: build references doc docs clean logo
 
 all: $(LIBNAME)
 
 $(LIBNAME): build copy_a shared
+# ---------------------------------------------------------------------
 
+
+# ---------------------------------------------------------------------
+# SOURCES
+# NO AUTO-GENERATED SOURCES
+# ---------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------
+# COMPILATION
 build: 
 	fpm build --profile=$(btype)
 
@@ -27,7 +43,11 @@ test: build
 example: build
 	fpm run --profile=$(btype) --example example_in_f
 	fpm run --profile=$(btype) --example example_in_c
+# ---------------------------------------------------------------------
 
+
+# ---------------------------------------------------------------------
+# LINKING - STATIC and DYNAMIC LIBS
 copy_a: 
 	cp -f $(shell find ./build/gfortran* -type f -name $(LIBNAME).a) $(BUILD_DIR)
 
@@ -41,7 +61,11 @@ shared_darwin:
 
 shared_windows: 
 	$(FC) -shared $(FPM_LDFLAGS) -o $(BUILD_DIR)/$(LIBNAME).dll -Wl,--out-implib=$(BUILD_DIR)/$(LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(BUILD_DIR)/$(LIBNAME).a -Wl,--no-whole-archive
+# ---------------------------------------------------------------------
 
+
+# ---------------------------------------------------------------------
+# INSTALLATION 
 install: install_dirs install_$(PLATFORM)
 
 install_dirs: 
@@ -71,11 +95,11 @@ uninstall:
 	rm -f $(install_dir)/lib/$(LIBNAME).dll.a
 	rm -f $(install_dir)/lib/$(LIBNAME).dll
 	rm -f $(install_dir)/bin/$(LIBNAME).dll
+# ---------------------------------------------------------------------
 
-clean:
-	fpm clean --all
-	rm -rf API-doc/*
 
+# ---------------------------------------------------------------------
+# OTHERS
 references:
 	pandoc -t markdown_strict --citeproc --csl ase.csl _REFERENCES.md -o REFERENCES.md
 
@@ -88,3 +112,8 @@ docs:
 
 logo:
 	make -C media
+
+clean:
+	fpm clean --all
+	rm -rf API-doc/*
+# ---------------------------------------------------------------------
