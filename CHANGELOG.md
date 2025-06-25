@@ -1,4 +1,4 @@
-# Version 0.5.0
+# 0.5.0
 
 * Drop support for python 3.8 and add support for python 3.13.
 * Code cleaning in python C extensions.
@@ -9,7 +9,7 @@
 **Not released**
 
 
-# Version 0.4.0
+# 0.4.0
 
 * Implementation of the region 4 in R7-97.
 * API break for kh and kd in g704. The temperature must be provided in Kelvin instead of degrees Celsius.
@@ -20,7 +20,7 @@
 
 
 
-# Version 0.3.0
+# 0.3.0
 
 * API break: functions for the Fortran code were renamed: 
    * They do not contain the package+module in the name for the sake of simplicity 
@@ -34,7 +34,7 @@
 
 
 
-# Version 0.2.2
+# 0.2.2
 
 * Implementation of report R283 for critical constants of water.
 * Switch to pyproject.toml for python wrapper.
@@ -46,7 +46,7 @@ Full changelog available at [github](https://github.com/MilanSkocic/iapws/releas
 
 
 
-# Version 0.2.1
+# 0.2.1
 
 
 * Comlete missing documentation of private functions.
@@ -57,7 +57,7 @@ Full changelog available at [github](https://github.com/MilanSkocic/iapws/releas
 
 
 
-# Version 0.2.0
+# 0.2.0
 
 * New structure with modules corresponding to the IAPWS papers.
 * Compatible with fpm.
@@ -82,7 +82,7 @@ Full changelog available at [github](https://github.com/MilanSkocic/iapws/releas
 
 
 
-# Version 0.1.1
+# 0.1.1
 
 * Logo creation
 * Error handling in python wrapper for arrays with rank greater than 1
@@ -93,7 +93,7 @@ Full changelog available at [github](https://github.com/MilanSkocic/iapws/releas
 
 
 
-# Version 0.1.0
+# 0.1.0
 
 * Implementation of kH and kD from IAPWS G7-04 in fortran + C API
 * Python wrapper for kH and kD.
