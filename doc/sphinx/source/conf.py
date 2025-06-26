@@ -6,7 +6,7 @@ import os
 import sys
 import tomllib
 sys.path.insert(0, os.path.abspath('../../../py/src/'))
-import pyciaaw
+import pyiapws
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -19,7 +19,7 @@ f.close()
 project = fpm["name"]
 copyright = fpm["copyright"].replace("Copyright ","")
 author = fpm["author"]
-release = pyciaaw.__version__
+release = pyiapws.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
