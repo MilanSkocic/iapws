@@ -70,7 +70,7 @@ if [[ "$OSTYPE" == "darwin"* ]];then
     FPM_AW=""
 fi
 
-if [[ "$VERSION" == *"dev"* ]]; then
+if [[ "$FPM_VERSION" == *"dev"* ]]; then
     export FPM_VERSION=$(git rev-parse --short HEAD)
 fi
 
