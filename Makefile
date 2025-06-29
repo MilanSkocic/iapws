@@ -105,7 +105,7 @@ doc:
 
 docs:
 	rm -rf docs/*
-	cp -rf API-doc/* ./docs/
+	cp -rf doc/sphinx/build/html/* ./docs/
 
 logo:
 	make -C media
