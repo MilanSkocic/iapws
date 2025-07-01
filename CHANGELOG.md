@@ -1,12 +1,10 @@
-# 0.5.0
+# 0.5.0dev
 
 * Drop support for python 3.8 and add support for python 3.13.
 * Code cleaning in python C extensions.
 * Code refactoring in pure python modules for encapsulating C extensions.
 * Documentation update.
 
-
-**Not released**
 
 
 # 0.4.0
@@ -32,6 +30,7 @@
 * Implement version module with its getter.
 * Documentation update.
 
+Full changelog available at [github](https://github.com/MilanSkocic/iapws/releases)
 
 
 # 0.2.2
