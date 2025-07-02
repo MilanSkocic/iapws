@@ -22,7 +22,7 @@ module iapws__api
     public :: psat, Tsat                                                        ! R797
 
     public :: Kw                                                                ! R1124 
-    public :: waterproperty
+    public :: wp
     
 contains
 
@@ -71,7 +71,7 @@ pure subroutine Tsat(ps, Ts)
     Ts = r4_Ts(ps)
 end subroutine
 
-pure subroutine waterproperty(p, T, prop, res)
+pure subroutine wp(p, T, prop, res)
     !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
     !! The adequate region is selected according to p and T.
     !!
@@ -114,7 +114,6 @@ pure subroutine waterproperty(p, T, prop, res)
             end if
         end do
     end if
-    
 end subroutine
 ! ------------------------------------------------------------------------------
 
