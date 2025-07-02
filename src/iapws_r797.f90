@@ -6,8 +6,9 @@ module iapws__r797
     private
 
     public :: find_region
-    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
+    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w, r1
     public :: r4_ps, r4_Ts
+    public :: is1region, get_r, rai
     
 real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
 real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
@@ -125,6 +126,15 @@ real(dp), parameter :: r5_pmin = 0.000_dp       !! T in K.
 real(dp), parameter :: r5_pmax = 50.0_dp        !! T in K.
 !-------------------------------------------------------------------------------
 
+abstract interface
+    pure subroutine rai(p, T, prop, res)
+        use iapws__common
+        real(dp), intent(in) :: p(:)
+        real(dp), intent(in) :: T(:)
+        character(len=*), intent(in) :: prop
+        real(dp), intent(out) :: res(:)
+    end subroutine
+end interface
 
 
 contains
@@ -192,6 +202,46 @@ pure elemental function find_region(p, T)result(res)
             res = 5
         end if
     end if
+end function
+
+pure function is1region(regions)result(res)
+    !! Check if all regions are identical
+
+    ! parameters
+    integer(int32), intent(in) :: regions(:)
+
+    ! returns
+    logical :: res
+
+    ! variables
+    integer(int32) :: i
+
+    res = .true.
+    do i=2, size(regions)
+        if(regions(i) /= regions(i))then
+            res = .false.
+            exit
+        endif
+    end do
+end function
+
+pure elemental function get_r(region)result(fptr)
+    !! Get the pointer to the adequate region subroutine
+    
+    ! parameters
+    integer(int32), intent(in) :: region
+    
+    ! returns
+    procedure(rai), pointer :: fptr
+
+
+    nullify(fptr)
+    select case (region)
+        case (1)
+            fptr => r1
+        case default
+            fptr => null()
+    end select
 end function
 
 
@@ -449,6 +499,44 @@ pure elemental function r1_w(p, T)result(res)
     res = sqrt(res) ! in m.s-1
 end function
 
+pure subroutine r1(p, T, prop, res)
+    !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
+    !! in region 1.
+    !!
+    !! Available properties:
+    !!     * v: specific volume in m3/kg
+    !!     * u: specific internal energy in kJ/kg
+    !!     * s: specific entropy in kJ/kg 
+    !!     * h: specific enthalpy in kJ/kg/K
+    !!     * cp: specific isobaric heat capacity in kJ/kg/K
+    !!     * cv: specific isochoric heat capacity in kJ/kg/K
+    !!     * w: speed of sound in m/s
+
+    ! parameters
+    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
+    real(dp), intent(in) :: T(:)                 !! Pressure in K.
+    character(len=*), intent(in) :: prop         !! Property
+    real(dp), intent(out) :: res(:)              !! Result 
+
+    select case (prop)
+        case ("v")
+            res = r1_v(p, T)
+        case ("u")
+            res = r1_u(p, T)
+        case ("s")
+            res = r1_s(p, T)
+        case ("h")
+            res = r1_h(p, T)
+        case ("cp")
+            res = r1_cp(p, T)
+        case ("cv")
+            res = r1_cv(p, T)
+        case ("w")
+            res = r1_w(p, T)
+        case default
+            res = ieee_value(1.0_dp, ieee_quiet_nan)
+    end select
+end subroutine
 !-------------------------------------------------------------------------------
 
 

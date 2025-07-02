@@ -8,6 +8,7 @@ module iapws__api
     use iapws__r797
     use iapws__r1124
     private
+
     
     character(len=:), allocatable, target :: version_f
 
@@ -21,6 +22,7 @@ module iapws__api
     public :: psat, Tsat                                                        ! R797
 
     public :: Kw                                                                ! R1124 
+    public :: waterproperty
     
 contains
 
@@ -74,13 +76,13 @@ pure subroutine waterproperty(p, T, prop, res)
     !! The adequate region is selected according to p and T.
     !!
     !! Available properties:
-    !!     * v: specific volume
-    !!     * u: specific internal energy
-    !!     * s: specific entropy
-    !!     * h: specific enthalpy
-    !!     * cp: specific isobaric heat capacity
-    !!     * cv: specific isochoric heat capacity
-    !!     * w: speed of sound
+    !!     * v: specific volume in m3/kg
+    !!     * u: specific internal energy in kJ/kg
+    !!     * s: specific entropy in kJ/kg 
+    !!     * h: specific enthalpy in kJ/kg/K
+    !!     * cp: specific isobaric heat capacity in kJ/kg/K
+    !!     * cv: specific isochoric heat capacity in kJ/kg/K
+    !!     * w: speed of sound in m/s
 
     ! parameters
     real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
@@ -89,10 +91,30 @@ pure subroutine waterproperty(p, T, prop, res)
     real(dp), intent(out) :: res(:)              !! Filled with NaN if no adequate region is found.
 
     ! variables
+    logical :: is1r
+    integer(int32) :: i
     integer(int32) :: regions(size(p))
+    procedure(rai), pointer :: fptr
 
     res = ieee_value(1.0_dp, ieee_quiet_nan)
-    ! regions = find_region(p, T)
+
+    regions = find_region(p, T)
+    is1r = is1region(regions) 
+
+    if(is1r .eqv. .true.)then
+        fptr => get_r(regions(1))
+        if(associated(fptr)) then
+            call fptr(p, T, prop, res) 
+        end if
+    else
+        do i=1, size(regions)
+            fptr => get_r(regions(i))
+            if(associated(fptr)) then
+                call fptr(p, T, prop, res) 
+            end if
+        end do
+    end if
+    
 end subroutine
 ! ------------------------------------------------------------------------------
 
