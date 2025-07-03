@@ -11,6 +11,10 @@ PyDoc_STRVAR(r797_psat_doc,
 PyDoc_STRVAR(r797_Tsat_doc, 
 "Tsat(ps: array-like) --> mview \n\n"
 "Get the saturation-temperature line.");
+PyDoc_STRVAR(r797_wp_doc, 
+"wp(p: array-like, T: array-like, prop: str) --> mview \n\n"
+"Get water property.");
+
 
 /* G704 Doc */
 PyDoc_STRVAR(g704_kh_doc, 
@@ -54,7 +58,6 @@ Py_buffer newbuffer_like(Py_buffer *buffer){
 
 /* R797 */
 static PyObject *r797_psat(PyObject *self, PyObject *args){
-    
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -94,10 +97,40 @@ static PyObject *r797_Tsat(PyObject *self, PyObject *args){
     return new_mview;
 }
 
+static PyObject *r797_wp(PyObject *self, PyObject *args){
+    PyObject *T_obj;
+    PyObject *p_obj;
+
+    PyObject *T_mview;
+    PyObject *p_mview;
+    PyObject *res_mview;
+    
+    Py_Buffer *T_buf;
+    Py_Buffer *p_buf;
+    Py_buffer *res_buf;
+    
+    char *prop;
+    
+    if(!PyArg_ParseTuple(args, "OOs", &T_obj, &p_obj, &prop)){
+        return NULL;
+    }
+
+    T_mview = PyMemoryView_FromObject(T_obj);
+    p_mview = PyMemoryView_FromObject(p_obj);
+
+    T_buf = PyMemoryView_GET_BUFFER(T_mview);
+    p_buf = PyMemoryView_GET_BUFFER(p_mview);
+
+    res_buf = newbuffer_like(T_buf);
+
+    iapws_r797_wp((double *)p_buf->buf, (double *)T_buf->buf, prop, res_buf.shape[0], strlen(prop));
+
+    res_mview = PyMemoryView_FromBuffer(&res_buf);
+    return res_mview;
+}
 
 /* G704 */
 static PyObject *kx(char k, PyObject *args){
-    
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -172,7 +205,6 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
 }
 
 static PyObject *g704_gases2(PyObject *self, PyObject *args){
-    
     int heavywater;
     char *gases;
     PyObject *py_gases;
@@ -187,7 +219,6 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
 
 /* R1124 */
 static PyObject *r1124_Kw(PyObject *self, PyObject *args){
-    
     PyObject *T_obj;
     PyObject *rho_obj;
 

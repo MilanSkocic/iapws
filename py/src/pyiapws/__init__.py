@@ -202,6 +202,51 @@ def Tsat(ps):
     else:
         return Ts
 
+def wp(p, T, prop):
+    """
+    Compute water properties at pressure p in MPa and temperature T in Kelvin.
+    The adequate region is selected according to p and T.
+    
+    Available properties:
+         * v: specific volume in m3/kg
+         * u: specific internal energy in kJ/kg
+         * s: specific entropy in kJ/kg 
+         * h: specific enthalpy in kJ/kg/K
+         * cp: specific isobaric heat capacity in kJ/kg/K
+         * cv: specific isochoric heat capacity in kJ/kg/K
+         * w: speed of sound in m/s
+
+    Parameters
+    ----------
+    p: int, float or 1d-array.
+        Pressure in MPa.
+    T: int, float or 1d-array.
+        Temperature in K.
+    prop: str
+        Water property: 
+            * v: specific volume in m3/kg
+            * u: specific internal energy in kJ/kg
+            * s: specific entropy in kJ/kg 
+            * h: specific enthalpy in kJ/kg/K
+            * cp: specific isobaric heat capacity in kJ/kg/K
+            * cv: specific isochoric heat capacity in kJ/kg/K
+            * w: speed of sound in m/s
+    Returns
+    -------
+    res: float or 1d-array
+        Computed property. Filled with NaN if no adequate region is found.
+    """
+    p_, scalar = _cast_ndarray(p)
+    T_, scalar = _cast_ndarray(T)
+    prop_ = str(prop)
+
+    res = np.asarray( _iapws.wp(p_, T_, prop_) )
+
+    if scalar:
+        return res[0]
+    else:
+        return res
+
 
 # R1124
 def Kw(T: np.ndarray, rhow: np.ndarray):
