@@ -70,7 +70,6 @@ subroutine test_find_region(error)
         call check(error, find_region(p(i),T(i)), 1)
         if (allocated(error)) return
     end do
-
 end subroutine
 
 subroutine test_r1_v(error)
@@ -78,11 +77,15 @@ subroutine test_r1_v(error)
     integer(int32) :: i
     real(dp) :: T(3) = [300.0_dp, 300.0_dp, 500.0_dp]
     real(dp) :: p(3) = [3.0_dp, 80.0_dp, 3.0_dp]
+    real(dp) :: res(3) = [0.0_dp, 0.0_dp, 0.0_dp]
     real(dp) :: ref(3) = [0.100215168d-2, 0.971180894d-3, 0.120241800d-2]
     real(dp) :: c(3) = [1d2, 1d3, 1d2]
     
+    call wp(p, T, "v", res)
+
     do i=1, size(T)
         call check(error, r1_v(p(i), T(i))*c(i), ref(i)*c(i), thr=1d-9)
+        call check(error, res(i)*c(i), ref(i)*c(i), thr=1d-9)
         if (allocated(error)) return
     end do
 end subroutine
