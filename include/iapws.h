@@ -28,6 +28,7 @@ extern char *iapws_g704_gases2(int heavywater);
 
 extern void iapws_r797_psat(size_t N, double *Ts, double *ps);
 extern void iapws_r797_Tsat(size_t N, double *ps, double *Ts);
+extern void iapws_r797_wp(double *p, double  *T, char *prop, double *res, size_t N, size_t len); 
 
 
 

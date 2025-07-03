@@ -119,7 +119,7 @@ subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
     call kd(T, f_gas, heavywater, k)    
 end subroutine
 
-pure function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
+function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
     !! C API for [[iapws__g704(module):ngases(function)]]
     implicit none
     
@@ -197,7 +197,6 @@ function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gase
     c_gases_str(len(f_gases_str):len(f_gases_str)) = c_null_char
 
     str_gases = c_loc(c_gases_str)
-
 end function
 ! ------------------------------------------------------------------------------
 
@@ -205,7 +204,7 @@ end function
 
 ! ------------------------------------------------------------------------------
 ! R797
-pure subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
+subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
     !! C API for [[iapws__api(module):psat(subroutine)]].
 
     integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
@@ -216,7 +215,7 @@ pure subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
 
 end subroutine
 
-pure subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
+subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
     !! C API for [[iapws__api(module):Tsat(subroutine)]].
     
     integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
@@ -224,14 +223,46 @@ pure subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
     real(c_double), intent(out) ::  Ts(N)         !! Saturation temperature in K. Filled with nan if out of validity range.
     
     call Tsat(ps, Ts)
+end subroutine
 
+subroutine capi_wp(p, T, prop, res, N, len)
+    !! C API for wp.
+    
+    !! Available properties:
+    !!     * v: specific volume in m3/kg
+    !!     * u: specific internal energy in kJ/kg
+    !!     * s: specific entropy in kJ/kg 
+    !!     * h: specific enthalpy in kJ/kg/K
+    !!     * cp: specific isobaric heat capacity in kJ/kg/K
+    !!     * cv: specific isochoric heat capacity in kJ/kg/K
+    !!     * w: speed of sound in m/s
+   
+    integer(c_int), intent(in), value    :: len         !! Size of the gas string.
+    integer(c_size_t), intent(in), value :: N           !! Size of T and p.
+    real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
+    real(c_double), intent(in)           :: T(N)        !! Temperature in °C.
+    type(c_ptr), intent(in), value       :: prop        !! Water property.
+    real(c_double), intent(inout)        :: res(N)      !! Result. Filled with NaNs if gas not found.
+    
+    ! variables
+    character, pointer, dimension(:) :: cprop
+    character(len=len) :: fprop
+    integer(int32) :: i
+
+    call c_f_pointer(prop, cprop, shape=[len])
+
+    do i=1, len
+        fprop(i:i) = cprop(i)
+    enddo
+
+    call wp(p, T, fprop, res)
 end subroutine
 ! ------------------------------------------------------------------------------
 
 
 ! ------------------------------------------------------------------------------
 ! R1124
-pure subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
+subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
     !! C API for [[iapws__api(module):Kw(subroutine)]].
 
     ! arguments
