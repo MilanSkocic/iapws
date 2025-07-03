@@ -37,7 +37,7 @@ module iapws__capi
     
     public :: capi_kh, capi_kd, capi_ngases, capi_gases                                            !!G704
 
-    public :: capi_psat, capi_Tsat                                                                 !! R797
+    public :: capi_psat, capi_Tsat, capi_wp                                                                !! R797
 
 
 contains
@@ -225,7 +225,7 @@ subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
     call Tsat(ps, Ts)
 end subroutine
 
-subroutine capi_wp(p, T, prop, res, N, len)
+subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     !! C API for wp.
     
     !! Available properties:
@@ -272,7 +272,6 @@ subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
     real(dp), intent(out) :: k(N)                 !! Ionization constant. Filled with NaN if out of validity range. 
 
     call Kw(T, rhow, k)
-    
 end subroutine
 ! ------------------------------------------------------------------------------
 

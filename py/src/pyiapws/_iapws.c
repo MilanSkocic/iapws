@@ -105,9 +105,9 @@ static PyObject *r797_wp(PyObject *self, PyObject *args){
     PyObject *p_mview;
     PyObject *res_mview;
     
-    Py_Buffer *T_buf;
-    Py_Buffer *p_buf;
-    Py_buffer *res_buf;
+    Py_buffer *T_buf;
+    Py_buffer *p_buf;
+    Py_buffer res_buf;
     
     char *prop;
     
@@ -123,7 +123,7 @@ static PyObject *r797_wp(PyObject *self, PyObject *args){
 
     res_buf = newbuffer_like(T_buf);
 
-    iapws_r797_wp((double *)p_buf->buf, (double *)T_buf->buf, prop, res_buf.shape[0], strlen(prop));
+    iapws_r797_wp((double *)p_buf->buf, (double *)T_buf->buf, prop, (double *) res_buf.buf, res_buf.shape[0], strlen(prop));
 
     res_mview = PyMemoryView_FromBuffer(&res_buf);
     return res_mview;
@@ -252,6 +252,7 @@ static PyObject *r1124_Kw(PyObject *self, PyObject *args){
 static PyMethodDef myMethods[] = {
     {"psat", (PyCFunction) r797_psat, METH_VARARGS, r797_psat_doc},
     {"Tsat", (PyCFunction) r797_Tsat, METH_VARARGS, r797_Tsat_doc},
+    {"wp", (PyCFunction) r797_wp, METH_VARARGS, r797_wp_doc},
     {"kh", (PyCFunction) g704_kh, METH_VARARGS, g704_kh_doc},
     {"kd", (PyCFunction) g704_kd, METH_VARARGS, g704_kd_doc},
     {"ngases", (PyCFunction) g704_ngases, METH_VARARGS, g704_ngases_doc},
