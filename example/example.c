@@ -5,8 +5,9 @@
 int main(void){
 
     double T = 25.0 + 273.15; /* in C*/
+    double p; /* p in Mpa */
     char *gas = "O2";
-    double kh, kd;
+    double kh, kd, wp_res;
     char **gases_list;
     char *gases_str;
     int ngas;
@@ -73,6 +74,10 @@ int main(void){
         printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
     }
 
+    T = 273.15 + 280.0;
+    p = 8.0;
+    iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
+    printf("v = %+23.16f L/kg", wp_res * 1000.0);
 
     return 0;
 }

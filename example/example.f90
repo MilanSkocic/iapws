@@ -3,7 +3,7 @@ program example_in_f
     use iapws
     implicit none
     integer(int32) :: i, ngas
-    real(dp) :: T(1), kh_res(1), kd_res(1)
+    real(dp) :: T(1), kh_res(1), kd_res(1), wp_res(1), p(1)
     real(dp) :: Ts(7), ps(7)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
@@ -70,5 +70,11 @@ program example_in_f
     do i=1, size(Ts)
         print "(SP, F23.3, A3, 4X, F23.3, A3)", Ts(i), "K", ps(i), "MPa"
     end do 
+
+    ! Compute water properties at 280°C/8 Mpa
+    p(1) = 8.0_dp
+    T(1) = 273.15_dp + 280.0_dp
+    call wp(p, T, "v", wp_res)
+    print "(A5, F23.16, X, A)", "v=", wp_res(1)*1000.0_dp, "L/kg"
 
 end program

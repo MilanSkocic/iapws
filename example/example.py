@@ -124,4 +124,10 @@ ax.legend()
 fig.savefig(f"../media/r797-r4.png", dpi=100, format="png")
 
 
+T = 280.0 + 273.15
+p = 8.0
+res = pyiapws.wp(p, T, "v")*1000.0
+print(f"v = {res:+23.16f} L/kg)")
+
+
 plt.show()
