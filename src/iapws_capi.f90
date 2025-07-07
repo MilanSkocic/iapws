@@ -242,7 +242,7 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
     real(c_double), intent(in)           :: T(N)        !! Temperature in °C.
     type(c_ptr), intent(in), value       :: prop        !! Water property.
-    real(c_double), intent(inout)        :: res(N)      !! Result. Filled with NaNs if gas not found.
+    real(c_double), intent(out)        :: res(N)      !! Result. Filled with NaNs if gas not found.
     
     ! variables
     character, pointer, dimension(:) :: cprop
