@@ -77,7 +77,7 @@ int main(void){
     T = 273.15 + 280.0;
     p = 8.0;
     iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
-    printf("v = %+23.16f L/kg", wp_res * 1000.0);
+    printf("v(8MPa,280°C) = %+23.16f L/kg", wp_res * 1000.0);
 
     return 0;
 }

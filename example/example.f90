@@ -75,6 +75,6 @@ program example_in_f
     p(1) = 8.0_dp
     T(1) = 273.15_dp + 280.0_dp
     call wp(p, T, "v", wp_res)
-    print "(A5, F23.16, X, A)", "v=", wp_res(1)*1000.0_dp, "L/kg"
+    print "(A5, F23.16, X, A)", "v(8MPa,280°C)=", wp_res(1)*1000.0_dp, "L/kg"
 
 end program
