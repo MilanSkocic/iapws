@@ -111,7 +111,7 @@ static PyObject *r797_wp(PyObject *self, PyObject *args){
     
     char *prop;
     
-    if(!PyArg_ParseTuple(args, "OOs", &T_obj, &p_obj, &prop)){
+    if(!PyArg_ParseTuple(args, "OOs", &p_obj, &T_obj, &prop)){
         return NULL;
     }
 
