@@ -240,9 +240,9 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     integer(c_int), intent(in), value    :: len         !! Size of the gas string.
     integer(c_size_t), intent(in), value :: N           !! Size of T and p.
     real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
-    real(c_double), intent(in)           :: T(N)        !! Temperature in °C.
+    real(c_double), intent(in)           :: T(N)        !! Temperature in K.
     type(c_ptr), intent(in), value       :: prop        !! Water property.
-    real(c_double), intent(out)        :: res(N)      !! Result. Filled with NaNs if gas not found.
+    real(c_double), intent(out)          :: res(N)      !! Result. Filled with NaNs if gas not found.
     
     ! variables
     character, pointer, dimension(:) :: cprop
