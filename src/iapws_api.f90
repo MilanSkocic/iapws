@@ -23,6 +23,16 @@ module iapws__api
 
     public :: Kw                                                                ! R1124 
     public :: wp
+
+    public :: get_phase
+
+    interface get_phase
+        !! Find the corresponding phase according to p and T.
+        !! Returns the phase either as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
+        !! or an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
+        module procedure get_phase_int
+        module procedure get_phase_str
+    end interface
     
 contains
 
@@ -114,6 +124,29 @@ pure subroutine wp(p, T, prop, res)
             end if
         end do
     end if
+end subroutine
+
+pure subroutine get_phase_int(p, T, phase)
+    !! Find the corresponding phase according to p and T.
+    !! Return the phase as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
+
+    ! parameters
+    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
+    real(dp), intent(in) :: T(:)                 !! Pressure in K.
+    integer(int32), intent(out) :: phase(:)      !! Phase as an integer.
+
+    phase = find_phase_int(p, T)
+end subroutine
+
+pure subroutine get_phase_str(p, T, phase)
+    !! Find the corresponding phase according to p and T.
+    !! Return an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
+    ! parameters
+    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
+    real(dp), intent(in) :: T(:)                 !! Pressure in K.
+    character(len=1), intent(out) :: phase(:)      !! Phase as an integer.
+
+    phase = find_phase_str(p, T)
 end subroutine
 ! ------------------------------------------------------------------------------
 
