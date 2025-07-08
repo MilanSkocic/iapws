@@ -9,13 +9,20 @@ module iapws__r797
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w, r1
     public :: r4_ps, r4_Ts
     public :: is1region, get_r, rai
+    public :: find_phase_int, find_phase_str
     
-real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
-real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
-real(dp), parameter :: pc = pc_H2O          !! critical pressure of the water in MPa
-real(dp), parameter :: rhoc = rhoc_H2O      !! critical density of the water in kg.m-3.
+    real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
+    real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
+    real(dp), parameter :: pc = pc_H2O          !! critical pressure of the water in MPa
+    real(dp), parameter :: rhoc = rhoc_H2O      !! critical density of the water in kg.m-3.
 
-real(dp), parameter :: R = 0.461526_dp      !! Specific gas constant 0.461 526 kJ.kg-1.K-1
+    real(dp), parameter :: R = 0.461526_dp      !! Specific gas constant 0.461 526 kJ.kg-1.K-1
+
+    integer(int32), parameter :: UNKNOWN         = -1 !! Phase not found
+    integer(int32), parameter :: LIQUID          = 1 !! Liquid phase
+    integer(int32), parameter :: VAPOR           = 2 !! Vapor phase
+    integer(int32), parameter :: SUPER_CRITICAL  = 3 !! Super critical phase
+    integer(int32), parameter :: SATURATION      = 4 !! Saturation line
 
 
 
@@ -202,6 +209,70 @@ pure elemental function find_region(p, T)result(res)
             res = 5
         end if
     end if
+end function
+
+pure elemental function find_phase_int(p, T)result(res)
+    !! Find the corresponding phase according to p and T.
+    !! Returns the phase as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    ! results
+    integer(int32) :: res
+
+    ! local variables
+    integer(int32) :: region
+
+    region = find_region(p, T)
+
+    select case(region)
+        case (1)
+            res = LIQUID
+        case (2)
+            res = VAPOR
+        case (3)
+            res = SUPER_CRITICAL
+        case (4)
+            res = SATURATION
+        case (5)
+            res = VAPOR
+        case default
+            res = -1
+    end select
+end function
+
+pure elemental function find_phase_str(p, T)result(res)
+    !! Find the corresponding phase according to p and T.
+    !! Returns the phase as an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
+
+    ! parameters
+    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: T !! Temperature in K.
+    
+    ! results
+    character(len=1) :: res
+
+    ! local variables 
+    integer(int32) :: phase
+
+    phase = find_phase_int(p, T)
+
+    select case(phase)
+        case (LIQUID)
+            res = "l"
+        case (VAPOR)
+            res = "v"
+        case (SUPER_CRITICAL)
+            res = "c"
+        case (SATURATION)
+            res = "s"
+        case (UNKNOWN)
+            res = "n"
+        case default
+            res = "n"
+    end select
 end function
 
 pure function is1region(regions)result(res)
