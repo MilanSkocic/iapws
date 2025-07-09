@@ -22,18 +22,8 @@ module iapws__api
     public :: psat, Tsat                                                        ! R797
 
     public :: Kw                                                                ! R1124 
-    public :: wp
+    public :: wp, wr, wph
 
-    public :: get_phase
-
-    interface get_phase
-        !! Find the corresponding phase according to p and T.
-        !! Returns the phase either as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
-        !! or an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
-        module procedure get_phase_int
-        module procedure get_phase_str
-    end interface
-    
 contains
 
 ! ------------------------------------------------------------------------------
@@ -126,27 +116,28 @@ pure subroutine wp(p, T, prop, res)
     end if
 end subroutine
 
-pure subroutine get_phase_int(p, T, phase)
-    !! Find the corresponding phase according to p and T.
-    !! Return the phase as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
+pure subroutine wr(p, T, res)
+    !! Get the water region corresponding to p and T.
+    !! Regions 1 to 5 or -1 when not found.
 
     ! parameters
-    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
-    real(dp), intent(in) :: T(:)                 !! Pressure in K.
-    integer(int32), intent(out) :: phase(:)      !! Phase as an integer.
+    real(dp), intent(in)        :: p(:)           !! Pressure in MPa.
+    real(dp), intent(in)        :: T(:)           !! Temperature in K.
+    integer(int32), intent(out) :: res(:)         !! Region (1-5)
 
-    phase = find_phase_int(p, T)
+    res = find_region(p, T)
 end subroutine
 
-pure subroutine get_phase_str(p, T, phase)
-    !! Find the corresponding phase according to p and T.
-    !! Return an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
+pure subroutine wph(p, T, res)
+    !! Get the water phase corresponding to p and T.
+    !! Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
+    
     ! parameters
-    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
-    real(dp), intent(in) :: T(:)                 !! Pressure in K.
-    character(len=1), intent(out) :: phase(:)      !! Phase as an integer.
+    real(dp), intent(in)          :: p(:)     !! pressure in MPa.
+    real(dp), intent(in)          :: T(:)     !! Temperature in K.
+    character(len=1), intent(out) :: res(:)   !! Phase (l, v, c, s, n)
 
-    phase = find_phase_str(p, T)
+    res = find_phase(p, T)
 end subroutine
 ! ------------------------------------------------------------------------------
 

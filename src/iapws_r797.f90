@@ -5,11 +5,9 @@ module iapws__r797
     implicit none
     private
 
-    public :: find_region
+    public :: find_region, find_phase, is1region, get_r, rai
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w, r1
     public :: r4_ps, r4_Ts
-    public :: is1region, get_r, rai
-    public :: find_phase_int, find_phase_str
     
     real(dp), parameter :: T_KELVIN = 273.15_dp !! Parameters from IAPWS R7-97
     real(dp), parameter :: Tc = Tc_H2O          !! critical temperature of water in K
@@ -17,13 +15,6 @@ module iapws__r797
     real(dp), parameter :: rhoc = rhoc_H2O      !! critical density of the water in kg.m-3.
 
     real(dp), parameter :: R = 0.461526_dp      !! Specific gas constant 0.461 526 kJ.kg-1.K-1
-
-    integer(int32), parameter :: UNKNOWN         = -1 !! Phase not found
-    integer(int32), parameter :: LIQUID          = 1 !! Liquid phase
-    integer(int32), parameter :: VAPOR           = 2 !! Vapor phase
-    integer(int32), parameter :: SUPER_CRITICAL  = 3 !! Super critical phase
-    integer(int32), parameter :: SATURATION      = 4 !! Saturation line
-
 
 
 ! Region 1
@@ -36,40 +27,40 @@ real(dp), parameter :: r1_Tmax = 623.15_dp  !! T in K.
 real(dp), parameter :: r1_pmax = 100.0_dp   !! p in MPa.
 
 real(dp), target :: r1_IJn_g(34, 3) = transpose(reshape([&
-  +0.0_dp,  -2.0_dp, +0.14632971213167d0,   &
-  +0.0_dp,  -1.0_dp, -0.84548187169114d0,   &
-  +0.0_dp,   0.0_dp, -0.37563603672040d1,   &
-  +0.0_dp,  +1.0_dp, +0.33855169168385d1,   &
-  +0.0_dp,  +2.0_dp, -0.95791963387872d0,   &
-  +0.0_dp,  +3.0_dp, +0.15772038513228d0,   &
-  +0.0_dp,  +4.0_dp, -0.16616417199501d-1,  &
-  +0.0_dp,  +5.0_dp, +0.81214629983568d-3,  &
-  +1.0_dp,  -9.0_dp, +0.28319080123804d-3,  &
-  +1.0_dp,  -7.0_dp, -0.60706301565874d-3,  &
-  +1.0_dp,  -1.0_dp, -0.18990068218419d-1,  &
-  +1.0_dp,   0.0_dp, -0.32529748770505d-1,  &
-  +1.0_dp,  +1.0_dp, -0.21841717175414d-1,  &
-  +1.0_dp,  +3.0_dp, -0.52838357969930d-4,  &
-  +2.0_dp,  -3.0_dp, -0.47184321073267d-3,  &
-  +2.0_dp,   0.0_dp, -0.30001780793026d-3,  &
-  +2.0_dp,  +1.0_dp, +0.47661393906987d-4,  &
-  +2.0_dp,  +3.0_dp, -0.44141845330846d-5,  &
-  +2.0_dp, +17.0_dp, -0.72694996297594d-15, &
-  +3.0_dp,  -4.0_dp, -0.31679644845054d-4,  &
-  +3.0_dp,   0.0_dp, -0.28270797985312d-5,  &
-  +3.0_dp,  +6.0_dp, -0.85205128120103d-9,  &
-  +4.0_dp,  -5.0_dp, -0.22425281908000d-5,  &
-  +4.0_dp,  -2.0_dp, -0.65171222895601d-6,  &
-  +4.0_dp, +10.0_dp, -0.14341729937924d-12, &
-  +5.0_dp,  -8.0_dp, -0.40516996860117d-6,  &
-  +8.0_dp, -11.0_dp, -0.12734301741641d-8,  &
-  +8.0_dp,  -6.0_dp, -0.17424871230634d-9,  &
- +21.0_dp, -29.0_dp, -0.68762131295531d-18, &
- +23.0_dp, -31.0_dp, +0.14478307828521d-19, &
- +29.0_dp, -38.0_dp, +0.26335781662795d-22, &
- +30.0_dp, -39.0_dp, -0.11947622640071d-22, &
- +31.0_dp, -40.0_dp, +0.18228094581404d-23, &
- +32.0_dp, -41.0_dp, -0.93537087292458d-25  &
+      +0.0_dp,  -2.0_dp, +0.14632971213167d0,   &
+      +0.0_dp,  -1.0_dp, -0.84548187169114d0,   &
+      +0.0_dp,   0.0_dp, -0.37563603672040d1,   &
+      +0.0_dp,  +1.0_dp, +0.33855169168385d1,   &
+      +0.0_dp,  +2.0_dp, -0.95791963387872d0,   &
+      +0.0_dp,  +3.0_dp, +0.15772038513228d0,   &
+      +0.0_dp,  +4.0_dp, -0.16616417199501d-1,  &
+      +0.0_dp,  +5.0_dp, +0.81214629983568d-3,  &
+      +1.0_dp,  -9.0_dp, +0.28319080123804d-3,  &
+      +1.0_dp,  -7.0_dp, -0.60706301565874d-3,  &
+      +1.0_dp,  -1.0_dp, -0.18990068218419d-1,  &
+      +1.0_dp,   0.0_dp, -0.32529748770505d-1,  &
+      +1.0_dp,  +1.0_dp, -0.21841717175414d-1,  &
+      +1.0_dp,  +3.0_dp, -0.52838357969930d-4,  &
+      +2.0_dp,  -3.0_dp, -0.47184321073267d-3,  &
+      +2.0_dp,   0.0_dp, -0.30001780793026d-3,  &
+      +2.0_dp,  +1.0_dp, +0.47661393906987d-4,  &
+      +2.0_dp,  +3.0_dp, -0.44141845330846d-5,  &
+      +2.0_dp, +17.0_dp, -0.72694996297594d-15, &
+      +3.0_dp,  -4.0_dp, -0.31679644845054d-4,  &
+      +3.0_dp,   0.0_dp, -0.28270797985312d-5,  &
+      +3.0_dp,  +6.0_dp, -0.85205128120103d-9,  &
+      +4.0_dp,  -5.0_dp, -0.22425281908000d-5,  &
+      +4.0_dp,  -2.0_dp, -0.65171222895601d-6,  &
+      +4.0_dp, +10.0_dp, -0.14341729937924d-12, &
+      +5.0_dp,  -8.0_dp, -0.40516996860117d-6,  &
+      +8.0_dp, -11.0_dp, -0.12734301741641d-8,  &
+      +8.0_dp,  -6.0_dp, -0.17424871230634d-9,  &
+     +21.0_dp, -29.0_dp, -0.68762131295531d-18, &
+     +23.0_dp, -31.0_dp, +0.14478307828521d-19, &
+     +29.0_dp, -38.0_dp, +0.26335781662795d-22, &
+     +30.0_dp, -39.0_dp, -0.11947622640071d-22, &
+     +31.0_dp, -40.0_dp, +0.18228094581404d-23, &
+     +32.0_dp, -41.0_dp, -0.93537087292458d-25  &
 ], &
 [3, 34])) !! Coefficients I, J and n for forward equation in region 1.
 !-------------------------------------------------------------------------------
@@ -101,16 +92,16 @@ real(dp), parameter :: r3_pmax = 100.0_dp        !! T in K.
 ! Region 4: Saturation line
 !-------------------------------------------------------------------------------
 real(dp) :: r4_n(10) = [  &
-+0.11670521452767e4_dp,   &
--0.72421316703206e6_dp,   &
--0.1707384694009292e2_dp, &
-+0.12020824702470e5_dp,   &
--0.32325550322333e7_dp,   &
-+0.14915108613530e2_dp,   &
--0.48232657361591e4_dp,   &
-+0.40511340542057e6_dp,   &
--0.23855557567849_dp,     &
-+0.65017534844798e3_dp    &
+    +0.11670521452767e4_dp,   &
+    -0.72421316703206e6_dp,   &
+    -0.1707384694009292e2_dp, &
+    +0.12020824702470e5_dp,   &
+    -0.32325550322333e7_dp,   &
+    +0.14915108613530e2_dp,   &
+    -0.48232657361591e4_dp,   &
+    +0.40511340542057e6_dp,   &
+    -0.23855557567849_dp,     &
+    +0.65017534844798e3_dp    &
 ] !! ni coefficients for region 4 (saturation line)
 
 real(dp), parameter :: r4_Tmin = 273.15_dp     !! Lower bound for validity for ps(T) in K.
@@ -149,13 +140,13 @@ contains
 
 pure elemental function find_region(p, T)result(res)
     !! Find the corresponding region according to p and T.
-    !! Returns the number of the region (1 to 5) when found otherwise returns -1.
+    !! Return the number of the region (1 to 5) when found otherwise return -1.
     
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
-    !results
+    ! results
     integer(int32) :: res
 
     ! variables
@@ -211,65 +202,33 @@ pure elemental function find_region(p, T)result(res)
     end if
 end function
 
-pure elemental function find_phase_int(p, T)result(res)
+pure elemental function find_phase(p, T)result(res)
     !! Find the corresponding phase according to p and T.
-    !! Returns the phase as an integer: 1=LIQUID, 2=VAPOR, 3=SUPER CRITICAL, 4=SATURATION when found otherwise returns -1.
+    !! Return the phase as an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION, n=UNKNOWN.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
-    real(dp), intent(in) :: T !! Temperature in K.
-    
-    ! results
-    integer(int32) :: res
-
-    ! local variables
-    integer(int32) :: region
-
-    region = find_region(p, T)
-
-    select case(region)
-        case (1)
-            res = LIQUID
-        case (2)
-            res = VAPOR
-        case (3)
-            res = SUPER_CRITICAL
-        case (4)
-            res = SATURATION
-        case (5)
-            res = VAPOR
-        case default
-            res = -1
-    end select
-end function
-
-pure elemental function find_phase_str(p, T)result(res)
-    !! Find the corresponding phase according to p and T.
-    !! Returns the phase as an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION when found otherwise returns n.
-
-    ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     ! results
     character(len=1) :: res
 
     ! local variables 
-    integer(int32) :: phase
+    integer(int32) :: region
 
-    phase = find_phase_int(p, T)
+    region = find_region(p, T)
 
-    select case(phase)
-        case (LIQUID)
+    select case(region)
+        case (1)
             res = "l"
-        case (VAPOR)
+        case (2)
             res = "v"
-        case (SUPER_CRITICAL)
+        case (3)
             res = "c"
-        case (SATURATION)
+        case (4)
             res = "s"
-        case (UNKNOWN)
-            res = "n"
+        case (5)
+            res = "v"
         case default
             res = "n"
     end select
@@ -322,7 +281,7 @@ pure elemental function r1_g(p, T)result(res)
     !! Compute gamma for region 1.
     
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     !results
@@ -343,7 +302,7 @@ pure elemental function r1_gp(p, T)result(res)
     !! Compute gamma_pi for region 1.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     ! results
@@ -364,7 +323,7 @@ pure elemental function r1_gt(p, T)result(res)
     !! Compute gamma_tau for region 1.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     ! results
@@ -385,7 +344,7 @@ pure elemental function r1_gpp(p, T)result(res)
     !! Compute gamma_pipi for region 1.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     ! results
@@ -406,7 +365,7 @@ pure elemental function r1_gtt(p, T)result(res)
     !! Compute gamma_tautau for region 1.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     ! results
@@ -427,7 +386,7 @@ pure elemental function r1_gpt(p, T)result(res)
     !! Compute gamma_pitau for region 1.
     
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
     
     !results
@@ -448,7 +407,7 @@ pure elemental function r1_v(p, T)result(res)
     !! Compute the specific volume v in m3/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -465,7 +424,7 @@ pure elemental function r1_u(p, T)result(res)
     !! Compute the specific internal energy u in m3/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -483,7 +442,7 @@ pure elemental function r1_s(p, T)result(res)
     !! Compute the specific enthropy h in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -500,7 +459,7 @@ pure elemental function r1_h(p, T)result(res)
     !! Compute the specific enthalpie h in kJ/kg.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -517,7 +476,7 @@ pure elemental function r1_cp(p, T)result(res)
     !! Compute the specific isobaric heat capacity cp in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -534,7 +493,7 @@ pure elemental function r1_cv(p, T)result(res)
     !! Compute the specific isochoric heat capacity cp in kJ/kg/K.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -551,7 +510,7 @@ pure elemental function r1_w(p, T)result(res)
     !! Compute the speed of sound w in m/s.
 
     ! parameters
-    real(dp), intent(in) :: p !! pressure in MPa.
+    real(dp), intent(in) :: p !! Pressure in MPa.
     real(dp), intent(in) :: T !! Temperature in K.
 
     ! results
@@ -639,7 +598,7 @@ pure elemental function r4_ps(Ts)result(value)
     !! Validity range 273.13 K <= Ts <= 647.096 K.
 
     real(dp), intent(in) :: Ts    !! Saturation temperature in K.
-    real(dp) :: value             !! Saturation pressure in MPa at temperature Ts. Is nan if Ts is out of range.
+    real(dp) :: value             !! Saturation Pressure in MPa at temperature Ts. Is nan if Ts is out of range.
 
     real(dp) :: theta, Ts_K, A, B, C
     
@@ -664,7 +623,7 @@ pure elemental function r4_Ts(ps)result(value)
     !! Compute the saturation-pressure line. 
     !! Validity range 611.213 Pa <= ps <= 22.064 MPa.
 
-    real(dp), intent(in) :: ps  !! Saturation pressure in MPa.
+    real(dp), intent(in) :: ps  !! Saturation Pressure in MPa.
     real(dp) :: value           !! Saturation temperature in K at pressure ps. Is nan if ps is out of range.
 
     real(dp) :: beta, D, E, F, G

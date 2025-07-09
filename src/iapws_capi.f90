@@ -237,7 +237,8 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     !!     * cv: specific isochoric heat capacity in kJ/kg/K
     !!     * w: speed of sound in m/s
    
-    integer(c_int), intent(in), value    :: len         !! Size of the gas string.
+    ! parameters
+    integer(c_int), intent(in), value    :: len         !! Size of the prop string.
     integer(c_size_t), intent(in), value :: N           !! Size of T and p.
     real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
     real(c_double), intent(in)           :: T(N)        !! Temperature in K.
@@ -257,6 +258,30 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
 
     call wp(p, T, fprop, res)
 end subroutine
+
+subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
+    !! C API for wr.
+
+    ! parameters
+    integer(c_size_t), intent(in), value :: N           !! Size of T and p.
+    real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
+    real(c_double), intent(in)           :: T(N)        !! Temperature in K.
+    integer(c_int), intent(out)             :: res(N)      !! Regions.
+
+    call wr(p, T, res)
+end subroutine
+
+subroutine capi_wph(p, T, res, N)bind(C, name="iapws_r797_wph")
+    !! C API for wph.
+
+    ! parameters
+    integer(c_size_t), intent(in), value          :: N           !! Size of T and p.
+    real(c_double), intent(in)                    :: p(N)        !! Pressure in MPa.
+    real(c_double), intent(in)                    :: T(N)        !! Temperature in K.
+    character(len=1, kind=c_char), intent(out)     :: res(N)      !! Regions.
+
+    call wph(p, T, res)
+end subroutine
 ! ------------------------------------------------------------------------------
 
 
@@ -267,9 +292,9 @@ subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
 
     ! arguments
     integer(c_size_t), intent(in), value :: N     !! Size of T, rhow and k.
-    real(dp), intent(in) :: T(N)                  !! Temperature in K.
-    real(dp), intent(in) :: rhow(N)               !! Mass density in g.cm^{-3}.
-    real(dp), intent(out) :: k(N)                 !! Ionization constant. Filled with NaN if out of validity range. 
+    real(c_double), intent(in) :: T(N)                  !! Temperature in K.
+    real(c_double), intent(in) :: rhow(N)               !! Mass density in g.cm^{-3}.
+    real(c_double), intent(out) :: k(N)                 !! Ionization constant. Filled with NaN if out of validity range. 
 
     call Kw(T, rhow, k)
 end subroutine
