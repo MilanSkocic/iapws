@@ -3,8 +3,9 @@
 * Drop support for python 3.8 and add support for python 3.13.
 * Code cleaning in python C extensions.
 * Code refactoring in pure python modules for encapsulating C extensions.
-* Implementation of region 1.
-* Add API for water properties `wp`.
+* Implementation of region 1 from R797.
+* Implementation of `Kw` from R1124.
+* Add API for water properties `wp`, water region `wr` and water phase `wp`.
 * Documentation update.
 
 Full changelog available at [github](https://github.com/MilanSkocic/iapws/releases)

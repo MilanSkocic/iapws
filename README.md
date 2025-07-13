@@ -15,7 +15,7 @@ For now, I have implemented
     - [x] kH
     - [x] kD
 - R7-97
-    - [ ] Region 1
+    - [x] Region 1
     - [ ] Region 2
     - [ ] Region 3
     - [x] Region 4
