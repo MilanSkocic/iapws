@@ -196,7 +196,7 @@ pure elemental function find_region(p, T)result(res)
 
     ! test region 5
     if((T>=r5_Tmin) .and. (T<=r5_Tmax))then
-        if((p>=r5_pmin) .and. (p>=r5_pmax))then
+        if((p>=r5_pmin) .and. (p<=r5_pmax))then
             res = 5
         end if
     end if
