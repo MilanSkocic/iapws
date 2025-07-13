@@ -247,6 +247,58 @@ def wp(p, T, prop):
     else:
         return res
 
+def wr(p, T):
+    """
+    Get the water region corresponding to p and T.
+
+    Parameters
+    ----------
+    p: int, float or 1d-array.
+        Pressure in MPa.
+    T: int, float or 1d-array.
+        Temperature in K.
+
+    Returns
+    -------
+    region: int or 1d-array
+        Regions 1 to 5 or -1 when not found.
+    """
+    p_, scalar = _cast_ndarray(p)
+    T_, scalar = _cast_ndarray(T)
+
+    res = np.asarray( _iapws.wr(p_, T_) )
+
+    if scalar:
+        return res[0]
+    else:
+        return res
+
+def wph(p, T):
+    """
+    Get the water phase corresponding to p and T.
+
+    Parameters
+    ----------
+    p: int, float or 1d-array.
+        Pressure in MPa.
+    T: int, float or 1d-array.
+        Temperature in K.
+
+    Returns
+    -------
+    region: str or 1d-array
+        Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
+    """
+    p_, scalar = _cast_ndarray(p)
+    T_, scalar = _cast_ndarray(T)
+
+    res = np.asarray( _iapws.wph(p_, T_) )
+
+    if scalar:
+        return res[0].decode("utf-8")
+    else:
+        return res.astype("U1")
+
 
 # R1124
 def Kw(T: np.ndarray, rhow: np.ndarray):
