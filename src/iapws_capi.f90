@@ -266,7 +266,7 @@ subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
     integer(c_size_t), intent(in), value :: N           !! Size of T and p.
     real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
     real(c_double), intent(in)           :: T(N)        !! Temperature in K.
-    integer(c_int), intent(out)             :: res(N)      !! Regions.
+    integer(c_int), intent(out)          :: res(N)      !! Regions.
 
     call wr(p, T, res)
 end subroutine
