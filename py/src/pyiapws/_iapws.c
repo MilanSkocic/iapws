@@ -14,6 +14,12 @@ PyDoc_STRVAR(r797_Tsat_doc,
 PyDoc_STRVAR(r797_wp_doc, 
 "wp(p: array-like, T: array-like, prop: str) --> mview \n\n"
 "Get water property.");
+PyDoc_STRVAR(r797_wr_doc, 
+"wr(p: array-like, T: array-like) --> mview \n\n"
+"Get water region.");
+PyDoc_STRVAR(r797_wph_doc, 
+"wph(p: array-like, T: array-like) --> mview \n\n"
+"Get water phase.");
 
 
 /* G704 Doc */
@@ -53,6 +59,64 @@ Py_buffer newbuffer_like(Py_buffer *buffer){
     newbuffer.suboffsets = NULL;
 
     return newbuffer;
+}
+
+Py_buffer create_new_buffer(char *format, Py_ssize_t itemsize, Py_ssize_t ndim, Py_ssize_t *shape){
+    Py_buffer buffer;
+    Py_ssize_t i, j, size, subsize;
+    Py_ssize_t *strides = (Py_ssize_t *)PyMem_Calloc(ndim, sizeof(Py_ssize_t));
+
+    buffer.obj = NULL;
+    buffer.suboffsets = NULL;
+    buffer.format = format;
+    buffer.readonly = 0;
+    buffer.itemsize = itemsize;
+    buffer.ndim = ndim;
+    buffer.shape = shape;
+
+    size = 1;
+    for(i=0; i<ndim; i++){
+        size *= shape[i];
+    }
+
+    strides[ndim-1] = itemsize;
+    if(ndim > 1){
+        for(i=0; i<(ndim-1); i++){
+            subsize = 1;
+            for(j=i+1; j<ndim; j++){
+                subsize *= shape[j];
+            }
+            strides[i] = subsize * itemsize;
+        }
+    }
+
+    buffer.len = size * itemsize;
+    buffer.strides = strides;
+    buffer.buf = PyMem_Calloc(size, itemsize);
+
+    return buffer;
+}
+
+Py_buffer *get_buffer(PyObject *o){
+    PyObject *mview;
+    Py_buffer *buffer;
+
+    if(PyObject_CheckBuffer(o)==1){
+        mview = PyMemoryView_FromObject(o);
+        buffer = PyMemoryView_GET_BUFFER(mview);
+    
+        if(strcmp(buffer->format, "d")!=0){
+            return NULL;
+        }else if(buffer->ndim>1){
+            return NULL;
+        }else if(buffer->ndim==0){
+            return NULL;
+        }else{
+            return buffer;
+        }
+    }else{
+        return NULL;
+    }
 }
 
 
@@ -124,6 +188,66 @@ static PyObject *r797_wp(PyObject *self, PyObject *args){
     res_buf = newbuffer_like(T_buf);
 
     iapws_r797_wp((double *)p_buf->buf, (double *)T_buf->buf, prop, (double *) res_buf.buf, res_buf.shape[0], strlen(prop));
+
+    res_mview = PyMemoryView_FromBuffer(&res_buf);
+    return res_mview;
+}
+
+static PyObject *r797_wr(PyObject *self, PyObject *args){
+    PyObject *T_obj;
+    PyObject *p_obj;
+
+    PyObject *T_mview;
+    PyObject *p_mview;
+    PyObject *res_mview;
+    
+    Py_buffer *T_buf;
+    Py_buffer *p_buf;
+    Py_buffer res_buf;
+    
+    if(!PyArg_ParseTuple(args, "OO", &p_obj, &T_obj)){
+        return NULL;
+    }
+    
+    T_mview = PyMemoryView_FromObject(T_obj);
+    p_mview = PyMemoryView_FromObject(p_obj);
+
+    T_buf = PyMemoryView_GET_BUFFER(T_mview);
+    p_buf = PyMemoryView_GET_BUFFER(p_mview);
+
+    res_buf = create_new_buffer("i", sizeof(int), T_buf->ndim, T_buf->shape);
+
+    iapws_r797_wr((double *)p_buf->buf, (double *)T_buf->buf, (int *) res_buf.buf, res_buf.shape[0]);
+
+    res_mview = PyMemoryView_FromBuffer(&res_buf);
+    return res_mview;
+}
+
+static PyObject *r797_wph(PyObject *self, PyObject *args){
+    PyObject *T_obj;
+    PyObject *p_obj;
+
+    PyObject *T_mview;
+    PyObject *p_mview;
+    PyObject *res_mview;
+    
+    Py_buffer *T_buf;
+    Py_buffer *p_buf;
+    Py_buffer res_buf;
+    
+    if(!PyArg_ParseTuple(args, "OO", &p_obj, &T_obj)){
+        return NULL;
+    }
+    
+    T_mview = PyMemoryView_FromObject(T_obj);
+    p_mview = PyMemoryView_FromObject(p_obj);
+
+    T_buf = PyMemoryView_GET_BUFFER(T_mview);
+    p_buf = PyMemoryView_GET_BUFFER(p_mview);
+
+    res_buf = create_new_buffer("c", sizeof(char), T_buf->ndim, T_buf->shape);
+
+    iapws_r797_wph((double *)p_buf->buf, (double *)T_buf->buf, (char *) res_buf.buf, res_buf.shape[0]);
 
     res_mview = PyMemoryView_FromBuffer(&res_buf);
     return res_mview;
@@ -253,6 +377,8 @@ static PyMethodDef myMethods[] = {
     {"psat", (PyCFunction) r797_psat, METH_VARARGS, r797_psat_doc},
     {"Tsat", (PyCFunction) r797_Tsat, METH_VARARGS, r797_Tsat_doc},
     {"wp", (PyCFunction) r797_wp, METH_VARARGS, r797_wp_doc},
+    {"wr", (PyCFunction) r797_wr, METH_VARARGS, r797_wr_doc},
+    {"wph", (PyCFunction) r797_wph, METH_VARARGS, r797_wph_doc},
     {"kh", (PyCFunction) g704_kh, METH_VARARGS, g704_kh_doc},
     {"kd", (PyCFunction) g704_kd, METH_VARARGS, g704_kd_doc},
     {"ngases", (PyCFunction) g704_ngases, METH_VARARGS, g704_ngases_doc},
