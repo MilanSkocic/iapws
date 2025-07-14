@@ -1,6 +1,5 @@
 module iapws__capi
     !! C API.
-    !! See [specs](../pages/specs/capi.html).
     use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
     use iapws__common
     use iapws__api
@@ -46,7 +45,7 @@ contains
 ! ------------------------------------------------------------------------------
 ! VERSION 
 function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
-    !! C API for [[iapws__api(module):get_version(function)]]
+    !! C API
     implicit none
     
     ! Returns   
@@ -70,7 +69,7 @@ end function
 ! ------------------------------------------------------------------------------
 ! G704
 subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")
-    !! C API for [[iapws__g704(module):kh(subroutine)]]
+    !! C API. 
     implicit none
     
     ! arguments
@@ -95,7 +94,7 @@ subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
 end subroutine
 
 subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
-    !! C API for [[iapws__g704(module):kd(subroutine)]]
+    !! C API.
     implicit none
     
     ! arguments
@@ -120,7 +119,7 @@ subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g7
 end subroutine
 
 function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
-    !! C API for [[iapws__g704(module):ngases(function)]]
+    !! C API.
     implicit none
     
     ! arguments
@@ -133,7 +132,7 @@ function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
 end function
 
 function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
-    !! C API for [[iapws__g704(module):gases(function)]]
+    !! C API.
     implicit none
 
     ! arguments
@@ -175,7 +174,7 @@ function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases
 end function
 
 function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gases)
-    !! C API for [[iapws__g704(module):gases2(function)]]
+    !! C API.
     implicit none
 
     ! arguments
@@ -205,7 +204,7 @@ end function
 ! ------------------------------------------------------------------------------
 ! R797
 subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
-    !! C API for [[iapws__api(module):psat(subroutine)]].
+    !! C API.
 
     integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
     real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
@@ -216,7 +215,7 @@ subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
 end subroutine
 
 subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
-    !! C API for [[iapws__api(module):Tsat(subroutine)]].
+    !! C API.
     
     integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
     real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
@@ -226,7 +225,7 @@ subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
 end subroutine
 
 subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
-    !! C API for wp.
+    !! C API.
     
     !! Available properties:
     !!     * v: specific volume in m3/kg
@@ -260,7 +259,7 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
 end subroutine
 
 subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
-    !! C API for wr.
+    !! C API.
 
     ! parameters
     integer(c_size_t), intent(in), value :: N           !! Size of T and p.
@@ -272,7 +271,7 @@ subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
 end subroutine
 
 subroutine capi_wph(p, T, res, N)bind(C, name="iapws_r797_wph")
-    !! C API for wph.
+    !! C API.
 
     ! parameters
     integer(c_size_t), intent(in), value          :: N           !! Size of T and p.
@@ -288,7 +287,7 @@ end subroutine
 ! ------------------------------------------------------------------------------
 ! R1124
 subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
-    !! C API for [[iapws__api(module):Kw(subroutine)]].
+    !! C API.
 
     ! arguments
     integer(c_size_t), intent(in), value :: N     !! Size of T, rhow and k.

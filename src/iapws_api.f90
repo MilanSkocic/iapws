@@ -1,6 +1,5 @@
 module iapws__api
     !! API.
-    !! See [specs](../page/specs/api.html).
     use iapws__common
     use iapws__version
     use iapws__r283
@@ -29,7 +28,7 @@ contains
 ! ------------------------------------------------------------------------------
 ! VERSION
 function get_version()result(fptr)
-    !! Returns the version
+    !! Return the version
     implicit none
     character(len=:), pointer :: fptr    !! Fortran pointer to a string indicating the version..
 
@@ -151,7 +150,7 @@ pure subroutine Kw(T, rhow, k)
     ! arguments
     real(dp), intent(in) :: T(:)          !! Temperature in K.
     real(dp), intent(in) :: rhow(:)       !! Mass density in g.cm^{-3}.
-    real(dp), intent(out) :: k(:)      !! Ionization constant. Filled with NaN if out of validity range. 
+    real(dp), intent(out) :: k(:)         !! Ionization constant. Filled with NaN if out of validity range. 
 
     k = 10**(-pKw(T, rhow))
 end subroutine

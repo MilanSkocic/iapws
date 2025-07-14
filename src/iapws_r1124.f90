@@ -41,7 +41,6 @@ pure elemental function pKwG(T)result(res)
     ! Returns
     real(dp) :: res
     res = 0.61415_dp + 48251.33_dp/T - 67707.93_dp/T**2.0_dp + 10102100.0_dp/T**3.0_dp
-
 end function
 
 pure elemental function pKw(T, rhow)result(res)
