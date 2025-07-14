@@ -5,6 +5,9 @@ program example_in_f
     integer(int32) :: i, ngas
     real(dp) :: T(1), kh_res(1), kd_res(1), wp_res(1), p(1)
     real(dp) :: Ts(7), ps(7)
+    real(dp) :: x(3), y(3)
+    integer(int32) :: r(3)
+    character(len=1) :: s(3)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
     type(gas_type), pointer :: gases_list(:)
@@ -76,5 +79,13 @@ program example_in_f
     T(1) = 273.15_dp + 280.0_dp
     call wp(p, T, "v", wp_res)
     print "(A5, F23.16, X, A)", "v(8MPa,280°C)=", wp_res(1)*1000.0_dp, "L/kg"
+
+    ! Compute region and phase
+    x = [8.0_dp, 4.0_dp, 6.0_dp ] 
+    y = [553.15_dp, 1200.0_dp, 2000.0_dp]
+    call wr(x, y, r)
+    call wph(x, y, s)
+    print *, r
+    print *, s
 
 end program

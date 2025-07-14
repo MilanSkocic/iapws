@@ -128,6 +128,13 @@ T = 280.0 + 273.15
 p = 8.0
 res = pyiapws.wp(p, T, "v")*1000.0
 print(f"v(8MPa,280°C) = {res:+23.16f} L/kg)")
+    
+x = np.asarray([8.0, 4.0, 6.0 ])
+y = np.asarray([553.15, 1200.0, 2000.0])
+r=pyiapws.wr(x, y)
+s=pyiapws.wph(x, y)
+print(r)
+print(s)
 
 
 plt.show()

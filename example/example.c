@@ -13,6 +13,10 @@ int main(void){
     int ngas;
     int i;
     int heavywater = 0;
+    double x[3]= {8.0, 4.0, 6.0 };
+    double y[3] = {553.15, 1200.0, 2000.0};
+    int r[3];
+    char s[3];
     
     printf("%s\n", "########################## IAPWS VERSION ##########################");
     printf("version %s\n", iapws_get_version());
@@ -77,7 +81,18 @@ int main(void){
     T = 273.15 + 280.0;
     p = 8.0;
     iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
-    printf("v(8MPa,280°C) = %+23.16f L/kg", wp_res * 1000.0);
+    printf("v(8MPa,280°C) = %+23.16f L/kg\n", wp_res * 1000.0);
+    
+    iapws_r797_wr(x, y, r, 3);
+    iapws_r797_wph(x, y, s, 3);
+    for(i=0; i<3; i++){
+        printf("%i", r[i]);
+    }
+    printf("\n");
+    for(i=0; i<3; i++){
+        printf("%c", s[i]);
+    }
+    printf("\n");
 
     return 0;
 }
