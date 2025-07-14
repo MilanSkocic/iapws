@@ -41,3 +41,5 @@ py/wheelhouse/
 py/src/pyiapws/bin/
 py/src/pyiapws/include/
 py/src/pyiapws/lib/
+
+.cache
