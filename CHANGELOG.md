@@ -1,4 +1,4 @@
-# 0.5.0dev
+# 0.4.1
 
 * Drop support for python 3.8 and add support for python 3.13.
 * Code cleaning in python C extensions.
