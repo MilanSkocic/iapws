@@ -1,3 +1,10 @@
+# 0.5.0 
+
+* Remove support for Python 3.9 and add support for Python 3.14.
+
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
+
 # 0.4.1
 
 * Drop support for python 3.8 and add support for python 3.13.
