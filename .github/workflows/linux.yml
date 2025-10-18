@@ -12,33 +12,37 @@ jobs:
   linux:
     runs-on: ubuntu-22.04
     steps:
-    - name: Gfortran  
-      run: |
-        sudo update-alternatives \
-          --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 \
-          --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10 \
-          --slave /usr/bin/gcov gcov /usr/bin/gcov-10
-    - name: Set FPM
-      uses: fortran-lang/setup-fpm@v5
+    - name: Set gfortran
+      uses: fortran-lang/setup-fortran@v1.7.0
+      id: setup-fortran 
+      with:
+        compiler: gcc
+        version: 10
+    - name: Set fpm
+      uses: fortran-lang/setup-fpm@v8
       with: 
-        fpm-version: "v0.10.0"
-    - name: Gfortran version
-      run : gfortran --version
+        fpm-version: "v0.12.0"
+    - name: Versions
+      run : |
+        gfortran --version
+        fpm --version
     - uses: actions/setup-python@v5
       with:
         python-version: |
-          3.9
           3.10
           3.11
           3.12
           3.13
+          3.14
+          3.14t
     - name: Update python packages
       run: |
-        python3.9  -m pip install -U --user pip setuptools wheel build auditwheel
-        python3.10 -m pip install -U --user pip setuptools wheel build auditwheel
-        python3.11 -m pip install -U --user pip setuptools wheel build auditwheel
-        python3.12 -m pip install -U --user pip setuptools wheel build auditwheel
-        python3.13 -m pip install -U --user pip setuptools wheel build auditwheel
+       python3.10 -m pip install -U --user pip setuptools wheel build auditwheel 
+       python3.11 -m pip install -U --user pip setuptools wheel build auditwheel
+       python3.12 -m pip install -U --user pip setuptools wheel build auditwheel
+       python3.13 -m pip install -U --user pip setuptools wheel build auditwheel
+       python3.14 -m pip install -U --user pip setuptools wheel build auditwheel
+       python3.14t -m pip install -U --user pip setuptools wheel build auditwheel
     - name: Checkout
       uses: actions/checkout@v4
     - name: Configure

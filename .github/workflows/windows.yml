@@ -15,33 +15,44 @@ jobs:
       run:
         shell: msys2 {0}
     steps: 
-    - name: MSYS2, Gfortran, fpm
+    - name: Set gfortran 
       uses: msys2/setup-msys2@v2
       with:
-        msystem: MINGW64
+        msystem: UCRT64
         install: >-
-          mingw-w64-x86_64-gcc-fortran
-          mingw-w64-x86_64-fpm
+          mingw-w64-ucrt-x86_64-gcc-fortran
           git
           make
           zip
-    - name: Gfortran version
-      run : gfortran --version
+    - name: Set fpm
+      run: |
+        wget https://github.com/fortran-lang/fpm/releases/download/v0.12.0/fpm-0.12.0-windows-x86_64-gcc-12.exe
+        mv fpm-0.12.0-windows-x86_64-gcc-12.exe fpm.exe
+        chmod +x fpm.exe
+        cp -fv fpm.exe /ucrt64/bin/
+        which gfortran
+        which fpm
+    - name: Versions
+      run : |
+        gfortran --version
+        fpm --version
     - uses: actions/setup-python@v5
       with:
         python-version: |
-          3.9
           3.10
           3.11
           3.12
           3.13
+          3.14
+          3.14t
     - name: Update python packages 
       run: |
-        py -3.9  -m pip install -U --user pip setuptools wheel build
         py -3.10 -m pip install -U --user pip setuptools wheel build 
         py -3.11 -m pip install -U --user pip setuptools wheel build
         py -3.12 -m pip install -U --user pip setuptools wheel build
         py -3.13 -m pip install -U --user pip setuptools wheel build
+        py -3.14 -m pip install -U --user pip setuptools wheel build
+        py -3.14t -m pip install -U --user pip setuptools wheel build
     - name: Checkout
       uses: actions/checkout@v4
     - name: Configure
