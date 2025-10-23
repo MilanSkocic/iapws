@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Python &#8212; iapws 0.5.0dev0 documentation</title>
+    <title>Python &#8212; iapws 0.5.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=cfb38e27"></script>
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/python';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">iapws 0.5.0dev0 documentation</p>
+    <p class="title logo__title">iapws 0.5.0 documentation</p>
   
 </a></div>
     
@@ -538,6 +538,96 @@ Validity range 273.13 K &lt;= Ts &lt;= 647.096 K.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pyiapws.wp">
+<span class="sig-name descname"><span class="pre">wp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyiapws.wp" title="Link to this definition">#</a></dt>
+<dd><p>Compute water properties at pressure p in MPa and temperature T in Kelvin.
+The adequate region is selected according to p and T.</p>
+<dl class="simple">
+<dt>Available properties:</dt><dd><ul class="simple">
+<li><p>v: specific volume in m3/kg</p></li>
+<li><p>u: specific internal energy in kJ/kg</p></li>
+<li><p>s: specific entropy in kJ/kg</p></li>
+<li><p>h: specific enthalpy in kJ/kg/K</p></li>
+<li><p>cp: specific isobaric heat capacity in kJ/kg/K</p></li>
+<li><p>cv: specific isochoric heat capacity in kJ/kg/K</p></li>
+<li><p>w: speed of sound in m/s</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p: int, float or 1d-array.</strong></dt><dd><p>Pressure in MPa.</p>
+</dd>
+<dt><strong>T: int, float or 1d-array.</strong></dt><dd><p>Temperature in K.</p>
+</dd>
+<dt><strong>prop: str</strong></dt><dd><dl class="simple">
+<dt>Water property: </dt><dd><ul class="simple">
+<li><p>v: specific volume in m3/kg</p></li>
+<li><p>u: specific internal energy in kJ/kg</p></li>
+<li><p>s: specific entropy in kJ/kg</p></li>
+<li><p>h: specific enthalpy in kJ/kg/K</p></li>
+<li><p>cp: specific isobaric heat capacity in kJ/kg/K</p></li>
+<li><p>cv: specific isochoric heat capacity in kJ/kg/K</p></li>
+<li><p>w: speed of sound in m/s</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns</strong></dt><dd></dd>
+<dt><strong>——-</strong></dt><dd></dd>
+<dt><strong>res: float or 1d-array</strong></dt><dd><p>Computed property. Filled with NaN if no adequate region is found.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyiapws.wph">
+<span class="sig-name descname"><span class="pre">wph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyiapws.wph" title="Link to this definition">#</a></dt>
+<dd><p>Get the water phase corresponding to p and T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p: int, float or 1d-array.</strong></dt><dd><p>Pressure in MPa.</p>
+</dd>
+<dt><strong>T: int, float or 1d-array.</strong></dt><dd><p>Temperature in K.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>region: str or 1d-array</dt><dd><p>Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyiapws.wr">
+<span class="sig-name descname"><span class="pre">wr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyiapws.wr" title="Link to this definition">#</a></dt>
+<dd><p>Get the water region corresponding to p and T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p: int, float or 1d-array.</strong></dt><dd><p>Pressure in MPa.</p>
+</dd>
+<dt><strong>T: int, float or 1d-array.</strong></dt><dd><p>Temperature in K.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>region: int or 1d-array</dt><dd><p>Regions 1 to 5 or -1 when not found.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -595,6 +685,9 @@ Validity range 273.13 K &lt;= Ts &lt;= 647.096 K.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.kh"><code class="docutils literal notranslate"><span class="pre">kh()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.ngases"><code class="docutils literal notranslate"><span class="pre">ngases()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.psat"><code class="docutils literal notranslate"><span class="pre">psat()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.wp"><code class="docutils literal notranslate"><span class="pre">wp()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.wph"><code class="docutils literal notranslate"><span class="pre">wph()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyiapws.wr"><code class="docutils literal notranslate"><span class="pre">wr()</span></code></a></li>
 </ul>
   </nav></div>
 

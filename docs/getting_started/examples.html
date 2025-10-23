@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Examples &#8212; iapws 0.5.0dev0 documentation</title>
+    <title>Examples &#8212; iapws 0.5.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=cfb38e27"></script>
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/examples';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">iapws 0.5.0dev0 documentation</p>
+    <p class="title logo__title">iapws 0.5.0 documentation</p>
   
 </a></div>
     
@@ -369,8 +369,11 @@
 <span class="w">    </span><span class="k">use </span><span class="n">iapws</span>
 <span class="w">    </span><span class="k">implicit none</span>
 <span class="k">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">ngas</span>
-<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">kh_res</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">kd_res</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">kh_res</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">kd_res</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">wp_res</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ts</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">ps</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;O2&quot;</span>
 <span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">gas_type</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gases_list</span><span class="p">(:)</span>
@@ -435,7 +438,21 @@
 <span class="w">    </span><span class="k">call </span><span class="n">Tsat</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">)</span>
 <span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">Ts</span><span class="p">)</span>
 <span class="w">        </span><span class="k">print</span><span class="w"> </span><span class="s2">&quot;(SP, F23.3, A3, 4X, F23.3, A3)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;K&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;MPa&quot;</span>
-<span class="w">    </span><span class="k">end do </span>
+<span class="w">    </span><span class="k">end do</span><span class="w"> </span>
+
+<span class="w">    </span><span class="c">! Compute water properties at 280°C/8 Mpa</span>
+<span class="w">    </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8.0_dp</span>
+<span class="w">    </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="mf">3.15_dp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">28</span><span class="mf">0.0_dp</span>
+<span class="w">    </span><span class="k">call </span><span class="n">wp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;v&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">wp_res</span><span class="p">)</span>
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="s2">&quot;(A5, F23.16, X, A)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;v(8MPa,280°C)=&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">wp_res</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;L/kg&quot;</span>
+
+<span class="w">    </span><span class="c">! Compute region and phase</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">8.0_dp</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0_dp</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0_dp</span><span class="w"> </span><span class="p">]</span><span class="w"> </span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">55</span><span class="mf">3.15_dp</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="mf">0.0_dp</span><span class="p">]</span>
+<span class="w">    </span><span class="k">call </span><span class="n">wr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">wph</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">r</span>
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">s</span>
 
 <span class="k">end program</span>
 </pre></div>
@@ -450,13 +467,18 @@
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
 
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">25.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">273.15</span><span class="p">;</span><span class="w"> </span><span class="cm">/* in C*/</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="cm">/* p in Mpa */</span>
 <span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">gas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;O2&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">kh</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">kh</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">wp_res</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">gases_list</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">gases_str</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ngas</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">553.15</span><span class="p">,</span><span class="w"> </span><span class="mf">1200.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2000.0</span><span class="p">};</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;########################## IAPWS VERSION ##########################&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;version %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">iapws_get_version</span><span class="p">());</span>
@@ -518,6 +540,21 @@
 <span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%+23.3f %s %+23.3f %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;K&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;MPa&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">273.15</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">280.0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8.0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">iapws_r797_wp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wp_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;v(8MPa,280°C) = %+23.16f L/kg</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">wp_res</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000.0</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">iapws_r797_wr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">iapws_r797_wph</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
@@ -527,12 +564,12 @@
 <section id="python">
 <h2>Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Example in python&quot;&quot;&quot;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;../py/src/&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">array</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyiapws</span>
+<span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pyiapws</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;########################## IAPWS VERSION ##########################&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pyiapws</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
@@ -650,6 +687,19 @@
 
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../media/r797-r4.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">)</span>
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="mf">280.0</span> <span class="o">+</span> <span class="mf">273.15</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">pyiapws</span><span class="o">.</span><span class="n">wp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">)</span><span class="o">*</span><span class="mf">1000.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v(8MPa,280°C) = </span><span class="si">{</span><span class="n">res</span><span class="si">:</span><span class="s2">+23.16f</span><span class="si">}</span><span class="s2"> L/kg)&quot;</span><span class="p">)</span>
+    
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">6.0</span> <span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mf">553.15</span><span class="p">,</span> <span class="mf">1200.0</span><span class="p">,</span> <span class="mf">2000.0</span><span class="p">])</span>
+<span class="n">r</span><span class="o">=</span><span class="n">pyiapws</span><span class="o">.</span><span class="n">wr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">s</span><span class="o">=</span><span class="n">pyiapws</span><span class="o">.</span><span class="n">wph</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>

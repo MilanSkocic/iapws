@@ -12,7 +12,3 @@ API
 
 .. autofortran:: ../../../src/iapws_api.f90
 
-C Bindings
-==========
-.. autofortran:: ../../../src/iapws_capi.f90
-

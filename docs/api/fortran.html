@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Fortran &#8212; iapws 0.5.0dev0 documentation</title>
+    <title>Fortran &#8212; iapws 0.5.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=cfb38e27"></script>
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">iapws 0.5.0dev0 documentation</p>
+    <p class="title logo__title">iapws 0.5.0 documentation</p>
   
 </a></div>
     
@@ -369,7 +369,7 @@
 <dl>
 <dt class="sig sig-object">
 <span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__api</span></span></dt>
-<dd><p> API. See [specs](../page/specs/api.html).</p>
+<dd><p> API.</p>
 <span class="math notranslate nohighlight">\(\)</span></dd></dl>
 
 <dl>
@@ -402,6 +402,61 @@
 
 <dl>
 <dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">prop</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
+<dd><p> Compute water properties at pressure p in MPa and temperature T in Kelvin. The adequate region is selected according to p and T.</p>
+<p> Available properties:     * v: specific volume in m3/kg     * u: specific internal energy in kJ/kg     * s: specific entropy in kJ/kg      * h: specific enthalpy in kJ/kg/K     * cp: specific isobaric heat capacity in kJ/kg/K     * cv: specific isochoric heat capacity in kJ/kg/K     * w: speed of sound in m/s</p>
+<p></p>
+<p></p>
+<dl class="simple">
+<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in MPa.</p>
+</dd>
+<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in K.</p>
+</dd>
+<dt>prop: character(len=*), intent(in)</dt><dd><p> Property</p>
+</dd>
+<dt>res: real(kind=dp), (:), intent(out)</dt><dd><p> Filled with NaN if no adequate region is found.
+
+</p>
+</dd>
+</dl>
+<span class="math notranslate nohighlight">\(\)</span></dd></dl>
+
+<dl>
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
+<dd><p> Get the water region corresponding to p and T. Regions 1 to 5 or -1 when not found.</p>
+<p></p>
+<p></p>
+<dl class="simple">
+<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in MPa.</p>
+</dd>
+<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Temperature in K.</p>
+</dd>
+<dt>res: integer(kind=int32), (:), intent(out)</dt><dd><p> Region (1-5)
+</p>
+</dd>
+</dl>
+<span class="math notranslate nohighlight">\(\)</span></dd></dl>
+
+<dl>
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
+<dd><p> Get the water phase corresponding to p and T. Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).</p>
+<p></p>
+<p></p>
+<dl class="simple">
+<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> pressure in MPa.</p>
+</dd>
+<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Temperature in K.</p>
+</dd>
+<dt>res: character(len=1), (:), intent(out)</dt><dd><p> Phase (l, v, c, s, n)
+</p>
+</dd>
+</dl>
+<span class="math notranslate nohighlight">\(\)</span></dd></dl>
+
+<dl>
+<dt class="sig sig-object">
 <span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">Kw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">rhow</span></em>, <em class="sig-param"><span class="pre">k</span></em><span class="sig-paren">)</span></dt>
 <dd><p> Compute the ionization constant of water Kw. Validity range 273.13 K &lt;= T &lt;= 1273.15 K and 0 &lt;= p &lt;= 1000 MPa.</p>
 <p></p>
@@ -420,182 +475,9 @@
 <dl>
 <dt class="sig sig-object">
 <span class="sig-name descname"><span class="pre">function</span> <span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">fptr</span></span></span></dt>
-<dd><p> Returns the version</p>
+<dd><p> Return the version</p>
 <dl class="simple">
 <dt>fptr: character(len=:), pointer</dt><dd><p></p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-</section>
-</section>
-<section id="c-bindings">
-<h2>C Bindings<a class="headerlink" href="#c-bindings" title="Link to this heading">#</a></h2>
-<section id="fortran-api">
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__capi</span></span></dt>
-<dd><p> C API. See [specs](../pages/specs/capi.html). VERSION</p>
-<p> R283</p>
-<p>G704</p>
-<p> R797</p>
-<p></p>
-<p></p>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">type</span> <span class="pre">c_char_p</span></span></dt>
-<dd><dl class="simple">
-<dt>p: type(c_ptr)</dt><dd></dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">type</span> <span class="pre">cgas_type</span></span></dt>
-<dd><dl class="simple">
-<dt>gas: character(kind=c_char, len=1), allocatable, (:)</dt><dd></dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">subroutine</span> <span class="pre">capi_kh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">gas</span></em>, <em class="sig-param"><span class="pre">heavywater</span></em>, <em class="sig-param"><span class="pre">k</span></em>, <em class="sig-param"><span class="pre">size_gas</span></em>, <em class="sig-param"><span class="pre">size_T</span></em><span class="sig-paren">)</span></dt>
-<dd><p> C API for [[iapws__g704(module):kh(subroutine)]]</p>
-<dl class="simple">
-<dt>T: real(kind=c_double), (size_T), intent(in)</dt><dd><p> Temperature in °C.</p>
-</dd>
-<dt>gas: type(c_ptr), value, intent(in)</dt><dd><p> Gas.</p>
-</dd>
-<dt>heavywater: integer(kind=c_int), value, intent(in)</dt><dd><p> Flag if D2O (1) is used or H2O(0).</p>
-</dd>
-<dt>k: real(kind=c_double), (size_T), intent(inout)</dt><dd><p> Henry constant. Filled with NaNs if gas not found.
-
-</p>
-</dd>
-<dt>size_gas: integer(kind=c_int), value, intent(in)</dt><dd><p> Size of the gas string.</p>
-</dd>
-<dt>size_T: integer(kind=c_size_t), value, intent(in)</dt><dd><p> Size of T and k.</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">subroutine</span> <span class="pre">capi_kd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">gas</span></em>, <em class="sig-param"><span class="pre">heavywater</span></em>, <em class="sig-param"><span class="pre">k</span></em>, <em class="sig-param"><span class="pre">size_gas</span></em>, <em class="sig-param"><span class="pre">size_T</span></em><span class="sig-paren">)</span></dt>
-<dd><p> C API for [[iapws__g704(module):kd(subroutine)]]</p>
-<dl class="simple">
-<dt>T: real(kind=c_double), (size_T), intent(in)</dt><dd><p> Temperature in °C.</p>
-</dd>
-<dt>gas: type(c_ptr), value, intent(in)</dt><dd><p> Gas.</p>
-</dd>
-<dt>heavywater: integer(kind=c_int), value, intent(in)</dt><dd><p> Flag if D2O (1) is used or H2O(0).</p>
-</dd>
-<dt>k: real(kind=c_double), (size_T), intent(inout)</dt><dd><p> Vapor-liquid constant. Filled with NaNs if gas not found.
-
-</p>
-</dd>
-<dt>size_gas: integer(kind=c_int), value, intent(in)</dt><dd><p> Size of the gas string.</p>
-</dd>
-<dt>size_T: integer(kind=c_size_t), value, intent(in)</dt><dd><p> Size of T and k.</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">capi_psat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">N</span></em>, <em class="sig-param"><span class="pre">Ts</span></em>, <em class="sig-param"><span class="pre">ps</span></em><span class="sig-paren">)</span></dt>
-<dd><p> C API for [[iapws__api(module):psat(subroutine)]].</p>
-<p></p>
-<dl class="simple">
-<dt>N: integer(kind=c_size_t), value, intent(in)</dt><dd><p> Size of Ts and ps.</p>
-</dd>
-<dt>Ts: real(kind=c_double), (N), intent(in)</dt><dd><p> Saturation temperature in K.</p>
-</dd>
-<dt>ps: real(kind=c_double), (N), intent(out)</dt><dd><p> Saturation pressure in MPa. Filled with nan if out of validity range.
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">capi_Tsat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">N</span></em>, <em class="sig-param"><span class="pre">ps</span></em>, <em class="sig-param"><span class="pre">Ts</span></em><span class="sig-paren">)</span></dt>
-<dd><p> C API for [[iapws__api(module):Tsat(subroutine)]].</p>
-<p></p>
-<dl class="simple">
-<dt>N: integer(kind=c_size_t), value, intent(in)</dt><dd><p> Size of ps and Ts.</p>
-</dd>
-<dt>ps: real(kind=c_double), (N), intent(in)</dt><dd><p> Saturation pressure in MPa.</p>
-</dd>
-<dt>Ts: real(kind=c_double), (N), intent(out)</dt><dd><p> Saturation temperature in K. Filled with nan if out of validity range.
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">capi_Kw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">N</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">rhow</span></em>, <em class="sig-param"><span class="pre">k</span></em><span class="sig-paren">)</span></dt>
-<dd><p> C API for [[iapws__api(module):Kw(subroutine)]].</p>
-<p></p>
-<p></p>
-<dl class="simple">
-<dt>N: integer(kind=c_size_t), value, intent(in)</dt><dd><p> Size of T, rhow and k.</p>
-</dd>
-<dt>T: real(kind=dp), (N), intent(in)</dt><dd><p> Temperature in K.</p>
-</dd>
-<dt>rhow: real(kind=dp), (N), intent(in)</dt><dd><p> Mass density in g.cm^{-3}.</p>
-</dd>
-<dt>k: real(kind=dp), (N), intent(out)</dt><dd><p> Ionization constant. Filled with NaN if out of validity range. 
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">function</span> <span class="pre">capi_get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cptr</span></span></span></dt>
-<dd><p> C API for [[iapws__api(module):get_version(function)]]</p>
-<dl class="simple">
-<dt>cptr: type(c_ptr)</dt><dd><p></p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">function</span> <span class="pre">capi_ngases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">heavywater</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">n</span></span></span></dt>
-<dd><p> C API for [[iapws__g704(module):ngases(function)]]</p>
-<dl class="simple">
-<dt>heavywater: integer(kind=c_int), value, intent(in)</dt><dd><p> Flag if D2O (1) is used or H2O(0).</p>
-</dd>
-<dt>n: integer(kind=c_int)</dt><dd><p></p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">function</span> <span class="pre">capi_gases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">heavywater</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list_gases</span></span></span></dt>
-<dd><p> C API for [[iapws__g704(module):gases(function)]]</p>
-<dl class="simple">
-<dt>heavywater: integer(kind=c_int), value, intent(in)</dt><dd><p> Flag if D2O (1) is used or H2O(0).</p>
-</dd>
-<dt>list_gases: type(c_ptr)</dt><dd><p></p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">function</span> <span class="pre">capi_gases2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">heavywater</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str_gases</span></span></span></dt>
-<dd><p> C API for [[iapws__g704(module):gases2(function)]]</p>
-<dl class="simple">
-<dt>heavywater: integer(kind=c_int), value, intent(in)</dt><dd><p> Flag if D2O (1) is used or H2O(0).</p>
-</dd>
-<dt>str_gases: type(c_ptr)</dt><dd><p></p>
 </dd>
 </dl>
 <span class="math notranslate nohighlight">\(\)</span></dd></dl>
@@ -654,19 +536,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fortran-api"><dt class="sig sig-object">
 <span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__api</span></span></dt>
-<dd><p> API. See [specs](../page/specs/api.html).</p>
-<span class="math notranslate nohighlight">\(\)</span></dd></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-bindings">C Bindings</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fortran-api"><dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__capi</span></span></dt>
-<dd><p> C API. See [specs](../pages/specs/capi.html). VERSION</p>
-<p> R283</p>
-<p>G704</p>
-<p> R797</p>
-<p></p>
-<p></p>
+<dd><p> API.</p>
 <span class="math notranslate nohighlight">\(\)</span></dd></a></li>
 </ul>
 </li>
