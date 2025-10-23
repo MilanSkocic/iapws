@@ -1,6 +1,6 @@
-# 0.5.0dev0
+# 0.5.0
 
-* Remove support for Python 3.9 and add support for Python 3.14.
+* Remove support for Python 3.9 and add support for Python 3.14(t).
 
 [Full changelog](https://github.com/MilanSkocic/iapws/releases)
 
