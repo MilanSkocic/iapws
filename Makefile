@@ -1,10 +1,9 @@
 include make.in
 # ---------------------------------------------------------------------
 # CONFIGURATION
+install_dir=$(DESTDIR)/$(PREFIX)
 ifneq ($(prefix), )
-	install_dir=$(prefix)
-else
-	install_dir=$(FPM_DEFAULT_INSTALL_DIR)
+	PREFIX=$(prefix)
 endif
 
 ifneq ($(type), )
@@ -12,6 +11,8 @@ ifneq ($(type), )
 else
 	btype=release
 endif
+
+install_dir=$(DESTDIR)/$(PREFIX)
 
 SRC_FYPP=$(wildcard ./src/*.fypp)
 # ---------------------------------------------------------------------
