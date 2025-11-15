@@ -43,3 +43,5 @@ py/src/pyiapws/include/
 py/src/pyiapws/lib/
 
 .cache
+
+make.in
