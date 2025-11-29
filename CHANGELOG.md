@@ -1,6 +1,9 @@
-# 0.5.1-dev
+# 0.5.1
 
 * Refactoring the `configure.sh` script.
+* Remove support for 3.14t. No official release on python.org.
+* If binaries for Python 3.14t are needed you need to compile them by yourself.
+
 
 # 0.5.0
 
