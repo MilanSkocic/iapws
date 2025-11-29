@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Changelog &#8212; iapws 0.5.0 documentation</title>
+    <title>Changelog &#8212; iapws 0.5.1 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../_static/documentation_options.js?v=b9afe91b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/changelog';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">iapws 0.5.0 documentation</p>
+    <p class="title logo__title">iapws 0.5.1 documentation</p>
   
 </a></div>
     
@@ -382,21 +382,23 @@ document.write(`
                   
   <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
-<section id="dev">
-<h2>0.5.1-dev<a class="headerlink" href="#dev" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h2>0.5.1<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Refactoring the <code class="docutils literal notranslate"><span class="pre">configure.sh</span></code> script.</p></li>
+<li><p>Remove support for 3.14t. No official release on python.org.</p></li>
+<li><p>If binaries for Python 3.14t are needed you need to compile them by yourself.</p></li>
 </ul>
 </section>
-<section id="id1">
-<h2>0.5.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h2>0.5.0<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Remove support for Python 3.9 and add support for Python 3.14(t).</p></li>
 </ul>
 <p><a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">Full changelog</a></p>
 </section>
-<section id="id2">
-<h2>0.4.1<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h2>0.4.1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Drop support for python 3.8 and add support for python 3.13.</p></li>
 <li><p>Code cleaning in python C extensions.</p></li>
@@ -408,8 +410,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id3">
-<h2>0.4.0<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h2>0.4.0<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Implementation of the region 4 in R7-97.</p></li>
 <li><p>API break for kh and kd in g704. The temperature must be provided in Kelvin instead of degrees Celsius.</p></li>
@@ -420,8 +422,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id4">
-<h2>0.3.0<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>0.3.0<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>API break: functions for the Fortran code were renamed:</p>
 <ul>
@@ -438,8 +440,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id5">
-<h2>0.2.2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>0.2.2<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Implementation of report R283 for critical constants of water.</p></li>
 <li><p>Switch to pyproject.toml for python wrapper.</p></li>
@@ -448,8 +450,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id6">
-<h2>0.2.1<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2>0.2.1<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Comlete missing documentation of private functions.</p></li>
 <li><p>Minor fixes in C API code as well in python wrapper.</p></li>
@@ -457,8 +459,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id7">
-<h2>0.2.0<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2>0.2.0<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>New structure with modules corresponding to the IAPWS papers.</p></li>
 <li><p>Compatible with fpm.</p></li>
@@ -489,8 +491,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id8">
-<h2>0.1.1<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h2>0.1.1<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Logo creation</p></li>
 <li><p>Error handling in python wrapper for arrays with rank greater than 1</p></li>
@@ -498,8 +500,8 @@ document.write(`
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
-<section id="id9">
-<h2>0.1.0<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h2>0.1.0<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Implementation of kH and kD from IAPWS G7-04 in fortran + C API</p></li>
 <li><p>Python wrapper for kH and kD.</p></li>
@@ -555,16 +557,16 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dev">0.5.1-dev</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.5.0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0.4.1</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">0.4.0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">0.3.0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">0.2.2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">0.2.1</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">0.2.0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">0.1.1</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">0.1.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.5.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0.5.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">0.4.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">0.2.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">0.2.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">0.1.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">0.1.0</a></li>
 </ul>
   </nav></div>
 
