@@ -1,32 +1,22 @@
-.. fspx documentation master file, created by
-   sphinx-quickstart on Mon Oct  7 14:09:33 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-IAPWS
-=====
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-
-   getting_started/index
-   api/index
-   references/index.rst
+#####################
+IAPWS - Documentation
+#####################
 
 .. image:: ../../../media/logo.png
   :width: 400
+  :align: center
   :alt: Alternative text
-  
 
-Introduction
-------------
+Light and heavy water properties according to IAPWS.
 
-The API defines convenient functions and subroutines for computing water physico-chemical properties. 
+.. only:: html
+    
+    - man page: :download:`iapws.3 <../build/man/iapws.3>`.
+    
+    - info: :download:`iapws.info <../build/texinfo/iapws.info>`.
+    
+    - pdf: :download:`iapws.pdf <../build/latex/iapws.pdf>`.
 
-
-Value at the critical point
----------------------------
 
 Critical values are available as constants :cite:p:`iapws1992-1`:
 
@@ -39,10 +29,6 @@ Critical values are available as constants :cite:p:`iapws1992-1`:
    * `Tc_D2O`
    * `rhoc_D2O`
    * `pc_D2O`
-
-
-Henry's Constant and Vapor-Liquid Distribution Constant for Gases in H2O and D2O
---------------------------------------------------------------------------------
 
 The Henry constant `kh` and 
 the liquid-vapor distribution constant `kd` 
@@ -77,10 +63,6 @@ The available gases can be retrieved with
 
    :math:`k_D` in :math:`D_2O`
 
-
-Thermodynamic Properties of Water and Steam
--------------------------------------------
-
 Five regions which cover the following range of validity :cite:p:`iapws2012-1`:
 
 * :math:`273.15K < T < 1073.15K` and :math:`p < 100MPa`
@@ -90,7 +72,6 @@ Five regions which cover the following range of validity :cite:p:`iapws2012-1`:
    :width: 400px
 
    Water regions defined in R7-97
-
 
 The saturation-pressure `psat` and the 
 saturation-temperature `Tsat` computes the 
@@ -103,3 +84,12 @@ saturation line as shown in the plot below.
 
 
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   
+   getting_started/index.rst
+   examples/index.rst
+   api/index.rst
+   changelog/index.rst
+   references/index.rst

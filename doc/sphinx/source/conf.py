@@ -60,3 +60,7 @@ html_theme_options = {
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
 add_module_names = False
+
+man_pages = [
+    ("index", 'iapws', 'Light and heavy water properties', [author], 3),
+]
