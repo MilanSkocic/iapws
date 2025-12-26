@@ -38,7 +38,6 @@
     <script src="../_static/documentation_options.js?v=b9afe91b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/fortran';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -140,9 +139,23 @@
 </li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog/index.html">
+    Changelog
   </a>
 </li>
 
@@ -260,9 +273,23 @@ document.write(`
 </li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog/index.html">
+    Changelog
   </a>
 </li>
 
@@ -383,127 +410,7 @@ document.write(`
                   
   <section id="fortran">
 <h1>Fortran<a class="headerlink" href="#fortran" title="Link to this heading">#</a></h1>
-<section id="api">
-<h2>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h2>
-<section id="fortran-api">
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__api</span></span></dt>
-<dd><p> API.</p>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">psat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Ts</span></em>, <em class="sig-param"><span class="pre">ps</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Compute the saturation pressure at temperature Ts.  Validity range 273.13 K &lt;= Ts &lt;= 647.096 K.</p>
-<p></p>
-<dl class="simple">
-<dt>Ts: real(kind=dp), contiguous, (:), intent(in)</dt><dd><p> Saturation temperature in K.</p>
-</dd>
-<dt>ps: real(kind=dp), contiguous, (:), intent(out)</dt><dd><p> Saturation pressure in MPa. Filled with nan if out of validity range.
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">Tsat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ps</span></em>, <em class="sig-param"><span class="pre">Ts</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Compute the saturation temperature at pressure ps. Validity range 611.213 Pa &lt;= ps &lt;= 22.064 MPa.</p>
-<p></p>
-<dl class="simple">
-<dt>ps: real(kind=dp), contiguous, (:), intent(in)</dt><dd><p> Saturation pressure in MPa.</p>
-</dd>
-<dt>Ts: real(kind=dp), contiguous, (:), intent(out)</dt><dd><p> Saturation temperature in K. Filled with nan if out of validity range.
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">prop</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Compute water properties at pressure p in MPa and temperature T in Kelvin. The adequate region is selected according to p and T.</p>
-<p> Available properties:     * v: specific volume in m3/kg     * u: specific internal energy in kJ/kg     * s: specific entropy in kJ/kg      * h: specific enthalpy in kJ/kg/K     * cp: specific isobaric heat capacity in kJ/kg/K     * cv: specific isochoric heat capacity in kJ/kg/K     * w: speed of sound in m/s</p>
-<p></p>
-<p></p>
-<dl class="simple">
-<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in MPa.</p>
-</dd>
-<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in K.</p>
-</dd>
-<dt>prop: character(len=*), intent(in)</dt><dd><p> Property</p>
-</dd>
-<dt>res: real(kind=dp), (:), intent(out)</dt><dd><p> Filled with NaN if no adequate region is found.
-
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Get the water region corresponding to p and T. Regions 1 to 5 or -1 when not found.</p>
-<p></p>
-<p></p>
-<dl class="simple">
-<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> Pressure in MPa.</p>
-</dd>
-<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Temperature in K.</p>
-</dd>
-<dt>res: integer(kind=int32), (:), intent(out)</dt><dd><p> Region (1-5)
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">wph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">res</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Get the water phase corresponding to p and T. Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).</p>
-<p></p>
-<p></p>
-<dl class="simple">
-<dt>p: real(kind=dp), (:), intent(in)</dt><dd><p> pressure in MPa.</p>
-</dd>
-<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Temperature in K.</p>
-</dd>
-<dt>res: character(len=1), (:), intent(out)</dt><dd><p> Phase (l, v, c, s, n)
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">pure</span> <span class="pre">subroutine</span> <span class="pre">Kw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em>, <em class="sig-param"><span class="pre">rhow</span></em>, <em class="sig-param"><span class="pre">k</span></em><span class="sig-paren">)</span></dt>
-<dd><p> Compute the ionization constant of water Kw. Validity range 273.13 K &lt;= T &lt;= 1273.15 K and 0 &lt;= p &lt;= 1000 MPa.</p>
-<p></p>
-<p></p>
-<dl class="simple">
-<dt>T: real(kind=dp), (:), intent(in)</dt><dd><p> Temperature in K.</p>
-</dd>
-<dt>rhow: real(kind=dp), (:), intent(in)</dt><dd><p> Mass density in g.cm^{-3}.</p>
-</dd>
-<dt>k: real(kind=dp), (:), intent(out)</dt><dd><p> Ionization constant. Filled with NaN if out of validity range. 
-</p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-<dl>
-<dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">function</span> <span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">fptr</span></span></span></dt>
-<dd><p> Return the version</p>
-<dl class="simple">
-<dt>fptr: character(len=:), pointer</dt><dd><p></p>
-</dd>
-</dl>
-<span class="math notranslate nohighlight">\(\)</span></dd></dl>
-
-</section>
-</section>
+<p><a class="reference external" href="../ford/index.html">FORD documentation</a></p>
 </section>
 
 
@@ -543,24 +450,6 @@ document.write(`
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fortran-api"><dt class="sig sig-object">
-<span class="sig-name descname"><span class="pre">module</span> <span class="pre">iapws__api</span></span></dt>
-<dd><p> API.</p>
-<span class="math notranslate nohighlight">\(\)</span></dd></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
 

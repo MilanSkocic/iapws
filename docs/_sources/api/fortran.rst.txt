@@ -2,13 +2,11 @@
 Fortran
 *******
 
-.. The Fortran documentation is generated with `FORD <../ford/index.html>`_.
+.. only:: html 
 
+    `FORD documentation <../ford/index.html>`_
 
-.. .. autofortran:: ../../../src/test_fspx.f90
-
-API
-===
-
-.. autofortran:: ../../../src/iapws_api.f90
+.. only:: (latex or texinfo or man)
+    
+    https://milanskocic.github.io/iapws/ford/index.html
 

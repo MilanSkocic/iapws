@@ -1,0 +1,1481 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Light and heavy water properties.">
+    <meta name="author" content="M. Skocic" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>iapws__r797 &ndash; iapws</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">iapws </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>iapws__r797
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="33.5% of total for modules and submodules.">312 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/iapws_r797.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/iapws_r797.f90.html'>iapws_r797.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">iapws__r797</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#absints-0"
+         aria-expanded="false" aria-controls="absints-0">
+         <h4 class="card-header bg-primary text-white">Abstract Interfaces</h4>
+      </a>
+      <div id="absints-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/iapws__r797.html#interface-rai">rai</a>
+        </div>
+      </div>
+    </div>
+
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-find_phase">find_phase</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-find_region">find_region</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-get_r">get_r</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-is1region">is1region</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_cp">r1_cp</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_cv">r1_cv</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_h">r1_h</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_s">r1_s</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_u">r1_u</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_v">r1_v</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1_w">r1_w</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r4_ts">r4_Ts</a>
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r4_ps">r4_ps</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/iapws__r797.html#proc-r1">r1</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Module for IAPWS R7-97: Not fully implemented - under development.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='iapws__common.html'>iapws__common</a></li>
+                  <li class="list-inline-item"><a href='iapws__r283.html'>iapws__r283</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.42.4 (0)
+ -->
+<!-- Title: module~~iapws__r797~~UsesGraph Pages: 1 -->
+<svg id="moduleiapws__r797UsesGraph" width="468pt" height="116pt"
+ viewBox="0.00 0.00 468.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~iapws__r797~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>module~~iapws__r797~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 464,-112 464,4 -4,4"/>
+<!-- module~iapws__r797 -->
+<g id="module~~iapws__r797~~UsesGraph_node1" class="node">
+<title>module~iapws__r797</title>
+<polygon fill="none" stroke="black" points="460,-66 382,-66 382,-42 460,-42 460,-66"/>
+<text text-anchor="middle" x="421" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">iapws__r797</text>
+</g>
+<!-- module~iapws__common -->
+<g id="module~~iapws__r797~~UsesGraph_node2" class="node">
+<title>module~iapws__common</title>
+<g id="a_module~~iapws__r797~~UsesGraph_node2"><a xlink:href="../module/iapws__common.html" xlink:title="iapws__common">
+<polygon fill="#337ab7" stroke="#337ab7" points="232,-66 132,-66 132,-42 232,-42 232,-66"/>
+<text text-anchor="middle" x="182" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iapws__common</text>
+</a>
+</g>
+</g>
+<!-- module~iapws__r797&#45;&gt;module~iapws__common -->
+<g id="module~~iapws__r797~~UsesGraph_edge1" class="edge">
+<title>module~iapws__r797&#45;&gt;module~iapws__common</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M381.97,-54.61C370.42,-54.77 357.69,-54.92 346,-55 311.33,-55.23 302.67,-55.2 268,-55 259.82,-54.95 251.19,-54.88 242.7,-54.79"/>
+<polygon fill="#000000" stroke="#000000" points="242.48,-51.29 232.44,-54.68 242.4,-58.29 242.48,-51.29"/>
+</g>
+<!-- module~iapws__r283 -->
+<g id="module~~iapws__r797~~UsesGraph_node3" class="node">
+<title>module~iapws__r283</title>
+<g id="a_module~~iapws__r797~~UsesGraph_node3"><a xlink:href="../module/iapws__r283.html" xlink:title="iapws__r283">
+<polygon fill="#337ab7" stroke="#337ab7" points="346,-46 268,-46 268,-22 346,-22 346,-46"/>
+<text text-anchor="middle" x="307" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iapws__r283</text>
+</a>
+</g>
+</g>
+<!-- module~iapws__r797&#45;&gt;module~iapws__r283 -->
+<g id="module~~iapws__r797~~UsesGraph_edge2" class="edge">
+<title>module~iapws__r797&#45;&gt;module~iapws__r283</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M381.77,-47.17C373.48,-45.69 364.61,-44.11 356,-42.57"/>
+<polygon fill="#000000" stroke="#000000" points="356.52,-39.11 346.06,-40.8 355.29,-46 356.52,-39.11"/>
+</g>
+<!-- ieee_arithmetic -->
+<g id="module~~iapws__r797~~UsesGraph_node4" class="node">
+<title>ieee_arithmetic</title>
+<g id="a_module~~iapws__r797~~UsesGraph_node4"><a xlink:href="http://fortranwiki.org/fortran/show/ieee_arithmetic" xlink:title="ieee_arithmetic">
+<polygon fill="#337ab7" stroke="#337ab7" points="96,-108 0,-108 0,-84 96,-84 96,-108"/>
+<text text-anchor="middle" x="48" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ieee_arithmetic</text>
+</a>
+</g>
+</g>
+<!-- module~iapws__common&#45;&gt;ieee_arithmetic -->
+<g id="module~~iapws__r797~~UsesGraph_edge3" class="edge">
+<title>module~iapws__common&#45;&gt;ieee_arithmetic</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.17,-66.04C128.68,-70.65 111.94,-75.97 96.64,-80.84"/>
+<polygon fill="#000000" stroke="#000000" points="95.3,-77.6 86.83,-83.96 97.42,-84.27 95.3,-77.6"/>
+</g>
+<!-- stdlib_kinds -->
+<g id="module~~iapws__r797~~UsesGraph_node5" class="node">
+<title>stdlib_kinds</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="85,-66 11,-66 11,-42 85,-42 85,-66"/>
+<text text-anchor="middle" x="48" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">stdlib_kinds</text>
+</g>
+<!-- module~iapws__common&#45;&gt;stdlib_kinds -->
+<g id="module~~iapws__r797~~UsesGraph_edge4" class="edge">
+<title>module~iapws__common&#45;&gt;stdlib_kinds</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M131.85,-54C119.94,-54 107.25,-54 95.48,-54"/>
+<polygon fill="#000000" stroke="#000000" points="95.4,-50.5 85.4,-54 95.4,-57.5 95.4,-50.5"/>
+</g>
+<!-- stdlib_optval -->
+<g id="module~~iapws__r797~~UsesGraph_node6" class="node">
+<title>stdlib_optval</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="87.5,-24 8.5,-24 8.5,0 87.5,0 87.5,-24"/>
+<text text-anchor="middle" x="48" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">stdlib_optval</text>
+</g>
+<!-- module~iapws__common&#45;&gt;stdlib_optval -->
+<g id="module~~iapws__r797~~UsesGraph_edge5" class="edge">
+<title>module~iapws__common&#45;&gt;stdlib_optval</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.17,-41.96C128.68,-37.35 111.94,-32.03 96.64,-27.16"/>
+<polygon fill="#000000" stroke="#000000" points="97.42,-23.73 86.83,-24.04 95.3,-30.4 97.42,-23.73"/>
+</g>
+<!-- module~iapws__r283&#45;&gt;module~iapws__common -->
+<g id="module~~iapws__r797~~UsesGraph_edge6" class="edge">
+<title>module~iapws__r283&#45;&gt;module~iapws__common</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.76,-40.22C259.65,-41.54 250.9,-42.96 242.22,-44.37"/>
+<polygon fill="#000000" stroke="#000000" points="241.41,-40.96 232.1,-46.02 242.53,-47.87 241.41,-40.96"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.42.4 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="516pt" height="32pt"
+ viewBox="0.00 0.00 516.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 512,-28 512,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="385.5,-24 328.5,-24 328.5,0 385.5,0 385.5,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="508,-24 404,-24 404,0 508,0 508,-24"/>
+<text text-anchor="middle" x="456" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.42.4 (0)
+ -->
+<!-- Title: module~~iapws__r797~~UsedByGraph Pages: 1 -->
+<svg id="moduleiapws__r797UsedByGraph" width="394pt" height="52pt"
+ viewBox="0.00 0.00 394.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~iapws__r797~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
+<title>module~~iapws__r797~~UsedByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-48 390,-48 390,4 -4,4"/>
+<!-- module~iapws__r797 -->
+<g id="module~~iapws__r797~~UsedByGraph_node1" class="node">
+<title>module~iapws__r797</title>
+<polygon fill="none" stroke="black" points="78,-44 0,-44 0,-20 78,-20 78,-44"/>
+<text text-anchor="middle" x="39" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50">iapws__r797</text>
+</g>
+<!-- module~iapws__api -->
+<g id="module~~iapws__r797~~UsedByGraph_node2" class="node">
+<title>module~iapws__api</title>
+<g id="a_module~~iapws__r797~~UsedByGraph_node2"><a xlink:href="../module/iapws__api.html" xlink:title="iapws__api">
+<polygon fill="#337ab7" stroke="#337ab7" points="184,-44 114,-44 114,-20 184,-20 184,-44"/>
+<text text-anchor="middle" x="149" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iapws__api</text>
+</a>
+</g>
+</g>
+<!-- module~iapws__api&#45;&gt;module~iapws__r797 -->
+<g id="module~~iapws__r797~~UsedByGraph_edge1" class="edge">
+<title>module~iapws__api&#45;&gt;module~iapws__r797</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M113.83,-32C105.66,-32 96.78,-32 88.11,-32"/>
+<polygon fill="#000000" stroke="#000000" points="88.08,-28.5 78.08,-32 88.08,-35.5 88.08,-28.5"/>
+</g>
+<!-- module~iapws -->
+<g id="module~~iapws__r797~~UsedByGraph_node3" class="node">
+<title>module~iapws</title>
+<g id="a_module~~iapws__r797~~UsedByGraph_node3"><a xlink:href="../module/iapws.html" xlink:title="iapws">
+<polygon fill="#337ab7" stroke="#337ab7" points="386,-44 332,-44 332,-20 386,-20 386,-44"/>
+<text text-anchor="middle" x="359" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iapws</text>
+</a>
+</g>
+</g>
+<!-- module~iapws&#45;&gt;module~iapws__api -->
+<g id="module~~iapws__r797~~UsedByGraph_edge2" class="edge">
+<title>module~iapws&#45;&gt;module~iapws__api</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M331.76,-32.52C320.72,-32.71 307.73,-32.91 296,-33 262.22,-33.27 253.78,-33.24 220,-33 211.71,-32.94 202.86,-32.84 194.34,-32.73"/>
+<polygon fill="#000000" stroke="#000000" points="194.23,-29.23 184.18,-32.59 194.13,-36.23 194.23,-29.23"/>
+</g>
+<!-- module~iapws__capi -->
+<g id="module~~iapws__r797~~UsedByGraph_node4" class="node">
+<title>module~iapws__capi</title>
+<g id="a_module~~iapws__r797~~UsedByGraph_node4"><a xlink:href="../module/iapws__capi.html" xlink:title="iapws__capi">
+<polygon fill="#337ab7" stroke="#337ab7" points="296,-24 220,-24 220,0 296,0 296,-24"/>
+<text text-anchor="middle" x="258" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iapws__capi</text>
+</a>
+</g>
+</g>
+<!-- module~iapws&#45;&gt;module~iapws__capi -->
+<g id="module~~iapws__r797~~UsedByGraph_edge4" class="edge">
+<title>module~iapws&#45;&gt;module~iapws__capi</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M331.99,-26.75C324,-25.13 314.94,-23.3 306,-21.49"/>
+<polygon fill="#000000" stroke="#000000" points="306.5,-18.03 296,-19.48 305.11,-24.89 306.5,-18.03"/>
+</g>
+<!-- module~iapws__capi&#45;&gt;module~iapws__api -->
+<g id="module~~iapws__r797~~UsedByGraph_edge3" class="edge">
+<title>module~iapws__capi&#45;&gt;module~iapws__api</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.88,-18.94C211.55,-20.5 202.63,-22.16 194.05,-23.77"/>
+<polygon fill="#000000" stroke="#000000" points="193.37,-20.33 184.19,-25.61 194.66,-27.21 193.37,-20.33"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.42.4 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="516pt" height="32pt"
+ viewBox="0.00 0.00 516.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 512,-28 512,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="385.5,-24 328.5,-24 328.5,0 385.5,0 385.5,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="508,-24 404,-24 404,0 508,0 508,-24"/>
+<text text-anchor="middle" x="456" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+
+
+
+        <section>
+          <h2>Abstract Interfaces</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="interface-rai"></span><h3>abstract interface
+        
+    </h3></div>
+    <ul class="list-group">
+      <li class="list-group-item">
+            <h3>
+    public pure subroutine rai(p, T, prop, res)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~8"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~24"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-prop~3"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>prop</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-res~10"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>res</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+      </li>
+    </ul>
+  </div>
+
+        </section>
+        <br>
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-find_phase"></span> <h3>public pure elemental function <a href='../proc/find_phase.html'>find_phase</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Find the corresponding phase according to p and T.
+Return the phase as an character: l=LIQUID, v=VAPOR, c=SUPER CRITICAL, s=SATURATION, n=UNKNOWN.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~10"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~26"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=1)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-find_region"></span> <h3>public pure elemental function <a href='../proc/find_region.html'>find_region</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Find the corresponding region according to p and T.
+Return the number of the region (1 to 5) when found otherwise return -1.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~9"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~25"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer(kind=int32)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_r"></span> <h3>public pure elemental function <a href='../proc/get_r.html'>get_r</a>(region) result(fptr)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Get the pointer to the adequate region subroutine</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-region~2"></span>
+              integer(kind=int32),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>region</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>procedure(<a href='../interface/rai.html'>rai</a>), pointer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-is1region"></span> <h3>public pure function <a href='../proc/is1region.html'>is1region</a>(regions) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Check if all regions are identical</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-regions~2"></span>
+              integer(kind=int32),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>regions</strong>(:)</td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_cp"></span> <h3>public pure elemental function <a href='../proc/r1_cp.html'>r1_cp</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific isobaric heat capacity cp in kJ/kg/K.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~21"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~37"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_cv"></span> <h3>public pure elemental function <a href='../proc/r1_cv.html'>r1_cv</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific isochoric heat capacity cp in kJ/kg/K.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~22"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~38"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_h"></span> <h3>public pure elemental function <a href='../proc/r1_h.html'>r1_h</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific enthalpie h in kJ/kg.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~20"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~36"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_s"></span> <h3>public pure elemental function <a href='../proc/r1_s.html'>r1_s</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific enthropy h in kJ/kg/K.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~19"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~35"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_u"></span> <h3>public pure elemental function <a href='../proc/r1_u.html'>r1_u</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific internal energy u in m3/kg.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~18"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~34"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_v"></span> <h3>public pure elemental function <a href='../proc/r1_v.html'>r1_v</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the specific volume v in m3/kg.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~17"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~33"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1_w"></span> <h3>public pure elemental function <a href='../proc/r1_w.html'>r1_w</a>(p, T) result(res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the speed of sound w in m/s.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~23"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~39"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong></td>
+            <td>
+<p>Temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r4_ts"></span> <h3>public pure elemental function <a href='../proc/r4_ts.html'>r4_Ts</a>(ps) result(value)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the saturation-pressure line. 
+Validity range 611.213 Pa &lt;= ps &lt;= 22.064 MPa.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ps~6"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ps</strong></td>
+            <td>
+<p>Saturation Pressure in MPa.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    <p>Saturation temperature in K at pressure ps. Is nan if ps is out of range.</p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r4_ps"></span> <h3>public pure elemental function <a href='../proc/r4_ps.html'>r4_ps</a>(Ts) result(value)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute the saturation-pressure line. 
+Validity range 273.13 K &lt;= Ts &lt;= 647.096 K.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ts~5"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ts</strong></td>
+            <td>
+<p>Saturation temperature in K.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    <p>Saturation Pressure in MPa at temperature Ts. Is nan if Ts is out of range.</p>
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-r1"></span> <h3>public pure subroutine <a href='../proc/r1.html'>r1</a>(p, T, prop, res)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Compute water properties at pressure p in MPa and temperature T in Kelvin.
+in region 1.</p><a href="../proc/r1.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~24"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>p</strong>(:)</td>
+            <td>
+<p>Pressure in MPa.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~40"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>T</strong>(:)</td>
+            <td>
+<p>Pressure in K.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-prop~4"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>prop</strong></td>
+            <td>
+<p>Property</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-res~27"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>res</strong>(:)</td>
+            <td>
+<p>Result </p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              iapws
+ was developed by M. Skocic<br>              &copy; 2025 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

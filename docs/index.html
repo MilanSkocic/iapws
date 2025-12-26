@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>IAPWS &#8212; iapws 0.5.1 documentation</title>
+    <title>IAPWS - Documentation &#8212; iapws 0.5.1 documentation</title>
   
   
   
@@ -140,8 +140,22 @@
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="api/index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog/index.html">
+    Changelog
   </a>
 </li>
 
@@ -262,8 +276,22 @@ document.write(`
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="api/index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog/index.html">
+    Changelog
   </a>
 </li>
 
@@ -339,18 +367,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="iapws">
-<h1>IAPWS<a class="headerlink" href="#iapws" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<a class="reference internal image-reference" href="_images/logo.png"><img alt="Alternative text" src="_images/logo.png" style="width: 400px;" />
+  <section id="iapws-documentation">
+<h1>IAPWS - Documentation<a class="headerlink" href="#iapws-documentation" title="Link to this heading">#</a></h1>
+<a class="reference internal image-reference" href="_images/logo.png"><img alt="Alternative text" class="align-center" src="_images/logo.png" style="width: 400px;" />
 </a>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p>The API defines convenient functions and subroutines for computing water physico-chemical properties.</p>
-</section>
-<section id="value-at-the-critical-point">
-<h2>Value at the critical point<a class="headerlink" href="#value-at-the-critical-point" title="Link to this heading">#</a></h2>
+<p>Light and heavy water properties according to IAPWS.</p>
+<ul class="simple">
+<li><p>man page: <a class="reference download internal" download="" href="_downloads/252a5994c0f4b707f91051806d8a7243/iapws.3"><code class="xref download docutils literal notranslate"><span class="pre">iapws.3</span></code></a>.</p></li>
+<li><p>info: <a class="reference download internal" download="" href="_downloads/b1fa80f9422b297474b26194d826a686/iapws.info"><code class="xref download docutils literal notranslate"><span class="pre">iapws.info</span></code></a>.</p></li>
+<li><p>pdf: <a class="reference download internal" download="" href="_downloads/c6590f1cb16fa3c0fab9a03d320b9284/iapws.pdf"><code class="xref download docutils literal notranslate"><span class="pre">iapws.pdf</span></code></a>.</p></li>
+</ul>
 <p>Critical values are available as constants <span id="id1">[<a class="reference internal" href="references/index.html#id7" title="IAPWS. Release on the Values of Temperature, Pressure and Density of Ordinary and Heavy Water Substances at Their Respective Critical Points. Technical Report R2-83, IAPWS, 1992.">1</a>]</span>:</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -372,9 +398,6 @@ document.write(`
 </dl>
 </li>
 </ul>
-</section>
-<section id="henry-s-constant-and-vapor-liquid-distribution-constant-for-gases-in-h2o-and-d2o">
-<h2>Henry’s Constant and Vapor-Liquid Distribution Constant for Gases in H2O and D2O<a class="headerlink" href="#henry-s-constant-and-vapor-liquid-distribution-constant-for-gases-in-h2o-and-d2o" title="Link to this heading">#</a></h2>
 <p>The Henry constant <cite>kh</cite> and
 the liquid-vapor distribution constant <cite>kd</cite>
 can be computed for the following gases as defined in <span id="id2">[<a class="reference internal" href="references/index.html#id8" title="IAPWS. Guideline on the Henry's Constant and Vapor-Liquid Distribution Constant for Gases in H2O and D2O at High Temperatures. Technical Report G7-04, IAPWS, 2004.">2</a>]</span> :</p>
@@ -416,9 +439,6 @@ can be computed for the following gases as defined in <span id="id2">[<a class="
 <p><span class="caption-text"><span class="math notranslate nohighlight">\(k_D\)</span> in <span class="math notranslate nohighlight">\(D_2O\)</span></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</section>
-<section id="thermodynamic-properties-of-water-and-steam">
-<h2>Thermodynamic Properties of Water and Steam<a class="headerlink" href="#thermodynamic-properties-of-water-and-steam" title="Link to this heading">#</a></h2>
 <p>Five regions which cover the following range of validity <span id="id3">[<a class="reference internal" href="references/index.html#id9" title="IAPWS. Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam. Technical Report R7-97, IAPWS, 2012.">3</a>]</span>:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(273.15K &lt; T &lt; 1073.15K\)</span> and <span class="math notranslate nohighlight">\(p &lt; 100MPa\)</span></p></li>
@@ -441,7 +461,8 @@ saturation line as shown in the plot below.</p>
 <p><span class="caption-text">Saturation line.</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
 
@@ -472,21 +493,6 @@ saturation line as shown in the plot below.</p>
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#value-at-the-critical-point">Value at the critical point</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#henry-s-constant-and-vapor-liquid-distribution-constant-for-gases-in-h2o-and-d2o">Henry’s Constant and Vapor-Liquid Distribution Constant for Gases in H2O and D2O</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thermodynamic-properties-of-water-and-steam">Thermodynamic Properties of Water and Steam</a></li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
 

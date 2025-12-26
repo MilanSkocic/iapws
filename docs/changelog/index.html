@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Readme &#8212; iapws 0.5.1 documentation</title>
+    <title>Changelog &#8212; iapws 0.5.1 documentation</title>
   
   
   
@@ -38,11 +38,11 @@
     <script src="../_static/documentation_options.js?v=b9afe91b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/readme';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'changelog/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Getting Started" href="index.html" />
+    <link rel="next" title="Bibliography" href="../references/index.html" />
+    <link rel="prev" title="Python" href="../api/python.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -132,9 +132,16 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
     Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
   </a>
 </li>
 
@@ -142,6 +149,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../api/index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Changelog
   </a>
 </li>
 
@@ -252,9 +266,16 @@ document.write(`
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
     Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
   </a>
 </li>
 
@@ -262,6 +283,13 @@ document.write(`
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../api/index.html">
     APIs
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Changelog
   </a>
 </li>
 
@@ -319,12 +347,7 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Readme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -360,10 +383,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting Started</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">Readme</li>
+    <li class="breadcrumb-item active" aria-current="page">Changelog</li>
   </ul>
 </nav>
 </div>
@@ -380,81 +400,134 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="readme">
-<h1>Readme<a class="headerlink" href="#readme" title="Link to this heading">#</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ipaws</span></code> is a  Fortran library providing the formulas for computing light and heavy water properties.
-The formulas are taken from http://iapws.org.
-C API allows usage from C, or can be used as a basis for other wrappers.
-Python wrapper allows easy usage from Python.</p>
-<p>For now, I have implemented</p>
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>0.5.1<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>R2-83</p>
-<ul>
-<li><p>[x] Tc in H2O and D2O</p></li>
-<li><p>[x] pc in H2O and D2O</p></li>
-<li><p>[x] rhoc in H2O and D2O</p></li>
+<li><p>Refactoring the <code class="docutils literal notranslate"><span class="pre">configure.sh</span></code> script.</p></li>
+<li><p>Remove support for 3.14t. No official release on python.org.</p></li>
+<li><p>If binaries for Python 3.14t are needed you need to compile them by yourself.</p></li>
 </ul>
-</li>
-<li><p>G7-04</p>
-<ul>
-<li><p>[x] kH</p></li>
-<li><p>[x] kD</p></li>
-</ul>
-</li>
-<li><p>R7-97</p>
-<ul>
-<li><p>[x] Region 1</p></li>
-<li><p>[ ] Region 2</p></li>
-<li><p>[ ] Region 3</p></li>
-<li><p>[x] Region 4</p></li>
-<li><p>[ ] Region 5</p></li>
-</ul>
-</li>
-<li><p>R11-24:</p>
-<ul>
-<li><p>[x] Kw</p></li>
-</ul>
-</li>
-</ul>
-<p>To use <code class="docutils literal notranslate"><span class="pre">iapws</span></code> within your <a class="reference external" href="https://github.com/fortran-lang/fpm">fpm</a> project,
-add the following to your <code class="docutils literal notranslate"><span class="pre">fpm.toml</span></code> file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
-    <span class="n">iapws</span> <span class="o">=</span> <span class="p">{</span> <span class="n">git</span><span class="o">=</span><span class="s2">&quot;https://github.com/MilanSkocic/iapws.git&quot;</span> <span class="p">}</span>
-</pre></div>
-</div>
 </section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span><span class="o">&gt;=</span><span class="mf">10.0</span>
-<span class="n">gfortran</span><span class="o">&gt;=</span><span class="mf">10.0</span>
-<span class="n">fpm</span><span class="o">&gt;=</span><span class="mf">0.8</span>
-<span class="n">stdlib</span><span class="o">&gt;=</span><span class="mf">0.5</span>
-</pre></div>
-</div>
-</section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<p>A Makefile is provided, which uses <a class="reference external" href="https://fpm.fortran-lang.org">fpm</a>, for building the library.</p>
+<section id="id2">
+<h2>0.5.0<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>On windows, <a class="reference external" href="https://www.msys2.org">msys2</a> needs to be installed.
-Add the msys2 binary (usually C:\msys64\usr\bin) to the path in order to be able to use make.</p></li>
-<li><p>On Darwin, the <a class="reference external" href="https://formulae.brew.sh/formula/gcc">gcc</a> toolchain needs to be installed.</p></li>
+<li><p>Remove support for Python 3.9 and add support for Python 3.14(t).</p></li>
 </ul>
-<p>Build: the configuration file will set all the environment variables necessary for the compilation</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">configure</span><span class="o">.</span><span class="n">sh</span>
-    <span class="o">./</span><span class="n">configure</span><span class="o">.</span><span class="n">sh</span>
-    <span class="n">make</span>
-    <span class="n">make</span> <span class="n">test</span>
-    <span class="n">make</span> <span class="n">install</span>
-    <span class="n">make</span> <span class="n">uninstall</span>
-</pre></div>
-</div>
+<p><a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">Full changelog</a></p>
 </section>
-<section id="license">
-<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
-<p>MIT</p>
+<section id="id3">
+<h2>0.4.1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Drop support for python 3.8 and add support for python 3.13.</p></li>
+<li><p>Code cleaning in python C extensions.</p></li>
+<li><p>Code refactoring in pure python modules for encapsulating C extensions.</p></li>
+<li><p>Implementation of region 1 from R797.</p></li>
+<li><p>Implementation of <code class="docutils literal notranslate"><span class="pre">Kw</span></code> from R1124.</p></li>
+<li><p>Add API for water properties <code class="docutils literal notranslate"><span class="pre">wp</span></code>, water region <code class="docutils literal notranslate"><span class="pre">wr</span></code> and water phase <code class="docutils literal notranslate"><span class="pre">wp</span></code>.</p></li>
+<li><p>Documentation update.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id4">
+<h2>0.4.0<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Implementation of the region 4 in R7-97.</p></li>
+<li><p>API break for kh and kd in g704. The temperature must be provided in Kelvin instead of degrees Celsius.</p></li>
+<li><p>Add dependency to numpy for python wrapper.</p></li>
+<li><p>Add pure python modules for encapsulating C extensions.</p></li>
+<li><p>Refactoring and code cleaning.</p></li>
+<li><p>Documentation update.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id5">
+<h2>0.3.0<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>API break: functions for the Fortran code were renamed:</p>
+<ul>
+<li><p>They do not contain the package+module in the name for the sake of simplicity</p></li>
+<li><p>The package is only added in the functions for the C API in order to have a namespace-like behavior.</p></li>
+<li><p>If needed for solving conflicts with other packages, the functions can be aliased.</p></li>
+</ul>
+</li>
+<li><p>Separate sources files for the C API code for each module.</p></li>
+<li><p>Implement tests with the test-drive framework.</p></li>
+<li><p>Add version extension in the pywrapper.</p></li>
+<li><p>Implement version module with its getter.</p></li>
+<li><p>Documentation update.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id6">
+<h2>0.2.2<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Implementation of report R283 for critical constants of water.</p></li>
+<li><p>Switch to pyproject.toml for python wrapper.</p></li>
+<li><p>Code refactoring and clean up.</p></li>
+<li><p>Documentation update.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id7">
+<h2>0.2.1<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Comlete missing documentation of private functions.</p></li>
+<li><p>Minor fixes in C API code as well in python wrapper.</p></li>
+<li><p>Remove unecessary dependency in Makefile.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id8">
+<h2>0.2.0<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New structure with modules corresponding to the IAPWS papers.</p></li>
+<li><p>Compatible with fpm.</p></li>
+<li><p>fpm module naming convention.</p></li>
+<li><p>API break for iapws_g704_kh and iapws_g704_kd functions:</p>
+<ul>
+<li><p>only 1d-arrays as inputs in Fortran and C API.</p></li>
+<li><p>only objects with buffer protocol as inputs in python wrapper.</p></li>
+<li><p>python wrappers return memoryviews.</p></li>
+</ul>
+</li>
+<li><p>New functions:</p>
+<ul>
+<li><p>providing the number of gases in H2O and D2O.</p></li>
+<li><p>providing the available of gases in H2O and D2O as list of strings.</p></li>
+<li><p>providing the available of gases in H2O and D2O as a unique string.</p></li>
+</ul>
+</li>
+<li><p>Cleanup old app code not needed anymore.</p></li>
+<li><p>Fix memory allocation in pywrapper.</p></li>
+<li><p>Completed tests.</p></li>
+<li><p>Documentation improvements:</p>
+<ul>
+<li><p>Add conversion equations from molar fractions to solubilities.</p></li>
+<li><p>Add plots for visualizing kh and kd.</p></li>
+</ul>
+</li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id9">
+<h2>0.1.1<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Logo creation</p></li>
+<li><p>Error handling in python wrapper for arrays with rank greater than 1</p></li>
+<li><p>Tests in python wrapper for expected failures with rank-n arrays</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
+</section>
+<section id="id10">
+<h2>0.1.0<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Implementation of kH and kD from IAPWS G7-04 in fortran + C API</p></li>
+<li><p>Python wrapper for kH and kD.</p></li>
+<li><p>Documentation with sphinx.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/iapws/releases">github</a></p>
 </section>
 </section>
 
@@ -469,20 +542,20 @@ Add the msys2 binary (usually C:\msys64\usr\bin) to the path in order to be able
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="../api/python.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Python</p>
       </div>
     </a>
     <a class="right-next"
-       href="examples.html"
+       href="../references/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Examples</p>
+        <p class="prev-next-title">Bibliography</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -504,17 +577,23 @@ Add the msys2 binary (usually C:\msys64\usr\bin) to the path in order to be able
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.5.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0.5.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">0.4.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">0.2.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">0.2.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">0.1.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">0.1.0</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/getting_started/readme.rst.txt">
+    <a href="../_sources/changelog/index.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
