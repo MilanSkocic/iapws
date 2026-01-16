@@ -10,8 +10,6 @@
 !     import pyiapws
 ! 
 ! DESCRIPTION
-! 
-! 
 !     Numerical implementation for reports:
 !         o R2-83
 !             o [x] Tc in H2O and D2O
