@@ -156,7 +156,7 @@ def gases2(heavywater: bool=False)->str:
 
 
 # R797
-def psat(Ts):
+def psat(Ts)->Union[np.ndarray, float]:
     """
     Compute the saturation pressure at temperature Ts. 
     Validity range 273.13 K <= Ts <= 647.096 K.
@@ -179,7 +179,7 @@ def psat(Ts):
     else:
         return ps
 
-def Tsat(ps):
+def Tsat(ps)->Union[np.ndarray, float]:
     """
     Compute the saturation temperature at pressure ps.
     Validity range 611.213 Pa <= ps <= 22.064 MPa.
@@ -202,7 +202,7 @@ def Tsat(ps):
     else:
         return Ts
 
-def wp(p, T, prop):
+def wp(p, T, prop)->Union[np.ndarray, float]:
     """
     Compute water properties at pressure p in MPa and temperature T in Kelvin.
     The adequate region is selected according to p and T.
@@ -247,7 +247,7 @@ def wp(p, T, prop):
     else:
         return res
 
-def wr(p, T):
+def wr(p, T)->Union[np.ndarray, float]:
     """
     Get the water region corresponding to p and T.
 
@@ -273,7 +273,7 @@ def wr(p, T):
     else:
         return res
 
-def wph(p, T):
+def wph(p, T)->Union[np.ndarray, float]:
     """
     Get the water phase corresponding to p and T.
 
@@ -301,7 +301,7 @@ def wph(p, T):
 
 
 # R1124
-def Kw(T: np.ndarray, rhow: np.ndarray):
+def Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the ionization constant of water Kw.
     Validity range 273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa.

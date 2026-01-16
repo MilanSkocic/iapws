@@ -6,9 +6,12 @@
 `ipaws` is a  Fortran library providing the formulas for computing light and heavy water properties.
 The formulas are taken from http://iapws.org. 
 
+- **Man pages:** https://github.com/MilanSkocic/iapws/tree/main/doc
 - **Documentation:** https://milanskocic.github.io/iapws/
+- **Examples:** https://github.com/MilanSkocic/iapws/tree/main/example
 - **Source code:** https://github.com/MilanSKocic/iapws
 - **Python wrapper:** https://pypi.org/project/pyiapws
+- **Binaries:** https://github.com/MilanSkocic/iapws/releases
 
 It covers: 
 

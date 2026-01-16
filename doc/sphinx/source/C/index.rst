@@ -1,6 +1,6 @@
-*****
-C API
-*****
+########
+C Header
+########
 
 .. literalinclude:: ../../../../include/iapws.h
    :language: C

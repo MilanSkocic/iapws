@@ -27,7 +27,7 @@ contains
 
 ! ------------------------------------------------------------------------------
 ! VERSION
-function get_version()result(fptr)
+function get_version()result(fptr) !FAPI
     !! Return the version
     implicit none
     character(len=:), pointer :: fptr    !! Fortran pointer to a string indicating the version..
@@ -50,7 +50,7 @@ end function
 
 ! ------------------------------------------------------------------------------
 ! R797
-pure subroutine psat(Ts, ps)
+pure subroutine psat(Ts, ps) !FAPI
     !! Compute the saturation pressure at temperature Ts. 
     !! Validity range 273.13 K <= Ts <= 647.096 K.
 
@@ -60,7 +60,7 @@ pure subroutine psat(Ts, ps)
     ps = r4_ps(Ts)
 end subroutine
 
-pure subroutine Tsat(ps, Ts)
+pure subroutine Tsat(ps, Ts) !FAPI
     !! Compute the saturation temperature at pressure ps.
     !! Validity range 611.213 Pa <= ps <= 22.064 MPa.
 
@@ -70,7 +70,7 @@ pure subroutine Tsat(ps, Ts)
     Ts = r4_Ts(ps)
 end subroutine
 
-pure subroutine wp(p, T, prop, res)
+pure subroutine wp(p, T, prop, res) !FAPI
     !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
     !! The adequate region is selected according to p and T.
     !!
@@ -115,7 +115,7 @@ pure subroutine wp(p, T, prop, res)
     end if
 end subroutine
 
-pure subroutine wr(p, T, res)
+pure subroutine wr(p, T, res) !FAPI
     !! Get the water region corresponding to p and T.
     !! Regions 1 to 5 or -1 when not found.
 
@@ -127,7 +127,7 @@ pure subroutine wr(p, T, res)
     res = find_region(p, T)
 end subroutine
 
-pure subroutine wph(p, T, res)
+pure subroutine wph(p, T, res) !FAPI
     !! Get the water phase corresponding to p and T.
     !! Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
     
@@ -143,7 +143,7 @@ end subroutine
 
 ! ------------------------------------------------------------------------------
 ! R1124
-pure subroutine Kw(T, rhow, k)
+pure subroutine Kw(T, rhow, k) !FAPI
     !! Compute the ionization constant of water Kw.
     !! Validity range 273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa.
 

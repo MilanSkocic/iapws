@@ -24,19 +24,21 @@ SRC_FYPP=$(wildcard ./src/*.fypp)
 
 all: $(FPM_LIBNAME)
 
-$(FPM_LIBNAME): build copy_a shared
+$(FPM_LIBNAME): prep build copy_a shared
 # ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
 # SOURCES
-# NO AUTO-GENERATED SOURCES
+prep:
+	make -C srcprep
 # ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
 # COMPILATION
 build: 
+	make -C doc man
 	fpm build --profile=$(btype)
 
 test: build
@@ -103,7 +105,7 @@ uninstall:
 # ---------------------------------------------------------------------
 # OTHERS
 doc: 
-	make -C doc/sphinx/ html
+	make -C doc
 
 docs:
 	rm -rf docs/*
