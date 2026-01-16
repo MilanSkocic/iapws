@@ -76,6 +76,7 @@ install_dirs:
 	mkdir -p $(install_dir)/bin
 	mkdir -p $(install_dir)/include
 	mkdir -p $(install_dir)/lib
+	mkdir -p $(install_dir)/share/man/man3
 	fpm install --prefix=$(install_dir) --profile=$(btype)
 	cp -f $(FPM_INCLUDE_DIR)/$(FPM_NAME)*.h $(install_dir)/include
 	cp -f doc/$(FPM_NAME)*.3 $(install_dir)/share/man/man3
