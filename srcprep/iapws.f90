@@ -35,37 +35,54 @@ DESCRIPTION
         o real(dp), parameter :: pc_D2O = 21.671_dp   Critical pressure for H2O in MPa
         o real(dp), parameter :: rhoc_H2O = 322.0_dp  Critical density for H2O in kg.m-3
         o real(dp), parameter :: rhoc_D2O = 356.0_dp  Critical density for H2O in kg.m-3
-        o character(len=:), pointer function get_version()  Get the version
-        o pure subroutine psat(Ts, ps)  Compute the saturation pressure at temperature Ts. 
-            o Validity range 273.13 K <= Ts <= 647.096 K.
-            o real(dp), intent(in), contiguous :: Ts(:)   Saturation temperature in K.
-            o real(dp), intent(out), contiguous :: ps(:)  Saturation pressure in MPa. Filled with nan if out of validity range.
-        o pure subroutine Tsat(ps, Ts)  Compute the saturation temperature at pressure ps.
-            o Validity range 611.213 Pa <= ps <= 22.064 MPa.
-            o real(dp), intent(in), contiguous :: ps(:)   Saturation pressure in MPa.
-            o real(dp), intent(out), contiguous :: Ts(:)  Saturation temperature in K. Filled with nan if out of validity range.
+        o function get_version()result(fptr)  Return the version
+             o character(len=:), pointer :: fptr    Fortran pointer to a string indicating the version.
+        o pure subroutine kh(T, gas, heavywater, k)  Compute the henry constant kH in MPa for a given temperature (x_2=1/kH).
+             o real(dp), intent(in), contiguous :: T(:)    Temperature in K.
+             o character(len=*), intent(in) :: gas    Gas.
+             o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
+             o real(dp), intent(out), contiguous :: k(:)    Henry constant in MPa. Filled with NaNs if gas not found.
+        o pure subroutine kd(T, gas, heavywater, k)  Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
+             o real(dp), intent(in), contiguous :: T(:)    Temperature in K.
+             o character(len=*), intent(in) :: gas    Gas.
+             o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
+             o real(dp), intent(out), contiguous :: k(:)    Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
+        o pure function ngases(heavywater)result(n)  Returns the number of gases.
+             o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
+             o integer(int32) :: n    Number of gases.
+        o function gases(heavywater)result(list_gases)  Returns the list of available gases.
+             o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
+             o type(gas_type), pointer :: list_gases(:)    Available gases.
+        o function gases2(heavywater)result(str_gases)  Returns the available gases as a string.
+             o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
+             o character(len=:), pointer :: str_gases    Available gases
+        o pure subroutine psat(Ts, ps)  Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
+             o real(dp), intent(in), contiguous :: Ts(:)    Saturation temperature in K.
+             o real(dp), intent(out), contiguous :: ps(:)    Saturation pressure in MPa. Filled with nan if out of validity range.
+        o pure subroutine Tsat(ps, Ts)  Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
+             o real(dp), intent(in), contiguous :: ps(:)    Saturation pressure in MPa.
+             o real(dp), intent(out), contiguous :: Ts(:)    Saturation temperature in K. Filled with nan if out of validity range.
         o pure subroutine wp(p, T, prop, res)  Compute water properties at pressure p in MPa and temperature T in Kelvin.
-            o real(dp), intent(in) :: p(:)        Pressure in MPa.
-            o real(dp), intent(in) :: T(:)        Pressure in K.
-            character(len=*), intent(in) :: prop  Property
-            o real(dp), intent(out) :: res(:)     Filled with NaN if no adequate region is found.
-        o pure subroutine wr(p, T, res)   Get the water region corresponding to p and T.
-            o real(dp), intent(in)        :: p(:)  Pressure in MPa.
-            o real(dp), intent(in)        :: T(:)  Temperature in K.
-            integer(int32), intent(out) :: res(:)  Region (1-5)
+             o real(dp), intent(in) :: p(:)    Pressure in MPa.
+             o real(dp), intent(in) :: T(:)    Pressure in K.
+             o character(len=*), intent(in) :: prop    Property (v, u, s, h, cp, cv, w)
+             o real(dp), intent(out) :: res(:)    Filled with NaN if no adequate region is found.
+        o pure subroutine wr(p, T, res)  Get the water region corresponding to p and T.
+             o real(dp), intent(in) :: p(:)    Pressure in MPa.
+             o real(dp), intent(in) :: T(:)    Temperature in K.
+             o integer(int32), intent(out) :: res(:)    Region 1 to 5 if found or -1.
         o pure subroutine wph(p, T, res)  Get the water phase corresponding to p and T.
-            o real(dp), intent(in)        :: p(:)  Pressure in MPa.
-            o real(dp), intent(in)        :: T(:)  Temperature in K.
-            integer(int32), intent(out) :: res(:)  Phase (l, v, c, s, n)
-        o pure subroutine Kw(T, rhow, k)  Compute the ionization constant of water Kw.
-            o Validity range 273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa.
-            o real(dp), intent(in) :: T(:)       Temperature in K.
-            o real(dp), intent(in) :: rhow(:)    Mass density in g.cm^{-3}.
-            o real(dp), intent(out) :: k(:)      Ionization constant. Filled with NaN if out of validity range. 
+             o real(dp), intent(in) :: p(:)    pressure in MPa.
+             o real(dp), intent(in) :: T(:)    Temperature in K.
+             o character(len=1), intent(out) :: res(:)    Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
+        o pure subroutine Kw(T, rhow, k)  Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
+             o real(dp), intent(in) :: T(:)    Temperature in K.
+             o real(dp), intent(in) :: rhow(:)    Mass density in g.cm^{-3}.
+             o real(dp), intent(out) :: k(:)    Ionization constant. Filled with NaN if out of validity range.
 
     C API
         o char* iapws_get_version(void)
-        o const double iapws_r283_Tc_H2O 
+        o const double iapws_r283_Tc_H2O
         o const double iapws_r283_Tc_D2O
         o const double iapws_r283_pc_H2O
         o const double iapws_r283_pc_D2O
@@ -78,26 +95,23 @@ DESCRIPTION
         o char *iapws_g704_gases2(int heavywater)
         o void iapws_r797_psat(size_t N, double *Ts, double *ps)
         o void iapws_r797_Tsat(size_t N, double *ps, double *Ts)
-        o void iapws_r797_wp(double *p, double  *T, char *prop, double *res, size_t N, size_t len) 
+        o void iapws_r797_wp(double *p, double *T, char *prop, double *res, size_t N, size_t len)
         o void iapws_r797_wr(double *p, double *T, int *res, size_t N)
         o void iapws_r797_wph(double *p, double *T, char *res, size_t N)
+        o void iapws_r1124_Kw(size_t N, double *T, double *rhow, double *k)
 
     Python wrapper
-        o kh(T np.ndarray, gas str, heavywater bool=False)->Union[np.ndarray, float]
-        o kd(T np.ndarray, gas str, heavywater bool=False)->Union[np.ndarray, float]
-        o ngases(heavywaterbool=False)->int
-        o gases(heavywater bool=False)->List[str]
-        o gases2(heavywater bool=False)->str
+        o kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+        o kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+        o ngases(heavywater:bool=False)->int
+        o gases(heavywater: bool=False)->List[str]
+        o gases2(heavywater: bool=False)->str
         o psat(Ts)->Union[np.ndarray, float]
         o Tsat(ps)->Union[np.ndarray, float]
         o wp(p, T, prop)->Union[np.ndarray, float]
         o wr(p, T)->Union[np.ndarray, float]
-        o wph(p, T)->Union[np.ndarray, float]
-        o Kw(T np.ndarray, rhow np.ndarray)->Union[np.ndarray, float]
-
-
-    Python wrapper
-
+        o wph(p, T)->Union[np.ndarray, str]
+        o Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]
 
 NOTES
     To use iapws within your fpm project, add the following to your fpm.toml file:
