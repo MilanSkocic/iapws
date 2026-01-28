@@ -13,8 +13,6 @@ type :: gas_type
     !! Derived type containing a allocatable string for representing a gas.
     character(len=:), allocatable :: gas !! Gas
 end type
-type(gas_type), allocatable, target :: f_gases(:)
-character(len=:), allocatable, target :: f_gases_str
 
 real(dp), parameter ::  T_KELVIN = 273.15_dp !! Absolute temperature in KELVIN 
 
@@ -118,9 +116,9 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
  efgh_t("CH4", 2216.0181_dp, -40.7666_dp, 152.5778_dp, -117.7430_dp)] 
     
 public :: gas_type
-public :: kh, kd
-public :: ngases
-public :: gases, gases2
+public :: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O, findgas_abc, findgas_efgh
+public :: efgh_H2O, efgh_D2O, abc_H2O, abc_D2O
+public :: ngas_H2O, ngas_D2O
 
 contains
 
@@ -318,162 +316,5 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
 
 end function
 
-pure subroutine kh(T, gas, heavywater, k)
-    !! Compute the henry constant kH in MPa for a given temperature.
-    !! The molar fraction in water is related to kH: x_2=1/kH. 
-    implicit none
-    
-    real(dp), intent(in), contiguous :: T(:) !! Temperature in K.
-    character(len=*), intent(in) :: gas !! Gas.
-    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:) !! Henry constant in MPa. Filled with NaNs if gas not found.
-    
-    integer(int32) :: i
-    
-    if(heavywater > 0)then
-        i = findgas_abc(gas, abc_D2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k =  f_kh_D2O(T, abc_D2O(i))
-        endif
-    else
-        i = findgas_abc(gas, abc_H2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k = f_kh_H2O(T, abc_H2O(i))
-        endif
-    endif
-
-end subroutine
-
-pure subroutine kd(T, gas, heavywater, k)
-    !! Compute the vapor-liquid constant kd for a given temperature.
-    !! The molar fraction in vapor in related to kd: \[ kd=y_2/x_2 \[
-    implicit none
-    
-    real(dp), intent(in), contiguous :: T(:)             !! Temperature in K.
-    character(len=*), intent(in) :: gas      !! Gas.
-    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
-    
-    integer(int32) :: i
-    
-    if(heavywater > 0)then
-        i = findgas_efgh(gas, efgh_D2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k =  f_kd_D2O(T, efgh_D2O(i))
-        endif
-    else
-        i = findgas_efgh(gas, efgh_H2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k = f_kd_H2O(T, efgh_H2O(i))
-        endif
-    endif
-
-end subroutine
-
-pure function ngases(heavywater)result(n)
-    !! Returns the number of gases.
-    implicit none
-    
-    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    integer(int32) :: n                      !! Number of gases.
-
-    if(heavywater > 0)then
-        n = ngas_D2O
-    else
-        n = ngas_H2O
-    endif
-end function
-
-function gases(heavywater)result(list_gases)
-    !! Returns the list of available gases.
-    implicit none
-
-    ! arguments
-    integer(int32), intent(in) :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    type(gas_type), pointer :: list_gases(:)
-        !! Available gases.
-    
-    ! variables
-    integer(int32) :: i, n
-
-    if(allocated(f_gases))then
-        deallocate(f_gases)
-    endif
-
-    if(heavywater > 0)then
-        allocate(f_gases(ngas_D2O))
-        do i=1, ngas_D2O
-            if(allocated(f_gases(i)%gas))then
-                deallocate(f_gases(i)%gas)
-            endif
-            n = len(trim(abc_D2O(i)%gas))
-            allocate(character(len=n) :: f_gases(i)%gas)
-            f_gases(i)%gas = trim(abc_D2O(i)%gas)
-        enddo
-    else
-        allocate(f_gases(ngas_H2O))
-        do i=1, ngas_H2O
-            if(allocated(f_gases(i)%gas))then
-                deallocate(f_gases(i)%gas)
-            endif
-            n = len(trim(abc_H2O(i)%gas))
-            allocate(character(len=n) :: f_gases(i)%gas)
-            f_gases(i)%gas = trim(abc_H2O(i)%gas)
-        enddo
-    endif
-    list_gases => f_gases
-end function
-
-function gases2(heavywater)result(str_gases)
-    !! Returns the available gases as a string.
-    implicit none
-
-    ! arguments
-    integer(int32), intent(in) :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    character(len=:), pointer :: str_gases
-        !! Available gases
-
-    ! variables
-    integer(int32) :: i, j, k, ngas
-    type(gas_type), pointer :: f_gases_list(:)
-    
-    f_gases_list => gases(heavywater)
-    ngas = size(f_gases_list)
-
-    k = 0
-    do i=1, ngas
-        k = k + len(f_gases_list(i)%gas)
-    enddo
-
-    if(allocated(f_gases_str))then
-        deallocate(f_gases_str)
-    endif
-    allocate(character(len=k+ngas) :: f_gases_str)
-
-    i = 1
-    j = 1
-    k = 1
-    do i=1, ngas
-        do j=1, len(f_gases_list(i)%gas)
-            f_gases_str(k:k) = f_gases_list(i)%gas(j:j)
-            k = k + 1
-        enddo
-        f_gases_str(k:k) = ","
-        k = k + 1
-    enddo
-    f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
-    str_gases => f_gases_str
-
-end function
 
 end module
