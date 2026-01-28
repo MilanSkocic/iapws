@@ -1,0 +1,12 @@
+        o _cast_ndarray(X)
+        o kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+        o kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+        o ngases(heavywater:bool=False)->int
+        o gases(heavywater: bool=False)->List[str]
+        o gases2(heavywater: bool=False)->str
+        o psat(Ts)->Union[np.ndarray, float]
+        o Tsat(ps)->Union[np.ndarray, float]
+        o wp(p, T, prop)->Union[np.ndarray, float]
+        o wr(p, T)->Union[np.ndarray, float]
+        o wph(p, T)->Union[np.ndarray, str]
+        o Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]
