@@ -273,7 +273,7 @@ def wr(p, T)->Union[np.ndarray, float]:
     else:
         return res
 
-def wph(p, T)->Union[np.ndarray, float]:
+def wph(p, T)->Union[np.ndarray, str]:
     """
     Get the water phase corresponding to p and T.
 
