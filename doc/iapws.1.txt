@@ -1,0 +1,33 @@
+iapws(1)                                                                                            Library calls                                                                                           iapws(1)
+
+NAME
+       iapws - Command line for iapws
+
+SYNOPSIS
+       iapws [OPTIONS] ARGS ...
+
+DESCRIPTION
+       iapws is a command line interface which provides ...
+
+OPTIONS
+       o --usage, -u
+              Show usage text and exit.
+
+       o --help, -h
+              Show help text and exit.
+
+       o --verbose, -V
+              Display additional information when available.
+
+       o --version, -v
+              Show version information and exit.
+
+EXAMPLE
+       Minimal example
+
+             iapws
+
+SEE ALSO
+       ciaaw(3), codata(3)
+
+0.5.1                                                                                              28 January 2026                                                                                          iapws(1)
