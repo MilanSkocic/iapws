@@ -20,8 +20,8 @@ subroutine collect_suite_g704(testsuite)
                  new_unittest("gases2 in D2O", test_gases2_D2O),&
                  new_unittest("kh in H2O", test_kh_H2O),&
                  new_unittest("kh in D2O", test_kh_D2O),&
-                 new_unittest("kd in H2O", test_kh_H2O),&
-                 new_unittest("kd in D2O", test_kh_D2O)]
+                 new_unittest("kd in H2O", test_kd_H2O),&
+                 new_unittest("kd in D2O", test_kd_D2O)]
 end subroutine
 
 subroutine test_ngases_H2O(error)
