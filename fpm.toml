@@ -35,7 +35,8 @@ main = "example.c"
 stdlib="*"
 M_CLI2 = {git="https://github.com/urbanjost/M_CLI2.git"}
 #fortran-regex = {git="https://github.com/perazz/fortran-regex.git", tag="1.1.2"}
-#codata = {git="https://github.com/MilanSkocic/codata", tag="2.4.0"}
+codata = {git="https://github.com/MilanSkocic/codata", tag="2.4.0"}
+ciaaw = {git="https://github.com/MilanSkocic/ciaaw", tag="1.1.1"}
 
 [[test]]
 name = "tester"
