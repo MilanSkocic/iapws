@@ -277,13 +277,13 @@ pure elemental function f_kd_H2O(T, efgh) result(value)
     real(dp) :: p3
     real(dp) :: p4
     
-    Tr = (T+T_KELVIN)/Tc1_H2O
+    Tr = T/Tc1_H2O
     tau  = 1-Tr
     
     p1 = q_H2O*efgh%F
     p2 = efgh%E/T*ft_H2O(tau)
     p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
-    p4 = exp(-T/100.0_dp)
+    p4 = exp((273.15_dp-T)/100.0_dp)
 
     value = exp(p1 + p2 + p3 * p4)
 
@@ -310,7 +310,7 @@ pure elemental function f_kd_D2O(T, efgh) result(value)
     p1 = q_D2O*efgh%F
     p2 = efgh%E/T*ft_D2O(tau)
     p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
-    p4 = exp(-T/100.0_dp)
+    p4 = exp((273.15_dp-T)/100.0_dp)
 
     value = exp(p1 + p2 + p3 * p4)
 

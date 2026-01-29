@@ -235,7 +235,7 @@ subroutine test_kd_H2O(error)
     do i=1, ngas
         call kd(T_K, gases(i), heavywater, k)
         do j=1, nT
-            value  = log(k(j)/1000d0)
+            value  = log(k(j))
             expected = expected_khs(i, j)
             call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
@@ -272,7 +272,7 @@ subroutine test_kd_D2O(error)
     do i=1, ngas
         call kd(T_K, gases(i), heavywater, k)
         do j=1, nT
-            value  = log(k(j)/1000d0)
+            value  = log(k(j))
             expected = expected_khs(i, j)
             call check(error, value, expected, thr=1e-4_dp)
             if (allocated(error)) return
