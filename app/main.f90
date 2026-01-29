@@ -65,7 +65,7 @@ program iapwscli
         '' ]
     
     call set_mode('strict')
-    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 --kH --kd --D2O', help_text, version_text) 
+    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 --kH --kD --D2O', help_text, version_text) 
     heavywater = 0
     call get_args('T', T)
     call get_args('g', gas)
@@ -76,7 +76,16 @@ program iapwscli
         allocate(k(size(T)))
         call kh(T+273.15_dp, trim(gas), heavywater, k)
         do i=1, size(T)
-            write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), log(k(i)/1000.0_dp)
+            write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), k(i)
+        end do
+        deallocate(k)
+    end if
+    
+    if(lget('kD'))then
+        allocate(k(size(T)))
+        call kd(T+273.15_dp, trim(gas), heavywater, k)
+        do i=1, size(T)
+            write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), k(i)
         end do
         deallocate(k)
     end if
