@@ -1,25 +1,36 @@
 iapws(1)                                                                                            Library calls                                                                                           iapws(1)
 
+              [      0%]                       main.f90
+
+              [ 50%] main.f90  done.
+
+              [ 50%] iapws
+
+              [100%] iapws  done.  [100%] Project compiled successfully.
+
 NAME
-       iapws - Command line for iapws
+       iapws - Compute light and heavy water properties.
 
 SYNOPSIS
-       iapws [OPTIONS] ARGS ...
+       iapws [OPTION...]
 
 DESCRIPTION
-       iapws is a command line interface which provides ...
+       iapws is a command line interface which computes the properties of light and heavy water according to IAPWS.
 
 OPTIONS
-       o --usage, -u
+       --colnames, -c
+              Show the headers in the outputs.
+
+       --usage, -u
               Show usage text and exit.
 
-       o --help, -h
+       --help, -h
               Show help text and exit.
 
-       o --verbose, -V
+       --verbose, -V
               Display additional information when available.
 
-       o --version, -v
+       --version, -v
               Show version information and exit.
 
 EXAMPLE
@@ -30,4 +41,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.5.1                                                                                              28 January 2026                                                                                          iapws(1)
+0.5.1                                                                                             04 February 2026                                                                                          iapws(1)

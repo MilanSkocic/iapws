@@ -1,4 +1,4 @@
-iapws(3)                                      Library calls                                      iapws(3)
+iapws(3)                                                                                            Library calls                                                                                           iapws(3)
 
 NAME
        iapws - library for light and heavy water properties according to IAPWS.
@@ -185,8 +185,7 @@ DESCRIPTION
                             Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
 
               o pure subroutine Kw(T, rhow, k)
-                     Compute  the  ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p
-                     <= 1000 MPa).
+                     Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
 
                      o real(dp), intent(in) :: T(:)
                             Temperature in K.
@@ -213,11 +212,9 @@ DESCRIPTION
 
               •  const double iapws_r283_rhoc_D2O
 
-              •  void iapws_g704_kh(double *T, char *gas, int heavywater, double *k, int size_gas, size_t
-                 size_T)
+              •  void iapws_g704_kh(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
 
-              •  void iapws_g704_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t
-                 size_T)
+              •  void iapws_g704_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
 
               •  int iapws_g704_ngases(int heavywater)
 
@@ -611,4 +608,4 @@ EXAMPLE
 SEE ALSO
        codata(3), ciaaw(3)
 
-0.5.1                                        28 January 2026                                     iapws(3)
+0.5.1                                                                                             04 February 2026                                                                                          iapws(3)
