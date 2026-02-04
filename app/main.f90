@@ -12,11 +12,11 @@ program iapwscli
     character(len=:),allocatable, target  :: help_text(:)
     character(len=:),allocatable, target  :: version_text(:)
 
-    integer :: i
+    integer :: i,j,k
     character(len=3) :: s
-    real(dp), allocatable :: k(:), T(:), P(:)
+    real(dp), allocatable :: kr(:), T(:), p(:)
     real(dp) :: k2(1)
-    character(len=:), allocatable :: gas
+    character(len=:), allocatable :: gas(:)
     integer :: heavywater
 
     type mm
@@ -58,7 +58,7 @@ program iapwscli
 
     version_text=[character(len=80) :: &
         'PROGRAM:      '//name//'                                              ', &
-        'DESCRIPTION:  Command line interface for iapws.                       ', &
+        'DESCRIPTION:  Compute light and heavy water properties.               ', &
         'VERSION:      '//get_version()//'                                     ', &
         'AUTHOR:       M. Skocic                                               ', &
         'LICENSE:      MIT                                                     ', &
@@ -66,7 +66,7 @@ program iapwscli
 
     help_text=[character(len=80) :: &
         'NAME                                                                  ', &
-        '  '//name//' - Compute ligh and heavy water properties.               ', &
+        '  '//name//' - Compute light and heavy water properties.               ', &
         '                                                                      ', &
         'SYNOPSIS                                                              ', &
         '  '//name//' [OPTION...]                                ', &
@@ -76,10 +76,11 @@ program iapwscli
         '  of light and heavy water according to IAPWS.                        ', &
         '                                                                      ', &
         'OPTIONS                                                               ', &
-        '  o --usage, -u      Show usage text and exit.                        ', &
-        '  o --help, -h       Show help text and exit.                         ', &
-        '  o --verbose, -V    Display additional information when available.   ', &
-        '  o --version, -v    Show version information and exit.               ', &
+        '  --colnames, -c   Show the headers in the outputs.                 ', &
+        '  --usage, -u      Show usage text and exit.                        ', &
+        '  --help, -h       Show help text and exit.                         ', &
+        '  --verbose, -V    Display additional information when available.   ', &
+        '  --version, -v    Show version information and exit.               ', &
         '                                                                      ', &
         'EXAMPLE                                                               ', &
         '  Minimal example                                                     ', &
@@ -91,38 +92,28 @@ program iapwscli
         '' ]
     
     call set_mode('strict')
-    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 --kH --kD --D2O --sppm', help_text, version_text) 
+    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 &
+                   --kH --kD --D2O --colnames:c', &
+                   help_text, version_text) 
     heavywater = 0
     call get_args('T', T)
     call get_args('g', gas)
-    call get_args('P', P)
+    call get_args('P', p)
     
-    M_solvent = M_H2O
-    if(lget('D2O')) then 
-        heavywater=1
-        M_solvent = M_D2O
-    end if
 
     if(lget('kH'))then
-        allocate(k(size(T)))
-        call kh(T+273.15_dp, trim(gas), heavywater, k)
-        do i=1, size(T)
-            if(lget('sppm')) then
-                write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), 1/k(i) * get_mm(gas) / M_solvent * 1d6 * P(1)
-            else
-                write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), k(i)
-            end if
-        end do
-        deallocate(k)
+        call print_kH(T, p, gas, heavywater, lget('c'))
     end if
     
     if(lget('kD'))then
-        allocate(k(size(T)))
-        call kd(T+273.15_dp, trim(gas), heavywater, k)
-        do i=1, size(T)
-            write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), k(i)
+        allocate(kr(size(T)))
+        do k=1, size(gas)
+            call kd(T+273.15_dp, trim(gas(k)), heavywater, kr)
+            do i=1, size(T)
+                write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), kr(i)
+            end do
         end do
-        deallocate(k)
+        deallocate(kr)
     end if
     
 contains
@@ -168,12 +159,53 @@ function get_mm(x)result(r)
     end select
 end function
 
-subroutine print_text(char_fp)
-    ! Print text pointed by char_fp.
-    character(len=:), pointer, intent(in) :: char_fp(:)
-    integer :: i
-    do i=1, size(char_fp), 1
-        write (OUTPUT_UNIT, '(A)') char_fp(i)
+subroutine print_kH(T, p, gas, heavywater,header)
+    real(dp), intent(in) :: T(:), p(:)
+    character(len=*), intent(in) :: gas(:)
+    integer, intent(in) :: heavywater
+    logical, intent(in) :: header
+
+    real(dp), allocatable :: kr(:)
+    real(dp) :: M_solvent
+    integer :: i,j,k
+    logical :: h
+
+    character(len=16) :: headers(5)
+    character(len=32) :: fmt
+    character(len=15) :: s1, s2, s3, s4, s5
+
+    h = optval(header, .false.)
+    
+    M_solvent = M_H2O
+    if(heavywater == 1) then 
+        M_solvent = M_D2O
+    end if
+
+    headers = [character(len=15) :: 'gas', 'T-degC', 'P-MPa', 'kH-MPa', 'S-ppm']
+    fmt = '(A5, A15, A15, A15, A15)'
+    
+    if(h) write(output_unit, fmt) headers
+
+    allocate(kr(size(T)))
+    do k=1, size(gas)
+        call kh(T+273.15_dp, trim(gas(k)), heavywater, kr)
+        do i=1, size(T)
+            do j=1, size(P)
+                write(s1, '(A5)') gas(k)
+                write(s2, '(F14.2)') T(i) 
+                write(s3, '(F14.6)') p(i) 
+                write(s4, '(EN14.2)') kr(i) 
+                write(s5, '(EN14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * P(j)
+                write(output_unit, fmt) &
+                    adjustl(s1), &
+                    adjustl(s2), &
+                    adjustl(s3), &
+                    adjustl(s4), &
+                    adjustl(s5)
+            end do
+        end do
     end do
+    deallocate(kr)
 end subroutine
+
 end program
