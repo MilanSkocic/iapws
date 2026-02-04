@@ -193,9 +193,9 @@ subroutine print_kH(T, p, gas, heavywater,header)
             do j=1, size(P)
                 write(s1, '(A5)') gas(k)
                 write(s2, '(F14.2)') T(i) 
-                write(s3, '(F14.6)') p(i) 
+                write(s3, '(F14.6)') p(j) 
                 write(s4, '(EN14.2)') kr(i) 
-                write(s5, '(EN14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * P(j)
+                write(s5, '(EN14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * p(j)
                 write(output_unit, fmt) &
                     adjustl(s1), &
                     adjustl(s2), &
