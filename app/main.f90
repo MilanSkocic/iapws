@@ -30,6 +30,8 @@ program iapwscli
     real(dp) :: M_H2S, M_CH4, M_C2H6, M_SF6
     real(dp) :: M_H2O, M_D2O
     real(dp) :: M_solvent
+
+    type(gas_type), pointer :: list_gases(:)
     
     M_H = get_saw('H')
     M_O = get_saw('O')
@@ -69,18 +71,22 @@ program iapwscli
         '  '//name//' - Compute light and heavy water properties.               ', &
         '                                                                      ', &
         'SYNOPSIS                                                              ', &
-        '  '//name//' [OPTION...]                                ', &
+        '  '//name//' [OPTION...]                                               ', &
         '                                                                      ', &
         'DESCRIPTION                                                           ', &
         '  '//name//' is a command line interface which computes the properties', &
         '  of light and heavy water according to IAPWS.                        ', &
         '                                                                      ', &
         'OPTIONS                                                               ', &
-        '  --colnames, -c   Show the headers in the outputs.                 ', &
-        '  --usage, -u      Show usage text and exit.                        ', &
-        '  --help, -h       Show help text and exit.                         ', &
-        '  --verbose, -V    Display additional information when available.   ', &
-        '  --version, -v    Show version information and exit.               ', &
+        '  --temperature, -T T...  Temperature values in degC. Default to 25 degC.', &
+        '  --pressure, -P P...     Pressure values in MPa. Default to 0.1 MPa.', &
+        '  --gas, -g gas...        Gases. Default to O2.', &
+        '  --listgases             Display available gases for computing the solubility.', &
+        '  --D2O,                  Flag for switching to heavywater as the solvent.', &
+        '  --usage, -u             Show usage text and exit.                        ', &
+        '  --help, -h              Show help text and exit.                         ', &
+        '  --verbose, -V           Display additional information when available.   ', &
+        '  --version, -v           Show version information and exit.               ', &
         '                                                                      ', &
         'EXAMPLE                                                               ', &
         '  Minimal example                                                     ', &
@@ -92,28 +98,26 @@ program iapwscli
         '' ]
     
     call set_mode('strict')
-    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 &
-                   --kH --kD --D2O --colnames:c', &
+    call set_args('--temperature:T 25.0 --pressure:P 0.1 --gas:g O2 --solubility:s &
+                   --D2O --listgases', &
                    help_text, version_text) 
     heavywater = 0
     call get_args('T', T)
     call get_args('g', gas)
     call get_args('P', p)
     
-
-    if(lget('kH'))then
-        call print_kH(T, p, gas, heavywater, lget('c'))
+    if(lget('D2O'))then
+        heavywater = 1
+    else
+        heavywater = 0
     end if
-    
-    if(lget('kD'))then
-        allocate(kr(size(T)))
-        do k=1, size(gas)
-            call kd(T+273.15_dp, trim(gas(k)), heavywater, kr)
-            do i=1, size(T)
-                write(output_unit, '(SP,F14.2,X,EN24.6)') T(i), kr(i)
-            end do
-        end do
-        deallocate(kr)
+
+    if(lget('s'))then
+        call print_khd(T, p, gas, heavywater)
+    end if
+
+    if(lget('listgases')) then
+        write(output_unit, '(A)') gases2(heavywater)
     end if
     
 contains
@@ -159,53 +163,60 @@ function get_mm(x)result(r)
     end select
 end function
 
-subroutine print_kH(T, p, gas, heavywater,header)
-    real(dp), intent(in) :: T(:), p(:)
-    character(len=*), intent(in) :: gas(:)
+subroutine print_khd(T, p, gas, heavywater)
+    real(dp), intent(in), contiguous :: T(:), p(:)
+    character(len=*), intent(in), contiguous :: gas(:)
     integer, intent(in) :: heavywater
-    logical, intent(in) :: header
 
-    real(dp), allocatable :: kr(:)
+    real(dp), allocatable :: khr(:), kdr(:)
     real(dp) :: M_solvent
     integer :: i,j,k
-    logical :: h
 
-    character(len=16) :: headers(5)
+    character(len=16) :: headers(8)
     character(len=32) :: fmt
-    character(len=15) :: s1, s2, s3, s4, s5
+    character(len=15) :: s1, s2, s3, s4, s5, s6, s7, s8
 
-    h = optval(header, .false.)
     
     M_solvent = M_H2O
     if(heavywater == 1) then 
         M_solvent = M_D2O
     end if
 
-    headers = [character(len=15) :: 'gas', 'T-degC', 'P-MPa', 'kH-MPa', 'S-ppm']
-    fmt = '(A5, A15, A15, A15, A15)'
+    headers = [character(len=15) :: 'gas', 'T-degC', 'P-MPa', 'kH-MPa', 'kD-a.u.',&
+                                     'x2-a.u.', 'y2-a.u.', 's-ppm']
+    fmt = '(A5, 7A15)'
     
-    if(h) write(output_unit, fmt) headers
+    write(output_unit, fmt) headers
 
-    allocate(kr(size(T)))
+    allocate(khr(size(T)))
+    allocate(kdr(size(T)))
     do k=1, size(gas)
-        call kh(T+273.15_dp, trim(gas(k)), heavywater, kr)
+        call kh(T+273.15_dp, trim(gas(k)), heavywater, khr)
+        call kd(T+273.15_dp, trim(gas(k)), heavywater, kdr)
         do i=1, size(T)
-            do j=1, size(P)
+            do j=1, size(p)
                 write(s1, '(A5)') gas(k)
                 write(s2, '(F14.2)') T(i) 
-                write(s3, '(F14.6)') p(j) 
-                write(s4, '(EN14.2)') kr(i) 
-                write(s5, '(EN14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * p(j)
+                write(s3, '(F14.3)') p(j) 
+                write(s4, '(SP, EN14.2)') khr(i) 
+                write(s5, '(SP, EN14.2)') kdr(i) 
+                write(s6, '(SP, EN14.2)') 1/khr(i) * p(j) ! x2
+                write(s7, '(SP, EN14.2)') kdr(i)/khr(i) * p(j) ! y2
+                write(s8, '(SP, F14.2)') 1/khr(i) * get_mm(gas(k)) / M_solvent * 1d6 * p(j) ! solubility in liquid
                 write(output_unit, fmt) &
                     adjustl(s1), &
                     adjustl(s2), &
                     adjustl(s3), &
                     adjustl(s4), &
-                    adjustl(s5)
+                    adjustl(s5), &
+                    adjustl(s6), &
+                    adjustl(s7), &
+                    adjustl(s8)
             end do
         end do
     end do
-    deallocate(kr)
+    deallocate(khr)
+    deallocate(kdr)
 end subroutine
 
 end program
