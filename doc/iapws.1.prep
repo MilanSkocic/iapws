@@ -1,8 +1,3 @@
-[  0%]                       main.f90
-[ 50%]                       main.f90  done.
-[ 50%]                          iapws
-[100%]                          iapws  done.
-[100%] Project compiled successfully.
 NAME
   iapws - Compute light and heavy water properties.
 
@@ -14,11 +9,15 @@ DESCRIPTION
   of light and heavy water according to IAPWS.
 
 OPTIONS
-  --colnames, -c   Show the headers in the outputs.
-  --usage, -u      Show usage text and exit.
-  --help, -h       Show help text and exit.
-  --verbose, -V    Display additional information when available.
-  --version, -v    Show version information and exit.
+  --temperature, -T T...  Temperature values in degC. Default to 25 degC.
+  --pressure, -P P...     Pressure values in MPa. Default to 0.1 MPa.
+  --gas, -g gas...        Gases. Default to O2.
+  --listgases             Display available gases for computing the solubility.
+  --D2O,                  Flag for switching to heavywater as the solvent.
+  --usage, -u             Show usage text and exit.
+  --help, -h              Show help text and exit.
+  --verbose, -V           Display additional information when available.
+  --version, -v           Show version information and exit.
 
 EXAMPLE
   Minimal example
