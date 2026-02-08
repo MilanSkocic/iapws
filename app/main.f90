@@ -82,8 +82,8 @@ program iapwscli
         '         See options.', &
         '                                                                      ', &
         '  Their syntax is:                                                    ', &
-        '    +kh   [OPTION...] T...                                          ', &
-        '    +kd   [OPTION...] T...                                          ', &
+        '    +kh   [OPTION...]                                                 ', &
+        '    +kd   [OPTION...]                                                 ', &
         '                                                                      ', &
         'OPTIONS                                                               ', &
         '                                                                      ', &
