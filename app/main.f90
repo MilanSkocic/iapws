@@ -66,7 +66,7 @@ program iapwscli
         '  '//name//' - Compute light and heavy water properties.              ', &
         '                                                                      ', &
         'SYNOPSIS                                                              ', &
-        '  '//name//' SUBCOMMAND [OPTION...] ARG...                            ', &
+        '  '//name//' SUBCOMMAND [OPTION...]                                   ', &
         '                                                                      ', &
         'DESCRIPTION                                                           ', &
         '  '//name//' is a command line interface which computes the properties', &
