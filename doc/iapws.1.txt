@@ -18,9 +18,9 @@ SUBCOMMANDS
 
        Their syntax is:
 
-              +kh    [OPTION...] T...
+              +kh    [OPTION...]
 
-              +kd    [OPTION...] T...
+              +kd    [OPTION...]
 
 OPTIONS
        kh:
