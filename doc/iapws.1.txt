@@ -1,40 +1,81 @@
 iapws(1)                                                                                            Library calls                                                                                           iapws(1)
 
+              [      0%]                       main.f90
+
+              [ 50%] main.f90  done.
+
+              [ 50%] iapws
+
+              [100%] iapws  done.  [100%] Project compiled successfully.
+
 NAME
        iapws - Compute light and heavy water properties.
 
 SYNOPSIS
-       iapws [OPTION...]
+       iapws SUBCOMMAND [OPTION...] ARG...
 
 DESCRIPTION
        iapws is a command line interface which computes the properties of light and heavy water according to IAPWS.
 
+SUBCOMMANDS
+       Valid subcommands are:
+
+              +kh    Compute the Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for O2 at 25°C.  See options.
+
+              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2O.  The default behavior is to compute the constant kD for H2 at 25°C.  See options.
+
+       Their syntax is:
+
+              +kh    [OPTION...] T...
+
+              +kd    [OPTION...] T...
+
 OPTIONS
-       --temperature, -T T...
-              Temperature values in degC. Default to 25 degC.
+       kh:
 
-       --pressure, -P P...
-              Pressure values in MPa. Default to 0.1 MPa.
+              --temperature, -T TEMPERATURE...
+                     Temperature in °C. Default to 25°C.
 
-       --gas, -g gas...
-              Gases. Default to O2.
+              --fugacity, -f FUGACITY...
+                     Liquid-phase fugacity in MPa. Default to 0.1
 
-       --listgases
-              Display available gases for computing the solubility.
+              --gases, -g GAS...
+                     Gases for which to compute kH. Default to O2
 
-       --D2O, Flag for switching to heavywater as the solvent.
+              --D2O  Set heavywater as the solvent.
 
-       --usage, -u
-              Show usage text and exit.
+              --listgases
+                     Display available gases for computing kH.
 
-       --help, -h
-              Show help text and exit.
+       kd:
 
-       --verbose, -V
-              Display additional information when available.
+              --temperature, -T TEMPERATURE...
+                     Temperature in °C. Default to 25°C.
 
-       --version, -v
-              Show version information and exit.
+              --x2, -x x2...
+                     Molar fraction of gas in water. Default to 1
+
+              --gases, -g GAS...
+                     Gases for which to compute kD. Default to H2
+
+              --D2O, Set heavywater as the solvent.
+
+              --listgases
+                     Display available gases for computing kD.
+
+       all:
+
+              --usage, -u
+                     Show usage text and exit.
+
+              --help, -h
+                     Show help text and exit.
+
+              --verbose, -V
+                     Display additional information when availabl
+
+              --version, -v
+                     Show version information and exit.
 
 EXAMPLE
        Minimal example
@@ -44,4 +85,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.5.1                                                                                             05 February 2026                                                                                          iapws(1)
+0.5.1                                                                                             08 February 2026                                                                                          iapws(1)
