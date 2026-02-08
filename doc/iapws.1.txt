@@ -1,18 +1,10 @@
 iapws(1)                                                                                            Library calls                                                                                           iapws(1)
 
-              [      0%]                       main.f90
-
-              [ 50%] main.f90  done.
-
-              [ 50%] iapws
-
-              [100%] iapws  done.  [100%] Project compiled successfully.
-
 NAME
        iapws - Compute light and heavy water properties.
 
 SYNOPSIS
-       iapws SUBCOMMAND [OPTION...] ARG...
+       iapws SUBCOMMAND [OPTION...]
 
 DESCRIPTION
        iapws is a command line interface which computes the properties of light and heavy water according to IAPWS.
