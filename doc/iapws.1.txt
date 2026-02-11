@@ -7,20 +7,28 @@ SYNOPSIS
        iapws SUBCOMMAND [OPTION...]
 
 DESCRIPTION
-       iapws is a command line interface which computes the properties of light and heavy water according to IAPWS.
+       iapws is a command line interface for computing properties of light and heavy water according to IAPWS.
 
 SUBCOMMANDS
        Valid subcommands are:
 
               +kh    Compute the Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for O2 at 25°C.  See options.
 
-              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2O.  The default behavior is to compute the constant kD for H2 at 25°C.  See options.
+              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2 The default behavior is to compute the constant kD for H2 at 25°C.  See options.
+
+              +psat  Compute the saturation pressure.  The default behavior is to compute psat at 25°C.  See options.
+
+              +Tsat  Compute the saturation temperature.  The default behavior is to compute Tsat at 1 bar.  See options.
 
        Their syntax is:
 
               +kh    [OPTION...]
 
               +kd    [OPTION...]
+
+              +psat  [OPTION...]
+
+              +Tsat  [OPTION...]
 
 OPTIONS
        kh:
@@ -54,6 +62,16 @@ OPTIONS
 
               --listgases
                      Display available gases for computing kD.
+
+       psat:
+
+              --temperature, -T TEMPERATURE...
+                     Temperature in °C. Default to 25°C.
+
+       Tsat:
+
+              --pressure, -p PRESSURE...
+                     Pressure in bar. Default to 1 bar.
 
        all:
 

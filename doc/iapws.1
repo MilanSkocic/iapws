@@ -13,7 +13,7 @@
 .fam T
 .fi
 .SH DESCRIPTION
-\fBiapws\fP is a command line interface which computes the properties
+\fBiapws\fP is a command line interface for computing properties
 of light and heavy water according to IAPWS.
 .SH SUBCOMMANDS
 Valid subcommands are:
@@ -27,8 +27,20 @@ See options.
 .TP
 .B
 +kd
-Compute the vapor-liquid distribution constant for gases in H2O or D2O.
+Compute the vapor-liquid distribution constant for gases in H2O or D2
 The default behavior is to compute the constant kD for H2 at 25°C.
+See options.
+.TP
+.B
++psat
+Compute the saturation pressure.
+The default behavior is to compute psat at 25°C.
+See options.
+.TP
+.B
++Tsat
+Compute the saturation temperature.
+The default behavior is to compute Tsat at 1 bar.
 See options.
 .RE
 .PP
@@ -41,6 +53,14 @@ Their syntax is:
 .TP
 .B
 +kd
+[OPTION\.\.\.]
+.TP
+.B
++psat
+[OPTION\.\.\.]
+.TP
+.B
++Tsat
 [OPTION\.\.\.]
 .SH OPTIONS
 
@@ -90,6 +110,22 @@ Set heavywater as the solvent.
 .B
 \fB--listgases\fP
 Display available gases for computing kD.
+.RE
+.PP
+psat:
+.RS
+.TP
+.B
+\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+Temperature in °C. Default to 25°C.
+.RE
+.PP
+Tsat:
+.RS
+.TP
+.B
+\fB--pressure\fP, \fB-p\fP PRESSURE\.\.\.
+Pressure in bar. Default to 1 bar.
 .RE
 .PP
 all:
