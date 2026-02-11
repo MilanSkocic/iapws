@@ -110,7 +110,9 @@ program iapwscli
         'EXAMPLE                                                               ', &
         '  Minimal example                                                     ', &
         '                                                                      ', &
-        '      iapws                                                           ', &
+        '      iapws kh -T 25,100 -f 0.1,0.02 -g O2,H2                       ', &
+        '                                                                      ', &
+        '      iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2                       ', &
         '                                                                      ', &
         'SEE ALSO                                                              ', &
         '  ciaaw(3), codata(3)                                                 ', &
