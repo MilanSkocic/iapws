@@ -69,7 +69,7 @@ program iapwscli
         '  '//name//' SUBCOMMAND [OPTION...]                                   ', &
         '                                                                      ', &
         'DESCRIPTION                                                           ', &
-        '  '//name//' is a command line interface which computes the properties', &
+        '  '//name//' is a command line interface for computing properties', &
         '  of light and heavy water according to IAPWS.                        ', &
         '                                                                      ', &
         'SUBCOMMANDS                                                           ', &
