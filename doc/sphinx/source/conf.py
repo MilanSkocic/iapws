@@ -6,7 +6,7 @@ import os
 import sys
 import tomllib
 sys.path.insert(0, os.path.abspath('../../../py/src/'))
-import pyciaaw
+import pyiapws
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -15,10 +15,10 @@ f = open(fpath, "rb")
 fpm = tomllib.load(f)
 f.close()
 
-project = 'ciaaw'
+project = 'pyiapws'
 copyright = fpm["copyright"].replace("Copyright ","")
 author = fpm["author"]
-release = pyciaaw.__version__
+release = pyiapws.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -73,5 +73,5 @@ add_module_names = False
 
 
 man_pages = [
-    ("index", 'ciaaw', 'Electrochemistry for Fortran', [author], 3),
+    ("index", 'pyiapws', 'Electrochemistry for Fortran', [author], 3),
 ]

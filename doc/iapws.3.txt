@@ -1,4 +1,4 @@
-iapws(3)                                                                                            Library calls                                                                                           iapws(3)
+iapws(3)                                                                                                         Library calls                                                                                                         iapws(3)
 
 NAME
        iapws - library for light and heavy water properties according to IAPWS.
@@ -608,4 +608,4 @@ EXAMPLE
 SEE ALSO
        codata(3), ciaaw(3)
 
-0.5.1                                                                                             04 February 2026                                                                                          iapws(3)
+0.5.1                                                                                                           11 February 2026                                                                                                       iapws(3)
