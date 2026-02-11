@@ -1,9 +1,17 @@
+# 0.6.0
+
+* Add CLI `iapws(1)` for computing light and heavy water properties: kH and kD.
+* Code refactoring.
+
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
 # 0.5.1
 
 * Refactoring the `configure.sh` script.
 * Remove support for 3.14t. No official release on python.org.
 * If binaries for Python 3.14t are needed you need to compile them by yourself.
 
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
 
 # 0.5.0
 
