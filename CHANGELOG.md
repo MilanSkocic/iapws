@@ -1,9 +1,10 @@
 # 0.6.0
 
-* Add CLI `iapws(1)` for computing light and heavy water properties: kH and kD.
+* Add CLI `iapws(1)` for computing light and heavy water properties:
+    * G7-04: kH and kD
+    * R7-97: Region 4 psat and Tsat
 * Code refactoring.
 
-[Full changelog](https://github.com/MilanSkocic/iapws/releases)
 
 # 0.5.1
 
