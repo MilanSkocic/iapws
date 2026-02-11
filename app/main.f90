@@ -15,7 +15,7 @@ program iapwscli
     character(len=124) :: msg
 
     integer :: i, ierr
-    real(dp), allocatable :: T(:), f(:), x2(:)
+    real(dp), allocatable :: T(:), f(:), x2(:), p(:)
     character(len=:), allocatable :: gas(:)
     integer :: heavywater
     
@@ -74,16 +74,24 @@ program iapwscli
         '                                                                      ', &
         'SUBCOMMANDS                                                           ', &
         '  Valid subcommands are:                                              ', &
-        "    +kh  Compute the Henry's constant for gases in H2O or D2O.        ", &
-        '         The default behavior is to compute the constant kH for O2 at 25°C.', &
-        '         See options.', &
-        '    +kd  Compute the vapor-liquid distribution constant for gases in H2O or D2O.  ', &
-        '         The default behavior is to compute the constant kD for H2 at 25°C.', &
-        '         See options.', &
+        "    +kh    Compute the Henry's constant for gases in H2O or D2O.        ", &
+        '           The default behavior is to compute the constant kH for O2 at 25°C.', &
+        '           See options.', &
+        '    +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2O.  ', &
+        '           The default behavior is to compute the constant kD for H2 at 25°C.', &
+        '           See options.', &
+        '    +psat  Compute the saturation pressure.', &
+        '           The default behavior is to compute psat at 25°C. ', &
+        '           See options.',&
+        '    +Tsat  Compute the saturation temperature.', &
+        '           The default behavior is to compute Tsat at 1 bar. ', &
+        '           See options.',&
         '                                                                      ', &
         '  Their syntax is:                                                    ', &
-        '    +kh   [OPTION...]                                                 ', &
-        '    +kd   [OPTION...]                                                 ', &
+        '    +kh     [OPTION...]                                                 ', &
+        '    +kd     [OPTION...]                                                 ', &
+        '    +psat   [OPTION...]                                                 ', &
+        '    +Tsat   [OPTION...]                                                 ', &
         '                                                                      ', &
         'OPTIONS                                                               ', &
         '                                                                      ', &
@@ -100,6 +108,12 @@ program iapwscli
         '  --gases, -g GAS...                Gases for which to compute kD. Default to H2.', &
         '  --D2O,                            Set heavywater as the solvent.', &
         '  --listgases                       Display available gases for computing kD.', &
+        '                                                                      ', &
+        'psat:                                                                   ', &
+        '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
+        '                                                                      ', &
+        'Tsat:                                                                   ', &
+        '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
         '                                                                      ', &
         'all:                                                                  ', &
         '  --usage, -u                       Show usage text and exit.                   ', &
@@ -162,6 +176,18 @@ program iapwscli
                 write(output_unit, '(A)') gases2(heavywater)
             end if
 
+        case ('psat')
+            call set_args('--temperature:T 25.0',  help_text, version_text) 
+            call get_args('T', T)
+
+            call print_psat(T)
+        
+        case ('Tsat')
+            call set_args('--pressure:p 1.0',  help_text, version_text) 
+            call get_args('p', p)
+
+            call print_Tsat(p)
+            
         case default
             call set_args('', help_text, version_text) 
             write(output_unit, '(A)') 'Enter a valid command. See --help.'
@@ -302,6 +328,56 @@ subroutine print_kd(T, x2, gas, heavywater)
         end do
     end do
     deallocate(kr)
+end subroutine
+
+subroutine print_psat(T)
+    real(dp), intent(in), contiguous :: T(:)
+    
+    real(dp), allocatable :: p(:)
+    integer :: i
+
+    character(len=20) :: headers(2)
+    character(len=32) :: fmt
+    character(len=20) :: s1, s2
+    
+    headers = [character(len=15) :: 'T-degC', 'psat-bar']
+    fmt = '(A20, A20)'
+    
+    write(output_unit, fmt) headers
+
+    allocate(p(size(T)))
+    call psat(T+273.15_dp, p)
+    do i=1, size(T)
+        write(s1, '(SP, F14.2)') T(i)
+        write(s2, '(SP, F20.6)') p(i)*10.0_dp 
+        write(output_unit, fmt) adjustl(s1), adjustl(s2)
+    end do
+    deallocate(p)
+end subroutine
+
+subroutine print_Tsat(p)
+    real(dp), intent(in), contiguous :: p(:)
+    
+    real(dp), allocatable :: T(:)
+    integer :: i
+
+    character(len=20) :: headers(2)
+    character(len=32) :: fmt
+    character(len=20) :: s1, s2
+    
+    headers = [character(len=15) :: 'psat-bar', 'T-degC']
+    fmt = '(A20, A20)'
+    
+    write(output_unit, fmt) headers
+
+    allocate(T(size(p)))
+    call Tsat(p/10.0_dp,T)
+    do i=1, size(p)
+        write(s1, '(SP, F20.6)') p(i)
+        write(s2, '(SP, F14.2)') T(i) - 273.15_dp
+        write(output_unit, fmt) adjustl(s1), adjustl(s2)
+    end do
+    deallocate(T)
 end subroutine
 
 end program
