@@ -11,3 +11,5 @@ Modules
 
 .. f:module:: iapws__capi
 
+.. f:program:: iapwscli
+
