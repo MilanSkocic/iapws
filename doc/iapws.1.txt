@@ -1,4 +1,4 @@
-iapws(1)                                                                                                         Library calls                                                                                                         iapws(1)
+iapws(1)                                                    Library calls                                                   iapws(1)
 
 NAME
        iapws - Compute light and heavy water properties.
@@ -12,9 +12,11 @@ DESCRIPTION
 SUBCOMMANDS
        Valid subcommands are:
 
-              +kh    Compute the Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for O2 at 25°C.  See options.
+              +kh    Compute  the  Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for
+                     O2 at 25°C.  See options.
 
-              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2 The default behavior is to compute the constant kD for H2 at 25°C.  See options.
+              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2 The default behavior is  to  compute  the
+                     constant kD for H2 at 25°C.  See options.
 
               +psat  Compute the saturation pressure.  The default behavior is to compute psat at 25°C.  See options.
 
@@ -97,4 +99,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.6.0                                                                                                           11 February 2026                                                                                                       iapws(1)
+0.6.0                                                     11 February 2026                                                  iapws(1)
