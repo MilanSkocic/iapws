@@ -1032,6 +1032,493 @@ document.write(`
 
 </section>
 </section>
+<section id="f-program-iapwscli">
+<h3>iapwscli (program)<a class="headerlink" href="#f-program-iapwscli" title="Link to this heading">#</a></h3>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">program </span><span class="n">iapwscli</span>
+<span class="w">    </span><span class="k">use </span><span class="n">iso_fortran_env</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">error_unit</span>
+<span class="w">    </span><span class="k">use </span><span class="n">M_CLI2</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">set_args</span><span class="p">,</span><span class="w"> </span><span class="n">iget</span><span class="p">,</span><span class="w"> </span><span class="n">lget</span><span class="p">,</span><span class="w"> </span><span class="n">get_args</span><span class="p">,</span><span class="w"> </span><span class="n">dgets</span>
+<span class="w">    </span><span class="k">use </span><span class="n">M_CLI2</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">args</span><span class="o">=&gt;</span><span class="n">unnamed</span><span class="p">,</span><span class="w"> </span><span class="n">get_subcommand</span><span class="p">,</span><span class="w"> </span><span class="n">set_mode</span>
+<span class="w">    </span><span class="k">use </span><span class="n">stdlib_optval</span>
+<span class="w">    </span><span class="k">use </span><span class="n">stdlib_codata</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">Mu</span><span class="o">=&gt;</span><span class="n">MOLAR_MASS_CONSTANT</span>
+<span class="w">    </span><span class="k">use </span><span class="n">iapws</span>
+<span class="w">    </span><span class="k">use </span><span class="n">iapws__common</span>
+<span class="w">    </span><span class="k">use </span><span class="n">ciaaw</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">get_saw</span><span class="p">,</span><span class="w"> </span><span class="n">get_naw</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;iapws&quot;</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">target</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">help_text</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">target</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">version_text</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cmd</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">124</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">msg</span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">ierr</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(:),</span><span class="w"> </span><span class="n">f</span><span class="p">(:),</span><span class="w"> </span><span class="n">x2</span><span class="p">(:),</span><span class="w"> </span><span class="n">p</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gas</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">heavywater</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">gas_type</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">list_gases</span><span class="p">(:)</span>
+
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_H</span><span class="p">,</span><span class="w"> </span><span class="n">M_O</span><span class="p">,</span><span class="w"> </span><span class="n">M_C</span><span class="p">,</span><span class="w"> </span><span class="n">M_N</span><span class="p">,</span><span class="w"> </span><span class="n">M_S</span><span class="p">,</span><span class="w"> </span><span class="n">M_F</span><span class="p">,</span><span class="w"> </span><span class="n">M_D</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_He</span><span class="p">,</span><span class="w"> </span><span class="n">M_Ne</span><span class="p">,</span><span class="w"> </span><span class="n">M_Ar</span><span class="p">,</span><span class="w"> </span><span class="n">M_Kr</span><span class="p">,</span><span class="w"> </span><span class="n">M_Xe</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_H2</span><span class="p">,</span><span class="w"> </span><span class="n">M_D2</span><span class="p">,</span><span class="w"> </span><span class="n">M_N2</span><span class="p">,</span><span class="w"> </span><span class="n">M_O2</span><span class="p">,</span><span class="w"> </span><span class="n">M_CO</span><span class="p">,</span><span class="w"> </span><span class="n">M_CO2</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_H2S</span><span class="p">,</span><span class="w"> </span><span class="n">M_CH4</span><span class="p">,</span><span class="w"> </span><span class="n">M_C2H6</span><span class="p">,</span><span class="w"> </span><span class="n">M_SF6</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_H2O</span><span class="p">,</span><span class="w"> </span><span class="n">M_D2O</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_solvent</span>
+
+<span class="w">    </span><span class="n">M_H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_F</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M_D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_naw</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">M_He</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;He&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_Ne</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;Ne&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_Ar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;Ar&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_Kr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;Kr&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_Xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_saw</span><span class="p">(</span><span class="s1">&#39;Xe&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_H2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">M_H</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_D2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">M_D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_N2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">M_N</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_O2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">M_O</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_CO2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">M_C</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">M_O</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_H2S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">M_H</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">M_S</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_CH4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">M_C</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">M_H</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_C2H6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">M_C</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="o">*</span><span class="n">M_H</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_SF6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">M_S</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="o">*</span><span class="n">M_F</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_H2O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">M_H</span><span class="o">+</span><span class="n">M_O</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+<span class="w">    </span><span class="n">M_D2O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">M_D</span><span class="o">+</span><span class="n">M_O</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Mu</span><span class="p">%</span><span class="k">value</span><span class="o">*</span><span class="mi">1</span><span class="n">d3</span>
+
+<span class="w">    </span><span class="n">version_text</span><span class="o">=</span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;PROGRAM:      &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="s1">&#39;                                              &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;DESCRIPTION:  Compute light and heavy water properties.               &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;VERSION:      &#39;</span><span class="o">//</span><span class="n">get_version</span><span class="p">()</span><span class="o">//</span><span class="s1">&#39;                                     &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;AUTHOR:       M. Skocic                                               &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;LICENSE:      MIT                                                     &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="p">]</span>
+
+<span class="w">    </span><span class="n">help_text</span><span class="o">=</span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;NAME                                                                  &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="s1">&#39; - Compute light and heavy water properties.              &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;SYNOPSIS                                                              &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="s1">&#39; SUBCOMMAND [OPTION...]                                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;DESCRIPTION                                                           &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="s1">&#39; is a command line interface for computing properties&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  of light and heavy water according to IAPWS.                        &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;SUBCOMMANDS                                                           &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  Valid subcommands are:                                              &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s2">&quot;    +kh    Compute the Henry&#39;s constant for gases in H2O or D2O.        &quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           The default behavior is to compute the constant kH for O2 at 25°C.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           See options.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2O.  &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           The default behavior is to compute the constant kD for H2 at 25°C.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           See options.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +psat  Compute the saturation pressure.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           The default behavior is to compute psat at 25°C. &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           See options.&#39;</span><span class="p">,&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +Tsat  Compute the saturation temperature.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           The default behavior is to compute Tsat at 1 bar. &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;           See options.&#39;</span><span class="p">,&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  Their syntax is:                                                    &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +kh     [OPTION...]                                                 &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +kd     [OPTION...]                                                 &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +psat   [OPTION...]                                                 &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;    +Tsat   [OPTION...]                                                 &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;OPTIONS                                                               &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;kh:                                                                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa. Default to 0.1 MPa.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --gases, -g GAS...                Gases for which to compute kH. Default to O2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --D2O                             Set heavywater as the solvent.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --listgases                       Display available gases for computing kH.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;kd:                                                                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --x2, -x x2...                    Molar fraction of gas in water. Default to 1e-9.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --gases, -g GAS...                Gases for which to compute kD. Default to H2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --D2O,                            Set heavywater as the solvent.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --listgases                       Display available gases for computing kD.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;psat:                                                                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;Tsat:                                                                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;all:                                                                  &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --usage, -u                       Show usage text and exit.                   &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --help, -h                        Show help text and exit.                    &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --verbose, -V                     Display additional information when available.&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  --version, -v                     Show version information and exit.          &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;EXAMPLE                                                               &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  Minimal example                                                     &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;      iapws kh -T 25,100 -f 0.1,0.02 -g O2,H2                       &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;      iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2                       &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;                                                                      &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;SEE ALSO                                                              &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;  ciaaw(3), codata(3)                                                 &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">call </span><span class="n">set_mode</span><span class="p">(</span><span class="s1">&#39;strict&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_subcommand</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;kh&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">set_args</span><span class="p">(</span><span class="s1">&#39;--temperature:T 25.0 --fugacity:f 0.1 --gas:g O2 --D2O --listgases&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="n">help_text</span><span class="p">,</span><span class="w"> </span><span class="n">version_text</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">lget</span><span class="p">(</span><span class="s1">&#39;D2O&#39;</span><span class="p">))</span><span class="k">then</span>
+<span class="k">                </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">end if</span>
+
+<span class="k">            call </span><span class="n">print_kh</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">,</span><span class="w"> </span><span class="n">heavywater</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">lget</span><span class="p">(</span><span class="s1">&#39;listgases&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">gases2</span><span class="p">(</span><span class="n">heavywater</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end if</span>
+
+<span class="k">        case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;kd&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">set_args</span><span class="p">(</span><span class="s1">&#39;--temperature:T 25.0 --x2:x 1.0d-9 --gas:g H2 --D2O --listgases&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="n">help_text</span><span class="p">,</span><span class="w"> </span><span class="n">version_text</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">lget</span><span class="p">(</span><span class="s1">&#39;D2O&#39;</span><span class="p">))</span><span class="k">then</span>
+<span class="k">                </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">heavywater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">            </span>
+<span class="k">            call </span><span class="n">print_kd</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">,</span><span class="w"> </span><span class="n">heavywater</span><span class="p">)</span>
+<span class="w">            </span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">lget</span><span class="p">(</span><span class="s1">&#39;listgases&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">gases2</span><span class="p">(</span><span class="n">heavywater</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end if</span>
+
+<span class="k">        case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;psat&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">set_args</span><span class="p">(</span><span class="s1">&#39;--temperature:T 25.0&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">help_text</span><span class="p">,</span><span class="w"> </span><span class="n">version_text</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">call </span><span class="n">print_psat</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Tsat&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">set_args</span><span class="p">(</span><span class="s1">&#39;--pressure:p 1.0&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">help_text</span><span class="p">,</span><span class="w"> </span><span class="n">version_text</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_args</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">call </span><span class="n">print_Tsat</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="w">            </span>
+<span class="w">        </span><span class="k">case </span><span class="n">default</span>
+<span class="w">            </span><span class="k">call </span><span class="n">set_args</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">help_text</span><span class="p">,</span><span class="w"> </span><span class="n">version_text</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Enter a valid command. See --help.&#39;</span>
+<span class="w">            </span><span class="k">stop</span>
+<span class="k">    end select</span>
+<span class="k">    </span>
+<span class="k">contains</span>
+
+<span class="k">function </span><span class="n">get_mm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="k">result</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span>
+<span class="w">    </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;He&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_He</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Ne&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_Ne</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Ar&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_Ar</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Kr&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_Kr</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Xe&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_Xe</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;H2&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_H2</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;D2&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_D2</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_N2</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;O2&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_O2</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;CO2&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_CO2</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;H2S&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_H2S</span><span class="w"> </span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;CH4&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_CH4</span><span class="w"> </span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;C2H6&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_C2H6</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;SF6&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_SF6</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_H2O</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;D2O&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_D2O</span>
+<span class="w">        </span><span class="k">case </span><span class="n">default</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_dp</span>
+<span class="w">    </span><span class="k">end select</span>
+<span class="k">end function</span>
+
+<span class="k">subroutine </span><span class="n">print_kh</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">,</span><span class="w"> </span><span class="n">heavywater</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(:),</span><span class="w"> </span><span class="n">f</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gas</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">heavywater</span>
+
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">kr</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_solvent</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">headers</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fmt</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="n">s3</span><span class="p">,</span><span class="w"> </span><span class="n">s4</span><span class="p">,</span><span class="w"> </span><span class="n">s5</span><span class="p">,</span><span class="w"> </span><span class="n">s6</span>
+
+<span class="w">    </span>
+<span class="w">    </span><span class="n">M_solvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_H2O</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">heavywater</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then </span>
+<span class="k">        </span><span class="n">M_solvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_D2O</span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k">    </span><span class="n">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="s1">&#39;gas&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;T-degC&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;f-MPa&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;kH-MPa&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;x2-a.u.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;s-ppm&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;(A5, 5A15)&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="n">headers</span>
+
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">kr</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)))</span>
+<span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">gas</span><span class="p">)</span>
+<span class="w">        </span><span class="k">call </span><span class="n">kh</span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="mi">27</span><span class="mf">3.15_dp</span><span class="p">,</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">gas</span><span class="p">(</span><span class="n">k</span><span class="p">)),</span><span class="w"> </span><span class="n">heavywater</span><span class="p">,</span><span class="w"> </span><span class="n">kr</span><span class="p">)</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="w">            </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(A5)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">gas</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(F14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(F14.3)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, EN14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">kr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, EN14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">kr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="c">! x2</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s6</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">kr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">get_mm</span><span class="p">(</span><span class="n">gas</span><span class="p">(</span><span class="n">k</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">M_solvent</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="n">d6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="c">! solubility in liquid</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s4</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s5</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s6</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">        end do</span>
+<span class="k">    end do</span>
+<span class="k">    deallocate</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span>
+<span class="k">end subroutine</span>
+
+<span class="k">subroutine </span><span class="n">print_kd</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">gas</span><span class="p">,</span><span class="w"> </span><span class="n">heavywater</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(:),</span><span class="w"> </span><span class="n">x2</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gas</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">heavywater</span>
+
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">kr</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_solvent</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">headers</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fmt</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="n">s3</span><span class="p">,</span><span class="w"> </span><span class="n">s4</span><span class="p">,</span><span class="w"> </span><span class="n">s5</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">M_solvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_H2O</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">heavywater</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then </span>
+<span class="k">        </span><span class="n">M_solvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_D2O</span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k">    </span><span class="n">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="s1">&#39;gas&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;T-degC&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;x2-a.u.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;kD&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;y2-a.u.&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;(A5, 4A15)&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="n">headers</span>
+
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">kr</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)))</span>
+<span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">gas</span><span class="p">)</span>
+<span class="w">        </span><span class="k">call </span><span class="n">kd</span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="mi">27</span><span class="mf">3.15_dp</span><span class="p">,</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">gas</span><span class="p">(</span><span class="n">k</span><span class="p">)),</span><span class="w"> </span><span class="n">heavywater</span><span class="p">,</span><span class="w"> </span><span class="n">kr</span><span class="p">)</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="w">            </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(A5)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">gas</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, ES14.3)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">x2</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, ES14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">kr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">s5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, ES14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">x2</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s4</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s5</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">        end do</span>
+<span class="k">    end do</span>
+<span class="k">    deallocate</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span>
+<span class="k">end subroutine</span>
+
+<span class="k">subroutine </span><span class="n">print_psat</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(:)</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">headers</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fmt</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="s1">&#39;T-degC&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;psat-bar&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;(A20, A20)&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="n">headers</span>
+
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)))</span>
+<span class="w">    </span><span class="k">call </span><span class="n">psat</span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="mi">27</span><span class="mf">3.15_dp</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F20.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="mf">0.0_dp</span><span class="w"> </span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="w"> </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">    deallocate</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">end subroutine</span>
+
+<span class="k">subroutine </span><span class="n">print_Tsat</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">contiguous</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="p">(:)</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">headers</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fmt</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="s1">&#39;psat-bar&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;T-degC&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;(A20, A20)&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="n">headers</span>
+
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+<span class="w">    </span><span class="k">call </span><span class="n">Tsat</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="mi">1</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F20.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(SP, F14.2)&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">27</span><span class="mf">3.15_dp</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="p">)</span><span class="w"> </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="w"> </span><span class="nb">adjustl</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">    deallocate</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="k">end subroutine</span>
+
+<span class="k">end program</span>
+</pre></div>
+</div>
+<p class="section-subtitle">Dependencies</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">M_CLI2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ciaaw</span></code></p></li>
+<li><p><a class="reference internal" href="#f-module-iapws" title="iapws"><code class="docutils literal notranslate"><span class="pre">iapws</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iapws__common</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iso_fortran_env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdlib_codata</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdlib_optval</span></code></p></li>
+</ul>
+<p class="section-subtitle">Procedures</p>
+<section id="f-function-iapwscli-get-mm">
+<h4>get_mm (function)<a class="headerlink" href="#f-function-iapwscli-get-mm" title="Link to this heading">#</a></h4>
+<dl class="f function">
+<dt class="sig sig-object f">
+<code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">get_mm(x)</span> <span class="pre">-&gt;</span> <span class="pre">r</span></code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x</strong><span class="classifier">character(len=*), intent(in)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">real(dp)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="f-subroutine-iapwscli-print-kh">
+<h4>print_kh (subroutine)<a class="headerlink" href="#f-subroutine-iapwscli-print-kh" title="Link to this heading">#</a></h4>
+<dl class="f subroutine">
+<dt class="sig sig-object f">
+<code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">print_kh(T,</span> <span class="pre">f,</span> <span class="pre">gas,</span> <span class="pre">heavywater)</span></code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>f</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>gas</strong><span class="classifier">character(len=*), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>heavywater</strong><span class="classifier">integer, intent(in)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="f-subroutine-iapwscli-print-kd">
+<h4>print_kd (subroutine)<a class="headerlink" href="#f-subroutine-iapwscli-print-kd" title="Link to this heading">#</a></h4>
+<dl class="f subroutine">
+<dt class="sig sig-object f">
+<code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">print_kd(T,</span> <span class="pre">x2,</span> <span class="pre">gas,</span> <span class="pre">heavywater)</span></code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>x2</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>gas</strong><span class="classifier">character(len=*), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+<dt><strong>heavywater</strong><span class="classifier">integer, intent(in)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="f-subroutine-iapwscli-print-psat">
+<h4>print_psat (subroutine)<a class="headerlink" href="#f-subroutine-iapwscli-print-psat" title="Link to this heading">#</a></h4>
+<dl class="f subroutine">
+<dt class="sig sig-object f">
+<code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">print_psat(T)</span></code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="f-subroutine-iapwscli-print-tsat">
+<h4>print_Tsat (subroutine)<a class="headerlink" href="#f-subroutine-iapwscli-print-tsat" title="Link to this heading">#</a></h4>
+<dl class="f subroutine">
+<dt class="sig sig-object f">
+<code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">print_Tsat(p)</span></code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p</strong><span class="classifier">real(dp), intent(in), contiguous, dimension(:)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
 </section>
 </section>
 
@@ -1113,6 +1600,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapws-capi-capi-wr">capi_wr (subroutine)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapws-capi-capi-wph">capi_wph (subroutine)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapws-capi-capi-kw">capi_Kw (subroutine)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-program-iapwscli">iapwscli (program)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-function-iapwscli-get-mm">get_mm (function)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapwscli-print-kh">print_kh (subroutine)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapwscli-print-kd">print_kd (subroutine)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapwscli-print-psat">print_psat (subroutine)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-subroutine-iapwscli-print-tsat">print_Tsat (subroutine)</a></li>
 </ul>
 </li>
 </ul>
