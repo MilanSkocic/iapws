@@ -5,6 +5,8 @@
     * R7-97: Region 4 psat and Tsat
 * Code refactoring.
 
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
 
 # 0.5.1
 
