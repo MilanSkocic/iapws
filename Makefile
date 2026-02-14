@@ -24,7 +24,7 @@ SRC_FYPP=$(wildcard ./src/*.fypp)
 
 all: $(FPM_LIBNAME)
 
-$(FPM_LIBNAME): prep build copy_a shared
+$(FPM_LIBNAME): build copy_a shared
 # ---------------------------------------------------------------------
 
 
