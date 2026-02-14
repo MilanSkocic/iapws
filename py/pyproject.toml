@@ -25,7 +25,7 @@ include-package-data = false
 where = ["src"]
 
 [tool.setuptools.package-data]
-pyiapws = ["libiapws.*", "libgfortran*", "libquadmath*", "libgcc_s*", "libwinpthread*"]
+pyiapws = ["libiapws.*", "iapws*", "libgfortran*", "libquadmath*", "libgcc_s*", "libwinpthread*"]
 
 [project.optional-dependencies]
 test = ["pytest"]
