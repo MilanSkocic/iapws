@@ -1,3 +1,10 @@
+# 0.6.1
+
+* Hotfix for missing binary `iapws(1)` in python wrapper.
+
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
+
 # 0.6.0
 
 * Add CLI `iapws(1)` for computing light and heavy water properties:
