@@ -97,7 +97,7 @@ program iapwscli
         '                                                                      ', &
         'kh:                                                                   ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
-        '  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa. Default to 0.1 MPa.', &
+        '  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa. Default to 1 bar.', &
         '  --gases, -g GAS...                Gases for which to compute kH. Default to O2.', &
         '  --D2O                             Set heavywater as the solvent.', &
         '  --listgases                       Display available gases for computing kH.', &
@@ -124,7 +124,7 @@ program iapwscli
         'EXAMPLE                                                               ', &
         '  Minimal example                                                     ', &
         '                                                                      ', &
-        '      iapws kh -T 25,100 -f 0.1,0.02 -g O2,H2                       ', &
+        '      iapws kh -T 25,100 -f 1,0.2 -g O2,H2                       ', &
         '                                                                      ', &
         '      iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2                       ', &
         '                                                                      ', &
@@ -137,7 +137,7 @@ program iapwscli
 
     select case (cmd)
         case ("kh")
-            call set_args('--temperature:T 25.0 --fugacity:f 0.1 --gas:g O2 --D2O --listgases', &
+            call set_args('--temperature:T 25.0 --fugacity:f 1 --gas:g O2 --D2O --listgases', &
                            help_text, version_text) 
             heavywater = 0
             call get_args('g', gas)
@@ -149,12 +149,14 @@ program iapwscli
             else
                 heavywater = 0
             end if
+            
+            if(lget('listgases')) then
+                write(output_unit, '(A)') gases2(heavywater)
+                stop 
+            end if
 
             call print_kh(T, f, gas, heavywater)
 
-            if(lget('listgases')) then
-                write(output_unit, '(A)') gases2(heavywater)
-            end if
 
         case ('kd')
             call set_args('--temperature:T 25.0 --x2:x 1.0d-9 --gas:g H2 --D2O --listgases', &
@@ -170,11 +172,12 @@ program iapwscli
                 heavywater = 0
             end if
             
-            call print_kd(T, x2, gas, heavywater)
-            
             if(lget('listgases')) then
                 write(output_unit, '(A)') gases2(heavywater)
+                stop
             end if
+            
+            call print_kd(T, x2, gas, heavywater)
 
         case ('psat')
             call set_args('--temperature:T 25.0',  help_text, version_text) 
@@ -256,7 +259,7 @@ subroutine print_kh(T, f, gas, heavywater)
         M_solvent = M_D2O
     end if
 
-    headers = [character(len=15) :: 'gas', 'T-degC', 'f-MPa', 'kH-MPa', 'x2-a.u.', 's-ppm']
+    headers = [character(len=15) :: 'gas', 'T-degC', 'f-bar', 'kH-MPa', 'x2-a.u.', 's-ppm']
     fmt = '(A5, 5A15)'
     
     write(output_unit, fmt) headers
@@ -270,8 +273,8 @@ subroutine print_kh(T, f, gas, heavywater)
                 write(s2, '(F14.2)') T(i) 
                 write(s3, '(F14.3)') f(j) 
                 write(s4, '(SP, EN14.2)') kr(i) 
-                write(s5, '(SP, EN14.2)') 1/kr(i) * f(j) ! x2
-                write(s6, '(SP, F14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * f(j) ! solubility in liquid
+                write(s5, '(SP, EN14.2)') 1/kr(i) * (f(j)/10.0_dp) ! x2
+                write(s6, '(SP, F14.2)') 1/kr(i) * get_mm(gas(k)) / M_solvent * 1d6 * (f(j)/10.0_dp) ! solubility in liquid
                 write(output_unit, fmt) &
                     adjustl(s1), &
                     adjustl(s2), &
