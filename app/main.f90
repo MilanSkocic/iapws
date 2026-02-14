@@ -28,6 +28,8 @@ program iapwscli
     real(dp) :: M_H2O, M_D2O
     real(dp) :: M_solvent
 
+    real(dp), parameter :: zero_Celsius = 273.15_dp
+
     M_H = get_saw('H')
     M_O = get_saw('O')
     M_C = get_saw('C')
@@ -266,7 +268,7 @@ subroutine print_kh(T, f, gas, heavywater)
 
     allocate(kr(size(T)))
     do k=1, size(gas)
-        call kh(T+273.15_dp, trim(gas(k)), heavywater, kr)
+        call kh(T+zero_Celsius, trim(gas(k)), heavywater, kr)
         do i=1, size(T)
             do j=1, size(f)
                 write(s1, '(A5)') gas(k)
@@ -313,7 +315,7 @@ subroutine print_kd(T, x2, gas, heavywater)
 
     allocate(kr(size(T)))
     do k=1, size(gas)
-        call kd(T+273.15_dp, trim(gas(k)), heavywater, kr)
+        call kd(T+zero_Celsius, trim(gas(k)), heavywater, kr)
         do i=1, size(T)
             do j=1, size(x2)
                 write(s1, '(A5)') gas(k)
@@ -349,7 +351,7 @@ subroutine print_psat(T)
     write(output_unit, fmt) headers
 
     allocate(p(size(T)))
-    call psat(T+273.15_dp, p)
+    call psat(T+zero_Celsius, p)
     do i=1, size(T)
         write(s1, '(SP, F14.2)') T(i)
         write(s2, '(SP, F20.6)') p(i)*10.0_dp 
@@ -377,7 +379,7 @@ subroutine print_Tsat(p)
     call Tsat(p/10.0_dp,T)
     do i=1, size(p)
         write(s1, '(SP, F20.6)') p(i)
-        write(s2, '(SP, F14.2)') T(i) - 273.15_dp
+        write(s2, '(SP, F14.2)') T(i) - zero_Celsius
         write(output_unit, fmt) adjustl(s1), adjustl(s2)
     end do
     deallocate(T)
