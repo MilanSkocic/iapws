@@ -1,4 +1,4 @@
-iapws(1)                                                                                                         Library calls                                                                                                         iapws(1)
+iapws(1)                                                                                            Library calls                                                                                           iapws(1)
 
 NAME
        iapws - Compute light and heavy water properties.
@@ -97,4 +97,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.6.0                                                                                                           14 February 2026                                                                                                       iapws(1)
+0.6.1                                                                                             14 February 2026                                                                                          iapws(1)
