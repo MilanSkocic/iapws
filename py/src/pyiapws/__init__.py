@@ -1,4 +1,9 @@
 """Python wrapper of the (Modern Fortran) iapws library."""
+import platform
+import subprocess
+import sys
+from pathlib import Path
+
 from typing import Union, List
 import array
 import numpy as np
@@ -13,6 +18,14 @@ pc_H2O = _iapws.pc_H2O
 pc_D2O = _iapws.pc_D2O
 rhoc_H2O = _iapws.rhoc_H2O
 rhoc_D2O = _iapws.rhoc_D2O
+
+def main():
+    binary = Path(__file__).parent / "iapws"
+    if platform.system() == "Windows":
+        binary = binary.with_suffix(".exe")
+
+    res = subprocess.run([binary] + sys.argv[1:])
+    sys.exit(res.returncode)
 
 # utilities
 def _cast_ndarray(X):

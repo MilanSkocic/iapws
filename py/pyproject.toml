@@ -29,3 +29,6 @@ pyiapws = ["libiapws.*", "iapws*", "libgfortran*", "libquadmath*", "libgcc_s*", 
 
 [project.optional-dependencies]
 test = ["pytest"]
+
+[project.scripts]
+pyiapws = "pyiapws:main"
