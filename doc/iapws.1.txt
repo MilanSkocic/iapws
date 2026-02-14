@@ -1,4 +1,4 @@
-iapws(1)                                                    Library calls                                                   iapws(1)
+iapws(1)                                                                                                         Library calls                                                                                                         iapws(1)
 
 NAME
        iapws - Compute light and heavy water properties.
@@ -12,11 +12,9 @@ DESCRIPTION
 SUBCOMMANDS
        Valid subcommands are:
 
-              +kh    Compute  the  Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for
-                     O2 at 25°C.  See options.
+              +kh    Compute the Henry's constant for gases in H2O or D2O.  The default behavior is to compute the constant kH for O2 at 25°C.  See options.
 
-              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2 The default behavior is  to  compute  the
-                     constant kD for H2 at 25°C.  See options.
+              +kd    Compute the vapor-liquid distribution constant for gases in H2O or D2 The default behavior is to compute the constant kD for H2 at 25°C.  See options.
 
               +psat  Compute the saturation pressure.  The default behavior is to compute psat at 25°C.  See options.
 
@@ -39,7 +37,7 @@ OPTIONS
                      Temperature in °C. Default to 25°C.
 
               --fugacity, -f FUGACITY...
-                     Liquid-phase fugacity in MPa. Default to 0.1
+                     Liquid-phase fugacity in MPa. Default to 1 b
 
               --gases, -g GAS...
                      Gases for which to compute kH. Default to O2
@@ -92,11 +90,11 @@ OPTIONS
 EXAMPLE
        Minimal example
 
-             iapws kh -T 25,100 -f 0.1,0.02 -g O2,H2
+             iapws kh -T 25,100 -f 1,0.2 -g O2,H2
 
              iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
 
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.6.0                                                     11 February 2026                                                  iapws(1)
+0.6.0                                                                                                           14 February 2026                                                                                                       iapws(1)

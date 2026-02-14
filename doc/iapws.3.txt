@@ -608,4 +608,4 @@ EXAMPLE
 SEE ALSO
        codata(3), ciaaw(3)
 
-0.5.1                                                                                                           11 February 2026                                                                                                       iapws(3)
+0.6.0                                                                                                           14 February 2026                                                                                                       iapws(3)

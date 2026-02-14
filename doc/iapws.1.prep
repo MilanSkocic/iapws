@@ -33,7 +33,7 @@ OPTIONS
 
 kh:
   --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.
-  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa. Default to 0.1
+  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa. Default to 1 b
   --gases, -g GAS...                Gases for which to compute kH. Default to O2
   --D2O                             Set heavywater as the solvent.
   --listgases                       Display available gases for computing kH.
@@ -60,7 +60,7 @@ all:
 EXAMPLE
   Minimal example
 
-      iapws kh -T 25,100 -f 0.1,0.02 -g O2,H2
+      iapws kh -T 25,100 -f 1,0.2 -g O2,H2
 
       iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
 
