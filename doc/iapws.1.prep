@@ -1,24 +1,3 @@
-[  0%]              iapws_version.f90
-[ 10%]              iapws_version.f90  done.
-[ 10%]                  iapws_api.f90
-[ 20%]                  iapws_api.f90  done.
-[ 20%]                 iapws_capi.f90
-[ 30%]                 iapws_capi.f90  done.
-[ 30%]                      iapws.f90
-[ 40%]                      iapws.f90  done.
-[ 40%]                     libiapws.a
-[ 50%]                     libiapws.a  done.
-[ 50%]                       main.f90
-[ 60%]                       main.f90  done.
-[ 60%]                    example.f90
-[ 70%]                    example.f90  done.
-[ 70%]                          iapws
-[ 80%]                          iapws  done.
-[ 80%]                   example_in_c
-[ 90%]                   example_in_c  done.
-[ 90%]                   example_in_f
-[100%]                   example_in_f  done.
-[100%] Project compiled successfully.
 NAME
   iapws - Compute light and heavy water properties.
 

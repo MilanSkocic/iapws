@@ -1,46 +1,5 @@
 iapws(1)                     Library calls                     iapws(1)
 
-              [      0%]              iapws_version.f90
-
-              [ 10%] iapws_version.f90  done.
-
-              [ 10%] iapws_api.f90
-
-              [ 20%] iapws_api.f90  done.
-
-              [ 20%] iapws_capi.f90
-
-              [ 30%] iapws_capi.f90  done.
-
-              [ 30%] iapws.f90
-
-              [ 40%] iapws.f90  done.
-
-              [ 40%] libiapws.a
-
-              [ 50%] libiapws.a  done.
-
-              [ 50%] main.f90
-
-              [ 60%] main.f90  done.
-
-              [ 60%] example.f90
-
-              [ 70%] example.f90  done.
-
-              [ 70%] iapws
-
-              [ 80%] iapws  done.
-
-              [ 80%] example_in_c
-
-              [ 90%] example_in_c  done.
-
-              [ 90%] example_in_f
-
-              [100%] example_in_f   done.  [100%] Project compiled suc‐
-                     cessfully.
-
 NAME
        iapws - Compute light and heavy water properties.
 
@@ -48,25 +7,25 @@ SYNOPSIS
        iapws SUBCOMMAND [OPTION...]
 
 DESCRIPTION
-       iapws is a command line interface for  computing  properties  of
+       iapws  is  a  command line interface for computing properties of
        light and heavy water according to IAPWS.
 
 SUBCOMMANDS
        Valid subcommands are:
 
-              +kh    Compute  the  Henry's constant for gases in H2O or
-                     D2O.  The default behavior is to compute the  con‐
+              +kh    Compute the Henry's constant for gases in  H2O  or
+                     D2O.   The default behavior is to compute the con‐
                      stant kH for O2 at 25°C.  See options.
 
               +kd    Compute the vapor-liquid distribution constant for
                      gases in H2O or D2 The default behavior is to com‐
                      pute the constant kD for H2 at 25°C.  See options.
 
-              +psat  Compute  the saturation pressure.  The default be‐
+              +psat  Compute the saturation pressure.  The default  be‐
                      havior is to compute psat at 25°C.  See options.
 
-              +Tsat  Compute the saturation temperature.   The  default
-                     behavior  is  to  compute  Tsat at 1 bar.  See op‐
+              +Tsat  Compute  the  saturation temperature.  The default
+                     behavior is to compute Tsat at  1  bar.   See  op‐
                      tions.
 
        Their syntax is:

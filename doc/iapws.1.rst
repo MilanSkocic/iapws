@@ -1,0 +1,131 @@
+NAME
+----
+
+**iapws** - Compute light and heavy water properties.
+
+SYNOPSIS
+--------
+
+::
+
+   iapws SUBCOMMAND [OPTION...]
+
+DESCRIPTION
+-----------
+
+**iapws is a command line interface for computing properties** of light
+and heavy water according to IAPWS.
+
+SUBCOMMANDS
+-----------
+
+Valid subcommands are:
+
+   **+kh**
+      Compute the Henry's constant for gases in H2O or D2O. The default
+      behavior is to compute the constant kH for O2 at 25°C. See
+      options.
+
+   **+kd**
+      Compute the vapor-liquid distribution constant for gases in H2O or
+      D2 The default behavior is to compute the constant kD for H2 at
+      25°C. See options.
+
+   **+psat**
+      Compute the saturation pressure. The default behavior is to
+      compute psat at 25°C. See options.
+
+   **+Tsat**
+      Compute the saturation temperature. The default behavior is to
+      compute Tsat at 1 bar. See options.
+
+Their syntax is:
+
+   **+kh**
+      [OPTION...]
+
+   **+kd**
+      [OPTION...]
+
+   **+psat**
+      [OPTION...]
+
+   **+Tsat**
+      [OPTION...]
+
+OPTIONS
+-------
+
+kh:
+
+   **--temperature, -T TEMPERATURE...**
+      Temperature in °C. Default to 25°C.
+
+   **--fugacity, -f FUGACITY...**
+      Liquid-phase fugacity in MPa. Default to 1 b
+
+   **--gases, -g GAS...**
+      Gases for which to compute kH. Default to O2
+
+   **--D2O**
+      Set heavywater as the solvent.
+
+   **--listgases**
+      Display available gases for computing kH.
+
+kd:
+
+   **--temperature, -T TEMPERATURE...**
+      Temperature in °C. Default to 25°C.
+
+   **--x2, -x x2...**
+      Molar fraction of gas in water. Default to 1
+
+   **--gases, -g GAS...**
+      Gases for which to compute kD. Default to H2
+
+   **--D2O,**
+      Set heavywater as the solvent.
+
+   **--listgases**
+      Display available gases for computing kD.
+
+psat:
+
+   **--temperature, -T TEMPERATURE...**
+      Temperature in °C. Default to 25°C.
+
+Tsat:
+
+   **--pressure, -p PRESSURE...**
+      Pressure in bar. Default to 1 bar.
+
+all:
+
+   **--usage, -u**
+      Show usage text and exit.
+
+   **--help, -h**
+      Show help text and exit.
+
+   **--verbose, -V**
+      Display additional information when availabl
+
+   **--version, -v**
+      Show version information and exit.
+
+EXAMPLE
+-------
+
+Minimal example
+
+::
+
+         iapws kh -T 25,100 -f 1,0.2 -g O2,H2
+
+         iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
+
+SEE ALSO
+--------
+
+**ciaaw(3), codata(3)**
