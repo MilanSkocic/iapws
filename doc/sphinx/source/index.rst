@@ -27,6 +27,7 @@ Example in Python
    :maxdepth: 1
    :hidden:
    
+   man/index.rst
    fortran/index.rst
    C/index.rst
    python/index.rst
