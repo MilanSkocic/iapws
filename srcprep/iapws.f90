@@ -3,7 +3,7 @@ NAME
     iapws - library for light and heavy water properties according to IAPWS.
 
 LIBRARY
-    iapws (-libiapws, -lipaws)
+    iapws (-libiapws, -libiapws)
 
 SYNOPSIS
     use iapws
