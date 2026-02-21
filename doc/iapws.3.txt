@@ -1,10 +1,11 @@
-iapws(3)                                                                                            Library calls                                                                                           iapws(3)
+iapws(3)                     Library calls                     iapws(3)
 
 NAME
-       iapws - library for light and heavy water properties according to IAPWS.
+       iapws  -  library for light and heavy water properties according
+       to IAPWS.
 
 LIBRARY
-       iapws (-libiapws, -lipaws)
+       iapws (-libiapws, -libiapws)
 
 SYNOPSIS
          use iapws
@@ -68,10 +69,12 @@ DESCRIPTION
                      Return the version
 
                      o character(len=:), pointer :: fptr
-                            Fortran pointer to a string indicating the version.
+                            Fortran pointer to a string indicating  the
+                            version.
 
               o pure subroutine kh(T, gas, heavywater, k)
-                     Compute the henry constant kH in MPa for a given temperature (x_2=1/kH).
+                     Compute  the  henry constant kH in MPa for a given
+                     temperature (x_2=1/kH).
 
                      o real(dp), intent(in), contiguous :: T(:)
                             Temperature in K.
@@ -83,10 +86,12 @@ DESCRIPTION
                             Flag if D2O (1) is used or H2O(0).
 
                      o real(dp), intent(out), contiguous :: k(:)
-                            Henry constant in MPa. Filled with NaNs if gas not found.
+                            Henry constant in MPa. Filled with NaNs  if
+                            gas not found.
 
               o pure subroutine kd(T, gas, heavywater, k)
-                     Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
+                     Compute  the  vapor-liquid constant kd for a given
+                     temperature (kd=y_2/x_2).
 
                      o real(dp), intent(in), contiguous :: T(:)
                             Temperature in K.
@@ -98,7 +103,8 @@ DESCRIPTION
                             Flag if D2O (1) is used or H2O(0).
 
                      o real(dp), intent(out), contiguous :: k(:)
-                            Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
+                            Vapor-liquid    constant    (adimensional).
+                            Filled with NaNs if gas not found.
 
               o pure function ngases(heavywater)result(n)
                      Returns the number of gases.
@@ -128,25 +134,30 @@ DESCRIPTION
                             Available gases
 
               o pure subroutine psat(Ts, ps)
-                     Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
+                     Compute  the saturation pressure at temperature Ts
+                     (273.13 K <= Ts <= 647.096 K).
 
                      o real(dp), intent(in), contiguous :: Ts(:)
                             Saturation temperature in K.
 
                      o real(dp), intent(out), contiguous :: ps(:)
-                            Saturation pressure in MPa. Filled with nan if out of validity range.
+                            Saturation pressure in MPa. Filled with nan
+                            if out of validity range.
 
               o pure subroutine Tsat(ps, Ts)
-                     Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
+                     Compute the saturation temperature at pressure  ps
+                     (611.213 Pa <= ps <= 22.064 MPa).
 
                      o real(dp), intent(in), contiguous :: ps(:)
                             Saturation pressure in MPa.
 
                      o real(dp), intent(out), contiguous :: Ts(:)
-                            Saturation temperature in K. Filled with nan if out of validity range.
+                            Saturation  temperature  in  K. Filled with
+                            nan if out of validity range.
 
               o pure subroutine wp(p, T, prop, res)
-                     Compute water properties at pressure p in MPa and temperature T in Kelvin.
+                     Compute water properties at pressure p in MPa  and
+                     temperature T in Kelvin.
 
                      o real(dp), intent(in) :: p(:)
                             Pressure in MPa.
@@ -158,7 +169,8 @@ DESCRIPTION
                             Property (v, u, s, h, cp, cv, w)
 
                      o real(dp), intent(out) :: res(:)
-                            Filled with NaN if no adequate region is found.
+                            Filled  with  NaN  if no adequate region is
+                            found.
 
               o pure subroutine wr(p, T, res)
                      Get the water region corresponding to p and T.
@@ -182,10 +194,13 @@ DESCRIPTION
                             Temperature in K.
 
                      o character(len=1), intent(out) :: res(:)
-                            Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
+                            Phases: l(liquid), v(VAPOR), c(SUPER CRITI‐
+                            CAL), s(SATURATION), n(UNKNOWN).
 
               o pure subroutine Kw(T, rhow, k)
-                     Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
+                     Compute  the  ionization  constant  of  water   Kw
+                     (273.13  K  <=  T  <= 1273.15 K and 0 <= p <= 1000
+                     MPa).
 
                      o real(dp), intent(in) :: T(:)
                             Temperature in K.
@@ -194,7 +209,8 @@ DESCRIPTION
                             Mass density in g.cm^{-3}.
 
                      o real(dp), intent(out) :: k(:)
-                            Ionization constant. Filled with NaN if out of validity range.
+                            Ionization constant. Filled with NaN if out
+                            of validity range.
 
        C API
 
@@ -212,9 +228,11 @@ DESCRIPTION
 
               •  const double iapws_r283_rhoc_D2O
 
-              •  void iapws_g704_kh(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
+              •  void iapws_g704_kh(double *T, char *gas, int  heavywa‐
+                 ter, double *k, int size_gas, size_t size_T)
 
-              •  void iapws_g704_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
+              •  void  iapws_g704_kd(double *T, char *gas, int heavywa‐
+                 ter, double *k, int size_gas, size_t size_T)
 
               •  int iapws_g704_ngases(int heavywater)
 
@@ -226,19 +244,25 @@ DESCRIPTION
 
               •  void iapws_r797_Tsat(size_t N, double *ps, double *Ts)
 
-              •  void iapws_r797_wp(double *p, double *T, char *prop, double *res, size_t N, size_t len)
+              •  void iapws_r797_wp(double *p, double *T,  char  *prop,
+                 double *res, size_t N, size_t len)
 
-              •  void iapws_r797_wr(double *p, double *T, int *res, size_t N)
+              •  void  iapws_r797_wr(double  *p,  double  *T, int *res,
+                 size_t N)
 
-              •  void iapws_r797_wph(double *p, double *T, char *res, size_t N)
+              •  void iapws_r797_wph(double *p, double *T,  char  *res,
+                 size_t N)
 
-              •  void iapws_r1124_Kw(size_t N, double *T, double *rhow, double *k)
+              •  void iapws_r1124_Kw(size_t N, double *T, double *rhow,
+                 double *k)
 
        Python wrapper
 
-              •  kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+              •  kh(T:     np.ndarray,     gas:     str,    heavywater:
+                 bool=False)->Union[np.ndarray, float]
 
-              •  kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
+              •  kd(T:    np.ndarray,     gas:     str,     heavywater:
+                 bool=False)->Union[np.ndarray, float]
 
               •  ngases(heavywater:bool=False)->int
 
@@ -256,15 +280,18 @@ DESCRIPTION
 
               •  wph(p, T)->Union[np.ndarray, str]
 
-              •  Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]
+              •  Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray,
+                 float]
 
 NOTES
-       To use iapws within your fpm project, add the following to your fpm.toml file:
+       To  use iapws within your fpm project, add the following to your
+       fpm.toml file:
 
                [dependencies]
                iapws = { git="https://github.com/MilanSkocic/iapws.git" }
 
-       •  dp stands for double precision and it is an alias to real64 from the iso_fortran_env module.
+       •  dp stands for double precision and it is an alias  to  real64
+          from the iso_fortran_env module.
 
        •  l => liquid
 
@@ -608,4 +635,4 @@ EXAMPLE
 SEE ALSO
        codata(3), ciaaw(3)
 
-0.6.1                                                                                             14 February 2026                                                                                          iapws(3)
+0.6.2                       21 February 2026                   iapws(3)
