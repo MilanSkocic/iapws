@@ -1,3 +1,13 @@
+# 0.6.2
+
+- Add [response_file]( https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html) 
+  capability for the CLI.
+- Add `rst` output for the man pages.
+- Integration of the man pages in the online documentation generated with sphinx.
+
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
+
 # 0.6.1
 
 * Hotfix for missing binary `iapws(1)` in python wrapper.
