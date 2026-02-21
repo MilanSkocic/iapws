@@ -1,6 +1,6 @@
 program iapwscli
     use iso_fortran_env, only: output_unit, error_unit
-    use M_CLI2, only: set_args, iget, lget, get_args, dgets
+    use M_CLI2, only: set_args, set_mode, iget, lget, get_args, dgets
     use M_CLI2, only: args=>unnamed, get_subcommand, set_mode
     use stdlib_optval
     use stdlib_codata, only: Mu=>MOLAR_MASS_CONSTANT
@@ -135,6 +135,7 @@ program iapwscli
         '' ]
     
     call set_mode('strict')
+    call set_mode('response_file')
     cmd = get_subcommand()
 
     select case (cmd)
