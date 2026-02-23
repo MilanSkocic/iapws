@@ -21,36 +21,36 @@ SUBCOMMANDS
 
 Valid subcommands are:
 
-   **+kh**
+   **+ kh**
       Compute the Henry's constant for gases in H2O or D2O. The default
       behavior is to compute the constant kH for O2 at 25°C. See
       options.
 
-   **+kd**
+   **+ kd**
       Compute the vapor-liquid distribution constant for gases in H2O or
-      D2 The default behavior is to compute the constant kD for H2 at
+      D The default behavior is to compute the constant kD for H2 at
       25°C. See options.
 
-   **+psat**
+   **+ psat**
       Compute the saturation pressure. The default behavior is to
       compute psat at 25°C. See options.
 
-   **+Tsat**
+   **+ Tsat**
       Compute the saturation temperature. The default behavior is to
       compute Tsat at 1 bar. See options.
 
 Their syntax is:
 
-   **+kh**
+   **+ kh**
       [OPTION...]
 
-   **+kd**
+   **+ kd**
       [OPTION...]
 
-   **+psat**
+   **+ psat**
       [OPTION...]
 
-   **+Tsat**
+   **+ Tsat**
       [OPTION...]
 
 OPTIONS
