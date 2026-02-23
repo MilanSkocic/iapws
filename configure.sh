@@ -76,7 +76,6 @@ if [[ "$FPM_VERSION" == *"dev"* ]]; then
     export FPM_VERSION="$FPM_VERSION+$(git rev-parse --short HEAD)"
 fi
 
-export DESTDIR=.
 export PREFIX=$FPM_DEFAULT_INSTALL_DIR
 export MANWIDTH=72
 
