@@ -1,4 +1,4 @@
-# 0.6.2
+# 0.7.0
 
 - Add [response_file]( https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html) 
   capability for the CLI.
