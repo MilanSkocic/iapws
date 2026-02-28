@@ -23,12 +23,12 @@ Valid subcommands are:
 
    **+ kh**
       Compute the Henry's constant for gases in H2O or D2O. The default
-      behavior is to compute the constant kH for O2 at 25°C. See
-      options.
+      behavior is to compute the constant kH for O2 at 25°C.See options.
+      See options.
 
    **+ kd**
       Compute the vapor-liquid distribution constant for gases in H2O or
-      D The default behavior is to compute the constant kD for H2 at
+      D2O. The default behavior is to compute the constant kD for H2 at
       25°C. See options.
 
    **+ psat**
@@ -38,6 +38,11 @@ Valid subcommands are:
    **+ Tsat**
       Compute the saturation temperature. The default behavior is to
       compute Tsat at 1 bar. See options.
+
+   **+ wp**
+      Compute water properties for regions 1 to 5. The default behavior
+      is to compute the properties at 25°C and 1 bar. WARNING:
+      Currently, only region 1 is supported.
 
 Their syntax is:
 
@@ -53,6 +58,9 @@ Their syntax is:
    **+ Tsat**
       [OPTION...]
 
+   **+ wp**
+      [OPTION...]
+
 OPTIONS
 -------
 
@@ -62,10 +70,10 @@ kh:
       Temperature in °C. Default to 25°C.
 
    **--fugacity, -f FUGACITY...**
-      Liquid-phase fugacity in MPa. Default to 1 b
+      Liquid-phase fugacity in MPa. Default to 1 bar.
 
    **--gases, -g GAS...**
-      Gases for which to compute kH. Default to O2
+      Gases for which to compute kH. Default to O2.
 
    **--D2O**
       Set heavywater as the solvent.
@@ -79,10 +87,10 @@ kd:
       Temperature in °C. Default to 25°C.
 
    **--x2, -x x2...**
-      Molar fraction of gas in water. Default to 1
+      Molar fraction of gas in water. Default to 1e-9.
 
    **--gases, -g GAS...**
-      Gases for which to compute kD. Default to H2
+      Gases for which to compute kD. Default to H2.
 
    **--D2O,**
       Set heavywater as the solvent.
@@ -100,6 +108,8 @@ Tsat:
    **--pressure, -p PRESSURE...**
       Pressure in bar. Default to 1 bar.
 
+wp:
+
 all:
 
    **--usage, -u**
@@ -109,7 +119,7 @@ all:
       Show help text and exit.
 
    **--verbose, -V**
-      Display additional information when availabl
+      Display additional information.
 
    **--version, -v**
       Show version information and exit.
@@ -137,7 +147,6 @@ Minimal example
 ::
 
          iapws kh -T 25,100 -f 1,0.2 -g O2,H2
-
          iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
 
 SEE ALSO

@@ -22,13 +22,16 @@ Valid subcommands are:
 .B
 + kh
 Compute the Henry's constant for gases in H2O or D2O.
-The default behavior is to compute the constant kH for O2 at 25°C.
+The default behavior is to compute the constant kH for O2
+at 25°C.See options.
 See options.
 .TP
 .B
 + kd
-Compute the vapor-liquid distribution constant for gases in H2O or D
-The default behavior is to compute the constant kD for H2 at 25°C.
+Compute the vapor-liquid distribution constant for gases
+in H2O or D2O.
+The default behavior is to compute the constant kD for H2
+at 25°C.
 See options.
 .TP
 .B
@@ -42,6 +45,13 @@ See options.
 Compute the saturation temperature.
 The default behavior is to compute Tsat at 1 bar.
 See options.
+.TP
+.B
++ wp
+Compute water properties for regions 1 to 5.
+The default behavior is to compute the properties
+at 25°C and 1 bar.
+WARNING: Currently, only region 1 is supported.
 .RE
 .PP
 Their syntax is:
@@ -62,6 +72,10 @@ Their syntax is:
 .B
 + Tsat
 [OPTION\.\.\.]
+.TP
+.B
++ wp
+[OPTION\.\.\.]
 .SH OPTIONS
 
 kh:
@@ -73,11 +87,13 @@ Temperature in °C. Default to 25°C.
 .TP
 .B
 \fB--fugacity\fP, \fB-f\fP FUGACITY\.\.\.
-Liquid-phase fugacity in MPa. Default to 1 b
+Liquid-phase fugacity in MPa.
+Default to 1 bar.
 .TP
 .B
 \fB--gases\fP, \fB-g\fP GAS\.\.\.
-Gases for which to compute kH. Default to O2
+Gases for which to compute kH.
+Default to O2.
 .TP
 .B
 \fB--D2O\fP
@@ -85,7 +101,8 @@ Set heavywater as the solvent.
 .TP
 .B
 \fB--listgases\fP
-Display available gases for computing kH.
+Display available gases for
+computing kH.
 .RE
 .PP
 kd:
@@ -97,11 +114,13 @@ Temperature in °C. Default to 25°C.
 .TP
 .B
 \fB--x2\fP, \fB-x\fP x2\.\.\.
-Molar fraction of gas in water. Default to 1
+Molar fraction of gas in water.
+Default to 1e-9.
 .TP
 .B
 \fB--gases\fP, \fB-g\fP GAS\.\.\.
-Gases for which to compute kD. Default to H2
+Gases for which to compute kD.
+Default to H2.
 .TP
 .B
 \fB--D2O\fP,
@@ -109,7 +128,8 @@ Set heavywater as the solvent.
 .TP
 .B
 \fB--listgases\fP
-Display available gases for computing kD.
+Display available gases for
+computing kD.
 .RE
 .PP
 psat:
@@ -128,6 +148,8 @@ Tsat:
 Pressure in bar. Default to 1 bar.
 .RE
 .PP
+wp:
+.PP
 all:
 .RS
 .TP
@@ -141,7 +163,7 @@ Show help text and exit.
 .TP
 .B
 \fB--verbose\fP, \fB-V\fP
-Display additional information when availabl
+Display additional information.
 .TP
 .B
 \fB--version\fP, \fB-v\fP
@@ -166,7 +188,6 @@ Minimal example
 .nf
 .fam C
       iapws kh -T 25,100 -f 1,0.2 -g O2,H2
-
       iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
 
 .fam T
