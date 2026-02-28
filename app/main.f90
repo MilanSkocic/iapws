@@ -132,6 +132,10 @@ program iapwscli
         '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
         '                                                                      ', &
         'wp:                                                           ', &
+        '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
+        '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
+        '  --psat,                           Compute properties at Psat for    ', &
+        '                                    each temperature.', &
         '                                                                      ', &
         'all:                                                                  ', &
         '  --usage, -u        Show usage text and exit.         ', &
@@ -225,7 +229,20 @@ program iapwscli
             call print_Tsat(p)
 
         case('wp')
-            call set_args('--temperature:T 25.0, --pressure:p 1.0', help_text, version_text)
+            call set_args('--temperature:T 25.0, --pressure:p 1.0 --psat:F', help_text, version_text)
+            call get_args('T', T)
+            if(lget('psat'))then
+                allocate(p(size(T)))
+                call psat(T+zero_Celsius, p)
+                p = (p + epsilon(p)*10.0_dp) * 10.0_dp
+            else
+                call get_args('p', p)
+            end if
+            if(size(p) /= size(T))then
+                write(output_unit, '(A)') 'T and p must have the same number of elements.'
+                stop
+            end if
+            call print_wp(p, T)
             
         case default
             call set_args('', help_text, version_text) 
@@ -417,6 +434,56 @@ subroutine print_Tsat(p)
         write(output_unit, fmt) adjustl(s1), adjustl(s2)
     end do
     deallocate(T)
+end subroutine
+
+subroutine print_wp(p, T)
+    real(dp), intent(in), contiguous :: T(:)
+    real(dp), intent(in), contiguous :: p(:)
+    
+    integer, allocatable :: r(:)
+    character(len=1), allocatable :: ph(:)
+    real(dp), allocatable :: v(:), u(:)
+    integer :: i, n
+
+    character(len=32) :: headers(7)
+    character(len=64) :: fmt
+    character(len=32) :: s1, s2, s3, s4, s5, s6, s7
+
+    headers = [character(len=15) :: 'T-degC', 'p-bar', 'r', 'p', &
+                                    'v-m3.kg^-1', 'rho-kg.m^-3', &
+                                    'u-kJ.kg^-1']
+    fmt = '(A15, A15, A5, A5, A15, A15, A15)'
+    
+    write(output_unit, fmt) headers
+    
+    n = size(p)
+    allocate(r(n))
+    allocate(ph(n))
+    allocate(v(n))
+    allocate(u(n))
+
+    call wr(p/10.0_dp, T+zero_Celsius, r)
+    call wph(p/10.0_dp, T+zero_Celsius, ph)
+    call wp(p/10.0_dp, T+zero_Celsius, 'v', v) 
+    call wp(p/10.0_dp, T+zero_Celsius, 'u', u) 
+    do i=1, size(p), 1
+        write(s1, '(SP, F14.2)') T(i)
+        write(s2, '(SP, F20.6)') p(i)
+        write(s3, '(I2)') r(i)
+        write(s4, '(A5)') ph(i)
+        write(s5, '(SP, EN14.4)') v(i)
+        write(s6, '(SP, F14.2)') 1.0_dp/v(i)
+        write(s7, '(SP, EN14.4)') u(i)
+        write(output_unit, fmt) adjustl(s1), adjustl(s2), &
+                                adjustl(s3), adjustl(s4), &
+                                adjustl(s5), adjustl(s6), &
+                                adjustl(s7)
+    end do
+
+    deallocate(r)
+    deallocate(ph)
+    deallocate(v)
+    deallocate(u)
 end subroutine
 
 end program
