@@ -77,17 +77,17 @@ program iapwscli
         'SUBCOMMANDS                                                           ', &
         '  Valid subcommands are:                                              ', &
         "    + kh    Compute the Henry's constant for gases in H2O or D2O.        ", &
-        '           The default behavior is to compute the constant kH for O2 at 25°C.', &
-        '           See options.', &
+        '            The default behavior is to compute the constant kH for O2 at 25°C.', &
+        '            See options.', &
         '    + kd    Compute the vapor-liquid distribution constant for gases in H2O or D2O.  ', &
-        '           The default behavior is to compute the constant kD for H2 at 25°C.', &
-        '           See options.', &
+        '            The default behavior is to compute the constant kD for H2 at 25°C.', &
+        '            See options.', &
         '    + psat  Compute the saturation pressure.', &
-        '           The default behavior is to compute psat at 25°C. ', &
-        '           See options.',&
+        '            The default behavior is to compute psat at 25°C. ', &
+        '            See options.',&
         '    + Tsat  Compute the saturation temperature.', &
-        '           The default behavior is to compute Tsat at 1 bar. ', &
-        '           See options.',&
+        '            The default behavior is to compute Tsat at 1 bar. ', &
+        '            See options.',&
         '                                                                      ', &
         '  Their syntax is:                                                    ', &
         '    + kh     [OPTION...]                                                 ', &
