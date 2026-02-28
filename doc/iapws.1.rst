@@ -1,3 +1,15 @@
+   **[**
+      0%] main.f90
+
+   **[ 50%]**
+      main.f90 done.
+
+   **[ 50%]**
+      iapws
+
+   **[100%]**
+      iapws done. [100%] Project compiled successfully.
+
 NAME
 ----
 
@@ -110,6 +122,12 @@ Tsat:
 
 wp:
 
+   **--temperature, -T TEMPERATURE...**
+      Temperature in °C. Default to 25°C.
+
+   **--pressure, -p PRESSURE...**
+      Pressure in bar. Default to 1 bar.
+
 all:
 
    **--usage, -u**
@@ -148,6 +166,7 @@ Minimal example
 
          iapws kh -T 25,100 -f 1,0.2 -g O2,H2
          iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
+         iapws wp -T 25,100 -p 0.035,1.0
 
 SEE ALSO
 --------

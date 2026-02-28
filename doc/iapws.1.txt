@@ -1,5 +1,14 @@
 iapws(1)                     Library calls                     iapws(1)
 
+              [      0%]                       main.f90
+
+              [ 50%] main.f90  done.
+
+              [ 50%] iapws
+
+              [100%] iapws   done.   [100%]  Project  compiled success‐
+                     fully.
+
 NAME
        iapws - Compute light and heavy water properties.
 
@@ -7,30 +16,30 @@ SYNOPSIS
        iapws SUBCOMMAND [OPTION...]
 
 DESCRIPTION
-       iapws  is  a  command line interface for computing properties of
+       iapws is a command line interface for  computing  properties  of
        light and heavy water according to IAPWS.
 
 SUBCOMMANDS
        Valid subcommands are:
 
-              + kh   Compute the Henry's constant for gases in  H2O  or
-                     D2O.   The default behavior is to compute the con‐
+              + kh   Compute  the  Henry's constant for gases in H2O or
+                     D2O.  The default behavior is to compute the  con‐
                      stant kH for O2 at 25°C.See options.  See options.
 
               + kd   Compute the vapor-liquid distribution constant for
-                     gases in H2O or D2O.  The default behavior  is  to
-                     compute  the  constant kD for H2 at 25°C.  See op‐
+                     gases  in  H2O or D2O.  The default behavior is to
+                     compute the constant kD for H2 at 25°C.   See  op‐
                      tions.
 
-              + psat Compute the saturation pressure.  The default  be‐
+              + psat Compute  the saturation pressure.  The default be‐
                      havior is to compute psat at 25°C.  See options.
 
-              + Tsat Compute  the  saturation temperature.  The default
-                     behavior is to compute Tsat at  1  bar.   See  op‐
+              + Tsat Compute the saturation temperature.   The  default
+                     behavior  is  to  compute  Tsat at 1 bar.  See op‐
                      tions.
 
-              + wp   Compute  water properties for regions 1 to 5.  The
-                     default behavior is to compute the  properties  at
+              + wp   Compute water properties for regions 1 to 5.   The
+                     default  behavior  is to compute the properties at
                      25°C and 1 bar.  WARNING: Currently, only region 1
                      is supported.
 
@@ -91,6 +100,12 @@ OPTIONS
 
        wp:
 
+              --temperature, -T TEMPERATURE...
+                     Temperature in °C. Default to 25°C.
+
+              --pressure, -p PRESSURE...
+                     Pressure in bar. Default to 1 bar.
+
        all:
 
               --usage, -u
@@ -106,14 +121,14 @@ OPTIONS
                      Show version information and exit.
 
 NOTES
-       You  may  replace  the default options from a file if your first
-       options begin with @file.  Initial options  will  then  be  read
+       You may replace the default options from a file  if  your  first
+       options  begin  with  @file.   Initial options will then be read
        from the "response file" "file.rsp" in the current directory.
 
        If "file" does not exist or cannot be read, then an error occurs
-       and  the  program  stops. Each line of the file is prefixed with
-       "options" and interpreted as a separate argument. The  file  it‐
-       self  may  not  contain  @file  arguments.  That  is,  it is not
+       and the program stops. Each line of the file  is  prefixed  with
+       "options"  and  interpreted as a separate argument. The file it‐
+       self may not  contain  @file  arguments.  That  is,  it  is  not
        processed recursively.
 
        For  more  information  on  response  files  see  https://urban‐
@@ -124,6 +139,7 @@ EXAMPLE
 
              iapws kh -T 25,100 -f 1,0.2 -g O2,H2
              iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
+             iapws wp -T 25,100 -p 0.035,1.0
 
 SEE ALSO
        ciaaw(3), codata(3)
