@@ -1,7 +1,7 @@
 program iapwscli
     use iso_fortran_env, only: output_unit, error_unit
-    use M_CLI2, only: set_args, set_mode, iget, lget, get_args, dgets
-    use M_CLI2, only: args=>unnamed, get_subcommand, set_mode
+    use M_CLI2, only: set_args, set_mode, iget, lget, get_args, dgets, &
+                      args=>unnamed, get_subcommand, set_mode
     use stdlib_optval
     use stdlib_codata, only: Mu=>MOLAR_MASS_CONSTANT
     use iapws
@@ -12,21 +12,16 @@ program iapwscli
     character(len=:),allocatable, target  :: help_text(:)
     character(len=:),allocatable, target  :: version_text(:)
     character(len=32) :: cmd
-    character(len=124) :: msg
 
-    integer :: i, ierr
     real(dp), allocatable :: T(:), f(:), x2(:), p(:)
     character(len=:), allocatable :: gas(:)
     integer :: heavywater
     
-    type(gas_type), pointer :: list_gases(:)
-
     real(dp) :: M_H, M_O, M_C, M_N, M_S, M_F, M_D
     real(dp) :: M_He, M_Ne, M_Ar, M_Kr, M_Xe 
     real(dp) :: M_H2, M_D2, M_N2, M_O2, M_CO, M_CO2 
     real(dp) :: M_H2S, M_CH4, M_C2H6, M_SF6
     real(dp) :: M_H2O, M_D2O
-    real(dp) :: M_solvent
 
     real(dp), parameter :: zero_Celsius = 273.15_dp
 
@@ -134,8 +129,6 @@ program iapwscli
         'wp:                                                           ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
         '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
-        '  --psat,                           Compute properties at Psat for    ', &
-        '                                    each temperature.', &
         '                                                                      ', &
         'all:                                                                  ', &
         '  --usage, -u        Show usage text and exit.         ', &
@@ -231,13 +224,7 @@ program iapwscli
         case('wp')
             call set_args('--temperature:T 25.0, --pressure:p 1.0 --psat:F', help_text, version_text)
             call get_args('T', T)
-            if(lget('psat'))then
-                allocate(p(size(T)))
-                call psat(T+zero_Celsius, p)
-                p = (p + epsilon(p)*10.0_dp) * 10.0_dp
-            else
-                call get_args('p', p)
-            end if
+            call get_args('p', p)
             if(size(p) /= size(T))then
                 write(output_unit, '(A)') 'T and p must have the same number of elements.'
                 stop
@@ -274,6 +261,8 @@ function get_mm(x)result(r)
             r = M_N2
         case ('O2')
             r = M_O2
+        case ('CO')
+            r = M_CO
         case ('CO2')
             r = M_CO2
         case ('H2S')
@@ -442,48 +431,70 @@ subroutine print_wp(p, T)
     
     integer, allocatable :: r(:)
     character(len=1), allocatable :: ph(:)
-    real(dp), allocatable :: v(:), u(:)
+    real(dp), allocatable :: v(:), u(:), s(:), h(:), cp(:), cv(:), w(:)
     integer :: i, n
 
-    character(len=32) :: headers(7)
+    character(len=32) :: headers(12)
     character(len=64) :: fmt
-    character(len=32) :: s1, s2, s3, s4, s5, s6, s7
+    character(len=32) :: s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12
 
-    headers = [character(len=15) :: 'T-degC', 'p-bar', 'r', 'p', &
+    headers = [character(len=32) :: 'T-degC', 'p-bar', 'r', 'p', &
                                     'v-m3.kg^-1', 'rho-kg.m^-3', &
-                                    'u-kJ.kg^-1']
-    fmt = '(A15, A15, A5, A5, A15, A15, A15)'
-    
+                                    'u-kJ.kg^-1', 's-kJ.kg^-1', 'h-kJ.kg^-1.K^-1', &
+                                    'cp-kJ.kg^-1.K^-1', 'cv-kJ.kg^-1.K^-1', 'w-m.s^-1']
+    fmt = '(A10, A15, A5, A5, A15, A15, A15, A15, A18, A18, A18, A15)'
+
     write(output_unit, fmt) headers
-    
+
     n = size(p)
     allocate(r(n))
     allocate(ph(n))
     allocate(v(n))
     allocate(u(n))
+    allocate(s(n))
+    allocate(h(n))
+    allocate(cp(n))
+    allocate(cv(n))
+    allocate(w(n))
 
     call wr(p/10.0_dp, T+zero_Celsius, r)
     call wph(p/10.0_dp, T+zero_Celsius, ph)
-    call wp(p/10.0_dp, T+zero_Celsius, 'v', v) 
-    call wp(p/10.0_dp, T+zero_Celsius, 'u', u) 
+    call wp(p/10.0_dp, T+zero_Celsius, 'v', v)
+    call wp(p/10.0_dp, T+zero_Celsius, 'u', u)
+    call wp(p/10.0_dp, T+zero_Celsius, 's', s)
+    call wp(p/10.0_dp, T+zero_Celsius, 'h', h)
+    call wp(p/10.0_dp, T+zero_Celsius, 'cp', cp)
+    call wp(p/10.0_dp, T+zero_Celsius, 'cv', cv)
+    call wp(p/10.0_dp, T+zero_Celsius, 'w', w)
     do i=1, size(p), 1
-        write(s1, '(SP, F14.2)') T(i)
-        write(s2, '(SP, F20.6)') p(i)
-        write(s3, '(I2)') r(i)
+        write(s1, '(SP, F10.2)') T(i)
+        write(s2, '(SP, F15.6)') p(i)
+        write(s3, '(I5)') r(i)
         write(s4, '(A5)') ph(i)
-        write(s5, '(SP, EN14.4)') v(i)
-        write(s6, '(SP, F14.2)') 1.0_dp/v(i)
-        write(s7, '(SP, EN14.4)') u(i)
+        write(s5, '(SP, EN15.6)') v(i)
+        write(s6, '(SP, F15.4)') 1.0_dp/v(i)
+        write(s7, '(SP, EN15.4)') u(i)
+        write(s8, '(SP, EN15.4)') s(i)
+        write(s9, '(SP,  EN20.4)') h(i)
+        write(s10, '(SP, EN20.4)') cp(i)
+        write(s11, '(SP, EN20.4)') cv(i)
+        write(s12, '(SP, EN15.4)') w(i)
         write(output_unit, fmt) adjustl(s1), adjustl(s2), &
                                 adjustl(s3), adjustl(s4), &
                                 adjustl(s5), adjustl(s6), &
-                                adjustl(s7)
+                                adjustl(s7), adjustl(s8), &
+                                adjustl(s9), adjustl(s10), &
+                                adjustl(s11), adjustl(s12)
     end do
 
     deallocate(r)
     deallocate(ph)
     deallocate(v)
     deallocate(u)
+    deallocate(h)
+    deallocate(cp)
+    deallocate(cv)
+    deallocate(w)
 end subroutine
 
 end program
