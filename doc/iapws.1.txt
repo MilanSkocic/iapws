@@ -119,4 +119,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3)
 
-0.7.0                       23 February 2026                   iapws(1)
+0.7.0                       28 February 2026                   iapws(1)
