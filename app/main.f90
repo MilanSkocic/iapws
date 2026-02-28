@@ -2,11 +2,11 @@ program iapwscli
     use iso_fortran_env, only: output_unit, error_unit
     use M_CLI2, only: set_args, set_mode, iget, lget, get_args, dgets, &
                       args=>unnamed, get_subcommand, set_mode
-    use stdlib_optval
     use stdlib_codata, only: Mu=>MOLAR_MASS_CONSTANT
     use iapws
     use iapws__common
     use ciaaw, only: get_saw, get_naw
+    implicit none
 
     character(len=*), parameter :: name="iapws"
     character(len=:),allocatable, target  :: help_text(:)
@@ -16,10 +16,10 @@ program iapwscli
     real(dp), allocatable :: T(:), f(:), x2(:), p(:)
     character(len=:), allocatable :: gas(:)
     integer :: heavywater
-    
+
     real(dp) :: M_H, M_O, M_C, M_N, M_S, M_F, M_D
-    real(dp) :: M_He, M_Ne, M_Ar, M_Kr, M_Xe 
-    real(dp) :: M_H2, M_D2, M_N2, M_O2, M_CO, M_CO2 
+    real(dp) :: M_He, M_Ne, M_Ar, M_Kr, M_Xe
+    real(dp) :: M_H2, M_D2, M_N2, M_O2, M_CO, M_CO2
     real(dp) :: M_H2S, M_CH4, M_C2H6, M_SF6
     real(dp) :: M_H2O, M_D2O
 
@@ -32,7 +32,7 @@ program iapwscli
     M_S = get_saw('S')
     M_F = get_saw('F')
     M_D = get_naw('H', A=2)
-    
+
     M_He = get_saw('He') * Mu%value*1d3
     M_Ne = get_saw('Ne') * Mu%value*1d3
     M_Ar = get_saw('Ar') * Mu%value*1d3
@@ -51,11 +51,11 @@ program iapwscli
     M_D2O = (2*M_D+M_O) * Mu%value*1d3
 
     version_text=[character(len=80) :: &
-        'PROGRAM:      '//name//'                                              ', &
-        'DESCRIPTION:  Compute light and heavy water properties.               ', &
-        'VERSION:      '//get_version()//'                                     ', &
-        'AUTHOR:       M. Skocic                                               ', &
-        'LICENSE:      MIT                                                     ', &
+        'PROGRAM:      '//name//'                                      ', &
+        'DESCRIPTION:  Compute light and heavy water properties.       ', &
+        'VERSION:      '//get_version()//'                             ', &
+        'AUTHOR:       M. Skocic                                       ', &
+        'LICENSE:      MIT                                             ', &
         '' ]
 
     help_text=[character(len=80) :: &
@@ -66,75 +66,75 @@ program iapwscli
         '  '//name//' SUBCOMMAND [OPTION...]                                   ', &
         '                                                                      ', &
         'DESCRIPTION                                                           ', &
-        '  '//name//' is a command line interface for computing properties', &
+        '  '//name//' is a command line interface for computing properties     ', &
         '  of light and heavy water according to IAPWS.                        ', &
         '                                                                      ', &
         'SUBCOMMANDS                                                           ', &
         '  Valid subcommands are:                                              ', &
-        "    + kh    Compute the Henry's constant for gases in H2O or D2O.        ", &
-        '            The default behavior is to compute the constant kH for O2', &
-        '            at 25°C.See options.', &
-        '            See options.', &
+        "    + kh    Compute the Henry's constant for gases in H2O or D2O.     ", &
+        '            The default behavior is to compute the constant kH for O2 ', &
+        '            at 25°C.See options.                                      ', &
+        '            See options.                                              ', &
         '    + kd    Compute the vapor-liquid distribution constant for gases  ', &
-        '            in H2O or D2O.', &
-        '            The default behavior is to compute the constant kD for H2', &
-        '            at 25°C.', &
-        '            See options.', &
-        '    + psat  Compute the saturation pressure.', &
-        '            The default behavior is to compute psat at 25°C. ', &
-        '            See options.',&
-        '    + Tsat  Compute the saturation temperature.', &
-        '            The default behavior is to compute Tsat at 1 bar. ', &
-        '            See options.',&
-        '    + wp    Compute water properties for regions 1 to 5.      ', &
+        '            in H2O or D2O.                                            ', &
+        '            The default behavior is to compute the constant kD for H2 ', &
+        '            at 25°C.                                                  ', &
+        '            See options.                                              ', &
+        '    + psat  Compute the saturation pressure.                          ', &
+        '            The default behavior is to compute psat at 25°C.          ', &
+        '            See options.                                              ',&
+        '    + Tsat  Compute the saturation temperature.                       ', &
+        '            The default behavior is to compute Tsat at 1 bar.         ', &
+        '            See options.                                              ',&
+        '    + wp    Compute water properties for regions 1 to 5.              ', &
         '            The default behavior is to compute the properties         ', &
-        '            at 25°C and 1 bar.                                         ', &
-        '            WARNING: Currently, only region 1 is supported.    ', &
-        '                                                              ', &
-        '  Their syntax is:                                            ', &
-        '    + kh     [OPTION...]                                      ', &
-        '    + kd     [OPTION...]                                      ', &
-        '    + psat   [OPTION...]                                      ', &
-        '    + Tsat   [OPTION...]                                      ', &
-        '    + wp     [OPTION...]                                      ', &
-        '                                                              ', &
+        '            at 25°C and 1 bar.                                        ', &
+        '            WARNING: Currently, only region 1 is supported.           ', &
+        '                                                                      ', &
+        '  Their syntax is:                                                    ', &
+        '    + kh     [OPTION...]                                              ', &
+        '    + kd     [OPTION...]                                              ', &
+        '    + psat   [OPTION...]                                              ', &
+        '    + Tsat   [OPTION...]                                              ', &
+        '    + wp     [OPTION...]                                              ', &
+        '                                                                      ', &
         'OPTIONS                                                               ', &
         '                                                                      ', &
         'kh:                                                                   ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
         '  --fugacity, -f FUGACITY...        Liquid-phase fugacity in MPa.     ', & 
-        '                                    Default to 1 bar.', &
+        '                                    Default to 1 bar.                 ', &
         '  --gases, -g GAS...                Gases for which to compute kH.    ', & 
-        '                                    Default to O2.', &
+        '                                    Default to O2.                    ', &
         '  --D2O                             Set heavywater as the solvent.    ', &
         '  --listgases                       Display available gases for       ', & 
-        '                                    computing kH.', &
+        '                                    computing kH.                     ', &
         '                                                                      ', &
         'kd:                                                                   ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
         '  --x2, -x x2...                    Molar fraction of gas in water.   ', &
-        '                                    Default to 1e-9.', &
+        '                                    Default to 1e-9.                  ', &
         '  --gases, -g GAS...                Gases for which to compute kD.    ', &
-        '                                    Default to H2.', &
-        '  --D2O,                            Set heavywater as the solvent.', &
+        '                                    Default to H2.                    ', &
+        '  --D2O,                            Set heavywater as the solvent.    ', &
         '  --listgases                       Display available gases for       ', &
-        '                                    computing kD.', &
+        '                                    computing kD.                     ', &
         '                                                                      ', &
-        'psat:                                                                   ', &
+        'psat:                                                                 ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
         '                                                                      ', &
-        'Tsat:                                                                   ', &
+        'Tsat:                                                                 ', &
         '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
         '                                                                      ', &
-        'wp:                                                           ', &
+        'wp:                                                                   ', &
         '  --temperature, -T TEMPERATURE...  Temperature in °C. Default to 25°C.', &
         '  --pressure, -p PRESSURE...        Pressure in bar. Default to 1 bar.', &
         '                                                                      ', &
         'all:                                                                  ', &
-        '  --usage, -u        Show usage text and exit.         ', &
-        '  --help, -h         Show help text and exit.          ', &
-        '  --verbose, -V      Display additional information.', &
-        '  --version, -v      Show version information and exit.          ', &
+        '  --usage, -u        Show usage text and exit.                        ', &
+        '  --help, -h         Show help text and exit.                         ', &
+        '  --verbose, -V      Display additional information.                  ', &
+        '  --version, -v      Show version information and exit.               ', &
         '                                                                      ', &
         'NOTES                                                                 ', &
         '                                                                      ', &
@@ -144,23 +144,24 @@ program iapwscli
         '  "file.rsp" in the current directory.                                ', &
         '                                                                      ', &
         '  If "file" does not exist or cannot be read, then an error occurs and', &
-        '  the program stops. Each line of the file is prefixed with "options"', &
-        '  and interpreted as a separate argument. The file itself may not'  , &
-        '  contain @file arguments. That is, it is not processed recursively.', &
+        '  the program stops. Each line of the file is prefixed with "options" ', &
+        '  and interpreted as a separate argument. The file itself may not     ', &
+        '  contain @file arguments. That is, it is not processed recursively.  ', &
         '                                                                      ', &
-        '  For more information on response files see                          '  , &
-        '  https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html            '  , &
+        '  For more information on response files see                          ', &
+        '  https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html            ', &
         '                                                                      ', &
         'EXAMPLE                                                               ', &
         '  Minimal example                                                     ', &
         '                                                                      ', &
-        '      iapws kh -T 25,100 -f 1,0.2 -g O2,H2                       ', &
+        '      iapws kh -T 25,100 -f 1,0.2 -g O2,H2                            ', &
         '      iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2                       ', &
+        '      iapws wp -T 25,100 -p 0.035,1.0                                 ', &
         '                                                                      ', &
         'SEE ALSO                                                              ', &
         '  ciaaw(3), codata(3)                                                 ', &
-        '' ]
-    
+        '                                                                      ' ]
+
     call set_mode('strict')
     call set_mode('response_file')
     cmd = get_subcommand()
@@ -168,7 +169,7 @@ program iapwscli
     select case (cmd)
         case ("kh")
             call set_args('--temperature:T 25.0 --fugacity:f 1 --gas:g O2 --D2O --listgases', &
-                           help_text, version_text) 
+                           help_text, version_text)
             heavywater = 0
             call get_args('g', gas)
             call get_args('f', f)
@@ -179,10 +180,10 @@ program iapwscli
             else
                 heavywater = 0
             end if
-            
+
             if(lget('listgases')) then
                 write(output_unit, '(A)') gases2(heavywater)
-                stop 
+                stop
             end if
 
             call print_kh(T, f, gas, heavywater)
@@ -190,7 +191,7 @@ program iapwscli
 
         case ('kd')
             call set_args('--temperature:T 25.0 --x2:x 1.0d-9 --gas:g H2 --D2O --listgases', &
-                           help_text, version_text) 
+                           help_text, version_text)
             heavywater = 0
             call get_args('g', gas)
             call get_args('x', x2)
@@ -201,28 +202,28 @@ program iapwscli
             else
                 heavywater = 0
             end if
-            
+
             if(lget('listgases')) then
                 write(output_unit, '(A)') gases2(heavywater)
                 stop
             end if
-            
+
             call print_kd(T, x2, gas, heavywater)
 
         case ('psat')
-            call set_args('--temperature:T 25.0',  help_text, version_text) 
+            call set_args('--temperature:T 25.0',  help_text, version_text)
             call get_args('T', T)
 
             call print_psat(T)
-        
+
         case ('Tsat')
-            call set_args('--pressure:p 1.0',  help_text, version_text) 
+            call set_args('--pressure:p 1.0',  help_text, version_text)
             call get_args('p', p)
 
             call print_Tsat(p)
 
         case('wp')
-            call set_args('--temperature:T 25.0, --pressure:p 1.0 --psat:F', help_text, version_text)
+            call set_args('--temperature:T 25.0 --pressure:p 1.0 --psat:F', help_text, version_text)
             call get_args('T', T)
             call get_args('p', p)
             if(size(p) /= size(T))then
@@ -230,13 +231,13 @@ program iapwscli
                 stop
             end if
             call print_wp(p, T)
-            
+
         case default
-            call set_args('', help_text, version_text) 
+            call set_args('', help_text, version_text)
             write(output_unit, '(A)') 'Enter a valid command. See --help.'
             stop
     end select
-    
+
 contains
 
 function get_mm(x)result(r)
