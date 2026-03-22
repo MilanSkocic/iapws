@@ -3,7 +3,6 @@
 #include "iapws.h"
 
 int main(void){
-
 double T = 25.0 + 273.15; /* in C*/
 double p; /* p in Mpa */
 char *gas = "O2";
