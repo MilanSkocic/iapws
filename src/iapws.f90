@@ -32,11 +32,11 @@
 !                                               Deprecated. It will be removed in the next major release.
 !                                               Use version() instead.
 !              o character(len=:), pointer :: fptr    Fortran pointer to a string indicating the version..
-!         o function capi_get_version()bind(c, name='iapws_get_version')result(cptr)  C API.
+!         o function capi_get_version()bind(c, name='ciaaw_get_version')result(cptr)  C API.
 !              o type(c_ptr) :: cptr    C pointer to a string indicating the version.
 !         o function version()result(fptr)  Get the version.
 !              o character(len=:), pointer :: fptr    Pointer to a string (=>version).
-!         o function capi_version()bind(C,name="iapws_version")result(cptr)  C API - Get the version
+!         o function capi_version()bind(C,name="ciaaw_version")result(cptr)  C API - Get the version
 !              o type(c_ptr) :: cptr    C pointer to a string indicating the version.
 ! 
 !     C API:
@@ -86,9 +86,10 @@
 !     Example in Fortran
 ! 
 !         program example_in_f
-!         use stdlib_kinds, only: dp, int32
+!         use iapws__common, only: dp, int32
 !         use iapws
-!         implicit none
+!         implicit none(type,external)
+! 
 !         integer(int32) :: i, ngas
 !         real(dp) :: T(1), kh_res(1), kd_res(1), wp_res(1), p(1)
 !         real(dp) :: Ts(7), ps(7)
@@ -101,7 +102,7 @@
 !         character(len=:), pointer :: gases_str
 ! 
 !         print *, '########################## IAPWS VERSION ##########################'
-!         print *, "version ", get_version()
+!         print *, "version ", version()
 ! 
 !         print *, '########################## IAPWS R2-83 ##########################'
 !         print "(a, f10.3, a)", "Tc in h2o=", Tc_H2O, " k"
@@ -175,7 +176,7 @@
 !         print *, r
 !         print *, s
 ! 
-!         end program
+!         end program example_in_f
 ! 
 !     Example in C
 ! 
@@ -200,7 +201,7 @@
 !             char s[3];
 ! 
 !             printf("%s\n", "########################## IAPWS VERSION ##########################");
-!             printf("version %s\n", iapws_get_version());
+!             printf("version %s\n", iapws_version());
 ! 
 !             printf("%s\n", "########################## IAPWS R2-83 ##########################");
 !             printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_Tc_H2O, "K");
@@ -433,6 +434,13 @@ character(len=*), parameter, private :: v = '0.7.0'
 character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
 
+!=======================================================================
+! PUBLIC
+!=======================================================================
+public :: get_version, capi_get_version
+public :: version, capi_version
+!=======================================================================
+
 contains
 !=======================================================================
 ! GET_VERSION() - DEPRECATED
@@ -446,7 +454,7 @@ character(len=:), pointer :: fptr  !! Fortran pointer to a string indicating the
 fptr => version()
 end function get_version
 !-----------------------------------------------------------------------
-function capi_get_version()bind(c, name='ciaaw_get_version')result(cptr)
+function capi_get_version()bind(c, name='iapws_get_version')result(cptr)
 !! C API.
 type(c_ptr) :: cptr    !! C pointer to a string indicating the version.
 cptr = capi_version()
@@ -468,7 +476,7 @@ vf = v
 fptr => vf
 end function version
 !-----------------------------------------------------------------------
-function capi_version()bind(C,name="ciaaw_version")result(cptr)
+function capi_version()bind(C,name="iapws_version")result(cptr)
 !! C API - Get the version
 type(c_ptr) :: cptr !! C pointer to a string indicating the version.
 character(len=:), pointer :: fptr

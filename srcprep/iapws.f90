@@ -66,6 +66,13 @@ $ENDIF
 character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
 
+!=======================================================================
+! PUBLIC
+!=======================================================================
+public :: get_version, capi_get_version
+public :: version, capi_version
+!=======================================================================
+
 contains
 !=======================================================================
 ! GET_VERSION() - DEPRECATED
@@ -79,7 +86,7 @@ character(len=:), pointer :: fptr  !! Fortran pointer to a string indicating the
 fptr => version()
 end function get_version
 !-----------------------------------------------------------------------
-function capi_get_version()bind(c, name='ciaaw_get_version')result(cptr)
+function capi_get_version()bind(c, name='iapws_get_version')result(cptr)
 !! C API.
 type(c_ptr) :: cptr    !! C pointer to a string indicating the version.
 cptr = capi_version()
@@ -101,7 +108,7 @@ vf = v
 fptr => vf
 end function version
 !-----------------------------------------------------------------------
-function capi_version()bind(C,name="ciaaw_version")result(cptr)
+function capi_version()bind(C,name="iapws_version")result(cptr)
 !! C API - Get the version
 type(c_ptr) :: cptr !! C pointer to a string indicating the version.
 character(len=:), pointer :: fptr
