@@ -6,7 +6,11 @@ use ieee_arithmetic, only: ieee_quiet_nan, ieee_value
 implicit none(type,external)
 private
 
+!=======================================================================
+! PUBLIC
+!=======================================================================
 public :: optval
 public :: sp, dp, int32, int64
 public :: ieee_value, ieee_quiet_nan
+!=======================================================================
 end module iapws__common
