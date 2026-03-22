@@ -27,66 +27,21 @@
 !         o R11-24:
 !             o [x] Kw
 ! 
-!     Fortran API
-!         o real(dp), parameter :: Tc_H2O = 647.096_dp  Critical temperature for H2O in K
-!         o real(dp), parameter :: Tc_D2O = 643.847_dp  Critical temperature for D2O in K
-!         o real(dp), parameter :: pc_H2O = 22.064_dp   Critical pressure for H2O in MPa
-!         o real(dp), parameter :: pc_D2O = 21.671_dp   Critical pressure for H2O in MPa
-!         o real(dp), parameter :: rhoc_H2O = 322.0_dp  Critical density for H2O in kg.m-3
-!         o real(dp), parameter :: rhoc_D2O = 356.0_dp  Critical density for H2O in kg.m-3
-!         o function get_version()result(fptr)  Return the version
-!              o character(len=:), pointer :: fptr    Fortran pointer to a string indicating the version.
-!         o pure subroutine kh(T, gas, heavywater, k)  Compute the henry constant kH in MPa for a given temperature (x_2=1/kH).
-!              o real(dp), intent(in), contiguous :: T(:)    Temperature in K.
-!              o character(len=*), intent(in) :: gas    Gas.
-!              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
-!              o real(dp), intent(out), contiguous :: k(:)    Henry constant in MPa. Filled with NaNs if gas not found.
-!         o pure subroutine kd(T, gas, heavywater, k)  Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
-!              o real(dp), intent(in), contiguous :: T(:)    Temperature in K.
-!              o character(len=*), intent(in) :: gas    Gas.
-!              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
-!              o real(dp), intent(out), contiguous :: k(:)    Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
-!         o pure function ngases(heavywater)result(n)  Returns the number of gases.
-!              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
-!              o integer(int32) :: n    Number of gases.
-!         o function gases(heavywater)result(list_gases)  Returns the list of available gases.
-!              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
-!              o type(gas_type), pointer :: list_gases(:)    Available gases.
-!         o function gases2(heavywater)result(str_gases)  Returns the available gases as a string.
-!              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).
-!              o character(len=:), pointer :: str_gases    Available gases
-!         o pure subroutine psat(Ts, ps)  Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
-!              o real(dp), intent(in), contiguous :: Ts(:)    Saturation temperature in K.
-!              o real(dp), intent(out), contiguous :: ps(:)    Saturation pressure in MPa. Filled with nan if out of validity range.
-!         o pure subroutine Tsat(ps, Ts)  Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
-!              o real(dp), intent(in), contiguous :: ps(:)    Saturation pressure in MPa.
-!              o real(dp), intent(out), contiguous :: Ts(:)    Saturation temperature in K. Filled with nan if out of validity range.
-!         o pure subroutine wp(p, T, prop, res)  Compute water properties at pressure p in MPa and temperature T in Kelvin.
-!              o real(dp), intent(in) :: p(:)    Pressure in MPa.
-!              o real(dp), intent(in) :: T(:)    Pressure in K.
-!              o character(len=*), intent(in) :: prop    Property (v, u, s, h, cp, cv, w)
-!              o real(dp), intent(out) :: res(:)    Filled with NaN if no adequate region is found.
-!         o pure subroutine wr(p, T, res)  Get the water region corresponding to p and T.
-!              o real(dp), intent(in) :: p(:)    Pressure in MPa.
-!              o real(dp), intent(in) :: T(:)    Temperature in K.
-!              o integer(int32), intent(out) :: res(:)    Region 1 to 5 if found or -1.
-!         o pure subroutine wph(p, T, res)  Get the water phase corresponding to p and T.
-!              o real(dp), intent(in) :: p(:)    pressure in MPa.
-!              o real(dp), intent(in) :: T(:)    Temperature in K.
-!              o character(len=1), intent(out) :: res(:)    Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
-!         o pure subroutine Kw(T, rhow, k)  Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
-!              o real(dp), intent(in) :: T(:)    Temperature in K.
-!              o real(dp), intent(in) :: rhow(:)    Mass density in g.cm^{-3}.
-!              o real(dp), intent(out) :: k(:)    Ionization constant. Filled with NaN if out of validity range.
+!     Fortran API:
+!         o function get_version()result(fptr)  Get the version.
+!                                               Deprecated. It will be removed in the next major release.
+!                                               Use version() instead.
+!              o character(len=:), pointer :: fptr    Fortran pointer to a string indicating the version..
+!         o function capi_get_version()bind(c, name='iapws_get_version')result(cptr)  C API.
+!              o type(c_ptr) :: cptr    C pointer to a string indicating the version.
+!         o function version()result(fptr)  Get the version.
+!              o character(len=:), pointer :: fptr    Pointer to a string (=>version).
+!         o function capi_version()bind(C,name="iapws_version")result(cptr)  C API - Get the version
+!              o type(c_ptr) :: cptr    C pointer to a string indicating the version.
 ! 
-!     C API
+!     C API:
 !         o char* iapws_get_version(void)
-!         o const double iapws_r283_Tc_H2O
-!         o const double iapws_r283_Tc_D2O
-!         o const double iapws_r283_pc_H2O
-!         o const double iapws_r283_pc_D2O
-!         o const double iapws_r283_rhoc_H2O
-!         o const double iapws_r283_rhoc_D2O
+!         o char* iapws_version(void)
 !         o void iapws_g704_kh(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
 !         o void iapws_g704_kd(double *T, char *gas, int heavywater, double *k, int size_gas, size_t size_T)
 !         o int iapws_g704_ngases(int heavywater)
@@ -99,7 +54,7 @@
 !         o void iapws_r797_wph(double *p, double *T, char *res, size_t N)
 !         o void iapws_r1124_Kw(size_t N, double *T, double *rhow, double *k)
 ! 
-!     Python wrapper
+!     Python API:
 !         o kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
 !         o kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]
 !         o ngases(heavywater:bool=False)->int
@@ -127,6 +82,7 @@
 !     o n => unknown
 ! 
 ! EXAMPLE
+! 
 !     Example in Fortran
 ! 
 !         program example_in_f
@@ -175,7 +131,7 @@
 !         print *, "Gases in H2O: ", ngas
 !         print *, gases_str
 !         do i=1, ngas
-!             print *, gases_list(i)%gas
+!         print *, gases_list(i)%gas
 !         enddo
 ! 
 !         heavywater = 1
@@ -186,7 +142,7 @@
 !         print *, "Gases in D2O: ", ngas
 !         print *, gases_str
 !         do i=1, ngas
-!             print *, gases_list(i)%gas
+!         print *, gases_list(i)%gas
 !         enddo
 ! 
 !         print *, '########################## IAPWS R7-97 ##########################'
@@ -196,13 +152,13 @@
 !         call psat(Ts, ps)
 ! 
 !         do i=1, size(Ts)
-!             print "(SP, F23.3, A3, 4X, F23.3, A3)", Ts(i), "K", ps(i), "MPa"
+!         print "(SP, F23.3, A3, 4X, F23.3, A3)", Ts(i), "K", ps(i), "MPa"
 !         end do
 ! 
 !         ! Compute Ts from ps
 !         call Tsat(ps, Ts)
 !         do i=1, size(Ts)
-!             print "(SP, F23.3, A3, 4X, F23.3, A3)", Ts(i), "K", ps(i), "MPa"
+!         print "(SP, F23.3, A3, 4X, F23.3, A3)", Ts(i), "K", ps(i), "MPa"
 !         end do
 ! 
 !         ! Compute water properties at 280°C/8 Mpa
@@ -228,101 +184,105 @@
 !         #include "iapws.h"
 ! 
 !         int main(void){
-!         double T = 25.0 + 273.15; /* in C*/
-!         double p; /* p in Mpa */
-!         char *gas = "O2";
-!         double kh, kd, wp_res;
-!         char **gases_list;
-!         char *gases_str;
-!         int ngas;
-!         int i;
-!         int heavywater = 0;
-!         double x[3]= {8.0, 4.0, 6.0 };
-!         double y[3] = {553.15, 1200.0, 2000.0};
-!         int r[3];
-!         char s[3];
 ! 
-!         printf("%s\n", "########################## IAPWS VERSION ##########################");
-!         printf("version %s\n", iapws_get_version());
+!             double T = 25.0 + 273.15; /* in C*/
+!             double p; /* p in Mpa */
+!             char *gas = "O2";
+!             double kh, kd, wp_res;
+!             char **gases_list;
+!             char *gases_str;
+!             int ngas;
+!             int i;
+!             int heavywater = 0;
+!             double x[3]= {8.0, 4.0, 6.0 };
+!             double y[3] = {553.15, 1200.0, 2000.0};
+!             int r[3];
+!             char s[3];
 ! 
-!         printf("%s\n", "########################## IAPWS R2-83 ##########################");
-!         printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_Tc_H2O, "K");
-!         printf("%s %10.3f %s\n", "pc in H2O", iapws_r283_pc_H2O, "MPa");
-!         printf("%s %10.3f %s\n", "rhoc in H2O", iapws_r283_rhoc_H2O, "kg/m3");
+!             printf("%s\n", "########################## IAPWS VERSION ##########################");
+!             printf("version %s\n", iapws_get_version());
 ! 
-!         printf("%s %10.3f %s\n", "Tc in D2O", iapws_r283_Tc_D2O, "K");
-!         printf("%s %10.3f %s\n", "pc in D2O", iapws_r283_pc_D2O, "MPa");
-!         printf("%s %10.3f %s\n", "rhoc in D2O", iapws_r283_rhoc_D2O, "kg/m3");
+!             printf("%s\n", "########################## IAPWS R2-83 ##########################");
+!             printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_Tc_H2O, "K");
+!             printf("%s %10.3f %s\n", "pc in H2O", iapws_r283_pc_H2O, "MPa");
+!             printf("%s %10.3f %s\n", "rhoc in H2O", iapws_r283_rhoc_H2O, "kg/m3");
 ! 
-!         printf("\n");
+!             printf("%s %10.3f %s\n", "Tc in D2O", iapws_r283_Tc_D2O, "K");
+!             printf("%s %10.3f %s\n", "pc in D2O", iapws_r283_pc_D2O, "MPa");
+!             printf("%s %10.3f %s\n", "rhoc in D2O", iapws_r283_rhoc_D2O, "kg/m3");
+! 
+!             printf("\n");
 ! 
 ! 
-!         printf("%s\n", "########################## IAPWS G7-04 ##########################");
-!         /* Compute kh and kd in H2O*/
-!         iapws_g704_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
-!         printf("Gas=%s\tT=%fK\tkh=%+10.4f\n", gas, T, kh);
+!             printf("%s\n", "########################## IAPWS G7-04 ##########################");
+!             /* Compute kh and kd in H2O*/
+!             iapws_g704_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
+!             printf("Gas=%s\tT=%fK\tkh=%+10.4f\n", gas, T, kh);
 ! 
-!         iapws_g704_kd(&T, gas, heavywater, &kd, strlen(gas), 1);
-!         printf("Gas=%s\tT=%fK\tkd=%+15.4f\n", gas, T, kd);
+!             iapws_g704_kd(&T, gas, heavywater, &kd, strlen(gas), 1);
+!             printf("Gas=%s\tT=%fK\tkd=%+15.4f\n", gas, T, kd);
 ! 
-!         /* Get and print the available gases */
-!         ngas = iapws_g704_ngases(heavywater);
-!         gases_list = iapws_g704_gases(heavywater);
-!         gases_str = iapws_g704_gases2(heavywater);
-!         printf("Gases in H2O: %d\n", ngas);
-!         printf("%s\n", gases_str);
-!         for(i=0; i<ngas; i++){
-!             printf("%s\n", gases_list[i]);
-!         }
+!             /* Get and print the available gases */
+!             ngas = iapws_g704_ngases(heavywater);
+!             gases_list = iapws_g704_gases(heavywater);
+!             gases_str = iapws_g704_gases2(heavywater);
+!             printf("Gases in H2O: %d\n", ngas);
+!             printf("%s\n", gases_str);
+!             for(i=0; i<ngas; i++){
+!                 printf("%s\n", gases_list[i]);
+!             }
 ! 
-!         heavywater = 1;
-!         ngas = iapws_g704_ngases(heavywater);
-!         gases_list = iapws_g704_gases(heavywater);
-!         gases_str = iapws_g704_gases2(heavywater);
-!         printf("Gases in D2O: %d\n", ngas);
-!         printf("%s\n", gases_str);
-!         for(i=0; i<ngas; i++){
-!             printf("%s\n", gases_list[i]);
-!         }
+!             heavywater = 1;
+!             ngas = iapws_g704_ngases(heavywater);
+!             gases_list = iapws_g704_gases(heavywater);
+!             gases_str = iapws_g704_gases2(heavywater);
+!             printf("Gases in D2O: %d\n", ngas);
+!             printf("%s\n", gases_str);
+!             for(i=0; i<ngas; i++){
+!                 printf("%s\n", gases_list[i]);
+!             }
 ! 
-!         printf("%s\n", "########################## IAPWS R7-97 ##########################");
-!         double Ts[7] =  {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0};
-!         double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-!         for(i=0; i<7; i++){
-!             Ts[i] = Ts[i] + 273.15;
-!         }
-!         iapws_r797_psat(7, Ts, ps);
+!             printf("%s\n", "########################## IAPWS R7-97 ##########################");
+!             double Ts[7] =  {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0};
+!             double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+!             for(i=0; i<7; i++){
+!                 Ts[i] = Ts[i] + 273.15;
+!             }
+!             iapws_r797_psat(7, Ts, ps);
 ! 
-!         for(i=0; i<7; i++){
-!             printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
-!         }
+!             for(i=0; i<7; i++){
+!                 printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
+!             }
 ! 
-!         iapws_r797_Tsat(7, ps, Ts);
-!         for(i=0; i<7; i++){
-!             printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
-!         }
+!             iapws_r797_Tsat(7, ps, Ts);
+!             for(i=0; i<7; i++){
+!                 printf("%+23.3f %s %+23.3f %s\n", Ts[i], "K", ps[i], "MPa");
+!             }
 ! 
-!         T = 273.15 + 280.0;
-!         p = 8.0;
-!         iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
-!         printf("v(8MPa,280°C) = %+23.16f L/kg\n", wp_res * 1000.0);
+!             T = 273.15 + 280.0;
+!             p = 8.0;
+!             iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
+!             printf("v(8MPa,280°C) = %+23.16f L/kg\n", wp_res * 1000.0);
 ! 
-!         iapws_r797_wr(x, y, r, 3);
-!         iapws_r797_wph(x, y, s, 3);
-!         for(i=0; i<3; i++){
-!             printf("%i", r[i]);
-!         }
-!         printf("\n");
-!         for(i=0; i<3; i++){
-!             printf("%c", s[i]);
-!         }
-!         printf("\n");
+!             iapws_r797_wr(x, y, r, 3);
+!             iapws_r797_wph(x, y, s, 3);
+!             for(i=0; i<3; i++){
+!                 printf("%i", r[i]);
+!             }
+!             printf("\n");
+!             for(i=0; i<3; i++){
+!                 printf("%c", s[i]);
+!             }
+!             printf("\n");
 ! 
-!         return 0;
+!             return 0;
 !         }
 ! 
 !     Example in Python
 ! 
+!         r"""Example in python"""
+!         import sys
+!         sys.path.insert(0, "../py/src/")
 !         import array
 !         import numpy as np
 !         import matplotlib.pyplot as plt
@@ -461,10 +421,64 @@
 ! 
 !         plt.show()
 ! 
+! 
 ! SEE ALSO
 !     codata(3), ciaaw(3)
 module iapws
-    !! Main module for the IAPWS library.
-    use iapws__capi
-    use iapws__api
+!! Main module for the IAPWS library.
+use iapws__capi
+use iapws__api
+
+character(len=*), parameter, private :: v = '0.7.0'
+character(len=:), allocatable, target :: vf
+character(len=:), allocatable, target :: vc
+
+contains
+!=======================================================================
+! GET_VERSION() - DEPRECATED
+!=======================================================================
+function get_version()result(fptr)
+!! Get the version.
+!! Deprecated. It will be removed in the next major release.
+!! Use version() instead.
+implicit none
+character(len=:), pointer :: fptr  !! Fortran pointer to a string indicating the version..
+fptr => version()
+end function get_version
+!-----------------------------------------------------------------------
+function capi_get_version()bind(c, name='ciaaw_get_version')result(cptr)
+!! C API.
+type(c_ptr) :: cptr    !! C pointer to a string indicating the version.
+cptr = capi_version()
+end function capi_get_version
+!=======================================================================
+
+
+!=======================================================================
+! VERSION()
+!=======================================================================
+function version()result(fptr)
+!! Get the version.
+character(len=:), pointer :: fptr !! Pointer to a string (=>version).
+if(allocated(vf))then
+    deallocate(vf)
+endif
+allocate(character(len=len(v)) :: vf)
+vf = v
+fptr => vf
+end function version
+!-----------------------------------------------------------------------
+function capi_version()bind(C,name="ciaaw_version")result(cptr)
+!! C API - Get the version
+type(c_ptr) :: cptr !! C pointer to a string indicating the version.
+character(len=:), pointer :: fptr
+fptr => version()
+if(allocated(vc))then
+    deallocate(vc)
+endif
+allocate(character(len=len(fptr)+1) :: vc)
+vc = fptr // c_null_char
+cptr = c_loc(vc)
+end function capi_version
+!=======================================================================
 end module
