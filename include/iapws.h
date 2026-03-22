@@ -8,6 +8,7 @@
 #endif
 
 extern char* iapws_get_version(void);
+extern char* iapws_version(void);
 
 ADD_IMPORT extern const double iapws_r283_Tc_H2O; 
 ADD_IMPORT extern const double iapws_r283_Tc_D2O;
