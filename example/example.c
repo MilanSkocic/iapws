@@ -19,7 +19,7 @@ int main(void){
     char s[3];
     
     printf("%s\n", "########################## IAPWS VERSION ##########################");
-    printf("version %s\n", iapws_get_version());
+    printf("version %s\n", iapws_version());
     
     printf("%s\n", "########################## IAPWS R2-83 ##########################");
     printf("%s %10.3f %s\n", "Tc in H2O", iapws_r283_Tc_H2O, "K");
