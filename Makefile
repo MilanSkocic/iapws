@@ -20,7 +20,7 @@ SRC_FYPP=$(wildcard ./src/*.fypp)
 
 # ---------------------------------------------------------------------
 # TARGETS
-.PHONY: build references doc docs clean logo
+.PHONY: build references doc docs clean logo api
 
 all: $(FPM_LIBNAME)
 
@@ -111,6 +111,11 @@ uninstall:
 
 # ---------------------------------------------------------------------
 # OTHERS
+api:
+	./scripts/f2txt.sh ./src/iapws.f90
+	./scripts/h2txt.sh ./include/iapws.h
+	./scripts/py2txt.sh ./py/src/pyiapws/__init__.py
+
 doc: 
 	fpm run --profile release --target $(FPM_APPNAME) -- --help > doc/$(FPM_APPNAME).1.prep
 	make -C doc

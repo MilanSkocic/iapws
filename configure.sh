@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-update_version () {
-    local mod=$1
-    local v=$2
-    
-    f="./src/"$mod"_version.f90"
-    echo "module "$mod"__version"           > $f
-    echo "    !! Version"                   >> $f
-    echo "    implicit none"                >> $f
-    echo "    private"                      >> $f
-    echo "    character(len=*), parameter, public :: version = \"$v\"" >> $f
-    echo "end module "$mod"__version" >> $f
-    
-    echo -n $FPM_VERSION > ./py/VERSION
-}
-
 # Name
 export FPM_NAME=$(cat fpm.toml | grep -m 1 "name =" | awk -F '=' '{print $2}' | sed -E 's/[ "]//g')
 export FPM_VERSION=$(tr -d '\r' < VERSION | tr -d '\n')
@@ -23,8 +8,6 @@ export FPM_APPNAME=$FPM_NAME
 export FPM_PYNAME="py$FPM_NAME"
 export FPM_PY_SRC="./src/$FPM_PYNAME"
 export FPM_AW="auditwheel repair --plat manylinux_2_35_x86_64 ./dist/*.whl"
-
-update_version $FPM_NAME $FPM_VERSION
 
 # environment variables
 export FPM_FC=gfortran
@@ -86,9 +69,7 @@ IFS=$'\n'
 for i in $envs; do
     echo "export $i" >> make.in
 done
-echo "export DESTDIR=$DESTDIR" >> make.in
 echo "export PREFIX=$PREFIX" >> make.in
-echo "export PREP_DOCUMENT_DIR=$PREP_DOCUMENT_DIR" >> make.in
 echo "export MANWIDTH=$MANWIDTH" >> make.in
 echo "done"
 
@@ -96,4 +77,5 @@ echo "done"
 echo -n "Copying env vars and license to python..."
 cp -f make.in ./py/make.in
 cp -f LICENSE ./py/LICENSE
+echo -n $FPM_VERSION > ./py/VERSION
 echo "done"

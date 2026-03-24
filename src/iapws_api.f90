@@ -1,7 +1,6 @@
 module iapws__api
     !! API.
     use iapws__common
-    use iapws__version
     use iapws__r283
     use iapws__g704
     use iapws__r797
@@ -12,8 +11,6 @@ module iapws__api
     character(len=:), allocatable, target :: version_f
     type(gas_type), allocatable, target :: f_gases(:)
     character(len=:), allocatable, target :: f_gases_str
-
-    public :: get_version                                                       ! VERSION
 
     public :: kh, kd, gases, gases2, ngases, gas_type                           ! G704
 
@@ -26,24 +23,6 @@ module iapws__api
     public :: wp, wr, wph
 
 contains
-
-! ------------------------------------------------------------------------------
-! VERSION
-function get_version()result(fptr) 
-    !! Return the version
-    implicit none
-    character(len=:), pointer :: fptr    !! Fortran pointer to a string indicating the version.
-
-    if(allocated(version_f))then
-        deallocate(version_f)
-    endif
-    allocate(character(len=len(version)) :: version_f)
-    version_f = version
-    fptr => version_f    
-end function
-! ------------------------------------------------------------------------------
-
-
 ! ------------------------------------------------------------------------------
 ! G704
 pure subroutine kh(T, gas, heavywater, k)

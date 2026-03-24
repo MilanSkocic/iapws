@@ -30,8 +30,6 @@ module iapws__capi
     real(c_double), protected, bind(C, name="iapws_r283_rhoc_D2O") :: capi_rhoc_D2O = rhoc_D2O !! Critical density for D2O in kg.m-3
     ! ------------------------------------------------------------------------------
 
-    public :: capi_get_version                                                                     !! VERSION
-
     public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O     !! R283
     
     public :: capi_kh, capi_kd, capi_ngases, capi_gases                                            !!G704
@@ -40,30 +38,6 @@ module iapws__capi
 
 
 contains
-
-
-! ------------------------------------------------------------------------------
-! VERSION 
-function capi_get_version()bind(c,name="iapws_get_version")result(cptr)
-    !! C API
-    implicit none
-    
-    ! Returns   
-    type(c_ptr) :: cptr !! Pointer to version string.
-
-    character(len=:), pointer :: fptr
-    fptr => get_version() 
-
-    if(allocated(version_c))then
-        deallocate(version_c)
-    endif
-    allocate(character(len=len(fptr)+1) :: version_c)
-
-    version_c = fptr // c_null_char
-    cptr = c_loc(version_c)
-end function
-! ------------------------------------------------------------------------------
-
 
 
 ! ------------------------------------------------------------------------------

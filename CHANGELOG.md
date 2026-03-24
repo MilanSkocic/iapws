@@ -1,3 +1,14 @@
+# 0.7.1
+
+- Maintenance release. No API break.
+- Use `prep(1)` for auto-generating the version parameter.
+- Add new API for getting the version number:
+    - `version()` instead of `get_version()` which is deprecated.
+- Deprecated functions will be removed in the next major release.
+
+[Full changelog](https://github.com/MilanSkocic/iapws/releases)
+
+
 # 0.7.0
 
 - Add [response_file]( https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html) 

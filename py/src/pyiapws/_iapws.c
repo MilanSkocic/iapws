@@ -396,7 +396,7 @@ PyMODINIT_FUNC PyInit__iapws(void){
     m = PyModule_Create(&_iapws);
     d = PyModule_GetDict(m);
     
-    v = PyUnicode_FromFormat("%s", iapws_get_version());
+    v = PyUnicode_FromFormat("%s", iapws_version());
     PyDict_SetItemString(d, "__version__", v);
     Py_INCREF(v);
 
