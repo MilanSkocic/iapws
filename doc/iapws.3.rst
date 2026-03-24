@@ -62,7 +62,7 @@ Fortran API:
       **o character(len=:), pointer :: fptr**
          Fortran pointer to a string indicating the version..
 
-   **o function capi_get_version()bind(c, name='ciaaw_get_version')result(cptr)**
+   **o function capi_get_version()bind(c, name='iapws_get_version')result(cptr)**
       C API.
 
       **o type(c_ptr) :: cptr**
@@ -74,7 +74,7 @@ Fortran API:
       **o character(len=:), pointer :: fptr**
          Pointer to a string (=>version).
 
-   **o function capi_version()bind(C,name="ciaaw_version")result(cptr)**
+   **o function capi_version()bind(C,name="iapws_version")result(cptr)**
       C API - Get the version
 
       **o type(c_ptr) :: cptr**
@@ -273,98 +273,97 @@ Example in C
            #include "iapws.h"
 
            int main(void){
+           double T = 25.0 + 273.15; /* in C*/
+           double p; /* p in Mpa */
+           char *gas = "O2";
+           double kh, kd, wp_res;
+           char **gases_list;
+           char *gases_str;
+           int ngas;
+           int i;
+           int heavywater = 0;
+           double x[3]= {8.0, 4.0, 6.0 };
+           double y[3] = {553.15, 1200.0, 2000.0};
+           int r[3];
+           char s[3];
 
-               double T = 25.0 + 273.15; /* in C*/
-               double p; /* p in Mpa */
-               char *gas = "O2";
-               double kh, kd, wp_res;
-               char **gases_list;
-               char *gases_str;
-               int ngas;
-               int i;
-               int heavywater = 0;
-               double x[3]= {8.0, 4.0, 6.0 };
-               double y[3] = {553.15, 1200.0, 2000.0};
-               int r[3];
-               char s[3];
+           printf("%s, "########################## IAPWS VERSION ##########################");
+           printf("version %s, iapws_version());
 
-               printf("%s, "########################## IAPWS VERSION ##########################");
-               printf("version %s, iapws_version());
+           printf("%s, "########################## IAPWS R2-83 ##########################");
+           printf("%s %10.3f %s, "Tc in H2O", iapws_r283_Tc_H2O, "K");
+           printf("%s %10.3f %s, "pc in H2O", iapws_r283_pc_H2O, "MPa");
+           printf("%s %10.3f %s, "rhoc in H2O", iapws_r283_rhoc_H2O, "kg/m3");
 
-               printf("%s, "########################## IAPWS R2-83 ##########################");
-               printf("%s %10.3f %s, "Tc in H2O", iapws_r283_Tc_H2O, "K");
-               printf("%s %10.3f %s, "pc in H2O", iapws_r283_pc_H2O, "MPa");
-               printf("%s %10.3f %s, "rhoc in H2O", iapws_r283_rhoc_H2O, "kg/m3");
+           printf("%s %10.3f %s, "Tc in D2O", iapws_r283_Tc_D2O, "K");
+           printf("%s %10.3f %s, "pc in D2O", iapws_r283_pc_D2O, "MPa");
+           printf("%s %10.3f %s, "rhoc in D2O", iapws_r283_rhoc_D2O, "kg/m3");
 
-               printf("%s %10.3f %s, "Tc in D2O", iapws_r283_Tc_D2O, "K");
-               printf("%s %10.3f %s, "pc in D2O", iapws_r283_pc_D2O, "MPa");
-               printf("%s %10.3f %s, "rhoc in D2O", iapws_r283_rhoc_D2O, "kg/m3");
-
-               printf(");
+           printf(");
 
 
-               printf("%s, "########################## IAPWS G7-04 ##########################");
-               /* Compute kh and kd in H2O*/
-               iapws_g704_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
-               printf("Gas=%s	T=%fK	kh=%+10.4f, gas, T, kh);
+           printf("%s, "########################## IAPWS G7-04 ##########################");
+           /* Compute kh and kd in H2O*/
+           iapws_g704_kh(&T, gas, heavywater, &kh, strlen(gas), 1);
+           printf("Gas=%s	T=%fK	kh=%+10.4f, gas, T, kh);
 
-               iapws_g704_kd(&T, gas, heavywater, &kd, strlen(gas), 1);
-               printf("Gas=%s	T=%fK	kd=%+15.4f, gas, T, kd);
+           iapws_g704_kd(&T, gas, heavywater, &kd, strlen(gas), 1);
+           printf("Gas=%s	T=%fK	kd=%+15.4f, gas, T, kd);
 
-               /* Get and print the available gases */
-               ngas = iapws_g704_ngases(heavywater);
-               gases_list = iapws_g704_gases(heavywater);
-               gases_str = iapws_g704_gases2(heavywater);
-               printf("Gases in H2O: %d, ngas);
-               printf("%s, gases_str);
-               for(i=0; i<ngas; i++){
-                   printf("%s, gases_list[i]);
-               }
+           /* Get and print the available gases */
+           ngas = iapws_g704_ngases(heavywater);
+           gases_list = iapws_g704_gases(heavywater);
+           gases_str = iapws_g704_gases2(heavywater);
+           printf("Gases in H2O: %d, ngas);
+           printf("%s, gases_str);
+           for(i=0; i<ngas; i++){
+               printf("%s, gases_list[i]);
+           }
 
-               heavywater = 1;
-               ngas = iapws_g704_ngases(heavywater);
-               gases_list = iapws_g704_gases(heavywater);
-               gases_str = iapws_g704_gases2(heavywater);
-               printf("Gases in D2O: %d, ngas);
-               printf("%s, gases_str);
-               for(i=0; i<ngas; i++){
-                   printf("%s, gases_list[i]);
-               }
+           heavywater = 1;
+           ngas = iapws_g704_ngases(heavywater);
+           gases_list = iapws_g704_gases(heavywater);
+           gases_str = iapws_g704_gases2(heavywater);
+           printf("Gases in D2O: %d, ngas);
+           printf("%s, gases_str);
+           for(i=0; i<ngas; i++){
+               printf("%s, gases_list[i]);
+           }
 
-               printf("%s, "########################## IAPWS R7-97 ##########################");
-               double Ts[7] =  {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0};
-               double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-               for(i=0; i<7; i++){
-                   Ts[i] = Ts[i] + 273.15;
-               }
-               iapws_r797_psat(7, Ts, ps);
+           printf("%s, "########################## IAPWS R7-97 ##########################");
+           double Ts[7] =  {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0, 374.0};
+           double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+           for(i=0; i<7; i++){
+               Ts[i] = Ts[i] + 273.15;
+           }
+           iapws_r797_psat(7, Ts, ps);
 
-               for(i=0; i<7; i++){
-                   printf("%+23.3f %s %+23.3f %s, Ts[i], "K", ps[i], "MPa");
-               }
+           for(i=0; i<7; i++){
+               printf("%+23.3f %s %+23.3f %s, Ts[i], "K", ps[i], "MPa");
+           }
 
-               iapws_r797_Tsat(7, ps, Ts);
-               for(i=0; i<7; i++){
-                   printf("%+23.3f %s %+23.3f %s, Ts[i], "K", ps[i], "MPa");
-               }
+           iapws_r797_Tsat(7, ps, Ts);
+           for(i=0; i<7; i++){
+               printf("%+23.3f %s %+23.3f %s, Ts[i], "K", ps[i], "MPa");
+           }
 
-               T = 273.15 + 280.0;
-               p = 8.0;
-               iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
-               printf("v(8MPa,280°C) = %+23.16f L/kg, wp_res * 1000.0);
+           T = 273.15 + 280.0;
+           p = 8.0;
+           iapws_r797_wp(&p, &T, "v", &wp_res, 1, 1);
+           printf("v(8MPa,280°C) = %+23.16f L/kg, wp_res * 1000.0);
 
-               iapws_r797_wr(x, y, r, 3);
-               iapws_r797_wph(x, y, s, 3);
-               for(i=0; i<3; i++){
-                   printf("%i", r[i]);
-               }
-               printf(");
-               for(i=0; i<3; i++){
-                   printf("%c", s[i]);
-               }
-               printf(");
+           iapws_r797_wr(x, y, r, 3);
+           iapws_r797_wph(x, y, s, 3);
+           for(i=0; i<3; i++){
+               printf("%i", r[i]);
+           }
+           printf(");
+           for(i=0; i<3; i++){
+               printf("%c", s[i]);
+           }
+           printf(");
 
-               return 0;
+           return 0;
            }
 
 Example in Python
