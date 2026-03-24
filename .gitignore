@@ -46,3 +46,7 @@ py/src/pyiapws/iapws
 .cache
 
 make.in
+
+
+srcprep/*api.txt
+srcprep/example*.txt

@@ -49,7 +49,7 @@ NOTES
     o n => unknown
 
 EXAMPLE
-$INCLUDE ./example.mantxt
+$INCLUDE ./example.txt
 
 SEE ALSO
     codata(3), ciaaw(3)
