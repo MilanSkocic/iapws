@@ -1,20 +1,19 @@
 module iapws__g704
-    !! Module for IAPWS G7-04.
-    use iapws__common
-    use iapws__r283
-    implicit none
-    private
+!! Module for IAPWS G7-04.
+use iapws__common, only: dp, int32
+use iapws__common, only: T_KELVIN
+use iapws__r283, only: Tc_H2O, pc_H2O, Tc_D2O, pc_D2O
+implicit none(type,external)
+private
 
 integer(int32), parameter :: lengas = 5
 integer(int32), parameter :: ngas_H2O = 14
 integer(int32), parameter :: ngas_D2O = 7
 
 type :: gas_type
-    !! Derived type containing a allocatable string for representing a gas.
-    character(len=:), allocatable :: gas !! Gas
-end type
-
-real(dp), parameter ::  T_KELVIN = 273.15_dp !! Absolute temperature in KELVIN 
+!! Derived type containing a allocatable string for representing a gas.
+character(len=:), allocatable :: gas !! Gas
+end type gas_type
 
 real(dp), parameter ::  Tc1_H2O = Tc_H2O
 real(dp), parameter ::  pc1_H2O = pc_H2O
@@ -26,20 +25,20 @@ real(dp), parameter :: q_D2O = -0.024552_dp !! solvent coefficient for kd in hea
 
 !! ABC coefficients for gases in water.
 type :: abc_t
-    character(len=lengas) :: gas !! Gas
-    real(dp) :: A !! A Column
-    real(dp) :: B !! B Column
-    real(dp) :: C !! C Column
-end type
+character(len=lengas) :: gas !! Gas
+real(dp) :: A !! A Column
+real(dp) :: B !! B Column
+real(dp) :: C !! C Column
+end type abc_t
 
 !! EFGH coefficients for gases in heavywater.
 type :: efgh_t
-    character(len=lengas) :: gas !! Gas
-    real(dp) :: E !! E Column
-    real(dp) :: F !! F Column
-    real(dp) :: G !! G Column
-    real(dp) :: H !! H Column
-end type
+character(len=lengas) :: gas !! Gas
+real(dp) :: E !! E Column
+real(dp) :: F !! F Column
+real(dp) :: G !! G Column
+real(dp) :: H !! H Column
+end type efgh_t
 
 !! ai and bi coefficients for water
 real(dp), dimension(6, 2), parameter :: aibi_H2O = reshape([&
@@ -53,30 +52,30 @@ real(dp), dimension(5, 2), parameter :: aibi_D2O = reshape([&
 
 !! ABC constants water.
 type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
-    [abc_t("He", -3.52839_dp, 7.12983_dp, 4.47770_dp),&
-     abc_t("Ne", -3.18301_dp, 5.31448_dp, 5.43774_dp),&
-     abc_t("Ar", -8.40954_dp, 4.29587_dp, 10.52779_dp),&
-     abc_t("Kr", -8.97358_dp, 3.61508_dp, 11.29963_dp),&
-     abc_t("Xe", -14.21635_dp, 4.00041_dp, 15.60999_dp),&
-     abc_t("H2", -4.73284_dp, 6.08954_dp, 6.06066_dp),&
-     abc_t("N2", -9.67578_dp, 4.72162_dp, 11.70585_dp),&
-     abc_t("O2", -9.44833_dp, 4.43822_dp, 11.42005_dp),&
-     abc_t("CO", -10.52862_dp, 5.13259_dp, 12.01421_dp),&
-     abc_t("CO2", -8.55445_dp, 4.01195_dp, 9.52345_dp),&
-     abc_t("H2S", -4.51499_dp, 5.23538_dp, 4.42126_dp),&
-     abc_t("CH4", -10.44708_dp, 4.66491_dp, 12.12986_dp),&
-     abc_t("C2H6", -19.67563_dp, 4.51222_dp, 20.62567_dp),&
-     abc_t("SF6", -16.56118_dp, 2.15289_dp, 20.35440_dp)]
+[abc_t("He", -3.52839_dp, 7.12983_dp, 4.47770_dp),&
+ abc_t("Ne", -3.18301_dp, 5.31448_dp, 5.43774_dp),&
+ abc_t("Ar", -8.40954_dp, 4.29587_dp, 10.52779_dp),&
+ abc_t("Kr", -8.97358_dp, 3.61508_dp, 11.29963_dp),&
+ abc_t("Xe", -14.21635_dp, 4.00041_dp, 15.60999_dp),&
+ abc_t("H2", -4.73284_dp, 6.08954_dp, 6.06066_dp),&
+ abc_t("N2", -9.67578_dp, 4.72162_dp, 11.70585_dp),&
+ abc_t("O2", -9.44833_dp, 4.43822_dp, 11.42005_dp),&
+ abc_t("CO", -10.52862_dp, 5.13259_dp, 12.01421_dp),&
+ abc_t("CO2", -8.55445_dp, 4.01195_dp, 9.52345_dp),&
+ abc_t("H2S", -4.51499_dp, 5.23538_dp, 4.42126_dp),&
+ abc_t("CH4", -10.44708_dp, 4.66491_dp, 12.12986_dp),&
+ abc_t("C2H6", -19.67563_dp, 4.51222_dp, 20.62567_dp),&
+ abc_t("SF6", -16.56118_dp, 2.15289_dp, 20.35440_dp)]
 
 !! ABC constants for heavywater
 type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
-    [abc_t("He", -0.72643_dp, 7.02134_dp, 2.04433_dp),&
-     abc_t("Ne", -0.91999_dp, 5.65327_dp, 3.17247_dp),&
-     abc_t("Ar", -7.17725_dp, 4.48177_dp, 9.31509_dp),&
-     abc_t("Kr", -8.47059_dp, 3.91580_dp, 10.69433_dp),&
-     abc_t("Xe", -14.46485_dp, 4.42330_dp, 15.60919_dp),&
-     abc_t("D2", -5.33843_dp, 6.15723_dp, 6.53046_dp),&
-     abc_t("CH4", -10.01915_dp, 4.73368_dp, 11.75711_dp)]
+[abc_t("He", -0.72643_dp, 7.02134_dp, 2.04433_dp),&
+ abc_t("Ne", -0.91999_dp, 5.65327_dp, 3.17247_dp),&
+ abc_t("Ar", -7.17725_dp, 4.48177_dp, 9.31509_dp),&
+ abc_t("Kr", -8.47059_dp, 3.91580_dp, 10.69433_dp),&
+ abc_t("Xe", -14.46485_dp, 4.42330_dp, 15.60919_dp),&
+ abc_t("D2", -5.33843_dp, 6.15723_dp, 6.53046_dp),&
+ abc_t("CH4", -10.01915_dp, 4.73368_dp, 11.75711_dp)]
 
 !! ci and di coefficients for water
 real(dp), dimension(6, 2), parameter :: cidi_H2O = reshape([&
@@ -114,11 +113,15 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
  efgh_t("Xe", 2038.3656_dp, 68.1228_dp, -271.3390_dp, 207.7984_dp),& 
  efgh_t("D2", 2141.3214_dp, -1.9696_dp, 1.6136_dp, 0.0_dp),&
  efgh_t("CH4", 2216.0181_dp, -40.7666_dp, 152.5778_dp, -117.7430_dp)] 
-    
+
+!=======================================================================
+! PUBLIC
+!=======================================================================
 public :: gas_type
 public :: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O, findgas_abc, findgas_efgh
 public :: efgh_H2O, efgh_D2O, abc_H2O, abc_D2O
 public :: ngas_H2O, ngas_D2O
+!=======================================================================
 
 contains
 
