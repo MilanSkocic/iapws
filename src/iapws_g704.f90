@@ -126,198 +126,198 @@ public :: ngas_H2O, ngas_D2O
 contains
 
 pure function findgas_abc(gas, abc)result(value)
-    !! Find the index of the gas in the ABC table.
-    implicit none
+!! Find the index of the gas in the ABC table.
+character(len=*), intent(in) :: gas          !! Gas.
+type(abc_t), dimension(:), intent(in) :: abc !! ABC table.
+integer(int32) :: value                      !! index of the gas.
 
-    character(len=*), intent(in) :: gas          !! Gas.
-    type(abc_t), dimension(:), intent(in) :: abc !! ABC table.
-    integer(int32) :: value                      !! index of the gas.
-    
-    integer(int32) :: i
+integer(int32) :: i
 
-    value = 0
+value = 0
 
-    do i=1, size(abc)
-        if(trim(gas) .eq. abc(i)%gas)then
-            value = i
-            exit
-        endif
-    end do
-end function
+do i=1, size(abc)
+    if(trim(gas) .eq. abc(i)%gas)then
+        value = i
+        exit
+    endif
+end do
+end function findgas_abc
+
 
 pure function findgas_efgh(gas, efgh)result(value)
-    !! Find the index of the gas in the ABC table.
-    implicit none
+!! Find the index of the gas in the ABC table.
+character(len=*), intent(in) :: gas            !! Gas.
+type(efgh_t), dimension(:), intent(in) :: efgh !! EFGH table.
+integer(int32) :: value                        !! index of gas.
 
-    character(len=*), intent(in) :: gas            !! Gas.
-    type(efgh_t), dimension(:), intent(in) :: efgh !! EFGH table.
-    integer(int32) :: value                        !! index of gas.
-    
-    integer(int32) :: i
+integer(int32) :: i
 
-    value = 0
+value = 0
 
-    do i=1, size(efgh)
-        if(trim(gas) .eq. efgh(i)%gas)then
-            value = i
-            exit
-        endif
-    end do
-end function
+do i=1, size(efgh)
+    if(trim(gas) .eq. efgh(i)%gas)then
+        value = i
+        exit
+    endif
+end do
+end function findgas_efgh
+
 
 pure elemental function f_p1star_H2O(T)result(value)
-    !! Compute p1* in H2O.
-    implicit none
+!! Compute p1* in H2O.
+real(dp), intent(in) :: T !! Temperature in K.
+real(dp) :: value         !! p1* in MPa.
 
-    real(dp), intent(in) :: T !! Temperature in K.
-    real(dp) :: value         !! p1* in MPa.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
+real(dp) :: Tr
+real(dp) :: tau
 
-    Tr = T/Tc1_H2O
-    tau = 1 - Tr
-    value = exp(1/(Tr) * sum(aibi_H2O(:,1)*tau**(aibi_H2O(:,2)))) * pc1_H2O
-end function
+Tr = T/Tc1_H2O
+tau = 1 - Tr
+value = exp(1/(Tr) * sum(aibi_H2O(:,1)*tau**(aibi_H2O(:,2)))) * pc1_H2O
+end function f_p1star_H2O
+
 
 pure elemental function f_p1star_D2O(T)result(value)
-    !! Compute p1* in D2O.
-    implicit none
+!! Compute p1* in D2O.
+real(dp), intent(in) :: T !! Temperature in K.
+real(dp) :: value         !! p1* in MPa.
 
-    real(dp), intent(in) :: T !! Temperature in K.
-    real(dp) :: value         !! p1* in MPa.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
+real(dp) :: Tr
+real(dp) :: tau
 
-    Tr = T/Tc1_D2O
-    tau = 1 - Tr
-    value = exp(1/(Tr) * sum(aibi_D2O(:,1)*tau**(aibi_D2O(:,2)))) * pc1_D2O
-end function
+Tr = T/Tc1_D2O
+tau = 1 - Tr
+value = exp(1/(Tr) * sum(aibi_D2O(:,1)*tau**(aibi_D2O(:,2)))) * pc1_D2O
+end function f_p1star_D2O
+
 
 pure elemental function f_kh_p1star_H2O(T, abc)result(value)
-    !! Compute kh/p1* in H2O.
-    implicit none
+!! Compute kh/p1* in H2O.
+real(dp), intent(in) :: T      !! Temperature in K.
+type(abc_t), intent(in) :: abc !! ABC coefficients.
+real(dp) :: value              !! kH/p1* adimensional.
 
-    real(dp), intent(in) :: T      !! Temperature in K.
-    type(abc_t), intent(in) :: abc !! ABC coefficients.
-    real(dp) :: value              !! kH/p1* adimensional.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
+real(dp) :: Tr
+real(dp) :: tau
 
-    Tr = T/Tc1_H2O
-    tau = 1 - Tr
-    value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
-end function
+Tr = T/Tc1_H2O
+tau = 1 - Tr
+value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
+end function f_kh_p1star_H2O
+
 
 pure elemental function f_kh_p1star_D2O(T, abc)result(value)
-    !! Compute kh/p1* in D2O.
-    implicit none
+!! Compute kh/p1* in D2O.
+real(dp), intent(in) :: T      !! Temperature in K.
+type(abc_t), intent(in) :: abc !! ABC coefficients.
+real(dp) :: value              !! kh/p1* adimensional.
 
-    real(dp), intent(in) :: T      !! Temperature in K.
-    type(abc_t), intent(in) :: abc !! ABC coefficients.
-    real(dp) :: value              !! kh/p1* adimensional.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
+real(dp) :: Tr
+real(dp) :: tau
 
-    Tr = T/Tc1_D2O
-    tau = 1 - Tr
-    value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
-end function
+Tr = T/Tc1_D2O
+tau = 1 - Tr
+value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
+end function f_kh_p1star_D2O
+
 
 pure elemental function ft_H2O(tau)result(value)
-    !! Compute f(t) for H2O.
-    implicit none
+!! Compute f(t) for H2O.
+real(dp), intent(in) :: tau !! tau = 1-T/Tr.
+real(dp) :: value           !! f(t) is adimensional.
+value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
+end function ft_H2O
 
-    real(dp), intent(in) :: tau !! tau = 1-T/Tr.
-    real(dp) :: value           !! f(t) is adimensional.
-    value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
-end function
 
 pure elemental function ft_D2O(tau)result(value)
-    !! Compute f(t) for D2O.
-    implicit none
+!! Compute f(t) for D2O.
+real(dp), intent(in) :: tau !! tau = 1-T/Tr.
+real(dp) :: value           !! f(t) is adimensional.
+value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
+end function ft_D2O
 
-    real(dp), intent(in) :: tau !! tau = 1-T/Tr.
-    real(dp) :: value           !! f(t) is adimensional.
-    value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
-end function
 
+!=======================================================================
+! f_kh_H2O()
+!=======================================================================
 pure elemental function f_kh_H2O(T, abc)result(value)
-    !! Compute kH in H2O.
-    implicit none
+!! Compute kH in H2O.
+real(dp), intent(in) :: T      !! Temperature in K.
+type(abc_t), intent(in) :: abc !! ABC coefficients.
+real(dp) :: value              !! kH in MPa.
+value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
+end function f_kh_H2O
+!=======================================================================
 
-    real(dp), intent(in) :: T      !! Temperature in K.
-    type(abc_t), intent(in) :: abc !! ABC coefficients.
-    real(dp) :: value              !! kH in MPa.
-    value = f_kh_p1star_H2O(T, abc) * f_p1star_H2O(T)
-end function
 
+!=======================================================================
+! f_kh_D2O()
+!=======================================================================
 pure elemental function f_kh_D2O(T, abc)result(value)
-    !! Compute kH in D2O.
-    implicit none
+!! Compute kH in D2O.
+real(dp), intent(in) :: T      !! Temperature in K.
+type(abc_t), intent(in) :: abc !! ABC coefficients.
+real(dp) :: value              !! kH in MPa.
+value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
+end function f_kh_D2O
+!=======================================================================
 
-    real(dp), intent(in) :: T      !! Temperature in K.
-    type(abc_t), intent(in) :: abc !! ABC coefficients.
-    real(dp) :: value              !! kH in MPa.
-    value = f_kh_p1star_D2O(T, abc) * f_p1star_D2O(T)
-end function
 
+!=======================================================================
+! f_kd_H2O
+!=======================================================================
 pure elemental function f_kd_H2O(T, efgh) result(value)
-    !! Compute kd in H2O.
-    implicit none
+!! Compute kd in H2O.
+real(dp), intent(in) :: T        !! Temperature in K.
+type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
+real(dp) :: value                !! kD adimensional.
 
-    real(dp), intent(in) :: T        !! Temperature in K.
-    type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
-    real(dp) :: value                !! kD adimensional.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
-    real(dp) :: p1
-    real(dp) :: p2
-    real(dp) :: p3
-    real(dp) :: p4
-    
-    Tr = T/Tc1_H2O
-    tau  = 1-Tr
-    
-    p1 = q_H2O*efgh%F
-    p2 = efgh%E/T*ft_H2O(tau)
-    p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
-    p4 = exp((273.15_dp-T)/100.0_dp)
+real(dp) :: Tr
+real(dp) :: tau
+real(dp) :: p1
+real(dp) :: p2
+real(dp) :: p3
+real(dp) :: p4
 
-    value = exp(p1 + p2 + p3 * p4)
+Tr = T/Tc1_H2O
+tau  = 1-Tr
 
-end function
+p1 = q_H2O*efgh%F
+p2 = efgh%E/T*ft_H2O(tau)
+p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
+p4 = exp((273.15_dp-T)/100.0_dp)
 
+value = exp(p1 + p2 + p3 * p4)
+end function f_kd_H2O
+!=======================================================================
+
+
+!=======================================================================
+! f_kd_D2O
+!=======================================================================
 pure elemental function f_kd_D2O(T, efgh) result(value)
-    !! Compute kd in D2O.
-    implicit none
+!! Compute kd in D2O.
+real(dp), intent(in) :: T        !! Temperature in K.
+type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
+real(dp) :: value                !! kD adimensional.
 
-    real(dp), intent(in) :: T        !! Temperature in K.
-    type(efgh_t), intent(in) :: efgh !! EFGH coefficients.
-    real(dp) :: value                !! kD adimensional.
-    
-    real(dp) :: Tr
-    real(dp) :: tau
-    real(dp) :: p1
-    real(dp) :: p2
-    real(dp) :: p3
-    real(dp) :: p4
-    
-    Tr = T/Tc1_D2O
-    tau  = 1-Tr
-    
-    p1 = q_D2O*efgh%F
-    p2 = efgh%E/T*ft_D2O(tau)
-    p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
-    p4 = exp((273.15_dp-T)/100.0_dp)
+real(dp) :: Tr
+real(dp) :: tau
+real(dp) :: p1
+real(dp) :: p2
+real(dp) :: p3
+real(dp) :: p4
 
-    value = exp(p1 + p2 + p3 * p4)
+Tr = T/Tc1_D2O
+tau  = 1-Tr
 
-end function
+p1 = q_D2O*efgh%F
+p2 = efgh%E/T*ft_D2O(tau)
+p3 = (efgh%F + efgh%G*tau**(2.0_dp/3.0_dp) + efgh%H*tau)
+p4 = exp((273.15_dp-T)/100.0_dp)
 
+value = exp(p1 + p2 + p3 * p4)
+end function f_kd_D2O
+!=======================================================================
 
-end module
+end module iapws__g704
