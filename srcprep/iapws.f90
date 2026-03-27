@@ -56,6 +56,8 @@ SEE ALSO
 $ENDBLOCK
 module iapws
 !! Main module for the IAPWS library.
+use iapws__r283, only: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
+use iapws__r283, only: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 use iapws__capi
 use iapws__api
 
@@ -66,11 +68,14 @@ $ENDIF
 character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
 
+
 !=======================================================================
 ! PUBLIC
 !=======================================================================
 public :: get_version, capi_get_version
 public :: version, capi_version
+public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
+public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 !=======================================================================
 
 contains
