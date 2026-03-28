@@ -6,23 +6,15 @@ use iapws__r283, only: Tc_H2O, pc_H2O, Tc_D2O, pc_D2O
 implicit none(type,external)
 private
 
-integer(int32), parameter :: lengas = 5
-integer(int32), parameter :: ngas_H2O = 14
-integer(int32), parameter :: ngas_D2O = 7
 
+!=======================================================================
+! DERIVED TYPES
+!=======================================================================
 type :: gas_type
 !! Derived type containing a allocatable string for representing a gas.
 character(len=:), allocatable :: gas !! Gas
 end type gas_type
-
-real(dp), parameter ::  Tc1_H2O = Tc_H2O
-real(dp), parameter ::  pc1_H2O = pc_H2O
-real(dp), parameter ::  Tc1_D2O = Tc_D2O
-real(dp), parameter ::  pc1_D2O = pc_D2O
-
-real(dp), parameter :: q_H2O = -0.023767_dp !! solvent coefficient for kd in water
-real(dp), parameter :: q_D2O = -0.024552_dp !! solvent coefficient for kd in heavywater
-
+!-----------------------------------------------------------------------
 !! ABC coefficients for gases in water.
 type :: abc_t
 character(len=lengas) :: gas !! Gas
@@ -30,7 +22,7 @@ real(dp) :: A !! A Column
 real(dp) :: B !! B Column
 real(dp) :: C !! C Column
 end type abc_t
-
+!-----------------------------------------------------------------------
 !! EFGH coefficients for gases in heavywater.
 type :: efgh_t
 character(len=lengas) :: gas !! Gas
@@ -39,17 +31,34 @@ real(dp) :: F !! F Column
 real(dp) :: G !! G Column
 real(dp) :: H !! H Column
 end type efgh_t
+!=======================================================================
 
+
+!=======================================================================
+! PARAMETERS
+!=======================================================================
+integer(int32), parameter :: lengas = 5
+integer(int32), parameter :: ngas_H2O = 14
+integer(int32), parameter :: ngas_D2O = 7
+!-----------------------------------------------------------------------
+real(dp), parameter ::  Tc1_H2O = Tc_H2O
+real(dp), parameter ::  pc1_H2O = pc_H2O
+real(dp), parameter ::  Tc1_D2O = Tc_D2O
+real(dp), parameter ::  pc1_D2O = pc_D2O
+!-----------------------------------------------------------------------
+real(dp), parameter :: q_H2O = -0.023767_dp !! solvent coefficient for kd in water
+real(dp), parameter :: q_D2O = -0.024552_dp !! solvent coefficient for kd in heavywater
+!-----------------------------------------------------------------------
 !! ai and bi coefficients for water
 real(dp), dimension(6, 2), parameter :: aibi_H2O = reshape([&
 -7.85951783_dp, 1.84408259_dp, -11.78664970_dp, 22.68074110_dp, -15.96187190_dp, 1.80122502_dp,&
 1.000_dp, 1.500_dp, 3.000_dp, 3.500_dp, 4.000_dp, 7.500_dp], [6,2])
-
+!-----------------------------------------------------------------------
 !! ai and bi coefficients for heavywater
 real(dp), dimension(5, 2), parameter :: aibi_D2O = reshape([&
 -7.8966570_dp, 24.7330800_dp, -27.8112800_dp,  9.3559130_dp, -9.2200830_dp, &
 1.00_dp, 1.89_dp, 2.00_dp, 3.00_dp, 3.60_dp], [5, 2])
-
+!-----------------------------------------------------------------------
 !! ABC constants water.
 type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
 [abc_t("He", -3.52839_dp, 7.12983_dp, 4.47770_dp),&
@@ -66,7 +75,7 @@ type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
  abc_t("CH4", -10.44708_dp, 4.66491_dp, 12.12986_dp),&
  abc_t("C2H6", -19.67563_dp, 4.51222_dp, 20.62567_dp),&
  abc_t("SF6", -16.56118_dp, 2.15289_dp, 20.35440_dp)]
-
+!-----------------------------------------------------------------------
 !! ABC constants for heavywater
 type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
 [abc_t("He", -0.72643_dp, 7.02134_dp, 2.04433_dp),&
@@ -76,17 +85,17 @@ type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
  abc_t("Xe", -14.46485_dp, 4.42330_dp, 15.60919_dp),&
  abc_t("D2", -5.33843_dp, 6.15723_dp, 6.53046_dp),&
  abc_t("CH4", -10.01915_dp, 4.73368_dp, 11.75711_dp)]
-
+!-----------------------------------------------------------------------
 !! ci and di coefficients for water
 real(dp), dimension(6, 2), parameter :: cidi_H2O = reshape([&
 1.99274064_dp, 1.09965342_dp, -0.510839303_dp, -1.75493479_dp, -45.5170352_dp, -6.7469445d5,&
 1.0_dp/3.0_dp, 2.0_dp/3.0_dp, 5.0_dp/3.0_dp, 16.0_dp/3.0_dp, 43.0_dp/3.0_dp, 110.0_dp/3.0_dp], [6,2])
-
+!-----------------------------------------------------------------------
 !! ci and di coefficients for heavywater
 real(dp), dimension(4, 2), parameter :: cidi_D2O = reshape([&
 2.7072_dp, 0.58662_dp, -1.3069_dp, -45.663_dp, &
 0.374_dp, 1.45_dp, 2.6_dp, 12.3_dp], [4,2])
-
+!-----------------------------------------------------------------------
 !! EFGH constants for water
 type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
 [efgh_t("He", 2267.4082_dp, -2.9616_dp, -3.2604_dp, 7.8819_dp),&
@@ -103,7 +112,7 @@ type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
  efgh_t("CH4", 2215.6977_dp, -0.1089_dp, -6.6240_dp, 4.6789_dp),&
  efgh_t("C2H6", 2143.8121_dp, 6.8859_dp, -12.6084_dp, 0.0_dp),&
  efgh_t("SF6", 2871.7265_dp, -66.7556_dp, 229.7191_dp, -172.7400_dp)]
-
+!-----------------------------------------------------------------------
  !! EFGH constants for heavywater
 type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 [efgh_t("He", 2293.2474_dp, -54.7707_dp, 194.2924_dp, -142.1257), &
@@ -113,6 +122,8 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
  efgh_t("Xe", 2038.3656_dp, 68.1228_dp, -271.3390_dp, 207.7984_dp),& 
  efgh_t("D2", 2141.3214_dp, -1.9696_dp, 1.6136_dp, 0.0_dp),&
  efgh_t("CH4", 2216.0181_dp, -40.7666_dp, 152.5778_dp, -117.7430_dp)] 
+!======================================================================
+
 
 !=======================================================================
 ! PUBLIC
@@ -123,8 +134,11 @@ public :: efgh_H2O, efgh_D2O, abc_H2O, abc_D2O
 public :: ngas_H2O, ngas_D2O
 !=======================================================================
 
-contains
 
+contains
+!=======================================================================
+! FINDGAS_ABC()
+!=======================================================================
 pure function findgas_abc(gas, abc)result(value)
 !! Find the index of the gas in the ABC table.
 character(len=*), intent(in) :: gas          !! Gas.
@@ -136,14 +150,18 @@ integer(int32) :: i
 value = 0
 
 do i=1, size(abc)
-    if(trim(gas) .eq. abc(i)%gas)then
+    if(trim(gas) == abc(i)%gas)then
         value = i
         exit
     endif
 end do
 end function findgas_abc
+!=======================================================================
 
 
+!=======================================================================
+! FINDGAS_EFGH()
+!=======================================================================
 pure function findgas_efgh(gas, efgh)result(value)
 !! Find the index of the gas in the ABC table.
 character(len=*), intent(in) :: gas            !! Gas.
@@ -155,14 +173,18 @@ integer(int32) :: i
 value = 0
 
 do i=1, size(efgh)
-    if(trim(gas) .eq. efgh(i)%gas)then
+    if(trim(gas) == efgh(i)%gas)then
         value = i
         exit
     endif
 end do
 end function findgas_efgh
+!=======================================================================
 
 
+!=======================================================================
+! f_P1STAR_H2O
+!=======================================================================
 pure elemental function f_p1star_H2O(T)result(value)
 !! Compute p1* in H2O.
 real(dp), intent(in) :: T !! Temperature in K.
@@ -175,8 +197,12 @@ Tr = T/Tc1_H2O
 tau = 1 - Tr
 value = exp(1/(Tr) * sum(aibi_H2O(:,1)*tau**(aibi_H2O(:,2)))) * pc1_H2O
 end function f_p1star_H2O
+!=======================================================================
 
 
+!=======================================================================
+! f_P1STAR_D2O()
+!=======================================================================
 pure elemental function f_p1star_D2O(T)result(value)
 !! Compute p1* in D2O.
 real(dp), intent(in) :: T !! Temperature in K.
@@ -189,8 +215,12 @@ Tr = T/Tc1_D2O
 tau = 1 - Tr
 value = exp(1/(Tr) * sum(aibi_D2O(:,1)*tau**(aibi_D2O(:,2)))) * pc1_D2O
 end function f_p1star_D2O
+!=======================================================================
 
 
+!=======================================================================
+! f_kH_P1STAR_H2O()
+!=======================================================================
 pure elemental function f_kh_p1star_H2O(T, abc)result(value)
 !! Compute kh/p1* in H2O.
 real(dp), intent(in) :: T      !! Temperature in K.
@@ -204,8 +234,12 @@ Tr = T/Tc1_H2O
 tau = 1 - Tr
 value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function f_kh_p1star_H2O
+!=======================================================================
 
 
+!=======================================================================
+! f_kH_P1STAR_D2O()
+!=======================================================================
 pure elemental function f_kh_p1star_D2O(T, abc)result(value)
 !! Compute kh/p1* in D2O.
 real(dp), intent(in) :: T      !! Temperature in K.
@@ -219,22 +253,31 @@ Tr = T/Tc1_D2O
 tau = 1 - Tr
 value = exp(abc%A/Tr + abc%B*(tau**0.355_dp)/Tr + abc%C*exp(tau)*Tr**(-0.41_dp))
 end function f_kh_p1star_D2O
+!=======================================================================
 
 
+!=======================================================================
+! ft_H2O
+!=======================================================================
 pure elemental function ft_H2O(tau)result(value)
 !! Compute f(t) for H2O.
 real(dp), intent(in) :: tau !! tau = 1-T/Tr.
 real(dp) :: value           !! f(t) is adimensional.
 value = sum(cidi_H2O(:,1) * tau**(cidi_H2O(:,2)))
 end function ft_H2O
+!=======================================================================
 
 
+!=======================================================================
+! ft_D2O
+!=======================================================================
 pure elemental function ft_D2O(tau)result(value)
 !! Compute f(t) for D2O.
 real(dp), intent(in) :: tau !! tau = 1-T/Tr.
 real(dp) :: value           !! f(t) is adimensional.
 value = sum(cidi_D2O(:,1) * tau**(cidi_D2O(:,2)))
 end function ft_D2O
+!=======================================================================
 
 
 !=======================================================================
