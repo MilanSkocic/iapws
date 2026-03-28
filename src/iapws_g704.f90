@@ -10,6 +10,8 @@ private
 !=======================================================================
 ! DERIVED TYPES
 !=======================================================================
+integer(int32), parameter :: lengas = 5
+!-----------------------------------------------------------------------
 type :: gas_type
 !! Derived type containing a allocatable string for representing a gas.
 character(len=:), allocatable :: gas !! Gas
@@ -37,7 +39,6 @@ end type efgh_t
 !=======================================================================
 ! PARAMETERS
 !=======================================================================
-integer(int32), parameter :: lengas = 5
 integer(int32), parameter :: ngas_H2O = 14
 integer(int32), parameter :: ngas_D2O = 7
 !-----------------------------------------------------------------------
