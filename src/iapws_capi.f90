@@ -1,10 +1,8 @@
 module iapws__capi
     !! C API.
-    use iso_c_binding, only: c_double, c_int, c_ptr, c_f_pointer, c_char, c_size_t, c_null_char, c_loc
     use iapws__common
     use iapws__api
     implicit none
-    
     
     character(len=:), allocatable, target :: version_c
     
@@ -18,20 +16,6 @@ module iapws__capi
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    ! ------------------------------------------------------------------------------
-    ! R283
-    real(c_double), protected, bind(C, name="iapws_r283_Tc_H2O") :: capi_Tc_H2O = Tc_H2O !! Critical temperature for H2O in K
-    real(c_double), protected, bind(C, name="iapws_r283_Tc_D2O") :: capi_Tc_D2O = Tc_D2O !! Critical temperature for D2O in K
-
-    real(c_double), protected, bind(C, name="iapws_r283_pc_H2O") :: capi_pc_H2O = pc_H2O !! Critical pressure for H2O in MPa
-    real(c_double), protected, bind(C, name="iapws_r283_pc_D2O") :: capi_pc_D2O = pc_D2O !! Critical pressure for D2O in MPa
-
-    real(c_double), protected, bind(C, name="iapws_r283_rhoc_H2O") :: capi_rhoc_H2O = rhoc_H2O !! Critical density for H2O in kg.m-3
-    real(c_double), protected, bind(C, name="iapws_r283_rhoc_D2O") :: capi_rhoc_D2O = rhoc_D2O !! Critical density for D2O in kg.m-3
-    ! ------------------------------------------------------------------------------
-
-    public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O     !! R283
-    
     public :: capi_kh, capi_kd, capi_ngases, capi_gases                                            !!G704
 
     public :: capi_psat, capi_Tsat, capi_wp                                                                !! R797

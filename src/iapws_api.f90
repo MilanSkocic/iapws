@@ -1,7 +1,6 @@
 module iapws__api
     !! API.
     use iapws__common
-    use iapws__r283
     use iapws__g704
     use iapws__r797
     use iapws__r1124
@@ -14,8 +13,6 @@ module iapws__api
 
     public :: kh, kd, gases, gases2, ngases, gas_type                           ! G704
 
-    public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O                ! R283
-    
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        ! R797
     public :: psat, Tsat                                                        ! R797
 
