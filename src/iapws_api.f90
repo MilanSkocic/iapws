@@ -11,7 +11,7 @@ module iapws__api
     type(gas_type), allocatable, target :: f_gases(:)
     character(len=:), allocatable, target :: f_gases_str
 
-    public :: kh, kd, gases, gases2, ngases, gas_type                           ! G704
+    public :: kd, gases, gases2, ngases, gas_type                           ! G704
 
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        ! R797
     public :: psat, Tsat                                                        ! R797
@@ -20,35 +20,6 @@ module iapws__api
     public :: wp, wr, wph
 
 contains
-! ------------------------------------------------------------------------------
-! G704
-pure subroutine kh(T, gas, heavywater, k)
-    !! Compute the henry constant kH in MPa for a given temperature (x_2=1/kH). 
-    implicit none
-    
-    real(dp), intent(in), contiguous :: T(:)      !! Temperature in K.
-    character(len=*), intent(in) :: gas           !! Gas.
-    integer(int32), intent(in) :: heavywater      !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:)     !! Henry constant in MPa. Filled with NaNs if gas not found.
-    
-    integer(int32) :: i
-    
-    if(heavywater > 0)then
-        i = findgas_abc(gas, abc_D2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k =  f_kh_D2O(T, abc_D2O(i))
-        endif
-    else
-        i = findgas_abc(gas, abc_H2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k = f_kh_H2O(T, abc_H2O(i))
-        endif
-    endif
-end subroutine
 
 pure subroutine kd(T, gas, heavywater, k)
     !! Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).

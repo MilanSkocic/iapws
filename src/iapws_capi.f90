@@ -4,8 +4,6 @@ module iapws__capi
     use iapws__api
     implicit none
     
-    character(len=:), allocatable, target :: version_c
-    
     type, bind(C) :: c_char_p
         type(c_ptr) :: p
     end type
@@ -16,9 +14,9 @@ module iapws__capi
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    public :: capi_kh, capi_kd, capi_ngases, capi_gases                                            !!G704
+    public :: capi_kd, capi_ngases, capi_gases                !!G704
 
-    public :: capi_psat, capi_Tsat, capi_wp                                                                !! R797
+    public :: capi_psat, capi_Tsat, capi_wp                !! R797
 
 
 contains
@@ -26,30 +24,6 @@ contains
 
 ! ------------------------------------------------------------------------------
 ! G704
-subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")
-    !! C API. 
-    implicit none
-    
-    ! arguments
-    integer(c_int), intent(in), value :: size_gas !! Size of the gas string.
-    integer(c_size_t), intent(in), value :: size_T !! Size of T and k.
-    real(c_double), intent(in) :: T(size_T) !! Temperature in °C.
-    type(c_ptr), intent(in), value :: gas !! Gas.
-    integer(c_int), intent(in), value :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    real(c_double), intent(inout) :: k(size_T) !! Henry constant. Filled with NaNs if gas not found.
-    
-    ! variables
-    character, pointer, dimension(:) :: c2f_gas
-    character(len=size_gas) :: f_gas
-    integer(int32) :: i
-
-    call c_f_pointer(gas, c2f_gas, shape=[size_gas])
-
-    do i=1, size_gas
-        f_gas(i:i) = c2f_gas(i)
-    enddo
-    call kh(T, f_gas, heavywater, k)    
-end subroutine
 
 subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
     !! C API.
