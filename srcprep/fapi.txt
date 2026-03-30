@@ -9,6 +9,7 @@
              o character(len=:), pointer :: fptr    Pointer to a string (=>version).
         o function capi_version()bind(C,name="iapws_version")result(cptr)  C API - Get the version
              o type(c_ptr) :: cptr    C pointer to a string indicating the version.
+        o subroutine kh(T, gas, heavywater, k)  Compute the henry constant kH in MPa for a given temperature (x_2=1/kH).
              o real(dp), intent(in), contiguous :: T(:)    Temperature in K.
              o character(len=*), intent(in) :: gas    Gas.
              o integer(int32), intent(in) :: heavywater    Flag if D2O (1) is used or H2O(0).

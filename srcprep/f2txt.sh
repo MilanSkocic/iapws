@@ -10,6 +10,8 @@ echo "    Fortran API:" > $fpath
 
 while IFS='' read -r lineraw; do
     line=$(echo $lineraw | sed -E 's/^[[:space:]]*//')
+    line=$(echo $line | sed -E 's/pure //')
+    line=$(echo $line | sed -E 's/elemental //')
     case $line in
         "function"*"("*")"*)
             func=1
