@@ -80,6 +80,43 @@ Fortran API:
       **o type(c_ptr) :: cptr**
          C pointer to a string indicating the version.
 
+   **o subroutine kh(T, gas, heavywater, k)**
+      Compute the henry constant kH in MPa for a given temperature
+      (x_2=1/kH).
+
+      **o real(dp), intent(in), contiguous :: T(:)**
+         Temperature in K.
+
+      **o character(len=\*), intent(in) :: gas**
+         Gas.
+
+      **o integer(int32), intent(in) :: heavywater**
+         Flag if D2O (1) is used or **H2O(0).**
+
+      **o real(dp), intent(out), contiguous :: k(:)**
+         Henry constant in MPa. Filled with NaNs if gas not found.
+
+   **o subroutine capi_kh(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kh")**
+      C API.
+
+      **o integer(c_int), intent(in), value :: size_gas**
+         Size of the gas string.
+
+      **o integer(c_size_t), intent(in), value :: size_T**
+         Size of T and k.
+
+      **o real(c_double), intent(in) :: T(size_T)**
+         Temperature in °C.
+
+      **o type(c_ptr), intent(in), value :: gas**
+         Gas.
+
+      **o integer(c_int), intent(in), value :: heavywater**
+         Flag if D2O (1) is used or **H2O(0).**
+
+      **o real(c_double), intent(inout) :: k(size_T)**
+         Henry constant. Filled with NaNs if gas not found.
+
 C API:
 
    -  char\* **iapws_get_version(void)**
