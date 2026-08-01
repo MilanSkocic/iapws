@@ -1,0 +1,388 @@
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Sat Aug  1 08:36:38 2026 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>iapws</title>
+
+</head>
+<body>
+
+<h1 align="center">iapws</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#SUBCOMMANDS">SUBCOMMANDS</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#NOTES">NOTES</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>iapws</b> -
+Compute light and heavy water properties.</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>iapws</b>
+<i>SUBCOMMAND</i> [OPTION...]</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>iapws</b> is
+a command line interface for computing properties of light
+and heavy water according to IAPWS.</p>
+
+<h2>SUBCOMMANDS
+<a name="SUBCOMMANDS"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Valid
+subcommands are:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ kh</b></p></td>
+<td width="1%"></td>
+<td width="73%">
+
+
+<p>Compute the Henry&rsquo;s constant for gases in H2O or
+D2O. The default behavior is to compute the constant kH for
+O2 at 25&deg;C.See options. See options.</p></td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ kd</b></p></td>
+<td width="1%"></td>
+<td width="73%">
+
+
+<p>Compute the vapor-liquid distribution constant for gases
+in H2O or D2O. The default behavior is to compute the
+constant kD for H2 at 25&deg;C. See options.</p></td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ psat</b></p></td>
+<td width="1%"></td>
+<td width="73%">
+
+
+<p>Compute the saturation pressure. The default behavior is
+to compute psat at 25&deg;C. See options.</p></td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ Tsat</b></p></td>
+<td width="1%"></td>
+<td width="73%">
+
+
+<p>Compute the saturation temperature. The default behavior
+is to compute Tsat at 1 bar. See options.</p></td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ wp</b></p></td>
+<td width="1%"></td>
+<td width="73%">
+
+
+<p>Compute water properties for regions 1 to 5. The default
+behavior is to compute the properties at 25&deg;C and 1 bar.
+WARNING: Currently, only region 1 is supported.</p></td></tr>
+</table>
+
+<p style="margin-left:9%; margin-top: 1em">Their syntax
+is:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p style="margin-top: 1em"><b>+ kh</b></p></td>
+<td width="1%"></td>
+<td width="14%">
+
+
+<p style="margin-top: 1em">[OPTION...]</p></td>
+<td width="59%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ kd</b></p></td>
+<td width="1%"></td>
+<td width="14%">
+
+
+<p>[OPTION...]</p></td>
+<td width="59%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ psat</b></p></td>
+<td width="1%"></td>
+<td width="14%">
+
+
+<p>[OPTION...]</p></td>
+<td width="59%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ Tsat</b></p></td>
+<td width="1%"></td>
+<td width="14%">
+
+
+<p>[OPTION...]</p></td>
+<td width="59%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>+ wp</b></p></td>
+<td width="1%"></td>
+<td width="14%">
+
+
+<p>[OPTION...]</p></td>
+<td width="59%">
+</td></tr>
+</table>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">kh:</p>
+
+<p style="margin-left:18%;"><b>--temperature, -T
+TEMPERATURE...</b></p>
+
+<p style="margin-left:27%;">Temperature in &deg;C. Default
+to 25&deg;C.</p>
+
+<p style="margin-left:18%;"><b>--fugacity, -f
+FUGACITY...</b></p>
+
+<p style="margin-left:27%;">Liquid-phase fugacity in MPa.
+Default to 1 bar.</p>
+
+<p style="margin-left:18%;"><b>--gases, -g GAS...</b></p>
+
+<p style="margin-left:27%;">Gases for which to compute kH.
+Default to O2.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="6%">
+
+
+<p><b>--D2O</b></p></td>
+<td width="3%"></td>
+<td width="38%">
+
+
+<p>Set heavywater as the solvent.</p></td>
+<td width="35%">
+</td></tr>
+</table>
+
+<p style="margin-left:18%;"><b>--listgases</b></p>
+
+<p style="margin-left:27%;">Display available gases for
+computing kH.</p>
+
+<p style="margin-left:9%; margin-top: 1em">kd:</p>
+
+<p style="margin-left:18%;"><b>--temperature, -T
+TEMPERATURE...</b></p>
+
+<p style="margin-left:27%;">Temperature in &deg;C. Default
+to 25&deg;C.</p>
+
+<p style="margin-left:18%;"><b>--x2, -x x2...</b></p>
+
+<p style="margin-left:27%;">Molar fraction of gas in water.
+Default to 1e-9.</p>
+
+<p style="margin-left:18%;"><b>--gases, -g GAS...</b></p>
+
+<p style="margin-left:27%;">Gases for which to compute kD.
+Default to H2.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p><b>--D2O,</b></p></td>
+<td width="1%"></td>
+<td width="38%">
+
+
+<p>Set heavywater as the solvent.</p></td>
+<td width="35%">
+</td></tr>
+</table>
+
+<p style="margin-left:18%;"><b>--listgases</b></p>
+
+<p style="margin-left:27%;">Display available gases for
+computing kD.</p>
+
+<p style="margin-left:9%; margin-top: 1em">psat:</p>
+
+<p style="margin-left:18%;"><b>--temperature, -T
+TEMPERATURE...</b></p>
+
+<p style="margin-left:27%;">Temperature in &deg;C. Default
+to 25&deg;C.</p>
+
+<p style="margin-left:9%; margin-top: 1em">Tsat:</p>
+
+<p style="margin-left:18%;"><b>--pressure, -p
+PRESSURE...</b></p>
+
+<p style="margin-left:27%;">Pressure in bar. Default to 1
+bar.</p>
+
+<p style="margin-left:9%; margin-top: 1em">wp:</p>
+
+<p style="margin-left:18%;"><b>--temperature, -T
+TEMPERATURE...</b></p>
+
+<p style="margin-left:27%;">Temperature in &deg;C. Default
+to 25&deg;C.</p>
+
+<p style="margin-left:18%;"><b>--pressure, -p
+PRESSURE...</b></p>
+
+<p style="margin-left:27%;">Pressure in bar. Default to 1
+bar.</p>
+
+<p style="margin-left:9%; margin-top: 1em">all:</p>
+
+<p style="margin-left:18%;"><b>--usage, -u</b></p>
+
+<p style="margin-left:27%;">Show usage text and exit.</p>
+
+<p style="margin-left:18%;"><b>--help, -h</b></p>
+
+<p style="margin-left:27%;">Show help text and exit.</p>
+
+<p style="margin-left:18%;"><b>--verbose, -V</b></p>
+
+<p style="margin-left:27%;">Display additional
+information.</p>
+
+<p style="margin-left:18%;"><b>--version, -v</b></p>
+
+<p style="margin-left:27%;">Show version information and
+exit.</p>
+
+<h2>NOTES
+<a name="NOTES"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">You may replace
+the default options from a file if your first options begin
+with @file. Initial options will then be read from the
+&quot;response file&quot; &quot;file.rsp&quot; in the
+current directory.</p>
+
+<p style="margin-left:9%; margin-top: 1em">If
+&quot;file&quot; does not exist or cannot be read, then an
+error occurs and the program stops. Each line of the file is
+prefixed with &quot;options&quot; and interpreted as a
+separate argument. The file itself may not contain @file
+arguments. That is, it is not processed recursively.</p>
+
+<p style="margin-left:9%; margin-top: 1em">For more
+information on response files see
+https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html</p>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Minimal
+example</p>
+
+<p style="margin-left:9%; margin-top: 1em">iapws kh -T
+25,100 -f 1,0.2 -g O2,H2 <br>
+iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2 <br>
+iapws wp -T 25,100 -p 0.035,1.0</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>ciaaw</b>(3),
+<b>codata</b>(3),</p>
+<hr>
+</body>
+</html>

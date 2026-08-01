@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+fpcode=$1
+fpapi=$2
+ext="${fpcode##*.}"
+
+function process_py (){
+awk '
+BEGIN{print "Python API:"}
+/^[[:space:]]*def[[:space:]]_.*/{next}
+/^[[:space:]]*def[[:space:]]main.*/{next}
+/^[[:space:]]*def.*/{
+    sub(/^ +/,"", $0) # Remove leading spaces
+    sub(/def /,"")
+    print ".BI "$0
+}
+' $1 > $2
+}
+
+function process_c (){
+awk '
+BEGIN{    print "C API:"}
+/^extern.*/{
+    sub(/^ +/,"", $0) # Remove leading spaces
+    sub(/extern /,"")
+    sub(/ADD_IMPORT /, "")
+    sub(/;/, "")
+    print ".BI "$0
+}
+' $1 > $2
+}
+
+function process_fortran (){
+awk '
+BEGIN{    
+    in_func=0
+    offset=0
+    n=12
+    
+    #print "    Fortran API:"
+    print "Fortran API:"
+}
+{
+    sub(/^ +/,"", $0) # Remove leading spaces
+}
+/^(function|subroutine).*\(.*\)/{
+    if(match($0, /capi_/)<=0){
+        in_func=1
+        offset=length($0)+n
+        #printf "%*s%s", 8, "", "o "$0
+        print ".BI "$0
+        print ".RS"
+    }
+    next
+}
+/^end[[:space:]](function|subroutine).*/{
+    if (in_func == 1){
+        in_func=0
+        print ".RE"
+        print ""
+    }
+    next
+}
+/^!![[:space:]].*/{
+    sub(/!! /, "")
+    if (in_func == 1){
+        #print $0
+    }
+    if (in_func>1){
+        #printf "%*s%s\n", offset, "", $0
+    }
+    #in_func = in_func+1
+    next
+}
+/.*::.*!!.*/{
+    if (in_func > 0){
+        #sub(/!!/,"  ", $0)
+        #printf "%*s%s\n", 12, "", "o "$0
+        split($0, m, "!!")
+        print ".IP \"\" 3"
+        split(m[1], args, "::")
+        printf "%s%s%s%s\n", ".BI \"", args[1], " :: \"", args[2]
+    }
+
+}
+' $1 > $2
+}
+
+
+case "$ext" in
+    "py")
+        process_py $fpcode $fpapi
+        ;;
+    "c"|"h")
+        process_c $fpcode $fpapi
+        ;;
+    "f"|"f90"|"f03"|"f08"|"f18")
+        process_fortran $fpcode $fpapi
+        ;;
+    "*")
+        echo "WARNING: Files with extension $ext are not handled."
+        ;;
+esac

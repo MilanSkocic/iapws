@@ -1,0 +1,24 @@
+.SH EXAMPLES
+\"{{{
+.PP
+Example in Fortran:
+.nf
+.ft CR
+.ft R
+.fi
+
+.PP
+Example in C
+.nf
+.ft CR
+.ft R
+.fi
+
+.PP
+Example in Python
+.nf
+.ft CR
+.ft R
+.fi
+\"}}}
+

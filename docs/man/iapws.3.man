@@ -1,0 +1,98 @@
+.TH iapws 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+
+.SH NAME
+iapws \- library for light and heavy water properties according to IAPWS.
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.IP Fortran 10 
+.B use iapws\fP
+
+.IP C 10
+.B #include \(dqiapws.h\(dq
+
+.IP Python 10
+.B import pyiapws
+\"}}}
+
+.SH DESCRIPTION
+Numerical implementation for reports:
+.RS
+.IP \(bu 3
+R2-83
+.RS
+.IP [x] 5
+Tc in H2O and D2O
+.IP [x] 5
+pc in H2O and D2O
+.IP [x] 5
+rhoc in H2O and D2O
+.RE
+.IP \(bu 3
+G7-04
+.RS
+.IP [x] 5
+kH
+.IP [x] 5
+kD
+.RE
+.IP \(bu 3
+R7-97
+.RS
+.IP [x] 5
+Region 1
+.IP [] 5
+Region 2
+.IP [] 5
+Region 3
+.IP [x] 5
+Region 4
+.IP [] 5
+Region 5
+.RE
+.IP \(bu 3
+R11-24:
+.RS
+.IP [x] 5
+Kw
+.RE
+.RE
+
+
+.SH NOTES
+To use \fBiapws\fP within your fpm project, add the following to your fpm.toml file:
+.nf
+.ft CR
+        [dependencies]
+        iapws = { git="https://github.com/MilanSkocic/iapws.git" }
+
+.ft R
+.fi
+
+.PP
+dp stands for double precision and it is an alias to real64
+from the iso_fortran_env module.
+
+Water phases:
+.RS
+.TP
+l 
+liquid
+.TP
+v 
+vapor
+.TP
+c 
+super critical
+.TP
+s 
+saturation
+.TP
+n 
+unknown
+.RE
+

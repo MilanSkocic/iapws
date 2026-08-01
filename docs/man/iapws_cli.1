@@ -1,0 +1,208 @@
+.TH iapws 1 "30 March 2026" "0.7.1" "Library calls"
+.SH NAME
+\fBiapws \fP- Compute light and heavy water properties.
+\fB
+.SH SYNOPSIS
+.nf
+.fam C
+\fBiapws\fP \fISUBCOMMAND\fP [OPTION\.\.\.]
+
+.fam T
+.fi
+.fam T
+.fi
+.SH DESCRIPTION
+\fBiapws\fP is a command line interface for computing properties
+of light and heavy water according to IAPWS.
+.SH SUBCOMMANDS
+Valid subcommands are:
+.RS
+.TP
+.B
++ kh
+Compute the Henry's constant for gases in H2O or D2O.
+The default behavior is to compute the constant kH for O2
+at 25°C.See options.
+See options.
+.TP
+.B
++ kd
+Compute the vapor-liquid distribution constant for gases
+in H2O or D2O.
+The default behavior is to compute the constant kD for H2
+at 25°C.
+See options.
+.TP
+.B
++ psat
+Compute the saturation pressure.
+The default behavior is to compute psat at 25°C.
+See options.
+.TP
+.B
++ Tsat
+Compute the saturation temperature.
+The default behavior is to compute Tsat at 1 bar.
+See options.
+.TP
+.B
++ wp
+Compute water properties for regions 1 to 5.
+The default behavior is to compute the properties
+at 25°C and 1 bar.
+WARNING: Currently, only region 1 is supported.
+.RE
+.PP
+Their syntax is:
+.RS
+.TP
+.B
++ kh
+[OPTION\.\.\.]
+.TP
+.B
++ kd
+[OPTION\.\.\.]
+.TP
+.B
++ psat
+[OPTION\.\.\.]
+.TP
+.B
++ Tsat
+[OPTION\.\.\.]
+.TP
+.B
++ wp
+[OPTION\.\.\.]
+.SH OPTIONS
+
+kh:
+.RS
+.TP
+.B
+\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+Temperature in °C. Default to 25°C.
+.TP
+.B
+\fB--fugacity\fP, \fB-f\fP FUGACITY\.\.\.
+Liquid-phase fugacity in MPa.
+Default to 1 bar.
+.TP
+.B
+\fB--gases\fP, \fB-g\fP GAS\.\.\.
+Gases for which to compute kH.
+Default to O2.
+.TP
+.B
+\fB--D2O\fP
+Set heavywater as the solvent.
+.TP
+.B
+\fB--listgases\fP
+Display available gases for
+computing kH.
+.RE
+.PP
+kd:
+.RS
+.TP
+.B
+\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+Temperature in °C. Default to 25°C.
+.TP
+.B
+\fB--x2\fP, \fB-x\fP x2\.\.\.
+Molar fraction of gas in water.
+Default to 1e-9.
+.TP
+.B
+\fB--gases\fP, \fB-g\fP GAS\.\.\.
+Gases for which to compute kD.
+Default to H2.
+.TP
+.B
+\fB--D2O\fP,
+Set heavywater as the solvent.
+.TP
+.B
+\fB--listgases\fP
+Display available gases for
+computing kD.
+.RE
+.PP
+psat:
+.RS
+.TP
+.B
+\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+Temperature in °C. Default to 25°C.
+.RE
+.PP
+Tsat:
+.RS
+.TP
+.B
+\fB--pressure\fP, \fB-p\fP PRESSURE\.\.\.
+Pressure in bar. Default to 1 bar.
+.RE
+.PP
+wp:
+.RS
+.TP
+.B
+\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+Temperature in °C. Default to 25°C.
+.TP
+.B
+\fB--pressure\fP, \fB-p\fP PRESSURE\.\.\.
+Pressure in bar. Default to 1 bar.
+.RE
+.PP
+all:
+.RS
+.TP
+.B
+\fB--usage\fP, \fB-u\fP
+Show usage text and exit.
+.TP
+.B
+\fB--help\fP, \fB-h\fP
+Show help text and exit.
+.TP
+.B
+\fB--verbose\fP, \fB-V\fP
+Display additional information.
+.TP
+.B
+\fB--version\fP, \fB-v\fP
+Show version information and exit.
+.SH NOTES
+
+You may replace the default options from a file if your first
+options begin with @file.
+Initial options will then be read from the "response file"
+"file.rsp" in the current directory.
+.PP
+If "file" does not exist or cannot be read, then an error occurs and
+the program stops. Each line of the file is prefixed with "options"
+and interpreted as a separate argument. The file itself may not
+contain @file arguments. That is, it is not processed recursively.
+.PP
+For more information on response files see
+https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html
+.SH EXAMPLE
+Minimal example
+.PP
+.nf
+.fam C
+      iapws kh -T 25,100 -f 1,0.2 -g O2,H2
+      iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
+      iapws wp -T 25,100 -p 0.035,1.0
+
+.fam T
+.fi
+
+.SH SEE ALSO
+.BR ciaaw (3),
+.BR codata (3),

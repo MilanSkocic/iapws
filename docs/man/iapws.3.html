@@ -1,0 +1,865 @@
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Sat Aug  1 08:36:38 2026 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>iapws</title>
+
+</head>
+<body>
+
+<h1 align="center">iapws</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#LIBRARY">LIBRARY</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#NOTES">NOTES</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws - library
+for light and heavy water properties according to IAPWS.</p>
+
+<h2>LIBRARY
+<a name="LIBRARY"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws library
+(<i>libiapws</i>, <i>-liapws</i>)</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em">Fortran</p></td>
+<td width="4%"></td>
+<td width="23%">
+
+
+<p style="margin-top: 1em"><b>use iapws</b></p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>C</p></td>
+<td width="4%"></td>
+<td width="23%">
+
+
+<p><b>#include &quot;iapws.h&quot;</b></p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>Python</p></td>
+<td width="4%"></td>
+<td width="23%">
+
+
+<p><b>import pyiapws</b></p></td>
+<td width="55%">
+</td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Numerical
+implementation for reports:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">&bull;</p></td>
+<td width="3%"></td>
+<td width="6%">
+
+
+<p style="margin-top: 1em">R2-83</p></td>
+<td width="72%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%;">[x]</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%"></td>
+<td width="2%"></td>
+<td width="25%">
+
+
+<p style="margin-top: 1em">Tc in H2O and D2O</p></td>
+<td width="47%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[x]</p></td>
+<td width="2%"></td>
+<td width="25%">
+
+
+<p>pc in H2O and D2O</p></td>
+<td width="47%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[x]</p></td>
+<td width="2%"></td>
+<td width="25%">
+
+
+<p>rhoc in H2O and D2O</p></td>
+<td width="47%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="25%"></td>
+<td width="47%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">G7-04</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p style="margin-top: 1em">[x]</p></td>
+<td width="2%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em">kH</p></td>
+<td width="69%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[x]</p></td>
+<td width="2%"></td>
+<td width="3%">
+
+
+<p>kD</p></td>
+<td width="69%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="3%"></td>
+<td width="69%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">R7-97</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p style="margin-top: 1em">[x]</p></td>
+<td width="2%"></td>
+<td width="10%">
+
+
+<p style="margin-top: 1em">Region 1</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[]</p></td>
+<td width="2%"></td>
+<td width="10%">
+
+
+<p>Region 2</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[]</p></td>
+<td width="2%"></td>
+<td width="10%">
+
+
+<p>Region 3</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[x]</p></td>
+<td width="2%"></td>
+<td width="10%">
+
+
+<p>Region 4</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>[]</p></td>
+<td width="2%"></td>
+<td width="10%">
+
+
+<p>Region 5</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="8%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="10%"></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">R11-24:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="4%">
+
+
+<p style="margin-top: 1em">[x]</p></td>
+<td width="2%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em">Kw</p></td>
+<td width="69%">
+</td></tr>
+</table>
+
+<h2>NOTES
+<a name="NOTES"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">To use
+<b>iapws</b> within your fpm project, add the following to
+your fpm.toml file: <br>
+[dependencies] <br>
+iapws = {
+git=&quot;https://github.com/MilanSkocic/iapws.git&quot;
+}</p>
+
+<p style="margin-left:9%; margin-top: 1em">dp stands for
+double precision and it is an alias to real64 from the
+iso_fortran_env module.</p>
+
+<p style="margin-left:9%; margin-top: 1em">Water
+phases:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">l</p></td>
+<td width="8%"></td>
+<td width="18%">
+
+
+<p style="margin-top: 1em">liquid</p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p>v</p></td>
+<td width="8%"></td>
+<td width="18%">
+
+
+<p>vapor</p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p>c</p></td>
+<td width="8%"></td>
+<td width="18%">
+
+
+<p>super critical</p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p>s</p></td>
+<td width="8%"></td>
+<td width="18%">
+
+
+<p>saturation</p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p>n</p></td>
+<td width="8%"></td>
+<td width="18%">
+
+
+<p>unknown</p></td>
+<td width="55%">
+</td></tr>
+</table>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Example in
+Fortran: <br>
+program example_in_f <br>
+use iapws__common, only: dp, int32 <br>
+use iapws <br>
+implicit none(type,external)</p>
+
+<p style="margin-left:9%; margin-top: 1em">integer(int32)
+:: i, ngas <br>
+real(dp) :: T(1), kh_res(1), kd_res(1), wp_res(1), p(1) <br>
+real(dp) :: Ts(7), ps(7) <br>
+real(dp) :: x(3), y(3) <br>
+integer(int32) :: r(3) <br>
+character(len=1) :: s(3) <br>
+character(len=2) :: gas = &quot;O2&quot; <br>
+integer(int32) :: heavywater = 0 <br>
+type(gas_type), pointer :: gases_list(:) <br>
+character(len=:), pointer :: gases_str</p>
+
+<p style="margin-left:9%; margin-top: 1em">print *,
+&rsquo;########################## IAPWS VERSION
+##########################&rsquo; <br>
+print *, &quot;version &quot;, version()</p>
+
+<p style="margin-left:9%; margin-top: 1em">print *,
+&rsquo;########################## IAPWS R2-83
+##########################&rsquo; <br>
+print &quot;(a, f10.3, a)&quot;, &quot;Tc in h2o=&quot;,
+Tc_H2O, &quot; k&quot; <br>
+print &quot;(a, f10.3, a)&quot;, &quot;pc in h2o=&quot;,
+pc_H2O, &quot; mpa&quot; <br>
+print &quot;(a, f10.3, a)&quot;, &quot;rhoc in h2o=&quot;,
+rhoc_H2O, &quot; kg/m3&quot;</p>
+
+<p style="margin-left:9%; margin-top: 1em">print &quot;(a,
+f10.3, a)&quot;, &quot;Tc in D2O=&quot;, Tc_D2O, &quot;
+k&quot; <br>
+print &quot;(a, f10.3, a)&quot;, &quot;pc in D2O=&quot;,
+pc_D2O, &quot; mpa&quot; <br>
+print &quot;(a, f10.3, a)&quot;, &quot;rhoc in D2O=&quot;,
+rhoc_D2O, &quot; kg/m3&quot; <br>
+print *, &rsquo;&rsquo;</p>
+
+<p style="margin-left:9%; margin-top: 1em">print *,
+&rsquo;########################## IAPWS G7-04
+##########################&rsquo; <br>
+! Compute kh and kd in H2O <br>
+T(1) = 25.0_dp + 273.15_dp <br>
+call kh(T, gas, heavywater, kh_res) <br>
+print &quot;(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP,
+F10.4)&quot;, &quot;Gas=&quot;, gas, &quot;T=&quot;, T,
+&quot;K&quot;, &quot;kh=&quot;, kh_res</p>
+
+<p style="margin-left:9%; margin-top: 1em">call kd(T, gas,
+heavywater, kd_res) <br>
+print &quot;(A10, 1X, A10, 1X, A2, F10.1, A, 4X, A3, SP,
+F15.4)&quot;, &quot;Gas=&quot;, gas, &quot;T=&quot;, T,
+&quot;K&quot;, &quot;kh=&quot;, kd_res</p>
+
+<p style="margin-left:9%; margin-top: 1em">! Get and print
+available gases <br>
+heavywater = 0 <br>
+ngas = ngases(heavywater) <br>
+gases_list =&gt; null() <br>
+gases_list =&gt; gases(heavywater) <br>
+gases_str =&gt; gases2(heavywater) <br>
+print *, &quot;Gases in H2O: &quot;, ngas <br>
+print *, gases_str <br>
+do i=1, ngas <br>
+print *, gases_list(i)%gas <br>
+enddo</p>
+
+<p style="margin-left:9%; margin-top: 1em">heavywater = 1
+<br>
+ngas = ngases(heavywater) <br>
+gases_list =&gt; null() <br>
+gases_list =&gt; gases(heavywater) <br>
+gases_str =&gt; gases2(heavywater) <br>
+print *, &quot;Gases in D2O: &quot;, ngas <br>
+print *, gases_str <br>
+do i=1, ngas <br>
+print *, gases_list(i)%gas <br>
+enddo</p>
+
+<p style="margin-left:9%; margin-top: 1em">print *,
+&rsquo;########################## IAPWS R7-97
+##########################&rsquo; <br>
+! Compute ps from Ts. <br>
+Ts(:) = [-1.0_dp, 25.0_dp, 100.0_dp, 200.0_dp, 300.0_dp,
+360.0_dp, 374.0_dp] <br>
+Ts(:) = Ts(:) + 273.15_dp <br>
+call psat(Ts, ps)</p>
+
+<p style="margin-left:9%; margin-top: 1em">do i=1, size(Ts)
+<br>
+print &quot;(SP, F23.3, A3, 4X, F23.3, A3)&quot;, Ts(i),
+&quot;K&quot;, ps(i), &quot;MPa&quot; <br>
+end do</p>
+
+<p style="margin-left:9%; margin-top: 1em">! Compute Ts
+from ps <br>
+call Tsat(ps, Ts) <br>
+do i=1, size(Ts) <br>
+print &quot;(SP, F23.3, A3, 4X, F23.3, A3)&quot;, Ts(i),
+&quot;K&quot;, ps(i), &quot;MPa&quot; <br>
+end do</p>
+
+<p style="margin-left:9%; margin-top: 1em">! Compute water
+properties at 280&deg;C/8 Mpa <br>
+p(1) = 8.0_dp <br>
+T(1) = 273.15_dp + 280.0_dp <br>
+call wp(p, T, &quot;v&quot;, wp_res) <br>
+print &quot;(A5, F23.16, X, A)&quot;,
+&quot;v(8MPa,280&deg;C)=&quot;, wp_res(1)*1000.0_dp,
+&quot;L/kg&quot;</p>
+
+<p style="margin-left:9%; margin-top: 1em">! Compute region
+and phase <br>
+x = [8.0_dp, 4.0_dp, 6.0_dp ] <br>
+y = [553.15_dp, 1200.0_dp, 2000.0_dp] <br>
+call wr(x, y, r) <br>
+call wph(x, y, s) <br>
+print *, r <br>
+print *, s</p>
+
+<p style="margin-left:9%; margin-top: 1em">end program
+example_in_f</p>
+
+<p style="margin-left:9%; margin-top: 1em">Example in C
+<br>
+#include &lt;string.h&gt; <br>
+#include &lt;stdio.h&gt; <br>
+#include &quot;iapws.h&quot;</p>
+
+<p style="margin-left:9%; margin-top: 1em">int main(void){
+<br>
+double T = 25.0 + 273.15; /* in C*/ <br>
+double p; /* p in Mpa */ <br>
+char *gas = &quot;O2&quot;; <br>
+double kh, kd, wp_res; <br>
+char **gases_list; <br>
+char *gases_str; <br>
+int ngas; <br>
+int i; <br>
+int heavywater = 0; <br>
+double x[3]= {8.0, 4.0, 6.0 }; <br>
+double y[3] = {553.15, 1200.0, 2000.0}; <br>
+int r[3]; <br>
+char s[3];</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;%s0,
+&quot;########################## IAPWS VERSION
+##########################&quot;); <br>
+printf(&quot;version %s0, iapws_version());</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;%s0,
+&quot;########################## IAPWS R2-83
+##########################&quot;); <br>
+printf(&quot;%s %10.3f %s0, &quot;Tc in H2O&quot;,
+iapws_r283_Tc_H2O, &quot;K&quot;); <br>
+printf(&quot;%s %10.3f %s0, &quot;pc in H2O&quot;,
+iapws_r283_pc_H2O, &quot;MPa&quot;); <br>
+printf(&quot;%s %10.3f %s0, &quot;rhoc in H2O&quot;,
+iapws_r283_rhoc_H2O, &quot;kg/m3&quot;);</p>
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;%s
+%10.3f %s0, &quot;Tc in D2O&quot;, iapws_r283_Tc_D2O,
+&quot;K&quot;); <br>
+printf(&quot;%s %10.3f %s0, &quot;pc in D2O&quot;,
+iapws_r283_pc_D2O, &quot;MPa&quot;); <br>
+printf(&quot;%s %10.3f %s0, &quot;rhoc in D2O&quot;,
+iapws_r283_rhoc_D2O, &quot;kg/m3&quot;);</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;0);</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;%s0,
+&quot;########################## IAPWS G7-04
+##########################&quot;); <br>
+/* Compute kh and kd in H2O*/ <br>
+iapws_g704_kh(&amp;T, gas, heavywater, &amp;kh, strlen(gas),
+1); <br>
+printf(&quot;Gas=%sT=%fKkh=%+10.4f0, gas, T, kh);</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws_g704_kd(&amp;T,
+gas, heavywater, &amp;kd, strlen(gas), 1); <br>
+printf(&quot;Gas=%sT=%fKkd=%+15.4f0, gas, T, kd);</p>
+
+<p style="margin-left:9%; margin-top: 1em">/* Get and print
+the available gases */ <br>
+ngas = iapws_g704_ngases(heavywater); <br>
+gases_list = iapws_g704_gases(heavywater); <br>
+gases_str = iapws_g704_gases2(heavywater); <br>
+printf(&quot;Gases in H2O: %d0, ngas); <br>
+printf(&quot;%s0, gases_str); <br>
+for(i=0; i&lt;ngas; i++){ <br>
+printf(&quot;%s0, gases_list[i]); <br>
+}</p>
+
+<p style="margin-left:9%; margin-top: 1em">heavywater = 1;
+<br>
+ngas = iapws_g704_ngases(heavywater); <br>
+gases_list = iapws_g704_gases(heavywater); <br>
+gases_str = iapws_g704_gases2(heavywater); <br>
+printf(&quot;Gases in D2O: %d0, ngas); <br>
+printf(&quot;%s0, gases_str); <br>
+for(i=0; i&lt;ngas; i++){ <br>
+printf(&quot;%s0, gases_list[i]); <br>
+}</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">printf(&quot;%s0,
+&quot;########################## IAPWS R7-97
+##########################&quot;); <br>
+double Ts[7] = {-1.0, 25.0, 100.0, 200.0, 300.0, 360.0,
+374.0}; <br>
+double ps[7] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}; <br>
+for(i=0; i&lt;7; i++){ <br>
+Ts[i] = Ts[i] + 273.15; <br>
+} <br>
+iapws_r797_psat(7, Ts, ps);</p>
+
+<p style="margin-left:9%; margin-top: 1em">for(i=0; i&lt;7;
+i++){ <br>
+printf(&quot;%+23.3f %s %+23.3f %s0, Ts[i], &quot;K&quot;,
+ps[i], &quot;MPa&quot;); <br>
+}</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws_r797_Tsat(7,
+ps, Ts); <br>
+for(i=0; i&lt;7; i++){ <br>
+printf(&quot;%+23.3f %s %+23.3f %s0, Ts[i], &quot;K&quot;,
+ps[i], &quot;MPa&quot;); <br>
+}</p>
+
+<p style="margin-left:9%; margin-top: 1em">T = 273.15 +
+280.0; <br>
+p = 8.0; <br>
+iapws_r797_wp(&amp;p, &amp;T, &quot;v&quot;, &amp;wp_res, 1,
+1); <br>
+printf(&quot;v(8MPa,280&deg;C) = %+23.16f L/kg0, wp_res *
+1000.0);</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws_r797_wr(x,
+y, r, 3); <br>
+iapws_r797_wph(x, y, s, 3); <br>
+for(i=0; i&lt;3; i++){ <br>
+printf(&quot;%i&quot;, r[i]); <br>
+} <br>
+printf(&quot;0); <br>
+for(i=0; i&lt;3; i++){ <br>
+printf(&quot;%c&quot;, s[i]); <br>
+} <br>
+printf(&quot;0);</p>
+
+<p style="margin-left:9%; margin-top: 1em">return 0; <br>
+}</p>
+
+<p style="margin-left:9%; margin-top: 1em">Example in
+Python <br>
+r&quot;&quot;&quot;Example in python&quot;&quot;&quot; <br>
+import sys <br>
+sys.path.insert(0, &quot;../py/src/&quot;) <br>
+import array <br>
+import numpy as np <br>
+import matplotlib.pyplot as plt <br>
+import pyiapws</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;##########################
+IAPWS VERSION ##########################&quot;) <br>
+print(pyiapws.__version__)</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;##########################
+IAPWS R2-83 ##########################&quot;) <br>
+print(&quot;Tc in H2O&quot;, pyiapws.Tc_H2O, &quot;K&quot;)
+<br>
+print(&quot;pc in H2O&quot;, pyiapws.pc_H2O,
+&quot;MPa&quot;) <br>
+print(&quot;rhoc in H2O&quot;, pyiapws.rhoc_H2O,
+&quot;kg/m3&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;Tc
+in D2O&quot;, pyiapws.Tc_D2O, &quot;K&quot;) <br>
+print(&quot;pc in D2O&quot;, pyiapws.pc_D2O,
+&quot;MPa&quot;) <br>
+print(&quot;rhoc in D2O&quot;, pyiapws.rhoc_D2O,
+&quot;kg/m3&quot;)</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;&quot;)</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;##########################
+IAPWS G7-04 ##########################&quot;) <br>
+gas = &quot;O2&quot; <br>
+T = array.array(&quot;d&quot;, (25.0+273.15,))</p>
+
+<p style="margin-left:9%; margin-top: 1em"># Compute kh and
+kd in H2O <br>
+heavywater = False <br>
+k = pyiapws.kh(T, &quot;O2&quot;, heavywater) <br>
+print(f&quot;Gas={gas}T={T[0]}Kkh={k[0]:+10.4f}0)</p>
+
+<p style="margin-left:9%; margin-top: 1em">k =
+pyiapws.kd(T, &quot;O2&quot;, heavywater) <br>
+print(f&quot;Gas={gas}T={T[0]}Kkd={k[0]:+10.4f}0)</p>
+
+<p style="margin-left:9%; margin-top: 1em"># Get and print
+the available gases <br>
+heavywater = False <br>
+gases_list = pyiapws.gases(heavywater) <br>
+gases_str = pyiapws.gases2(heavywater) <br>
+ngas = pyiapws.ngases(heavywater) <br>
+print(f&quot;Gases in H2O: {ngas:}&quot;) <br>
+print(gases_str) <br>
+for gas in gases_list: <br>
+print(gas)</p>
+
+<p style="margin-left:9%; margin-top: 1em">heavywater =
+True <br>
+gases_list = pyiapws.gases(heavywater) <br>
+gases_str = pyiapws.gases2(heavywater) <br>
+ngas = pyiapws.ngases(heavywater) <br>
+print(f&quot;Gases in D2O: {ngas:}&quot;) <br>
+print(gases_str) <br>
+for gas in gases_list: <br>
+print(gas)</p>
+
+<p style="margin-left:9%; margin-top: 1em">style =
+{&quot;marker&quot;:&quot;.&quot;,
+&quot;ls&quot;:&quot;&quot;, &quot;ms&quot;:2} <br>
+T_KELVIN = 273.15 <br>
+T = np.linspace(0.0, 360.0, 1000) + 273.15</p>
+
+<p style="margin-left:9%; margin-top: 1em">solvent = {True:
+&quot;D2O&quot;, False: &quot;H2O&quot;}</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;Generating
+plot for kh&quot;) <br>
+kname = &quot;kh&quot; <br>
+for HEAVYWATER in (False, True): <br>
+print(solvent[HEAVYWATER]) <br>
+fig = plt.figure() <br>
+ax = fig.add_subplot() <br>
+ax.grid(visible=True, ls=&rsquo;:&rsquo;) <br>
+ax.set_xlabel(&quot;T /&deg;K&quot;) <br>
+ax.set_ylabel(&quot;ln (kh/1GPa)&quot;) <br>
+gases = pyiapws.gases(HEAVYWATER) <br>
+for gas in gases: <br>
+k = pyiapws.kh(T, gas, HEAVYWATER) / 1000.0 <br>
+ln_k = np.log(k) <br>
+ax.plot(T, ln_k, label=gas, **style) <br>
+ax.legend(ncol=3) <br>
+
+fig.savefig(f&quot;../media/g704-{kname:s}_{solvent[HEAVYWATER]}.png&quot;,
+dpi=100, format=&quot;png&quot;)</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;Generating
+plot for kd&quot;) <br>
+kname = &quot;kd&quot; <br>
+for HEAVYWATER in (False, True): <br>
+print(solvent[HEAVYWATER]) <br>
+fig = plt.figure() <br>
+ax = fig.add_subplot() <br>
+ax.grid(visible=True, ls=&rsquo;:&rsquo;) <br>
+ax.set_xlabel(&quot;T /&deg;K&quot;) <br>
+ax.set_ylabel(&quot;ln kd&quot;) <br>
+gases = pyiapws.gases(HEAVYWATER) <br>
+for gas in gases: <br>
+k = pyiapws.kd(T, gas, HEAVYWATER) <br>
+ln_k = np.log(k) <br>
+ax.plot(T, ln_k, label=gas, **style) <br>
+ax.legend(ncol=3) <br>
+
+fig.savefig(f&quot;../media/g704-{kname:s}_{solvent[HEAVYWATER]}.png&quot;,
+dpi=100, format=&quot;png&quot;)</p>
+
+
+<p style="margin-left:9%; margin-top: 1em">print(&quot;##########################
+IAPWS R7-97 ##########################&quot;) <br>
+Ts = np.asarray([-1.0, 25.0, 100.0, 200.0, 300.0, 360.0,
+374.0]) <br>
+Ts = Ts + 273.15</p>
+
+<p style="margin-left:9%; margin-top: 1em">ps =
+pyiapws.psat(Ts) <br>
+for i in range(Ts.size): <br>
+print(f&quot;{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">Ts =
+pyiapws.Tsat(ps) <br>
+for i in range(Ts.size): <br>
+print(f&quot;{Ts[i]:23.3f} K {ps[i]:23.3f} MPa.&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">fig =
+plt.figure() <br>
+ax = fig.add_subplot() <br>
+ax.grid(visible=True, ls=&rsquo;:&rsquo;) <br>
+ax.set_xlabel(&quot;Ts /K&quot;) <br>
+ax.set_ylabel(&quot;ps /MPa&quot;) <br>
+Ts = np.linspace(0.0, 370.0, 500) <br>
+Ts = Ts + 273.15</p>
+
+<p style="margin-left:9%; margin-top: 1em">ps =
+pyiapws.psat(Ts) <br>
+ax.plot(Ts, ps, &quot;r-&quot;,
+label=&quot;ps(Ts)&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">Ts =
+pyiapws.Tsat(ps) <br>
+ax.plot(Ts, ps, &quot;b--&quot;,
+label=&quot;Ts(ps)&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">ax.legend() <br>
+fig.savefig(f&quot;../media/r797-r4.png&quot;, dpi=100,
+format=&quot;png&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">T = 280.0 +
+273.15 <br>
+p = 8.0 <br>
+res = pyiapws.wp(p, T, &quot;v&quot;)*1000.0 <br>
+print(f&quot;v(8MPa,280&deg;C) = {res:+23.16f}
+L/kg)&quot;)</p>
+
+<p style="margin-left:9%; margin-top: 1em">x =
+np.asarray([8.0, 4.0, 6.0 ]) <br>
+y = np.asarray([553.15, 1200.0, 2000.0]) <br>
+r=pyiapws.wr(x, y) <br>
+s=pyiapws.wph(x, y) <br>
+print(r) <br>
+print(s)</p>
+
+<p style="margin-left:9%; margin-top: 1em">plt.show()</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>ciaaw</b>(3),
+<b>codata</b>(3),</p>
+<hr>
+</body>
+</html>
