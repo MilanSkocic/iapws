@@ -1,4 +1,4 @@
-iapws(1)                     Library calls                     iapws(1)
+iapws(1)                     User Commands                     iapws(1)
 
 NAME
        iapws - Compute light and heavy water properties.
@@ -135,4 +135,4 @@ EXAMPLE
 SEE ALSO
        ciaaw(3), codata(3),
 
-0.7.1                        30 March 2026                     iapws(1)
+0.7.1                        02 August 2026                    iapws(1)

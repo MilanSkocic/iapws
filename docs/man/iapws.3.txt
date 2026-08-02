@@ -48,11 +48,6 @@ DESCRIPTION
                  [x]  Kw
 
 NOTES
-       To use iapws within your fpm project, add the following to  your
-       fpm.toml file:
-               [dependencies]
-               iapws = { git="https://github.com/MilanSkocic/iapws.git" }
-
        dp stands for double precision and it is an alias to real64 from
        the iso_fortran_env module.
 
@@ -67,6 +62,65 @@ NOTES
               s      saturation
 
               n      unknown
+
+       References
+
+       [1]  IAPWS, “Release on the Values of Temperature, Pressure  and
+            Density of Ordinary and Heavy Water Substances at Their Re‐
+            spective  Critical Points.”  IAPWS, St. Petersburg, Russia,
+            1992.
+
+       [2]  “International Equations for the Saturation  Properties  of
+            Ordinary Water Substance. Revised According to the Interna‐
+            tional  Temperature  Scale  of  1990.  Addendum to J. Phys.
+            Chem. Ref. Data 16, 893 (1987),”, Journal of  Physical  and
+            Chemical  Reference  Data, vol. 22, no. 3, pp. 783–787, May
+            1993, doi: 10.1063/1.555926.
+
+       [3]  A. H. Harvey and E. W. Lemmon, “Correlation for  the  Vapor
+            Pressure of Heavy Water From the Triple Point to the Criti‐
+            cal  Point,”  Journal  of  Physical  and Chemical Reference
+            Data,  vol.  31,  no.  1,  pp.  173–181,  Mar.  2002,  doi:
+            10.1063/1.1430231.
+
+       [4]  W.  Wagner and A. Pruß, “The IAPWS Formulation 1995 for the
+            Thermodynamic Properties of Ordinary  Water  Substance  for
+            General and Scientific Use,” Journal of Physical and Chemi‐
+            cal Reference Data, vol. 31, no. 2, pp. 387–535, Jun. 2002,
+            doi: 10.1063/1.1461829.
+
+       [5]  R.  Fernandez-Prini,  J.  L.  Alvarez,  and  A.  H. Harvey,
+            “Henry’s Constants and Vapor–Liquid Distribution  Constants
+            for  Gaseous  Solutes in H2O and D2O at High Temperatures,”
+            Journal of Physical Chemistry Reference Data, vol. 32,  no.
+            2, pp. 903–916, 2003.
+
+       [6]  IAPWS,  “Guideline on the Henry’s Constant and Vapor-Liquid
+            Distribution Constant for Gases in H2O and D2O at High Tem‐
+            peratures.”  IAPWS, Kyoto, Japan, 2004.
+
+       [7]  A. V. Bandura and S. N. Lvov, “The Ionization  Constant  of
+            Water over Wide Ranges of Temperature and Density,” Journal
+            of  Physical  and  Chemical Reference Data, vol. 35, no. 1,
+            pp. 15–30, Mar. 2006, doi: 10.1063/1.1928231.
+
+       [8]  IAPWS, “Revised Release on the IAPWS Industrial Formulation
+            1997 for the Thermodynamic Properties of Water and  Steam.”
+            Lucerne, Switzerland, 2012.
+
+       [9]  IAPWS,  “Revised  Release on the IAPWS Formulation 1995 for
+            the Thermodynamic Properties of  Ordinary  Water  Substance
+            for  General  and Scientific Use.”  Praque, Czech Republic,
+            2018.
+
+       [10] IAPWS, “Revised Release on the Ionization Constant of H2O.”
+            Banff, Canada, 2019.
+
+       [11] H. Arcis et al., “Revised Parameters for the IAPWS Formula‐
+            tion for the Ionization Constant of Water Over a Wide Range
+            of Temperatures and Densities, Including Near-Critical Con‐
+            ditions,” Journal of Physical and Chemical Reference  Data,
+            vol. 53, no. 2, p. 23103, May 2024, doi: 10.1063/5.0198792.
 
 EXAMPLES
        Example in Fortran:
@@ -401,4 +455,4 @@ EXAMPLES
 SEE ALSO
        ciaaw(3), codata(3),
 
-0.7.1                        01 August 2026                    iapws(3)
+0.7.1                        02 August 2026                    iapws(3)

@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Aug  1 08:36:38 2026 -->
+<!-- CreationDate: Sun Aug  2 12:36:46 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -319,14 +319,6 @@ implementation for reports:</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">To use
-<b>iapws</b> within your fpm project, add the following to
-your fpm.toml file: <br>
-[dependencies] <br>
-iapws = {
-git=&quot;https://github.com/MilanSkocic/iapws.git&quot;
-}</p>
-
 <p style="margin-left:9%; margin-top: 1em">dp stands for
 double precision and it is an alias to real64 from the
 iso_fortran_env module.</p>
@@ -401,6 +393,172 @@ phases:</p>
 <p>unknown</p></td>
 <td width="55%">
 </td></tr>
+</table>
+
+<p style="margin-left:9%; margin-top: 1em">References</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p style="margin-top: 1em">[1]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p style="margin-top: 1em">IAPWS, &ldquo;Release on the
+Values of Temperature, Pressure and Density of Ordinary and
+Heavy Water Substances at Their Respective Critical
+Points.&rdquo; IAPWS, St. Petersburg, Russia, 1992.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[2]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>&ldquo;International Equations for the Saturation
+Properties of Ordinary Water Substance. Revised According to
+the International Temperature Scale of 1990. Addendum to J.
+Phys. Chem. Ref. Data 16, 893 (1987),&rdquo;, Journal of
+Physical and Chemical Reference Data, vol. 22, no. 3, pp.
+783&ndash;787, May 1993, doi: 10.1063/1.555926.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[3]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>A. H. Harvey and E. W. Lemmon, &ldquo;Correlation for
+the Vapor Pressure of Heavy Water From the Triple Point to
+the Critical Point,&rdquo; Journal of Physical and Chemical
+Reference Data, vol. 31, no. 1, pp. 173&ndash;181, Mar.
+2002, doi: 10.1063/1.1430231.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[4]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>W. Wagner and A. Pru&szlig;, &ldquo;The IAPWS
+Formulation 1995 for the Thermodynamic Properties of
+Ordinary Water Substance for General and Scientific
+Use,&rdquo; Journal of Physical and Chemical Reference Data,
+vol. 31, no. 2, pp. 387&ndash;535, Jun. 2002, doi:
+10.1063/1.1461829.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[5]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>R. Fernandez-Prini, J. L. Alvarez, and A. H. Harvey,
+&ldquo;Henry&rsquo;s Constants and Vapor&ndash;Liquid
+Distribution Constants for Gaseous Solutes in H2O and D2O at
+High Temperatures,&rdquo; Journal of Physical Chemistry
+Reference Data, vol. 32, no. 2, pp. 903&ndash;916, 2003.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[6]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>IAPWS, &ldquo;Guideline on the Henry&rsquo;s Constant
+and Vapor-Liquid Distribution Constant for Gases in H2O and
+D2O at High Temperatures.&rdquo; IAPWS, Kyoto, Japan,
+2004.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[7]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>A. V. Bandura and S. N. Lvov, &ldquo;The Ionization
+Constant of Water over Wide Ranges of Temperature and
+Density,&rdquo; Journal of Physical and Chemical Reference
+Data, vol. 35, no. 1, pp. 15&ndash;30, Mar. 2006, doi:
+10.1063/1.1928231.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[8]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>IAPWS, &ldquo;Revised Release on the IAPWS Industrial
+Formulation 1997 for the Thermodynamic Properties of Water
+and Steam.&rdquo; Lucerne, Switzerland, 2012.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[9]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>IAPWS, &ldquo;Revised Release on the IAPWS Formulation
+1995 for the Thermodynamic Properties of Ordinary Water
+Substance for General and Scientific Use.&rdquo; Praque,
+Czech Republic, 2018.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[10]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>IAPWS, &ldquo;Revised Release on the Ionization Constant
+of H2O.&rdquo; Banff, Canada, 2019.</p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="5%">
+
+
+<p>[11]</p></td>
+<td width="1%"></td>
+<td width="85%">
+
+
+<p>H. Arcis et al., &ldquo;Revised Parameters for the IAPWS
+Formulation for the Ionization Constant of Water Over a Wide
+Range of Temperatures and Densities, Including Near-Critical
+Conditions,&rdquo; Journal of Physical and Chemical
+Reference Data, vol. 53, no. 2, p. 23103, May 2024, doi:
+10.1063/5.0198792.</p> </td></tr>
 </table>
 
 <h2>EXAMPLES

@@ -1,4 +1,4 @@
-.TH iapws 1 "30 March 2026" "0.7.1" "Library calls"
+.TH iapws 1 "@DATE@" "@VERSION@" "User Commands"
 .SH NAME
 \fBiapws \fP- Compute light and heavy water properties.
 \fB
