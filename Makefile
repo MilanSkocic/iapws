@@ -1,6 +1,8 @@
 include make.in
 # ---------------------------------------------------------------------
 # CONFIGURATION
+# ---------------------------------------------------------------------
+#{{{
 install_dir=$(PREFIX)
 ifneq ($(prefix), )
 	PREFIX=$(prefix)
@@ -14,85 +16,91 @@ endif
 
 install_dir=$(PREFIX)
 
-SRC_FYPP=$(wildcard ./src/*.fypp)
+ARCHIVE=$(FPM_NAME)-$(FPM_PLATFORM)-$(FPM_ARCH)-$(FPM_VERSION)
+PYARCHIVE=$(FPM_PYNAME)-$(FPM_PLATFORM)-$(FPM_ARCH)-$(FPM_VERSION)
+#}}}
 # ---------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------
-# TARGETS
-.PHONY: build references doc docs clean logo api
 
 all: $(FPM_LIBNAME)
 
-$(FPM_LIBNAME): build copy_a shared
-# ---------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------
-# SOURCES
-prep:
-	make -C srcprep
-# ---------------------------------------------------------------------
-
+$(FPM_LIBNAME): build shared
 
 # ---------------------------------------------------------------------
 # COMPILATION
-build: 
-	fpm build --profile=$(btype)
+# ---------------------------------------------------------------------
+#{{{
+.PHONY: build
+build:
+	fpm build --profile $(btype)
+	fpm install --prefix $(FPM_BUILD_DIR)/install --profile $(btype) --no-rebuild
+	install -d $(FPM_BUILD_DIR)/install/share/man/man1/ \
+		       $(FPM_BUILD_DIR)/install/share/man/man3/
+	install $(FPM_INCLUDE_DIR)/$(FPM_NAME)*.h $(FPM_BUILD_DIR)/install/include
+	install docs/man/$(FPM_NAME)*.3.gz $(FPM_BUILD_DIR)/install/share/man/man3
+	install docs/man/$(FPM_APPNAME)*.1.gz $(FPM_BUILD_DIR)/install/share/man/man1
 
-test: build
-	fpm test --profile=$(btype)
+.PHONY: test
+test:
+	fpm test --profile $(btype)
 
-example: build
-	fpm run --profile=$(btype) --example example_in_f
-	fpm run --profile=$(btype) --example example_in_c
+.PHONY: example
+example:
+	fpm run --profile $(btype) --example example_in_f
+	fpm run --profile $(btype) --example example_in_c
+#}}}
 # ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
-# LINKING - STATIC and DYNAMIC LIBS
-copy_a: 
-	cp -f $(shell find ./build/gfortran* -type f -name $(FPM_LIBNAME).a) $(FPM_BUILD_DIR)
-
+# SHARED LIBRARY
+# ---------------------------------------------------------------------
+#{{{
+.PHONY: shared
 shared: shared_$(FPM_PLATFORM)
 
+.PHONY: shared_linux
 shared_linux: 
-	$(FPM_FC) -shared -o $(FPM_BUILD_DIR)/$(FPM_LIBNAME).so -Wl,--whole-archive $(FPM_BUILD_DIR)/$(FPM_LIBNAME).a -Wl,--no-whole-archive
+	$(FPM_FC) -shared -o $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).so -Wl,--whole-archive $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).a -Wl,--no-whole-archive
 
+.PHONY: shared_darwin
 shared_darwin: 
-	$(FPM_FC) -dynamiclib -install_name @rpath/$(FPM_LIBNAME).dylib $(FPM_LDFLAGS) -o $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dylib -Wl,-all_load $(FPM_BUILD_DIR)/$(FPM_LIBNAME).a
+	$(FPM_FC) -dynamiclib -install_name @rpath/$(FPM_LIBNAME).dylib $(FPM_LDFLAGS) -o $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).dylib -Wl,-all_load $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).a
 
+.PHONY: shared_window
 shared_windows: 
-	$(FPM_FC) -shared $(FPM_LDFLAGS) -o $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dll -Wl,--out-implib=$(FPM_BUILD_DIR)/$(FPM_LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(FPM_BUILD_DIR)/$(FPM_LIBNAME).a -Wl,--no-whole-archive
+	$(FPM_FC) -shared $(FPM_LDFLAGS) -o $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).dll -Wl,--out-implib=$(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).dll.a,--export-all-symbols,--enable-auto-import,--whole-archive $(FPM_BUILD_DIR)/install/lib/$(FPM_LIBNAME).a -Wl,--no-whole-archive
+#}}}
 # ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
+# PYTHON
+# ---------------------------------------------------------------------
+# {{{
+.PHONY: python
+python:
+	mkdir -p py/$(FPM_PY_SRC)/$(FPM_PLATFORM)
+	cp -rfv $(FPM_BUILD_DIR)/install/* py/$(FPM_PY_SRC)/$(FPM_PLATFORM)
+	cp -rfv py/$(FPM_PY_SRC)/$(FPM_PLATFORM)/include/*.h py/$(FPM_PY_SRC)/
+	cp -rfv py/$(FPM_PY_SRC)/$(FPM_PLATFORM)/lib/* py/$(FPM_PY_SRC)/
+	make -C py
+#}}}
+# ---------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------
 # INSTALLATION 
-install: install_dirs install_$(FPM_PLATFORM)
+#-----------------------------------------------------------------------
+#{{{
+.PHONY: install
+install: install_dirs
 
+.PHONY: install_dirs
 install_dirs: 
-	mkdir -p $(install_dir)/bin
-	mkdir -p $(install_dir)/include
-	mkdir -p $(install_dir)/lib
-	mkdir -p $(install_dir)/share/man/man3
-	mkdir -p $(install_dir)/share/man/man1
-	fpm install --prefix=$(install_dir) --profile=$(btype)
-	cp -f $(FPM_INCLUDE_DIR)/$(FPM_NAME)*.h $(install_dir)/include
-	cp -f doc/$(FPM_NAME)*.3.gz $(install_dir)/share/man/man3
-	cp -f doc/$(FPM_APPNAME)*.1.gz $(install_dir)/share/man/man1
+	mkdir -p $(install_dir)
+	cp -rfv $(FPM_BUILD_DIR)/install/* $(install_dir)
 
-install_linux: 
-	cp -f $(FPM_BUILD_DIR)/$(FPM_LIBNAME).so $(install_dir)/lib
-
-install_darwin: 
-	cp -f $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dylib $(install_dir)/lib
-
-install_windows:
-	cp -f $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dll.a $(install_dir)/lib
-	cp -f $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dll $(install_dir)/lib
-	cp -f $(FPM_BUILD_DIR)/$(FPM_LIBNAME).dll $(install_dir)/bin
-
+.PHONY: uninstall
 uninstall:
 	rm -f $(install_dir)/include/$(FPM_NAME)*.h
 	rm -f $(install_dir)/include/$(FPM_NAME)*.mod
@@ -104,31 +112,31 @@ uninstall:
 	rm -f $(install_dir)/bin/$(FPM_LIBNAME).dll
 	rm -f $(install_dir)/bin/$(FPM_APPNAME)
 	rm -f $(install_dir)/bin/$(FPM_APPNAME).exe
-	rm -r $(install_dir)/share/man1/$(FPM_APPNAME)*.1
-	rm -r $(install_dir)/share/man3/$(FPM_NAME)*.3
-# ---------------------------------------------------------------------
+	rm -r $(install_dir)/share/man/man1/$(FPM_APPNAME)*.1.*
+	rm -r $(install_dir)/share/man/man3/$(FPM_NAME)*.3.*
+#}}}
+#-----------------------------------------------------------------------
 
 
-# ---------------------------------------------------------------------
-# OTHERS
-api:
-	./scripts/f2txt.sh ./src/iapws.f90
-	./scripts/h2txt.sh ./include/iapws.h
-	./scripts/py2txt.sh ./py/src/pyiapws/__init__.py
+#-----------------------------------------------------------------------
+# ARCHIVES
+#-----------------------------------------------------------------------
+#{{{
+.PHONY: archives 
+archives:
+	cd ./build/install && tar -czvf ../$(ARCHIVE).tar.gz . && cd ../../
+	cd ./py && [ -d wheelhouse ] && cp -rfv ./wheelhouse/*.whl ./dist/ || true && cd ./dist && tar --exclude='$(PYARCHIVE).tar.gz' -czvf $(PYARCHIVE).tar.gz *.* && cd ../../ 
+#}}}
+#-----------------------------------------------------------------------
 
-doc: 
-	fpm run --profile release --target $(FPM_APPNAME) -- --help > doc/$(FPM_APPNAME).1.prep
-	make -C doc
 
-docs:
-	rm -rf docs/*
-	cp -rf doc/sphinx/build/html/* ./docs/
-
-logo:
-	make -C media
-
+#-----------------------------------------------------------------------
+# CLEAN
+#-----------------------------------------------------------------------
+#{{{
+.PHONY: clean
 clean:
 	fpm clean --all
-	make -C srcprep clean
-	make -C doc clean
-# ---------------------------------------------------------------------
+	make -C py clean
+#}}}
+#-----------------------------------------------------------------------
