@@ -4,7 +4,7 @@ NAME
        iapws - Compute light and heavy water properties.
 
 SYNOPSIS
-       iapws SUBCOMMAND [OPTION...]
+       iapws SUBCOMMAND [OPTION]...
 
 DESCRIPTION
        iapws  is  a  command line interface for computing properties of
@@ -36,15 +36,15 @@ SUBCOMMANDS
 
        Their syntax is:
 
-              + kh   [OPTION...]
+              + kh   [OPTION]...
 
-              + kd   [OPTION...]
+              + kd   [OPTION]...
 
-              + psat [OPTION...]
+              + psat [OPTION]...
 
-              + Tsat [OPTION...]
+              + Tsat [OPTION]...
 
-              + wp   [OPTION...]
+              + wp   [OPTION]...
 
 OPTIONS
        kh:
