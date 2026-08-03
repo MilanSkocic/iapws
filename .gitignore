@@ -16,6 +16,7 @@
 bin/
 build/
 docs/build/
+sphinx/_build
 dist/
 local/
 API-doc/
@@ -23,13 +24,13 @@ API-doc/
 *.obj
 *.o
 *.mod
-*.mod*
 *.pyd
 *.dll.a
 *.a
 *.dll
 *.so
 *.dylib
+tmp.txt
 
 *.egg-info
 __pycache__
@@ -42,11 +43,7 @@ py/src/pyiapws/bin/
 py/src/pyiapws/include/
 py/src/pyiapws/lib/
 py/src/pyiapws/iapws
+py/src/pyiapws/linux
+py/src/pyiapws/darwin
+py/src/pyiapws/windows
 
-.cache
-
-make.in
-
-
-srcprep/*api.txt
-srcprep/example*.txt
