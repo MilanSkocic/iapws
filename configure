@@ -80,4 +80,4 @@ cp -f LICENSE ./py/LICENSE
 echo -n $FPM_VERSION > ./py/VERSION
 echo "done"
 
-sed -i -E "s/@VERSION@/$FPM_VERSION/g" src/ciaaw.f90 
+sed -i -E "s/@VERSION@/$FPM_VERSION/g" src/iapws.f90 
