@@ -1,0 +1,251 @@
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Wed Aug  5 06:15:09 2026 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>iapws_kh</title>
+
+</head>
+<body>
+
+<h1 align="center">iapws_kh</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#LIBRARY">LIBRARY</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#RETURN VALUE">RETURN VALUE</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">kh -
+function</p>
+
+<h2>LIBRARY
+<a name="LIBRARY"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws library
+(<i>libiapws</i>, <i>-liapws</i>)</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em">Fortran</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em"><b>pure subroutine
+kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>real(dp), intent(in), contiguous ::</b>
+<i>T(:)</i></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>character(len=*), intent(in) ::</b> <i>gas</i></p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>integer(int32), intent(in) ::</b>
+<i>heavywater</i></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>real(dp), intent(out), contiguous ::</b>
+<i>k(:)</i></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>C</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>void iapws_g704_kh(double *</b><i>T,</i><b>char
+*</b><i>gas,</i><b>int</b> <i>heavywater,</i><b>double
+*</b><i>k,</i><b>int</b> <i>size_gas,</i><b>size_t</b>
+<i>size_T</i><b>)</b></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>Python</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+
+<p><b>kh(</b><i>T:</i><b>np.ndarray,</b><i>gas:</i><b>str,</b><i>heavywater:</i><b>bool=False)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Computes the
+Henry constant <i>kH</i> in MPa for a given temperature
+<i>T</i>.</p>
+
+<p style="margin-left:9%; margin-top: 1em">Arguments:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="13%">
+
+
+<p style="margin-top: 1em"><i>T(:)</i></p></td>
+<td width="6%"></td>
+<td width="45%">
+
+
+<p style="margin-top: 1em">Temperature in K.</p></td>
+<td width="27%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="13%">
+
+
+<p><i>gas</i></p></td>
+<td width="6%"></td>
+<td width="45%">
+
+
+<p>Gas.</p></td>
+<td width="27%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="13%">
+
+
+<p><i>heavywater</i></p></td>
+<td width="6%"></td>
+<td width="45%">
+
+
+<p>Flag if D2O (1) is used or H2O (0).</p></td>
+<td width="27%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="13%">
+
+
+<p><i>k(:)</i></p></td>
+<td width="6%"></td>
+<td width="45%">
+
+
+<p>Henry constant in MPa.</p></td>
+<td width="27%">
+</td></tr>
+</table>
+
+<h2>RETURN VALUE
+<a name="RETURN VALUE"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><i>k</i> is
+filled with NaN if gas is not found.</p>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Fortran:</p>
+
+<pre style="margin-left:9%;">    use iapws
+    real(dp) :: T(1), kH(1)
+    T(1) = 25.0_dp + 273.15_dp
+    call kh(T, &quot;O2&quot;, 0, kH)</pre>
+
+
+<p style="margin-left:9%; margin-top: 1em">C:</p>
+
+<pre style="margin-left:9%;">    #include &quot;iapws.h&quot;
+    double T = 25.0 + 273.15;
+    double kH;
+    iapws_g704_kh(&amp;T, &quot;O2&quot;, 0, &amp;kH, strlen(gas), 1);</pre>
+
+
+<p style="margin-left:9%; margin-top: 1em">Python:</p>
+
+<pre style="margin-left:9%;">    import numpy as np
+    import pyiapws
+    T = np.asarray([25.0])
+    kH = pyiapws.kh(T+273.15, &quot;O2&quot;, False)
+    print(kH)</pre>
+
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>iapws</b>(3)
+<b>iapws_cli</b>(1) <b>iapws_kh</b>(3) <b>ciaaw</b>(3),
+<b>codata</b>(3),</p>
+<hr>
+</body>
+</html>

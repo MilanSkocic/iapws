@@ -1,0 +1,12 @@
+Python API:
+.BI kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
+.BI kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
+.BI ngases(heavywater:bool=False)->int:
+.BI gases(heavywater: bool=False)->List[str]:
+.BI gases2(heavywater: bool=False)->str:
+.BI psat(Ts)->Union[np.ndarray, float]:
+.BI Tsat(ps)->Union[np.ndarray, float]:
+.BI wp(p, T, prop)->Union[np.ndarray, float]:
+.BI wr(p, T)->Union[np.ndarray, float]:
+.BI wph(p, T)->Union[np.ndarray, str]:
+.BI Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]:

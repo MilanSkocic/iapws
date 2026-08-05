@@ -43,7 +43,7 @@ BEGIN{
 {
     sub(/^ +/,"", $0) # Remove leading spaces
 }
-/^(function|subroutine).*\(.*\)/{
+/.*(function|subroutine).*\(.*\)/{
     if(match($0, /capi_/)<=0){
         in_func=1
         offset=length($0)+n

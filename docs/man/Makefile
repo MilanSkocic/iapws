@@ -1,7 +1,8 @@
 include ../../make.in
 
 MANSRC=iapws.3.man \
-	   iapws_cli.1.man
+	   iapws_cli.1.man \
+	   iapws_kh.3.man
 MAN=$(patsubst %.man, %, $(MANSRC))
 MANPDF=$(patsubst %, %.pdf, $(MAN))
 MANTXT=$(patsubst %, %.txt, $(MAN))
