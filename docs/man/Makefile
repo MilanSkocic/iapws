@@ -2,6 +2,7 @@ include ../../make.in
 
 MANSRC=iapws.1.man \
 	   iapws_lib.3.man \
+	   iapws_version.3.man \
 	   iapws_kh.3.man \
 	   iapws_kd.3.man
 MAN=$(patsubst %.man, %, $(MANSRC))

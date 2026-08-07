@@ -1,0 +1,41 @@
+iapws_version(3)        Library Functions Manual       iapws_version(3)
+
+NAME
+       version - get the library version
+
+LIBRARY
+       Codata library (libiapws, -liapws)
+
+SYNOPSIS
+       Fortran   function version()result(fptr)
+
+                    character(len=:), pointer :: fptr
+
+       C         char* iapws_version()
+
+       Python    str:pyiapws.__version__
+
+DESCRIPTION
+       Get the library version.
+
+RETURN VALUE
+       pointer   Pointer to the version string.
+
+EXAMPLE
+       Fortran:
+           use iapws
+           print *, "version = ", version()
+
+       C:
+           include <stdio.h>
+           include "iapws.h"
+           printf("version = %s\n", iapws_version());
+
+       Python:
+           import pyiapws
+           print(f"version = {pyiapws.__version__}")
+
+SEE ALSO
+       iapws(3) iapws_cli(1) iapws_kh(3) ciaaw(3), codata(3),
+
+0.7.1                         07 août 2026             iapws_version(3)
