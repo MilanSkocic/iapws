@@ -13,12 +13,12 @@
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
 </style>
-<title>iapws_kh</title>
+<title>iapws_kd</title>
 
 </head>
 <body>
 
-<h1 align="center">iapws_kh</h1>
+<h1 align="center">iapws_kd</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#LIBRARY">LIBRARY</a><br>
@@ -65,7 +65,7 @@ function</p>
 
 
 <p style="margin-top: 1em"><b>pure subroutine
-kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
+kd(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -115,7 +115,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 <td width="78%">
 
 
-<p><b>void iapws_g704_kh(double *</b><i>T,</i><b>char
+<p><b>void iapws_g704_kd(double *</b><i>T,</i><b>char
 *</b><i>gas,</i><b>int</b> <i>heavywater,</i><b>double
 *</b><i>k,</i><b>int</b> <i>size_gas,</i><b>size_t</b>
 <i>size_T</i><b>)</b></p> </td></tr>
@@ -130,7 +130,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 
 
 
-<p><b>kh(</b><i>T:</i><b>np.ndarray,</b><i>gas:</i><b>str,</b><i>heavywater:</i><b>bool=False)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
+<p><b>kd(</b><i>T:</i><b>np.ndarray,</b><i>gas:</i><b>str,</b><i>heavywater:</i><b>bool=False)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
 </table>
 
 <h2>DESCRIPTION
@@ -140,7 +140,8 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 
 <p style="margin-left:9%; margin-top: 1em">Computes the
 Henry constant <i>kH</i> in MPa for a given temperature
-<i>T</i>.</p>
+<i>T</i>. Compute the vapor-liquid constant <i>kD</i> for a
+given temperature <i>T</i>.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Arguments:</p>
 
@@ -195,7 +196,7 @@ Henry constant <i>kH</i> in MPa for a given temperature
 <td width="45%">
 
 
-<p>Henry constant in MPa.</p></td>
+<p>Vapor-liquid constant in MPa.</p></td>
 <td width="27%">
 </td></tr>
 </table>
@@ -216,17 +217,17 @@ filled with NaN if gas is not found.</p>
 <p style="margin-left:9%; margin-top: 1em">Fortran:</p>
 
 <pre style="margin-left:9%;">    use iapws
-    real(dp) :: T(1), kH(1)
+    real(dp) :: T(1), kD(1)
     T(1) = 25.0_dp + 273.15_dp
-    call kh(T, &quot;O2&quot;, 0, kH)</pre>
+    call kd(T, &quot;O2&quot;, 0, kD)</pre>
 
 
 <p style="margin-left:9%; margin-top: 1em">C:</p>
 
 <pre style="margin-left:9%;">    #include &quot;iapws.h&quot;
     double T = 25.0 + 273.15;
-    double kH;
-    iapws_g704_kh(&amp;T, &quot;O2&quot;, 0, &amp;kH, strlen(gas), 1);</pre>
+    double kD;
+    iapws_g704_kd(&amp;T, &quot;O2&quot;, 0, &amp;kD, strlen(gas), 1);</pre>
 
 
 <p style="margin-left:9%; margin-top: 1em">Python:</p>
@@ -234,8 +235,8 @@ filled with NaN if gas is not found.</p>
 <pre style="margin-left:9%;">    import numpy as np
     import pyiapws
     T = np.asarray([25.0])
-    kH = pyiapws.kh(T+273.15, &quot;O2&quot;, False)
-    print(kH)</pre>
+    kD = pyiapws.kd(T+273.15, &quot;O2&quot;, False)
+    print(kD)</pre>
 
 
 <h2>SEE ALSO

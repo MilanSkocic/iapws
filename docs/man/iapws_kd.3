@@ -1,4 +1,4 @@
-.TH iapws_kh 3 "07 August 2026" "0.7.1" "Library Functions Manual"
+.TH iapws_kd 3 "07 August 2026" "0.7.1" "Library Functions Manual"
 
 .SH NAME
 kh \- function
@@ -10,7 +10,7 @@ iapws library
 .SH SYNOPSIS
 \"{{{
 .IP Fortran 10 
-.BI "pure subroutine kh(" T , gas , heavywater , k ")"
+.BI "pure subroutine kd(" T , gas , heavywater , k ")"
 .RS
 .IP "" 3
 .BI "real(dp), intent(in), contiguous  :: " T(:)      
@@ -23,14 +23,16 @@ iapws library
 .RE
 
 .IP C 10
-.BI "void iapws_g704_kh(double *" T, "char *" gas, "int " heavywater, "double *" k, "int " size_gas, "size_t " size_T )
+.BI "void iapws_g704_kd(double *" T, "char *" gas, "int " heavywater, "double *" k, "int " size_gas, "size_t " size_T )
 
 .IP Python 10
-.BI kh( T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray,float]:
+.BI kd( T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray,float]:
 \"}}}
 
 .SH DESCRIPTION
 Computes the Henry constant  \fIkH\fP in MPa for a given temperature 
+\fIT\fP. 
+Compute the vapor-liquid constant \fIkD\fP for a given temperature 
 \fIT\fP. 
 
 Arguments:
@@ -41,7 +43,7 @@ Gas.
 .IP \fIheavywater\fP 15
 Flag if D2O (1) is used or H2O (0).
 .IP \fIk(:)\fP 15
-Henry constant in MPa. 
+Vapor-liquid constant in MPa. 
 
 .SH RETURN VALUE
 \fIk\fP is filled with NaN if gas is not found.
@@ -52,9 +54,9 @@ Fortran:
 .nf
 .ft C 
     use iapws
-    real(dp) :: T(1), kH(1)
+    real(dp) :: T(1), kD(1)
     T(1) = 25.0_dp + 273.15_dp
-    call kh(T, "O2", 0, kH)
+    call kd(T, "O2", 0, kD)
 .ft R
 .fi
 
@@ -64,8 +66,8 @@ C:
 .ft C 
     #include "iapws.h" 
     double T = 25.0 + 273.15;
-    double kH;
-    iapws_g704_kh(&T, "O2", 0, &kH, strlen(gas), 1);
+    double kD;
+    iapws_g704_kd(&T, "O2", 0, &kD, strlen(gas), 1);
 .ft R
 .fi
 
@@ -76,8 +78,8 @@ Python:
     import numpy as np
     import pyiapws
     T = np.asarray([25.0])
-    kH = pyiapws.kh(T+273.15, "O2", False)
-    print(kH)
+    kD = pyiapws.kd(T+273.15, "O2", False)
+    print(kD)
 .ft R
 .fi
 .SH SEE ALSO
