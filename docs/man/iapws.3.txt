@@ -2,7 +2,7 @@ iapws(3)                Library Functions Manual               iapws(3)
 
 NAME
        iapws  -  library for light and heavy water properties according
-       to IAPWS.
+       to IAPWS
 
 LIBRARY
        iapws library (libiapws, -liapws)
