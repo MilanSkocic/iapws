@@ -1,7 +1,7 @@
 iapws_kd(3)             Library Functions Manual            iapws_kd(3)
 
 NAME
-       kh - compute the vapor-liquid constant
+       kh - compute the vapor-liquid constant in water or heavy water.
 
 LIBRARY
        iapws library (libiapws, -liapws)
@@ -24,9 +24,8 @@ SYNOPSIS
                  ter:bool=False)->Union[np.ndarray,float]:
 
 DESCRIPTION
-       Computes the Henry constant  kH in MPa for a  given  temperature
-       T.  Compute the vapor-liquid constant kD for a given temperature
-       T.
+       Compute the vapor-liquid constant kD for a given  temperature  T
+       in water or heavy water.
 
        Arguments:
 

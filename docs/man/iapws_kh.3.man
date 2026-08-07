@@ -1,7 +1,7 @@
 .TH iapws_kh 3 "@DATE@" "@VERSION@" "Library Functions Manual"
 
 .SH NAME
-kh \- compute the Henry constant
+kh \- compute the Henry constant in water or heavy water.
 
 .SH LIBRARY
 iapws library 
@@ -31,7 +31,7 @@ iapws library
 
 .SH DESCRIPTION
 Computes the Henry constant  \fIkH\fP in MPa for a given temperature 
-\fIT\fP. 
+\fIT\fP in water or heavy water. 
 
 Arguments:
 .IP \fIT(:)\fP 15      

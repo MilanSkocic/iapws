@@ -1,7 +1,7 @@
 iapws_kh(3)             Library Functions Manual            iapws_kh(3)
 
 NAME
-       kh - compute the Henry constant
+       kh - compute the Henry constant in water or heavy water.
 
 LIBRARY
        iapws library (libiapws, -liapws)
@@ -24,8 +24,8 @@ SYNOPSIS
                  ter:bool=False)->Union[np.ndarray,float]:
 
 DESCRIPTION
-       Computes the Henry constant  kH in MPa for a  given  temperature
-       T.
+       Computes the Henry constant  kH in MPa for a given temperature T
+       in water or heavy water.
 
        Arguments:
 
