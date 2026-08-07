@@ -36,6 +36,7 @@ EXAMPLE
            print(f"version = {pyiapws.__version__}")
 
 SEE ALSO
-       iapws(3) iapws_cli(1) iapws_kh(3) ciaaw(3), codata(3),
+       iapws(1)   iapws_lib(3)   iapws_kh(3)   iapws_kd(3)  iapws_kw(3)
+       ciaaw(3), codata(3),
 
 0.7.1                         07 août 2026             iapws_version(3)

@@ -1,0 +1,71 @@
+iapws_kw(3)             Library Functions Manual            iapws_kw(3)
+
+NAME
+       kh - compute the Henry constant in water or heavy water.
+
+LIBRARY
+       iapws library (libiapws, -liapws)
+
+SYNOPSIS
+       Fortran   pure subroutine Kw(T,rhow,k)
+
+                    real(dp), intent(in)  :: T(:)
+
+                    real(dp), intent(in)  :: rhow(:)
+
+                    real(dp), intent(out)  :: k(:)
+
+       C         void    iapws_r1124_Kw(size_t    N,double    *T,double
+                 *rhow,double *k)
+
+       Python    Kw(T:np.ndarray,rhow:np.ndarray)->Union[np.ndar‐
+                 ray,float]:
+
+DESCRIPTION
+       Compute the ionization constant of water Kw
+
+       Arguments:
+
+              T(:)      Temperature in K.
+
+              rhow      Mass density in g.cm^-3.
+
+              k(:)      Ionisation constant.
+
+       Validity range:
+
+              •  273.13 K <= T <= 1273.15 K
+
+              •  0 <= p <= 1000 MPa).
+
+RETURN VALUE
+       k is filled with NaN if out of validity range.
+
+EXAMPLES
+       Fortran:
+           use iapws
+           real(dp) :: T(1), k(1), rhow(1)
+           T(1) = 25.0_dp + 273.15_dp
+           rhow(1) = 1.0_dp
+           call Kw(T, rhow, 0, k)
+
+       C:
+           #include "iapws.h"
+           double T = 25.0 + 273.15;
+           double rhow = 1.0;
+           double k;
+           void iapws_r1124_Kw(1, &T, &rhow, &k)
+
+       Python:
+           import numpy as np
+           import pyiapws
+           T = np.asarray([25.0])
+           rhow = np.asarray([1.0])
+           k = pyiapws.Kw(T+273.15, "rhow)
+           print(k)
+
+SEE ALSO
+       iapws(1)  iapws_lib(3)   iapws_kh(3)   iapws_kd(3)   iapws_kw(3)
+       ciaaw(3), codata(3),
+
+0.7.1                         07 août 2026                  iapws_kw(3)

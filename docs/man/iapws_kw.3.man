@@ -1,0 +1,93 @@
+.TH iapws_kw 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+
+.SH NAME
+kh \- compute the Henry constant in water or heavy water.
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.IP Fortran 10 
+.BI "pure subroutine Kw(" T , rhow , k ")" 
+.RS
+.IP "" 3
+.BI "real(dp), intent(in)  :: " T(:)          
+.IP "" 3
+.BI "real(dp), intent(in)  :: " rhow(:)       
+.IP "" 3
+.BI "real(dp), intent(out)  :: " k(:)         
+.RE
+
+.IP C 10
+.BI "void iapws_r1124_Kw(size_t " N, "double *" T, "double *" rhow, "double *" k )
+
+.IP Python 10
+.BI Kw( T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray,float]:
+\"}}}
+
+.SH DESCRIPTION
+.PP
+Compute the ionization constant of water \fBKw\fP 
+
+.PP
+Arguments:
+.RS
+.IP \fIT(:)\fP 10      
+Temperature in K.
+.IP \fIrhow\fP 10           
+Mass density in g.cm^-3.
+.IP \fIk(:)\fP 10
+Ionisation constant. 
+.RE
+
+.PP
+Validity range:
+.RS
+.IP \(bu 3 
+273.13 K <= T <= 1273.15 K 
+.IP \(bu 3 
+0 <= p <= 1000 MPa).
+.RE
+
+.SH RETURN VALUE
+\fIk\fP is filled with NaN if out of validity range.
+
+.SH EXAMPLES
+.PP
+Fortran:
+.nf
+.ft CR 
+    use iapws
+    real(dp) :: T(1), k(1), rhow(1)
+    T(1) = 25.0_dp + 273.15_dp
+    rhow(1) = 1.0_dp
+    call Kw(T, rhow, 0, k)
+.ft R
+.fi
+
+.PP
+C:
+.nf
+.ft CR 
+    #include "iapws.h" 
+    double T = 25.0 + 273.15;
+    double rhow = 1.0;
+    double k;
+    void iapws_r1124_Kw(1, &T, &rhow, &k)
+.ft R
+.fi
+
+.PP
+Python: 
+.nf
+.ft CR 
+    import numpy as np
+    import pyiapws
+    T = np.asarray([25.0])
+    rhow = np.asarray([1.0])
+    k = pyiapws.Kw(T+273.15, "rhow)
+    print(k)
+.ft R
+.fi

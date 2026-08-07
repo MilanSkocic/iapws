@@ -52,9 +52,9 @@ Fortran:
 .nf
 .ft CR 
     use iapws
-    real(dp) :: T(1), kD(1)
+    real(dp) :: T(1), k(1)
     T(1) = 25.0_dp + 273.15_dp
-    call kd(T, "O2", 0, kD)
+    call k(T, "O2", 0, k)
 .ft R
 .fi
 
@@ -64,8 +64,8 @@ C:
 .ft CR 
     #include "iapws.h" 
     double T = 25.0 + 273.15;
-    double kD;
-    iapws_g704_kd(&T, "O2", 0, &kD, strlen(gas), 1);
+    double k;
+    iapws_g704_kd(&T, "O2", 0, &k, strlen(gas), 1);
 .ft R
 .fi
 
@@ -76,13 +76,15 @@ Python:
     import numpy as np
     import pyiapws
     T = np.asarray([25.0])
-    kD = pyiapws.kd(T+273.15, "O2", False)
-    print(kD)
+    k = pyiapws.kd(T+273.15, "O2", False)
+    print(k)
 .ft R
 .fi
 .SH SEE ALSO
-.BR iapws (3)
-.BR iapws_cli (1)
+.BR iapws (1)
+.BR iapws_lib (3)
 .BR iapws_kh (3)
+.BR iapws_kd (3)
+.BR iapws_kw (3)
 .BR ciaaw (3),
 .BR codata (3),

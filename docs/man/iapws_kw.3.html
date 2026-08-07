@@ -13,12 +13,12 @@
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
 </style>
-<title>iapws_kh</title>
+<title>iapws_kw</title>
 
 </head>
 <body>
 
-<h1 align="center">iapws_kh</h1>
+<h1 align="center">iapws_kw</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#LIBRARY">LIBRARY</a><br>
@@ -65,7 +65,7 @@ Henry constant in water or heavy water.</p>
 
 
 <p style="margin-top: 1em"><b>pure subroutine
-kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
+Kw(</b><i>T</i><b>,</b><i>rhow</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -74,8 +74,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 <td width="78%">
 
 
-<p><b>real(dp), intent(in), contiguous ::</b>
-<i>T(:)</i></p> </td></tr>
+<p><b>real(dp), intent(in) ::</b> <i>T(:)</i></p></td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -84,7 +83,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 <td width="78%">
 
 
-<p><b>character(len=*), intent(in) ::</b> <i>gas</i></p></td></tr>
+<p><b>real(dp), intent(in) ::</b> <i>rhow(:)</i></p></td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -93,18 +92,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 <td width="78%">
 
 
-<p><b>integer(int32), intent(in) ::</b>
-<i>heavywater</i></p> </td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-</td>
-<td width="4%"></td>
-<td width="78%">
-
-
-<p><b>real(dp), intent(out), contiguous ::</b>
-<i>k(:)</i></p> </td></tr>
+<p><b>real(dp), intent(out) ::</b> <i>k(:)</i></p></td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -115,10 +103,9 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 <td width="78%">
 
 
-<p><b>void iapws_g704_kh(double *</b><i>T,</i><b>char
-*</b><i>gas,</i><b>int</b> <i>heavywater,</i><b>double
-*</b><i>k,</i><b>int</b> <i>size_gas,</i><b>size_t</b>
-<i>size_T</i><b>)</b></p> </td></tr>
+<p><b>void iapws_r1124_Kw(size_t</b> <i>N,</i><b>double
+*</b><i>T,</i><b>double *</b><i>rhow,</i><b>double
+*</b><i>k</i><b>)</b></p> </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -130,7 +117,7 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 
 
 
-<p><b>kh(</b><i>T:</i><b>np.ndarray,</b><i>gas:</i><b>str,</b><i>heavywater:</i><b>bool=False)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
+<p><b>Kw(</b><i>T:</i><b>np.ndarray,</b><i>rhow:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
 </table>
 
 <h2>DESCRIPTION
@@ -138,65 +125,85 @@ kh(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Computes the
-Henry constant <i>kH</i> in MPa for a given temperature
-<i>T</i> in water or heavy water.</p>
+<p style="margin-left:9%; margin-top: 1em">Compute the
+ionization constant of water <b>Kw</b></p>
 
 <p style="margin-left:9%; margin-top: 1em">Arguments:</p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="9%"></td>
-<td width="13%">
+<td width="18%"></td>
+<td width="5%">
 
 
 <p style="margin-top: 1em"><i>T(:)</i></p></td>
-<td width="6%"></td>
-<td width="45%">
+<td width="8%"></td>
+<td width="31%">
 
 
 <p style="margin-top: 1em">Temperature in K.</p></td>
-<td width="27%">
+<td width="38%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
-<td width="13%">
+<td width="18%"></td>
+<td width="5%">
 
 
-<p><i>gas</i></p></td>
-<td width="6%"></td>
-<td width="45%">
+<p><i>rhow</i></p></td>
+<td width="8%"></td>
+<td width="31%">
 
 
-<p>Gas.</p></td>
-<td width="27%">
+<p>Mass density in g.cm&#710;-3.</p></td>
+<td width="38%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
-<td width="13%">
-
-
-<p><i>heavywater</i></p></td>
-<td width="6%"></td>
-<td width="45%">
-
-
-<p>Flag if D2O (1) is used or H2O (0).</p></td>
-<td width="27%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="13%">
+<td width="18%"></td>
+<td width="5%">
 
 
 <p><i>k(:)</i></p></td>
-<td width="6%"></td>
+<td width="8%"></td>
+<td width="31%">
+
+
+<p>Ionisation constant.</p></td>
+<td width="38%">
+</td></tr>
+</table>
+
+<p style="margin-left:9%; margin-top: 1em">Validity
+range:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">&bull;</p></td>
+<td width="3%"></td>
+<td width="33%">
+
+
+<p style="margin-top: 1em">273.13 K &lt;= T &lt;= 1273.15
+K</p> </td>
 <td width="45%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
 
 
-<p>Henry constant in MPa.</p></td>
-<td width="27%">
+<p>&bull;</p></td>
+<td width="3%"></td>
+<td width="33%">
+
+
+<p>0 &lt;= p &lt;= 1000 MPa).</p></td>
+<td width="45%">
 </td></tr>
 </table>
 
@@ -206,7 +213,7 @@ Henry constant <i>kH</i> in MPa for a given temperature
 
 
 <p style="margin-left:9%; margin-top: 1em"><i>k</i> is
-filled with NaN if gas is not found.</p>
+filled with NaN if out of validity range.</p>
 
 <h2>EXAMPLES
 <a name="EXAMPLES"></a>
@@ -215,22 +222,24 @@ filled with NaN if gas is not found.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Fortran: <br>
 use iapws <br>
-real(dp) :: T(1), k(1) <br>
+real(dp) :: T(1), k(1), rhow(1) <br>
 T(1) = 25.0_dp + 273.15_dp <br>
-call k(T, &quot;O2&quot;, 0, k)</p>
+rhow(1) = 1.0_dp <br>
+call Kw(T, rhow, 0, k)</p>
 
 <p style="margin-left:9%; margin-top: 1em">C: <br>
 #include &quot;iapws.h&quot; <br>
 double T = 25.0 + 273.15; <br>
+double rhow = 1.0; <br>
 double k; <br>
-iapws_g704_kh(&amp;T, &quot;O2&quot;, 0, &amp;k,
-strlen(gas), 1);</p>
+void iapws_r1124_Kw(1, &amp;T, &amp;rhow, &amp;k)</p>
 
 <p style="margin-left:9%; margin-top: 1em">Python: <br>
 import numpy as np <br>
 import pyiapws <br>
 T = np.asarray([25.0]) <br>
-k = pyiapws.kh(T+273.15, &quot;O2&quot;, False) <br>
+rhow = np.asarray([1.0]) <br>
+k = pyiapws.Kw(T+273.15, &quot;rhow) <br>
 print(k)</p>
 
 <h2>SEE ALSO

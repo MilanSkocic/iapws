@@ -43,24 +43,25 @@ RETURN VALUE
 EXAMPLES
        Fortran:
            use iapws
-           real(dp) :: T(1), kD(1)
+           real(dp) :: T(1), k(1)
            T(1) = 25.0_dp + 273.15_dp
-           call kd(T, "O2", 0, kD)
+           call k(T, "O2", 0, k)
 
        C:
            #include "iapws.h"
            double T = 25.0 + 273.15;
-           double kD;
-           iapws_g704_kd(&T, "O2", 0, &kD, strlen(gas), 1);
+           double k;
+           iapws_g704_kd(&T, "O2", 0, &k, strlen(gas), 1);
 
        Python:
            import numpy as np
            import pyiapws
            T = np.asarray([25.0])
-           kD = pyiapws.kd(T+273.15, "O2", False)
-           print(kD)
+           k = pyiapws.kd(T+273.15, "O2", False)
+           print(k)
 
 SEE ALSO
-       iapws(3) iapws_cli(1) iapws_kh(3) ciaaw(3), codata(3),
+       iapws(1)   iapws_lib(3)   iapws_kh(3)   iapws_kd(3)  iapws_kw(3)
+       ciaaw(3), codata(3),
 
 0.7.1                         07 août 2026                  iapws_kd(3)

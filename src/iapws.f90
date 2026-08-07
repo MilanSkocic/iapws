@@ -3,8 +3,9 @@ module iapws
 use iapws__r283, only: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 use iapws__r283, only: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 use iapws__g704, only: findgas_abc, findgas_efgh
-use iapws__g704, only: abc_H2O, abc_D2O
+use iapws__g704, only: abc_H2O, abc_D2O, efgh_H2O, efgh_D2O
 use iapws__g704, only: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O
+use iapws__r1124, only: pkw
 use iapws__capi
 use iapws__api
 
@@ -20,7 +21,7 @@ public :: get_version, capi_get_version
 public :: version, capi_version
 public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
-public :: kh, capi_kh
+public :: kh, capi_kh, kd, capi_kd, Kw, capi_Kw
 !=======================================================================
 
 contains
@@ -123,4 +124,87 @@ enddo
 call kh(T, f_gas, heavywater, k)
 end subroutine capi_kh
 !=======================================================================
+
+
+!=======================================================================
+! G704 - KD()
+!=======================================================================
+pure subroutine kd(T, gas, heavywater, k)
+!! Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
+implicit none
+
+real(dp), intent(in), contiguous :: T(:)             !! Temperature in K.
+character(len=*), intent(in) :: gas                  !! Gas.
+integer(int32), intent(in) :: heavywater             !! Flag if D2O (1) is used or H2O(0).
+real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
+
+integer(int32) :: i
+
+if(heavywater > 0)then
+    i = findgas_efgh(gas, efgh_D2O)
+    if(i==0)then
+        k = ieee_value(1.0_dp, ieee_quiet_nan)
+    else
+        k =  f_kd_D2O(T, efgh_D2O(i))
+    endif
+else
+    i = findgas_efgh(gas, efgh_H2O)
+    if(i==0)then
+        k = ieee_value(1.0_dp, ieee_quiet_nan)
+    else
+        k = f_kd_H2O(T, efgh_H2O(i))
+    endif
+endif
+end subroutine
+! ----------------------------------------------------------------------
+subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
+!! C API.
+! arguments
+integer(c_size_t), intent(in), value :: size_T !! Size of T and k.
+integer(c_int), intent(in), value :: size_gas !! Size of the gas string.
+real(c_double), intent(in) :: T(size_T) !! Temperature in °C.
+type(c_ptr), intent(in), value :: gas !! Gas.
+integer(c_int), intent(in), value :: heavywater  !! Flag if D2O (1) is used or H2O(0).
+real(c_double), intent(inout) :: k(size_T) !! Vapor-liquid constant. Filled with NaNs if gas not found.
+
+! variables
+character, pointer, dimension(:) :: c2f_gas
+character(len=size_gas) :: f_gas
+integer(int32) :: i
+
+call c_f_pointer(gas, c2f_gas, shape=[size_gas])
+
+do i=1, size_gas
+    f_gas(i:i) = c2f_gas(i)
+enddo
+call kd(T, f_gas, heavywater, k)    
+end subroutine
+!=======================================================================
+
+
+!=======================================================================
+! R1124 - KW()
+!=======================================================================
+pure subroutine Kw(T, rhow, k) 
+!! Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
+! arguments
+real(dp), intent(in) :: T(:)          !! Temperature in K.
+real(dp), intent(in) :: rhow(:)       !! Mass density in g.cm^{-3}.
+real(dp), intent(out) :: k(:)         !! Ionization constant. Filled with NaN if out of validity range. 
+
+k = 10**(-pKw(T, rhow))
+end subroutine
+! ----------------------------------------------------------------------
+subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
+!! C API.
+! arguments
+integer(c_size_t), intent(in), value :: N  !! Size of T, rhow and k.
+real(c_double), intent(in) :: T(N)         !! Temperature in K.
+real(c_double), intent(in) :: rhow(N)      !! Mass density in g.cm^{-3}.
+real(c_double), intent(out) :: k(N)        !! Ionization constant. Filled with NaN if out of validity range. 
+
+call Kw(T, rhow, k)
+end subroutine
+!=======================================================================
+
 end module
