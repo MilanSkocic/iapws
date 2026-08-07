@@ -1,4 +1,4 @@
-iapws(3)                Library Functions Manual               iapws(3)
+iapws_lib(3)            Library Functions Manual           iapws_lib(3)
 
 NAME
        iapws  -  library for light and heavy water properties according
@@ -455,4 +455,4 @@ EXAMPLES
 SEE ALSO
        iapws(3) iapws_cli(1) iapws_kh(3) ciaaw(3), codata(3),
 
-0.7.1                        07 August 2026                    iapws(3)
+0.7.1                         07 août 2026                 iapws_lib(3)

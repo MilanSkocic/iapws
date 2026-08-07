@@ -52,7 +52,7 @@ Vapor-liquid constant in MPa.
 .PP
 Fortran:
 .nf
-.ft C 
+.ft CR 
     use iapws
     real(dp) :: T(1), kD(1)
     T(1) = 25.0_dp + 273.15_dp
@@ -63,7 +63,7 @@ Fortran:
 .PP
 C:
 .nf
-.ft C 
+.ft CR 
     #include "iapws.h" 
     double T = 25.0 + 273.15;
     double kD;
@@ -74,7 +74,7 @@ C:
 .PP
 Python: 
 .nf
-.ft C 
+.ft CR 
     import numpy as np
     import pyiapws
     T = np.asarray([25.0])
