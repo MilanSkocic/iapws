@@ -14,7 +14,7 @@ module iapws__capi
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    public :: capi_kd, capi_ngases, capi_gases                !!G704
+    public :: capi_ngases, capi_gases                !!G704
 
     public :: capi_psat, capi_Tsat, capi_wp                !! R797
 
@@ -25,30 +25,6 @@ contains
 ! ------------------------------------------------------------------------------
 ! G704
 
-subroutine capi_kd(T, gas, heavywater, k, size_gas, size_T)bind(C,name="iapws_g704_kd")
-    !! C API.
-    implicit none
-    
-    ! arguments
-    integer(c_size_t), intent(in), value :: size_T !! Size of T and k.
-    integer(c_int), intent(in), value :: size_gas !! Size of the gas string.
-    real(c_double), intent(in) :: T(size_T) !! Temperature in °C.
-    type(c_ptr), intent(in), value :: gas !! Gas.
-    integer(c_int), intent(in), value :: heavywater  !! Flag if D2O (1) is used or H2O(0).
-    real(c_double), intent(inout) :: k(size_T) !! Vapor-liquid constant. Filled with NaNs if gas not found.
-    
-    ! variables
-    character, pointer, dimension(:) :: c2f_gas
-    character(len=size_gas) :: f_gas
-    integer(int32) :: i
-
-    call c_f_pointer(gas, c2f_gas, shape=[size_gas])
-
-    do i=1, size_gas
-        f_gas(i:i) = c2f_gas(i)
-    enddo
-    call kd(T, f_gas, heavywater, k)    
-end subroutine
 
 function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
     !! C API.
@@ -212,22 +188,6 @@ subroutine capi_wph(p, T, res, N)bind(C, name="iapws_r797_wph")
     character(len=1, kind=c_char), intent(out)     :: res(N)      !! Regions.
 
     call wph(p, T, res)
-end subroutine
-! ------------------------------------------------------------------------------
-
-
-! ------------------------------------------------------------------------------
-! R1124
-subroutine capi_Kw(N, T, rhow, k)bind(C, name="iapws_r1124_Kw")
-    !! C API.
-
-    ! arguments
-    integer(c_size_t), intent(in), value :: N     !! Size of T, rhow and k.
-    real(c_double), intent(in) :: T(N)                  !! Temperature in K.
-    real(c_double), intent(in) :: rhow(N)               !! Mass density in g.cm^{-3}.
-    real(c_double), intent(out) :: k(N)                 !! Ionization constant. Filled with NaN if out of validity range. 
-
-    call Kw(T, rhow, k)
 end subroutine
 ! ------------------------------------------------------------------------------
 

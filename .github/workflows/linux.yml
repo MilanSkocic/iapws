@@ -17,14 +17,14 @@ jobs:
         compiler: gcc
         version: 10
     - name: Set fpm
-      uses: fortran-lang/setup-fpm@v8
+      uses: fortran-lang/setup-fpm@v10
       with: 
-        fpm-version: "v0.12.0"
+        fpm-version: "v0.13.0"
     - name: Versions
       run : |
         gfortran --version
         fpm --version
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: |
           3.10
@@ -34,7 +34,7 @@ jobs:
           3.14
     - name: Update python packages
       run: |
-       python3.10 -m pip install -U --user pip setuptools wheel build auditwheel 
+       python3.10 -m pip install -U --user pip setuptools wheel build auditwheel
        python3.11 -m pip install -U --user pip setuptools wheel build auditwheel
        python3.12 -m pip install -U --user pip setuptools wheel build auditwheel
        python3.13 -m pip install -U --user pip setuptools wheel build auditwheel
@@ -43,7 +43,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Configure
       run: |
-        . ./configure.sh
+        . ./configure
         echo "FPM_NAME=$FPM_NAME" >> $GITHUB_ENV
         echo "FPM_PYNAME=$FPM_PYNAME" >> $GITHUB_ENV
         echo "FPM_VERSION=$FPM_VERSION" >> $GITHUB_ENV
@@ -51,8 +51,11 @@ jobs:
         echo "FPM_ARCH=$FPM_ARCH" >> $GITHUB_ENV
     - name: Compile
       run: |
-        chmod u+x build.sh
-        ./build.sh
+        . ./configure
+        make
+        make python
+        make -C py auditwheel
+        make archives
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -68,7 +71,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./build/*.zip
+        file: ./build/*.tar.gz
         file_glob: true
         tag: ${{ github.ref }}
         overwrite: true
@@ -77,7 +80,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./py/dist/*.zip
+        file: ./py/dist/*linux*.tar.gz
         file_glob: true
         tag: ${{ github.ref }}
         overwrite: true

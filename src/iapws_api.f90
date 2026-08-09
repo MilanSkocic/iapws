@@ -11,43 +11,15 @@ module iapws__api
     type(gas_type), allocatable, target :: f_gases(:)
     character(len=:), allocatable, target :: f_gases_str
 
-    public :: kd, gases, gases2, ngases, gas_type                           ! G704
+    public :: gases, gases2, ngases, gas_type                           ! G704
 
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        ! R797
     public :: psat, Tsat                                                        ! R797
 
-    public :: Kw                                                                ! R1124 
     public :: wp, wr, wph
 
 contains
 
-pure subroutine kd(T, gas, heavywater, k)
-    !! Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
-    implicit none
-    
-    real(dp), intent(in), contiguous :: T(:)             !! Temperature in K.
-    character(len=*), intent(in) :: gas                  !! Gas.
-    integer(int32), intent(in) :: heavywater             !! Flag if D2O (1) is used or H2O(0).
-    real(dp), intent(out), contiguous :: k(:)            !! Vapor-liquid constant (adimensional). Filled with NaNs if gas not found.
-    
-    integer(int32) :: i
-    
-    if(heavywater > 0)then
-        i = findgas_efgh(gas, efgh_D2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k =  f_kd_D2O(T, efgh_D2O(i))
-        endif
-    else
-        i = findgas_efgh(gas, efgh_H2O)
-        if(i==0)then
-            k = ieee_value(1.0_dp, ieee_quiet_nan)
-        else
-            k = f_kd_H2O(T, efgh_H2O(i))
-        endif
-    endif
-end subroutine
 
 pure function ngases(heavywater)result(n)
     !! Returns the number of gases.
@@ -233,21 +205,5 @@ pure subroutine wph(p, T, res)
     res = find_phase(p, T)
 end subroutine
 ! ------------------------------------------------------------------------------
-
-
-! ------------------------------------------------------------------------------
-! R1124
-pure subroutine Kw(T, rhow, k) 
-    !! Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
-
-    ! arguments
-    real(dp), intent(in) :: T(:)          !! Temperature in K.
-    real(dp), intent(in) :: rhow(:)       !! Mass density in g.cm^{-3}.
-    real(dp), intent(out) :: k(:)         !! Ionization constant. Filled with NaN if out of validity range. 
-
-    k = 10**(-pKw(T, rhow))
-end subroutine
-! ------------------------------------------------------------------------------
-
 
 end module iapws__api

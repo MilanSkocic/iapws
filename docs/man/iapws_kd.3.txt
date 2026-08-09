@@ -1,0 +1,67 @@
+iapws_kd(3)             Library Functions Manual            iapws_kd(3)
+
+NAME
+       kh - compute the vapor-liquid constant in water or heavy water.
+
+LIBRARY
+       iapws library (libiapws, -liapws)
+
+SYNOPSIS
+       Fortran   pure subroutine kd(T,gas,heavywater,k)
+
+                    real(dp), intent(in), contiguous  :: T(:)
+
+                    character(len=*), intent(in)  :: gas
+
+                    integer(int32), intent(in)  :: heavywater
+
+                    real(dp), intent(out), contiguous  :: k(:)
+
+       C         void  iapws_g704_kd(double  *T,char  *gas,int heavywa‐
+                 ter,double *k,int size_gas,size_t size_T)
+
+       Python    kd(T:np.ndarray,gas:str,heavywa‐
+                 ter:bool=False)->Union[np.ndarray,float]:
+
+DESCRIPTION
+       Compute the vapor-liquid constant kD for a given  temperature  T
+       in water or heavy water.
+
+       Arguments:
+
+       T(:)           Temperature in K.
+
+       gas            Gas.
+
+       heavywater     Flag if D2O (1) is used or H2O (0).
+
+       k(:)           Vapor-liquid constant in MPa.
+
+RETURN VALUE
+       k is filled with NaN if gas is not found.
+
+EXAMPLES
+       Fortran:
+           use iapws
+           real(dp) :: T(1), k(1)
+           T(1) = 25.0_dp + 273.15_dp
+           call k(T, "O2", 0, k)
+
+       C:
+           #include "iapws.h"
+           double T = 25.0 + 273.15;
+           double k;
+           iapws_g704_kd(&T, "O2", 0, &k, strlen(gas), 1);
+
+       Python:
+           import numpy as np
+           import pyiapws
+           T = np.asarray([25.0])
+           k = pyiapws.kd(T+273.15, "O2", False)
+           print(k)
+
+SEE ALSO
+       iapws(1)   iapws_lib(3)   iapws_kh(3)   iapws_kd(3)  iapws_kw(3)
+       ciaaw(3), codata(3),
+
+0.7.1                         07 août 2026                  iapws_kd(3)

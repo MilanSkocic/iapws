@@ -1,0 +1,90 @@
+.TH iapws_kh 3 "07 août 2026" "0.7.1" "Library Functions Manual"
+
+.SH NAME
+kh \- compute the Henry constant in water or heavy water.
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.IP Fortran 10 
+.BI "pure subroutine kh(" T , gas , heavywater , k ")"
+.RS
+.IP "" 3
+.BI "real(dp), intent(in), contiguous  :: " T(:)      
+.IP "" 3
+.BI "character(len=*), intent(in)  :: " gas           
+.IP "" 3
+.BI "integer(int32), intent(in)  :: " heavywater      
+.IP "" 3
+.BI "real(dp), intent(out), contiguous  :: " k(:)     
+.RE
+
+.IP C 10
+.BI "void iapws_g704_kh(double *" T, "char *" gas, "int " heavywater, "double *" k, "int " size_gas, "size_t " size_T )
+
+.IP Python 10
+.BI kh( T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray,float]:
+\"}}}
+
+.SH DESCRIPTION
+Computes the Henry constant  \fIkH\fP in MPa for a given temperature 
+\fIT\fP in water or heavy water. 
+
+Arguments:
+.IP \fIT(:)\fP 15      
+Temperature in K.
+.IP \fIgas\fP 15           
+Gas.
+.IP \fIheavywater\fP 15
+Flag if D2O (1) is used or H2O (0).
+.IP \fIk(:)\fP 15
+Henry constant in MPa. 
+
+.SH RETURN VALUE
+\fIk\fP is filled with NaN if gas is not found.
+
+.SH EXAMPLES
+.PP
+Fortran:
+.nf
+.ft CR 
+    use iapws
+    real(dp) :: T(1), k(1)
+    T(1) = 25.0_dp + 273.15_dp
+    call k(T, "O2", 0, k)
+.ft R
+.fi
+
+.PP
+C:
+.nf
+.ft CR 
+    #include "iapws.h" 
+    double T = 25.0 + 273.15;
+    double k;
+    iapws_g704_kh(&T, "O2", 0, &k, strlen(gas), 1);
+.ft R
+.fi
+
+.PP
+Python: 
+.nf
+.ft CR 
+    import numpy as np
+    import pyiapws
+    T = np.asarray([25.0])
+    k = pyiapws.kh(T+273.15, "O2", False)
+    print(k)
+.ft R
+.fi
+.SH SEE ALSO
+.BR iapws (1)
+.BR iapws_lib (3)
+.BR iapws_kh (3)
+.BR iapws_kd (3)
+.BR iapws_kw (3)
+.BR ciaaw (3),
+.BR codata (3),

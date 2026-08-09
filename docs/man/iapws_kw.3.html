@@ -1,0 +1,255 @@
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Fri Aug  7 15:34:29 2026 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>iapws_kw</title>
+
+</head>
+<body>
+
+<h1 align="center">iapws_kw</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#LIBRARY">LIBRARY</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#RETURN VALUE">RETURN VALUE</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">kh - compute the
+Henry constant in water or heavy water.</p>
+
+<h2>LIBRARY
+<a name="LIBRARY"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">iapws library
+(<i>libiapws</i>, <i>-liapws</i>)</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em">Fortran</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em"><b>pure subroutine
+Kw(</b><i>T</i><b>,</b><i>rhow</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>real(dp), intent(in) ::</b> <i>T(:)</i></p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>real(dp), intent(in) ::</b> <i>rhow(:)</i></p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+</td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>real(dp), intent(out) ::</b> <i>k(:)</i></p></td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>C</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p><b>void iapws_r1124_Kw(size_t</b> <i>N,</i><b>double
+*</b><i>T,</i><b>double *</b><i>rhow,</i><b>double
+*</b><i>k</i><b>)</b></p> </td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
+
+
+<p>Python</p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+
+<p><b>Kw(</b><i>T:</i><b>np.ndarray,</b><i>rhow:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Compute the
+ionization constant of water <b>Kw</b></p>
+
+<p style="margin-left:9%; margin-top: 1em">Arguments:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="5%">
+
+
+<p style="margin-top: 1em"><i>T(:)</i></p></td>
+<td width="8%"></td>
+<td width="31%">
+
+
+<p style="margin-top: 1em">Temperature in K.</p></td>
+<td width="38%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="5%">
+
+
+<p><i>rhow</i></p></td>
+<td width="8%"></td>
+<td width="31%">
+
+
+<p>Mass density in g.cm&#710;-3.</p></td>
+<td width="38%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="5%">
+
+
+<p><i>k(:)</i></p></td>
+<td width="8%"></td>
+<td width="31%">
+
+
+<p>Ionisation constant.</p></td>
+<td width="38%">
+</td></tr>
+</table>
+
+<p style="margin-left:9%; margin-top: 1em">Validity
+range:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">&bull;</p></td>
+<td width="3%"></td>
+<td width="33%">
+
+
+<p style="margin-top: 1em">273.13 K &lt;= T &lt;= 1273.15
+K</p> </td>
+<td width="45%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="18%"></td>
+<td width="1%">
+
+
+<p>&bull;</p></td>
+<td width="3%"></td>
+<td width="33%">
+
+
+<p>0 &lt;= p &lt;= 1000 MPa).</p></td>
+<td width="45%">
+</td></tr>
+</table>
+
+<h2>RETURN VALUE
+<a name="RETURN VALUE"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><i>k</i> is
+filled with NaN if out of validity range.</p>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em">Fortran: <br>
+use iapws <br>
+real(dp) :: T(1), k(1), rhow(1) <br>
+T(1) = 25.0_dp + 273.15_dp <br>
+rhow(1) = 1.0_dp <br>
+call Kw(T, rhow, 0, k)</p>
+
+<p style="margin-left:9%; margin-top: 1em">C: <br>
+#include &quot;iapws.h&quot; <br>
+double T = 25.0 + 273.15; <br>
+double rhow = 1.0; <br>
+double k; <br>
+void iapws_r1124_Kw(1, &amp;T, &amp;rhow, &amp;k)</p>
+
+<p style="margin-left:9%; margin-top: 1em">Python: <br>
+import numpy as np <br>
+import pyiapws <br>
+T = np.asarray([25.0]) <br>
+rhow = np.asarray([1.0]) <br>
+k = pyiapws.Kw(T+273.15, &quot;rhow) <br>
+print(k)</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>iapws</b>(1)
+<b>iapws_lib</b>(3) <b>iapws_kh</b>(3) <b>iapws_kd</b>(3)
+<b>iapws_kw</b>(3) <b>ciaaw</b>(3), <b>codata</b>(3),</p>
+<hr>
+</body>
+</html>
