@@ -13,12 +13,12 @@
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
 </style>
-<title>iapws_kd</title>
+<title>iapws_Tsat</title>
 
 </head>
 <body>
 
-<h1 align="center">iapws_kd</h1>
+<h1 align="center">iapws_Tsat</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#LIBRARY">LIBRARY</a><br>
@@ -36,8 +36,8 @@
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">kh - compute the
-vapor-liquid constant in water or heavy water.</p>
+<p style="margin-left:9%; margin-top: 1em">Tsat - compute
+the saturation pressure</p>
 
 <h2>LIBRARY
 <a name="LIBRARY"></a>
@@ -61,50 +61,37 @@ vapor-liquid constant in water or heavy water.</p>
 
 <p style="margin-top: 1em">Fortran</p></td>
 <td width="4%"></td>
-<td width="78%">
+<td width="66%">
 
 
 <p style="margin-top: 1em"><b>pure subroutine
-kd(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</b></p> </td></tr>
+Tsat(</b><i>ps</i><b>,</b><i>Ts</i><b>)</b></p> </td>
+<td width="12%">
+</td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
 </td>
 <td width="4%"></td>
-<td width="78%">
+<td width="66%">
 
 
 <p><b>real(dp), intent(in), contiguous ::</b>
-<i>T(:)</i></p> </td></tr>
+<i>ps(:)</i></p> </td>
+<td width="12%">
+</td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
 </td>
 <td width="4%"></td>
-<td width="78%">
-
-
-<p><b>character(len=*), intent(in) ::</b> <i>gas</i></p></td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-</td>
-<td width="4%"></td>
-<td width="78%">
-
-
-<p><b>integer(int32), intent(in) ::</b>
-<i>heavywater</i></p> </td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-</td>
-<td width="4%"></td>
-<td width="78%">
+<td width="66%">
 
 
 <p><b>real(dp), intent(out), contiguous ::</b>
-<i>k(:)</i></p> </td></tr>
+<i>Ts(:)</i></p> </td>
+<td width="12%">
+</td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -112,13 +99,13 @@ kd(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 
 <p>C</p></td>
 <td width="4%"></td>
-<td width="78%">
+<td width="66%">
 
 
-<p><b>void iapws_g704_kd(double *</b><i>T,</i><b>char
-*</b><i>gas,</i><b>int</b> <i>heavywater,</i><b>double
-*</b><i>k,</i><b>int</b> <i>size_gas,</i><b>size_t</b>
-<i>size_T</i><b>);</b></p> </td></tr>
+<p><b>void iapws_r797_Tsat(size_t</b> <i>N,</i><b>double
+*</b><i>ps,</i><b>double *</b><i>Ts</i><b>)</b></p></td>
+<td width="12%">
+</td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
 <td width="9%">
@@ -126,11 +113,13 @@ kd(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 
 <p>Python</p></td>
 <td width="4%"></td>
-<td width="78%">
+<td width="66%">
 
 
 
-<p><b>kd(</b><i>T:</i><b>np.ndarray,</b><i>gas:</i><b>str,</b><i>heavywater:</i><b>bool=False)-&gt;Union[np.ndarray,float]:</b></p> </td></tr>
+<p><b>Tsat(</b><i>ps:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td>
+<td width="12%">
+</td></tr>
 </table>
 
 <h2>DESCRIPTION
@@ -138,75 +127,27 @@ kd(</b><i>T</i><b>,</b><i>gas</i><b>,</b><i>heavywater</i><b>,</b><i>k</i><b>)</
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Compute the
-vapor-liquid constant <i>kD</i> for a given temperature
-<i>T</i> in water or heavy water.</p>
-
 <p style="margin-left:9%; margin-top: 1em">Arguments:</p>
 
-<table width="100%" border="0" rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="13%">
+<p style="margin-left:18%;"><i>ps(:)</i></p>
 
+<p style="margin-left:24%;">Saturation pressure in MPa.</p>
 
-<p style="margin-top: 1em"><i>T(:)</i></p></td>
-<td width="6%"></td>
-<td width="45%">
+<p style="margin-left:18%;"><i>Ts(:)</i></p>
 
+<p style="margin-left:24%;">Saturation temperature in
+K.</p>
 
-<p style="margin-top: 1em">Temperature in K.</p></td>
-<td width="18%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="13%">
-
-
-<p><i>gas</i></p></td>
-<td width="6%"></td>
-<td width="45%">
-
-
-<p>Gas.</p></td>
-<td width="18%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="13%">
-
-
-<p><i>heavywater</i></p></td>
-<td width="6%"></td>
-<td width="45%">
-
-
-<p>Flag if D2O (1) is used or H2O (0).</p></td>
-<td width="18%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="13%">
-
-
-<p><i>k(:)</i></p></td>
-<td width="6%"></td>
-<td width="45%">
-
-
-<p>Vapor-liquid constant in MPa.</p></td>
-<td width="18%">
-</td></tr>
-</table>
+<p style="margin-left:9%; margin-top: 1em">Validity range:
+611.213 Pa &lt;= ps &lt;= 22.064 MPa</p>
 
 <h2>RETURN VALUE
 <a name="RETURN VALUE"></a>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em"><i>k</i> is
-filled with NaN if gas is not found.</p>
+<p style="margin-left:9%; margin-top: 1em"><i>Ts</i> is
+filled with NaN if out of validity range.</p>
 
 <h2>EXAMPLES
 <a name="EXAMPLES"></a>
@@ -215,23 +156,22 @@ filled with NaN if gas is not found.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Fortran: <br>
 use iapws <br>
-real(dp) :: T(1), k(1) <br>
-T(1) = 25.0_dp + 273.15_dp <br>
-call kd(T, &quot;O2&quot;, 0, k)</p>
+real(dp) :: T(1), p(1) <br>
+p(1) = 0.1_dp <br>
+call Tsat(p, T)</p>
 
 <p style="margin-left:9%; margin-top: 1em">C: <br>
 #include &quot;iapws.h&quot; <br>
-double T = 25.0 + 273.15; <br>
-char *gas = &quot;O2&quot;; <br>
-double k; <br>
-iapws_g704_kd(&amp;T, gas, 0, &amp;k, strlen(gas), 1);</p>
+double p = 0.1; <br>
+double T; <br>
+iapws_g704_Tsat(1, &amp;p, &amp;T);</p>
 
 <p style="margin-left:9%; margin-top: 1em">Python: <br>
 import numpy as np <br>
 import pyiapws <br>
-T = np.asarray([25.0]) <br>
-k = pyiapws.kd(T+273.15, &quot;O2&quot;, False) <br>
-print(k)</p>
+p = np.asarray([0.1]) <br>
+T = pyiapws.Tsat(p) <br>
+print(T)</p>
 
 <h2>SEE ALSO
 <a name="SEE ALSO"></a>

@@ -18,7 +18,7 @@ SYNOPSIS
                     real(dp), intent(out), contiguous  :: k(:)
 
        C         void  iapws_g704_kh(double  *T,char  *gas,int heavywa‐
-                 ter,double *k,int size_gas,size_t size_T)
+                 ter,double *k,int size_gas,size_t size_T);
 
        Python    kh(T:np.ndarray,gas:str,heavywa‐
                  ter:bool=False)->Union[np.ndarray,float]:
@@ -29,13 +29,13 @@ DESCRIPTION
 
        Arguments:
 
-       T(:)           Temperature in K.
+              T(:)           Temperature in K.
 
-       gas            Gas.
+              gas            Gas.
 
-       heavywater     Flag if D2O (1) is used or H2O (0).
+              heavywater     Flag if D2O (1) is used or H2O (0).
 
-       k(:)           Henry constant in MPa.
+              k(:)           Henry constant in MPa.
 
 RETURN VALUE
        k is filled with NaN if gas is not found.
@@ -50,8 +50,9 @@ EXAMPLES
        C:
            #include "iapws.h"
            double T = 25.0 + 273.15;
+           char *gas = "O2";
            double k;
-           iapws_g704_kh(&T, "O2", 0, &k, strlen(gas), 1);
+           iapws_g704_kh(&T, gas, 0, &k, strlen(gas), 1);
 
        Python:
            import numpy as np

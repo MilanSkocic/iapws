@@ -1,0 +1,87 @@
+.TH iapws_Tsat 3 "09 August 2026" "0.7.1" "Library Functions Manual"
+
+.SH NAME
+Tsat \- compute the saturation pressure
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.IP Fortran 10
+.BI "pure subroutine Tsat(" ps , Ts ) 
+.RS
+.IP "" 3
+.BI "real(dp), intent(in), contiguous  :: " ps(:)  
+.IP "" 3
+.BI "real(dp), intent(out), contiguous  :: " Ts(:) 
+.RE
+
+.IP C 10
+.BI "void iapws_r797_Tsat(size_t " N, "double *" ps, "double *" Ts ")"
+
+.IP Python 10
+.BI "Tsat(" ps: np.ndarray)->Union[np.ndarray,float]:
+\"}}}
+
+.SH DESCRIPTION
+
+Arguments:
+.RS
+.IP \fIps(:)\fP 5      
+Saturation pressure in MPa.
+.IP \fITs(:)\fP 5
+Saturation temperature in K. 
+.RE
+
+.PP
+Validity range: 611.213 Pa <= ps <= 22.064 MPa
+
+.SH RETURN VALUE
+\fITs\fP is filled with NaN if out of validity range.
+
+.SH EXAMPLES
+.PP
+Fortran:
+.nf
+.ft CR 
+    use iapws
+    real(dp) :: T(1), p(1)
+    p(1) = 0.1_dp
+    call Tsat(p, T)
+.ft R
+.fi
+
+.PP
+C:
+.nf
+.ft CR 
+    #include "iapws.h" 
+    double p = 0.1;
+    double T;
+    iapws_g704_Tsat(1, &p, &T);
+.ft R
+.fi
+
+.PP
+Python: 
+.nf
+.ft CR 
+    import numpy as np
+    import pyiapws
+    p = np.asarray([0.1])
+    T = pyiapws.Tsat(p)
+    print(T)
+.ft R
+.fi
+.SH SEE ALSO
+.BR iapws (1)
+.BR iapws_lib (3)
+.BR iapws_psat (3)
+.BR iapws_Tsat (3)
+.BR iapws_kh (3)
+.BR iapws_kd (3)
+.BR iapws_kw (3)
+.BR ciaaw (3),
+.BR codata (3),

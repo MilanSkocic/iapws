@@ -9,6 +9,7 @@ iapws library
 
 .SH SYNOPSIS
 \"{{{
+.IP Fortran 10
 .BI "pure subroutine psat(" Ts , ps ")"
 .RS
 .IP "" 3
@@ -18,7 +19,7 @@ iapws library
 .RE
 
 .IP C 10
-.BI "void iapws_r797_psat(size_t " N, "double *" Ts, "double *" ps ")"
+.BI "void iapws_r797_psat(size_t " N, "double *" Ts, "double *" ps ")";
 
 .IP Python 10
 .BI psat( Ts: np.ndarray)->Union[np.ndarray,float]:
@@ -30,16 +31,16 @@ Compute the saturation pressure \fIps\fP at temperature \fITs\fP.
 Arguments:
 .RS
 .IP \fITs(:)\fP 5      
-Temperature in K.
+Saturation temperature in K.
 .IP \fIps(:)\fP 5
-Henry constant in MPa. 
+Saturation pressure in MPa. 
 .RE
 
 .PP
 Validity range: 273.13 K <= T <= 647.096 K 
 
 .SH RETURN VALUE
-\fIp\fP is filled with NaN if out of validity range.
+\fIps\fP is filled with NaN if out of validity range.
 
 .SH EXAMPLES
 .PP

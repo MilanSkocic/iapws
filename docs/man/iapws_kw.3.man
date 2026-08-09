@@ -21,7 +21,7 @@ iapws library
 .RE
 
 .IP C 10
-.BI "void iapws_r1124_Kw(size_t " N, "double *" T, "double *" rhow, "double *" k )
+.BI "void iapws_r1124_Kw(size_t " N, "double *" T, "double *" rhow, "double *" k );
 
 .IP Python 10
 .BI Kw( T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray,float]:
@@ -87,7 +87,7 @@ Python:
     import pyiapws
     T = np.asarray([25.0])
     rhow = np.asarray([1.0])
-    k = pyiapws.Kw(T+273.15, "rhow)
+    k = pyiapws.Kw(T+273.15, rhow)
     print(k)
 .ft R
 .fi

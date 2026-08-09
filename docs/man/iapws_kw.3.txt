@@ -16,7 +16,7 @@ SYNOPSIS
                     real(dp), intent(out)  :: k(:)
 
        C         void    iapws_r1124_Kw(size_t    N,double    *T,double
-                 *rhow,double *k)
+                 *rhow,double *k);
 
        Python    Kw(T:np.ndarray,rhow:np.ndarray)->Union[np.ndar‐
                  ray,float]:
@@ -61,7 +61,7 @@ EXAMPLES
            import pyiapws
            T = np.asarray([25.0])
            rhow = np.asarray([1.0])
-           k = pyiapws.Kw(T+273.15, "rhow)
+           k = pyiapws.Kw(T+273.15, rhow)
            print(k)
 
 SEE ALSO
