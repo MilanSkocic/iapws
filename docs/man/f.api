@@ -35,6 +35,22 @@ Fortran API:
 .BI "real(dp), intent(out), contiguous  :: " k(:)            
 .RE
 
+.BI pure subroutine psat(Ts, ps) 
+.RS
+.IP "" 3
+.BI "real(dp), intent(in), contiguous  :: " Ts(:)  
+.IP "" 3
+.BI "real(dp), intent(out), contiguous  :: " ps(:) 
+.RE
+
+.BI pure subroutine Tsat(ps, Ts) 
+.RS
+.IP "" 3
+.BI "real(dp), intent(in), contiguous  :: " ps(:)  
+.IP "" 3
+.BI "real(dp), intent(out), contiguous  :: " Ts(:) 
+.RE
+
 .BI pure subroutine Kw(T, rhow, k) 
 .RS
 .IP "" 3

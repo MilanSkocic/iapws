@@ -29,7 +29,7 @@ iapws library
 
 .SH DESCRIPTION
 .PP
-Compute the ionization constant of water \fBKw\fP 
+Compute the ionization constant of water \fIKw\fP. 
 
 .PP
 Arguments:

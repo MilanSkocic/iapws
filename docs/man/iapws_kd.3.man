@@ -54,7 +54,7 @@ Fortran:
     use iapws
     real(dp) :: T(1), k(1)
     T(1) = 25.0_dp + 273.15_dp
-    call k(T, "O2", 0, k)
+    call kd(T, "O2", 0, k)
 .ft R
 .fi
 

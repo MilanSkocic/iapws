@@ -169,7 +169,7 @@ def gases2(heavywater: bool=False)->str:
 
 
 # R797
-def psat(Ts)->Union[np.ndarray, float]:
+def psat(Ts: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the saturation pressure at temperature Ts. 
     Validity range 273.13 K <= Ts <= 647.096 K.
@@ -192,7 +192,7 @@ def psat(Ts)->Union[np.ndarray, float]:
     else:
         return ps
 
-def Tsat(ps)->Union[np.ndarray, float]:
+def Tsat(ps: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the saturation temperature at pressure ps.
     Validity range 611.213 Pa <= ps <= 22.064 MPa.
