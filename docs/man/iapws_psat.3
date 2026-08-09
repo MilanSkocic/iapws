@@ -1,0 +1,87 @@
+.TH iapws_psat 3 "09 August 2026" "0.7.1" "Library Functions Manual"
+
+.SH NAME
+psat \- compute the saturation pressure
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.BI "pure subroutine psat(" Ts , ps ")"
+.RS
+.IP "" 3
+.BI "real(dp), intent(in), contiguous  :: " Ts(:)  
+.IP "" 3
+.BI "real(dp), intent(out), contiguous  :: " ps(:) 
+.RE
+
+.IP C 10
+.BI "void iapws_r797_psat(size_t " N, "double *" Ts, "double *" ps ")"
+
+.IP Python 10
+.BI psat( Ts: np.ndarray)->Union[np.ndarray,float]:
+\"}}}
+
+.SH DESCRIPTION
+Compute the saturation pressure \fIps\fP at temperature \fITs\fP.
+
+Arguments:
+.RS
+.IP \fITs(:)\fP 5      
+Temperature in K.
+.IP \fIps(:)\fP 5
+Henry constant in MPa. 
+.RE
+
+.PP
+Validity range: 273.13 K <= T <= 647.096 K 
+
+.SH RETURN VALUE
+\fIp\fP is filled with NaN if out of validity range.
+
+.SH EXAMPLES
+.PP
+Fortran:
+.nf
+.ft CR 
+    use iapws
+    real(dp) :: T(1), p(1)
+    T(1) = 25.0_dp + 273.15_dp
+    call psat(T, p)
+.ft R
+.fi
+
+.PP
+C:
+.nf
+.ft CR 
+    #include "iapws.h" 
+    double T = 25.0 + 273.15;
+    double p;
+    iapws_g704_psat(1, &T, &p);
+.ft R
+.fi
+
+.PP
+Python: 
+.nf
+.ft CR 
+    import numpy as np
+    import pyiapws
+    T = np.asarray([25.0])
+    p = pyiapws.psat(T+273.15)
+    print(p)
+.ft R
+.fi
+.SH SEE ALSO
+.BR iapws (1)
+.BR iapws_lib (3)
+.BR iapws_psat (3)
+.BR iapws_Tsat (3)
+.BR iapws_kh (3)
+.BR iapws_kd (3)
+.BR iapws_kw (3)
+.BR ciaaw (3),
+.BR codata (3),

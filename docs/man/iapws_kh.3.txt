@@ -45,7 +45,7 @@ EXAMPLES
            use iapws
            real(dp) :: T(1), k(1)
            T(1) = 25.0_dp + 273.15_dp
-           call k(T, "O2", 0, k)
+           call kh(T, "O2", 0, k)
 
        C:
            #include "iapws.h"
@@ -61,7 +61,7 @@ EXAMPLES
            print(k)
 
 SEE ALSO
-       iapws(1)  iapws_lib(3)   iapws_kh(3)   iapws_kd(3)   iapws_kw(3)
-       ciaaw(3), codata(3),
+       iapws(1) iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
+       iapws_kd(3) iapws_kw(3) ciaaw(3), codata(3),
 
-0.7.1                         07 août 2026                  iapws_kh(3)
+0.7.1                        09 August 2026                 iapws_kh(3)

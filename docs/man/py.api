@@ -4,8 +4,8 @@ Python API:
 .BI ngases(heavywater:bool=False)->int:
 .BI gases(heavywater: bool=False)->List[str]:
 .BI gases2(heavywater: bool=False)->str:
-.BI psat(Ts)->Union[np.ndarray, float]:
-.BI Tsat(ps)->Union[np.ndarray, float]:
+.BI psat(Ts: np.ndarray)->Union[np.ndarray, float]:
+.BI Tsat(ps: np.ndarray)->Union[np.ndarray, float]:
 .BI wp(p, T, prop)->Union[np.ndarray, float]:
 .BI wr(p, T)->Union[np.ndarray, float]:
 .BI wph(p, T)->Union[np.ndarray, str]:

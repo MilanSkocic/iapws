@@ -1,6 +1,8 @@
 .SH SEE ALSO
 .BR iapws (1)
 .BR iapws_lib (3)
+.BR iapws_psat (3)
+.BR iapws_Tsat (3)
 .BR iapws_kh (3)
 .BR iapws_kd (3)
 .BR iapws_kw (3)
