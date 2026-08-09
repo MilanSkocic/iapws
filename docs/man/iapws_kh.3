@@ -23,7 +23,7 @@ iapws library
 .RE
 
 .IP C 10
-.BI "void iapws_g704_kh(double *" T, "char *" gas, "int " heavywater, "double *" k, "int " size_gas, "size_t " size_T )
+.BI "void iapws_g704_kh(double *" T, "char *" gas, "int " heavywater, "double *" k, "int " size_gas, "size_t " size_T );
 
 .IP Python 10
 .BI kh( T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray,float]:
@@ -34,6 +34,7 @@ Computes the Henry constant  \fIkH\fP in MPa for a given temperature
 \fIT\fP in water or heavy water. 
 
 Arguments:
+.RS
 .IP \fIT(:)\fP 15      
 Temperature in K.
 .IP \fIgas\fP 15           
@@ -42,6 +43,7 @@ Gas.
 Flag if D2O (1) is used or H2O (0).
 .IP \fIk(:)\fP 15
 Henry constant in MPa. 
+.RE
 
 .SH RETURN VALUE
 \fIk\fP is filled with NaN if gas is not found.

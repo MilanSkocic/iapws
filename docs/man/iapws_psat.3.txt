@@ -7,13 +7,13 @@ LIBRARY
        iapws library (libiapws, -liapws)
 
 SYNOPSIS
-       pure subroutine psat(Ts,ps)
+       Fortran   pure subroutine psat(Ts,ps)
 
-                 real(dp), intent(in), contiguous  :: Ts(:)
+                    real(dp), intent(in), contiguous  :: Ts(:)
 
-                 real(dp), intent(out), contiguous  :: ps(:)
+                    real(dp), intent(out), contiguous  :: ps(:)
 
-       C         void iapws_r797_psat(size_t N,double *Ts,double *ps)
+       C         void iapws_r797_psat(size_t N,double *Ts,double *ps);
 
        Python    psat(Ts:np.ndarray)->Union[np.ndarray,float]:
 
@@ -23,15 +23,15 @@ DESCRIPTION
        Arguments:
 
               Ts(:)
-                   Temperature in K.
+                   Saturation temperature in K.
 
               ps(:)
-                   Henry constant in MPa.
+                   Saturation pressure in MPa.
 
        Validity range: 273.13 K <= T <= 647.096 K
 
 RETURN VALUE
-       p is filled with NaN if out of validity range.
+       ps is filled with NaN if out of validity range.
 
 EXAMPLES
        Fortran:

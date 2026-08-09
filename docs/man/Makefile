@@ -4,6 +4,7 @@ MANSRC=iapws.1.man \
 	   iapws_lib.3.man \
 	   iapws_version.3.man \
 	   iapws_psat.3.man \
+	   iapws_Tsat.3.man \
 	   iapws_kh.3.man \
 	   iapws_kd.3.man \
 	   iapws_kw.3.man

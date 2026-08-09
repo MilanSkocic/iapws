@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Aug  9 18:55:11 2026 -->
+<!-- CreationDate: Sun Aug  9 19:09:58 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -52,62 +52,73 @@ the saturation pressure</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em"><b>pure
-subroutine psat(</b><i>Ts</i><b>,</b><i>ps</i><b>)</b></p>
-
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="9%"></td>
-<td width="8%">
+<td width="9%">
+
+
+<p style="margin-top: 1em">Fortran</p></td>
+<td width="4%"></td>
+<td width="68%">
+
+
+<p style="margin-top: 1em"><b>pure subroutine
+psat(</b><i>Ts</i><b>,</b><i>ps</i><b>)</b></p> </td>
+<td width="10%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="9%">
 </td>
-<td width="5%"></td>
-<td width="66%">
+<td width="4%"></td>
+<td width="68%">
 
 
 <p><b>real(dp), intent(in), contiguous ::</b>
 <i>Ts(:)</i></p> </td>
-<td width="12%">
+<td width="10%">
 </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
-<td width="8%">
+<td width="9%">
 </td>
-<td width="5%"></td>
-<td width="66%">
+<td width="4%"></td>
+<td width="68%">
 
 
 <p><b>real(dp), intent(out), contiguous ::</b>
 <i>ps(:)</i></p> </td>
-<td width="12%">
+<td width="10%">
 </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
-<td width="8%">
+<td width="9%">
 
 
 <p>C</p></td>
-<td width="5%"></td>
-<td width="66%">
+<td width="4%"></td>
+<td width="68%">
 
 
 <p><b>void iapws_r797_psat(size_t</b> <i>N,</i><b>double
-*</b><i>Ts,</i><b>double *</b><i>ps</i><b>)</b></p></td>
-<td width="12%">
+*</b><i>Ts,</i><b>double *</b><i>ps</i><b>)</b><i>;</i></p></td>
+<td width="10%">
 </td></tr>
 <tr valign="top" align="left">
 <td width="9%"></td>
-<td width="8%">
+<td width="9%">
 
 
 <p>Python</p></td>
-<td width="5%"></td>
-<td width="66%">
+<td width="4%"></td>
+<td width="68%">
 
 
 
 <p><b>psat(</b><i>Ts:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td>
-<td width="12%">
+<td width="10%">
 </td></tr>
 </table>
 
@@ -123,11 +134,12 @@ saturation pressure <i>ps</i> at temperature <i>Ts</i>.</p>
 
 <p style="margin-left:18%;"><i>Ts(:)</i></p>
 
-<p style="margin-left:24%;">Temperature in K.</p>
+<p style="margin-left:24%;">Saturation temperature in
+K.</p>
 
 <p style="margin-left:18%;"><i>ps(:)</i></p>
 
-<p style="margin-left:24%;">Henry constant in MPa.</p>
+<p style="margin-left:24%;">Saturation pressure in MPa.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Validity range:
 273.13 K &lt;= T &lt;= 647.096 K</p>
@@ -137,7 +149,7 @@ saturation pressure <i>ps</i> at temperature <i>Ts</i>.</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em"><i>p</i> is
+<p style="margin-left:9%; margin-top: 1em"><i>ps</i> is
 filled with NaN if out of validity range.</p>
 
 <h2>EXAMPLES

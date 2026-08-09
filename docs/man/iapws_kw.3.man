@@ -21,7 +21,7 @@ iapws library
 .RE
 
 .IP C 10
-.BI "void iapws_r1124_Kw(size_t " N, "double *" T, "double *" rhow, "double *" k )
+.BI "void iapws_r1124_Kw(size_t " N, "double *" T, "double *" rhow, "double *" k );
 
 .IP Python 10
 .BI Kw( T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray,float]:
