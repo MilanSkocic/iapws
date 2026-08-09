@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Aug  9 11:21:55 2026 -->
+<!-- CreationDate: Sun Aug  9 18:55:11 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -222,9 +222,9 @@ call kd(T, &quot;O2&quot;, 0, k)</p>
 <p style="margin-left:9%; margin-top: 1em">C: <br>
 #include &quot;iapws.h&quot; <br>
 double T = 25.0 + 273.15; <br>
+char *gas = &quot;O2&quot;; <br>
 double k; <br>
-iapws_g704_kd(&amp;T, &quot;O2&quot;, 0, &amp;k,
-strlen(gas), 1);</p>
+iapws_g704_kd(&amp;T, gas, 0, &amp;k, strlen(gas), 1);</p>
 
 <p style="margin-left:9%; margin-top: 1em">Python: <br>
 import numpy as np <br>

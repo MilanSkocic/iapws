@@ -64,8 +64,9 @@ C:
 .ft CR 
     #include "iapws.h" 
     double T = 25.0 + 273.15;
+    char *gas = "O2";
     double k;
-    iapws_g704_kd(&T, "O2", 0, &k, strlen(gas), 1);
+    iapws_g704_kd(&T, gas, 0, &k, strlen(gas), 1);
 .ft R
 .fi
 
