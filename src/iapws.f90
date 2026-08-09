@@ -6,6 +6,7 @@ use iapws__g704, only: findgas_abc, findgas_efgh
 use iapws__g704, only: abc_H2O, abc_D2O, efgh_H2O, efgh_D2O
 use iapws__g704, only: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O
 use iapws__r1124, only: pkw
+use iapws__r797, only: r4_Ts, r4_ps
 use iapws__capi
 use iapws__api
 
@@ -178,6 +179,46 @@ do i=1, size_gas
     f_gas(i:i) = c2f_gas(i)
 enddo
 call kd(T, f_gas, heavywater, k)    
+end subroutine
+!=======================================================================
+
+
+!=======================================================================
+! R797 - PSAT()
+!=======================================================================
+pure subroutine psat(Ts, ps) 
+!! Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
+real(dp), intent(in), contiguous :: Ts(:)  !! Saturation temperature in K.
+real(dp), intent(out), contiguous :: ps(:) !! Saturation pressure in MPa. Filled with nan if out of validity range.
+ps = r4_ps(Ts)
+end subroutine
+! ----------------------------------------------------------------------
+subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
+!! C API.
+integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
+real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
+real(c_double), intent(out) :: ps(N)          !! Saturation pressure in MPa. Filled with nan if out of validity range.
+call psat(Ts, ps)
+end subroutine
+!=======================================================================
+
+
+!=======================================================================
+! R797 - TSAT()
+!=======================================================================
+pure subroutine Tsat(ps, Ts) 
+!! Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
+real(dp), intent(in), contiguous :: ps(:)  !! Saturation pressure in MPa.
+real(dp), intent(out), contiguous :: Ts(:) !! Saturation temperature in K. Filled with nan if out of validity range.
+Ts = r4_Ts(ps)
+end subroutine
+! ----------------------------------------------------------------------
+subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
+!! C API.
+integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
+real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
+real(c_double), intent(out) ::  Ts(N)         !! Saturation temperature in K. Filled with nan if out of validity range.
+call Tsat(ps, Ts)
 end subroutine
 !=======================================================================
 

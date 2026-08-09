@@ -14,7 +14,6 @@ module iapws__api
     public :: gases, gases2, ngases, gas_type                           ! G704
 
     public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        ! R797
-    public :: psat, Tsat                                                        ! R797
 
     public :: wp, wr, wph
 
@@ -119,24 +118,6 @@ end function
 
 ! ------------------------------------------------------------------------------
 ! R797
-pure subroutine psat(Ts, ps) 
-    !! Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
-
-    real(dp), intent(in), contiguous :: Ts(:)  !! Saturation temperature in K.
-    real(dp), intent(out), contiguous :: ps(:) !! Saturation pressure in MPa. Filled with nan if out of validity range.
-    
-    ps = r4_ps(Ts)
-end subroutine
-
-pure subroutine Tsat(ps, Ts) 
-    !! Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
-
-    real(dp), intent(in), contiguous :: ps(:)  !! Saturation pressure in MPa.
-    real(dp), intent(out), contiguous :: Ts(:) !! Saturation temperature in K. Filled with nan if out of validity range.
-
-    Ts = r4_Ts(ps)
-end subroutine
-
 pure subroutine wp(p, T, prop, res) 
     !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
     

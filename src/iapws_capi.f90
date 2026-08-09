@@ -16,7 +16,7 @@ module iapws__capi
 
     public :: capi_ngases, capi_gases                !!G704
 
-    public :: capi_psat, capi_Tsat, capi_wp                !! R797
+    public :: capi_wp                !! R797
 
 
 contains
@@ -111,27 +111,6 @@ end function
 
 ! ------------------------------------------------------------------------------
 ! R797
-subroutine capi_psat(N, Ts, ps)bind(C, name="iapws_r797_psat")
-    !! C API.
-
-    integer(c_size_t), intent(in), value :: N     !! Size of Ts and ps.
-    real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
-    real(c_double), intent(out) :: ps(N)          !! Saturation pressure in MPa. Filled with nan if out of validity range.
-
-    call psat(Ts, ps)
-
-end subroutine
-
-subroutine capi_Tsat(N, ps, Ts)bind(C, name="iapws_r797_Tsat")
-    !! C API.
-    
-    integer(c_size_t), intent(in), value :: N     !! Size of ps and Ts.
-    real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
-    real(c_double), intent(out) ::  Ts(N)         !! Saturation temperature in K. Filled with nan if out of validity range.
-    
-    call Tsat(ps, Ts)
-end subroutine
-
 subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     !! C API.
     
