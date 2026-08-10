@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Aug  9 19:09:58 2026 -->
+<!-- CreationDate: Mon Aug 10 04:52:24 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -132,78 +132,6 @@ behavior is to compute the properties at 25&deg;C and 1 bar.
 WARNING: Currently, only region 1 is supported.</p></td></tr>
 </table>
 
-<p style="margin-left:9%; margin-top: 1em">Their syntax
-is:</p>
-
-<table width="100%" border="0" rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="8%">
-
-
-<p style="margin-top: 1em"><b>+ kh</b></p></td>
-<td width="1%"></td>
-<td width="14%">
-
-
-<p style="margin-top: 1em">[<i>OPTION</i>]...</p></td>
-<td width="59%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="8%">
-
-
-<p><b>+ kd</b></p></td>
-<td width="1%"></td>
-<td width="14%">
-
-
-<p>[<i>OPTION</i>]...</p></td>
-<td width="59%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="8%">
-
-
-<p><b>+ psat</b></p></td>
-<td width="1%"></td>
-<td width="14%">
-
-
-<p>[<i>OPTION</i>]...</p></td>
-<td width="59%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="8%">
-
-
-<p><b>+ Tsat</b></p></td>
-<td width="1%"></td>
-<td width="14%">
-
-
-<p>[<i>OPTION</i>]...</p></td>
-<td width="59%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="18%"></td>
-<td width="8%">
-
-
-<p><b>+ wp</b></p></td>
-<td width="1%"></td>
-<td width="14%">
-
-
-<p>[<i>OPTION</i>]...</p></td>
-<td width="59%">
-</td></tr>
-</table>
-
 <h2>OPTIONS
 <a name="OPTIONS"></a>
 </h2>
@@ -211,19 +139,19 @@ is:</p>
 
 <p style="margin-left:9%; margin-top: 1em">kh:</p>
 
-<p style="margin-left:18%;"><b>--temperature, -T
-TEMPERATURE...</b></p>
+<p style="margin-left:18%;"><b>-T,
+--temperatureTEMPERATURE...</b></p>
 
 <p style="margin-left:27%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:18%;"><b>--fugacity, -f
+<p style="margin-left:18%;"><b>-f, --fugacity
 FUGACITY...</b></p>
 
 <p style="margin-left:27%;">Liquid-phase fugacity in MPa.
 Default to 1 bar.</p>
 
-<p style="margin-left:18%;"><b>--gases, -g GAS...</b></p>
+<p style="margin-left:18%;"><b>-g, --gases GAS...</b></p>
 
 <p style="margin-left:27%;">Gases for which to compute kH.
 Default to O2.</p>
@@ -252,18 +180,18 @@ computing kH.</p>
 
 <p style="margin-left:9%; margin-top: 1em">kd:</p>
 
-<p style="margin-left:18%;"><b>--temperature, -T
+<p style="margin-left:18%;"><b>-T, --temperature
 TEMPERATURE...</b></p>
 
 <p style="margin-left:27%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:18%;"><b>--x2, -x x2...</b></p>
+<p style="margin-left:18%;"><b>-x, --x2 x2...</b></p>
 
 <p style="margin-left:27%;">Molar fraction of gas in water.
 Default to 1e-9.</p>
 
-<p style="margin-left:18%;"><b>--gases, -g GAS...</b></p>
+<p style="margin-left:18%;"><b>-g, --gases GAS...</b></p>
 
 <p style="margin-left:27%;">Gases for which to compute kD.
 Default to H2.</p>
@@ -292,7 +220,7 @@ computing kD.</p>
 
 <p style="margin-left:9%; margin-top: 1em">psat:</p>
 
-<p style="margin-left:18%;"><b>--temperature, -T
+<p style="margin-left:18%;"><b>-T, --temperature
 TEMPERATURE...</b></p>
 
 <p style="margin-left:27%;">Temperature in &deg;C. Default
@@ -300,21 +228,26 @@ to 25&deg;C.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Tsat:</p>
 
-<p style="margin-left:18%;"><b>--pressure, -p
-PRESSURE...</b></p>
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="27%"></td>
+<td width="73%">
 
-<p style="margin-left:27%;">Pressure in bar. Default to 1
-bar.</p>
+
+<p>-p<b>, --pressure PRESSURE... Pressure in bar. Default
+to 1 bar.</b></p></td></tr>
+</table>
 
 <p style="margin-left:9%; margin-top: 1em">wp:</p>
 
-<p style="margin-left:18%;"><b>--temperature, -T
+<p style="margin-left:18%;"><b>-T, --temperature
 TEMPERATURE...</b></p>
 
 <p style="margin-left:27%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:18%;"><b>--pressure, -p
+<p style="margin-left:18%;"><b>-p, --pressure
 PRESSURE...</b></p>
 
 <p style="margin-left:27%;">Pressure in bar. Default to 1
@@ -322,20 +255,20 @@ bar.</p>
 
 <p style="margin-left:9%; margin-top: 1em">all:</p>
 
-<p style="margin-left:18%;"><b>--usage, -u</b></p>
+<p style="margin-left:18%;"><b>-u, --usage</b></p>
 
 <p style="margin-left:27%;">Show usage text and exit.</p>
 
-<p style="margin-left:18%;"><b>--help, -h</b></p>
+<p style="margin-left:18%;"><b>-h, --help,</b></p>
 
 <p style="margin-left:27%;">Show help text and exit.</p>
 
-<p style="margin-left:18%;"><b>--verbose, -V</b></p>
+<p style="margin-left:18%;"><b>-V, --verbose</b></p>
 
 <p style="margin-left:27%;">Display additional
 information.</p>
 
-<p style="margin-left:18%;"><b>--version, -v</b></p>
+<p style="margin-left:18%;"><b>-v, --version</b></p>
 
 <p style="margin-left:27%;">Show version information and
 exit.</p>
