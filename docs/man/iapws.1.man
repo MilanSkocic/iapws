@@ -52,47 +52,23 @@ The default behavior is to compute the properties
 at 25°C and 1 bar.
 WARNING: Currently, only region 1 is supported.
 .RE
-.PP
-Their syntax is:
-.RS
-.TP
-.B
-+ kh
-[\fIOPTION\fP]\.\.\.
-.TP
-.B
-+ kd
-[\fIOPTION\fP]\.\.\.
-.TP
-.B
-+ psat
-[\fIOPTION\fP]\.\.\.
-.TP
-.B
-+ Tsat
-[\fIOPTION\fP]\.\.\.
-.TP
-.B
-+ wp
-[\fIOPTION\fP]\.\.\.
-
 
 .SH OPTIONS
-
+.PP
 kh:
 .RS
 .TP
 .B
-\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+\fB-T\fP, \fB--temperature\fPTEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
 .B
-\fB--fugacity\fP, \fB-f\fP FUGACITY\.\.\.
+\fB-f\fP, \fB--fugacity\fP FUGACITY\.\.\.
 Liquid-phase fugacity in MPa.
 Default to 1 bar.
 .TP
 .B
-\fB--gases\fP, \fB-g\fP GAS\.\.\.
+\fB-g\fP, \fB--gases\fP GAS\.\.\.
 Gases for which to compute kH.
 Default to O2.
 .TP
@@ -110,16 +86,16 @@ kd:
 .RS
 .TP
 .B
-\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
 .B
-\fB--x2\fP, \fB-x\fP x2\.\.\.
+\fB-x\fP, \fB--x2\fP x2\.\.\.
 Molar fraction of gas in water.
 Default to 1e-9.
 .TP
 .B
-\fB--gases\fP, \fB-g\fP GAS\.\.\.
+\fB-g\fP, \fB--gases\fP GAS\.\.\.
 Gases for which to compute kD.
 Default to H2.
 .TP
@@ -137,7 +113,7 @@ psat:
 .RS
 .TP
 .B
-\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .RE
 .PP
@@ -145,7 +121,7 @@ Tsat:
 .RS
 .TP
 .B
-\fB--pressure\fP, \fB-p\fP PRESSURE\.\.\.
+ \fB-p\fP, \fB--pressure\fP PRESSURE\.\.\.
 Pressure in bar. Default to 1 bar.
 .RE
 .PP
@@ -153,11 +129,11 @@ wp:
 .RS
 .TP
 .B
-\fB--temperature\fP, \fB-T\fP TEMPERATURE\.\.\.
+\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
 .B
-\fB--pressure\fP, \fB-p\fP PRESSURE\.\.\.
+\fB-p\fP, \fB--pressure\fP PRESSURE\.\.\.
 Pressure in bar. Default to 1 bar.
 .RE
 .PP
@@ -165,19 +141,15 @@ all:
 .RS
 .TP
 .B
-\fB--usage\fP, \fB-u\fP
+\fB-u\fP, \fB--usage\fP
 Show usage text and exit.
 .TP
 .B
-\fB--help\fP, \fB-h\fP
+\fB-h\fP, \fB--help\fP,
 Show help text and exit.
 .TP
 .B
-\fB--verbose\fP, \fB-V\fP
-Display additional information.
-.TP
-.B
-\fB--version\fP, \fB-v\fP
+\fB-v\fP, \fB--version\fP
 Show version information and exit.
 .SH NOTES
 

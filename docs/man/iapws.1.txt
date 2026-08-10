@@ -34,28 +34,16 @@ SUBCOMMANDS
                      25°C and 1 bar.  WARNING: Currently, only region 1
                      is supported.
 
-       Their syntax is:
-
-              + kh   [OPTION]...
-
-              + kd   [OPTION]...
-
-              + psat [OPTION]...
-
-              + Tsat [OPTION]...
-
-              + wp   [OPTION]...
-
 OPTIONS
        kh:
 
-              --temperature, -T TEMPERATURE...
+              -T, --temperatureTEMPERATURE...
                      Temperature in °C. Default to 25°C.
 
-              --fugacity, -f FUGACITY...
+              -f, --fugacity FUGACITY...
                      Liquid-phase fugacity in MPa.  Default to 1 bar.
 
-              --gases, -g GAS...
+              -g, --gases GAS...
                      Gases for which to compute kH.  Default to O2.
 
               --D2O  Set heavywater as the solvent.
@@ -65,13 +53,13 @@ OPTIONS
 
        kd:
 
-              --temperature, -T TEMPERATURE...
+              -T, --temperature TEMPERATURE...
                      Temperature in °C. Default to 25°C.
 
-              --x2, -x x2...
+              -x, --x2 x2...
                      Molar fraction of gas in water.  Default to 1e-9.
 
-              --gases, -g GAS...
+              -g, --gases GAS...
                      Gases for which to compute kD.  Default to H2.
 
               --D2O, Set heavywater as the solvent.
@@ -81,45 +69,45 @@ OPTIONS
 
        psat:
 
-              --temperature, -T TEMPERATURE...
+              -T, --temperature TEMPERATURE...
                      Temperature in °C. Default to 25°C.
 
        Tsat:
 
-              --pressure, -p PRESSURE...
-                     Pressure in bar. Default to 1 bar.
+                     -p,  --pressure  PRESSURE...  Pressure in bar. De‐
+                     fault to 1 bar.
 
        wp:
 
-              --temperature, -T TEMPERATURE...
+              -T, --temperature TEMPERATURE...
                      Temperature in °C. Default to 25°C.
 
-              --pressure, -p PRESSURE...
+              -p, --pressure PRESSURE...
                      Pressure in bar. Default to 1 bar.
 
        all:
 
-              --usage, -u
+              -u, --usage
                      Show usage text and exit.
 
-              --help, -h
+              -h, --help,
                      Show help text and exit.
 
-              --verbose, -V
+              -V, --verbose
                      Display additional information.
 
-              --version, -v
+              -v, --version
                      Show version information and exit.
 
 NOTES
-       You  may  replace  the default options from a file if your first
-       options begin with @file.  Initial options  will  then  be  read
+       You may replace the default options from a file  if  your  first
+       options  begin  with  @file.   Initial options will then be read
        from the "response file" "file.rsp" in the current directory.
 
        If "file" does not exist or cannot be read, then an error occurs
-       and  the  program  stops. Each line of the file is prefixed with
-       "options" and interpreted as a separate argument. The  file  it‐
-       self  may  not  contain  @file  arguments.  That  is,  it is not
+       and the program stops. Each line of the file  is  prefixed  with
+       "options"  and  interpreted as a separate argument. The file it‐
+       self may not  contain  @file  arguments.  That  is,  it  is  not
        processed recursively.
 
        For  more  information  on  response  files  see  https://urban‐
@@ -133,7 +121,7 @@ EXAMPLE
              iapws wp -T 25,100 -p 0.035,1.0
 
 SEE ALSO
-       iapws(1)  iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3) iapws_kh(3)
+       iapws(1) iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
        iapws_kd(3) iapws_kw(3) ciaaw(3), codata(3),
 
-0.7.1                        09 August 2026                    iapws(1)
+0.7.1                        10 August 2026                    iapws(1)
