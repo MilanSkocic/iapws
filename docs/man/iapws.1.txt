@@ -93,9 +93,6 @@ OPTIONS
               -h, --help,
                      Show help text and exit.
 
-              -V, --verbose
-                     Display additional information.
-
               -v, --version
                      Show version information and exit.
 
