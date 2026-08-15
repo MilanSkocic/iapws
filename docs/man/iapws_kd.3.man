@@ -1,4 +1,4 @@
-.TH iapws_kd 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+.TH iapws_kd 3 "@DATE@" "@VERSION@" "Library calls"
 
 .SH NAME
 kh \- compute the vapor-liquid constant in water or heavy water.

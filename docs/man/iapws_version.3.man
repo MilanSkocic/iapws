@@ -1,4 +1,4 @@
-.TH iapws_version 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+.TH iapws_version 3 "@DATE@" "@VERSION@" "Library calls"
 
 .SH NAME
 \"{{{

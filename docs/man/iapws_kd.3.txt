@@ -1,4 +1,4 @@
-iapws_kd(3)             Library Functions Manual            iapws_kd(3)
+iapws_kd(3)                  Library calls                  iapws_kd(3)
 
 NAME
        kh - compute the vapor-liquid constant in water or heavy water.
@@ -65,4 +65,4 @@ SEE ALSO
        iapws(1)  iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3) iapws_kh(3)
        iapws_kd(3) iapws_kw(3) ciaaw(3), codata(3),
 
-0.7.1                        10 August 2026                 iapws_kd(3)
+0.7.1                        15 August 2026                 iapws_kd(3)
