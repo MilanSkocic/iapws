@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Aug 15 06:45:34 2026 -->
+<!-- CreationDate: Sat Aug 15 06:45:35 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -13,19 +13,18 @@
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
 </style>
-<title>iapws_version</title>
+<title>iapws_Tc</title>
 
 </head>
 <body>
 
-<h1 align="center">iapws_version</h1>
+<h1 align="center">iapws_Tc</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#LIBRARY">LIBRARY</a><br>
 <a href="#SYNOPSIS">SYNOPSIS</a><br>
 <a href="#DESCRIPTION">DESCRIPTION</a><br>
-<a href="#RETURN VALUE">RETURN VALUE</a><br>
-<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
 <a href="#SEE ALSO">SEE ALSO</a><br>
 
 <hr>
@@ -36,15 +35,15 @@
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">version - get
-the library version</p>
+<p style="margin-left:9%; margin-top: 1em">Tc - critical
+temperature</p>
 
 <h2>LIBRARY
 <a name="LIBRARY"></a>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Codata library
+<p style="margin-left:9%; margin-top: 1em">iapws library
 (<i>libiapws</i>, <i>-liapws</i>)</p>
 
 <h2>SYNOPSIS
@@ -61,100 +60,89 @@ the library version</p>
 
 <p style="margin-top: 1em">Fortran</p></td>
 <td width="4%"></td>
-<td width="46%">
+<td width="37%">
 
 
-<p style="margin-top: 1em"><b>function
-version()result(</b><i>fptr</i><b>)</b></p> </td>
-<td width="32%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-</td>
-<td width="4%"></td>
-<td width="46%">
-
-
-<p><b>character(len=:), pointer ::</b> <i>fptr</i></p></td>
-<td width="32%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-
-
-<p>C</p></td>
-<td width="4%"></td>
-<td width="46%">
-
-
-<p><b>char* iapws_version()</b></p></td>
-<td width="32%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-
-
-<p>Python</p></td>
-<td width="4%"></td>
-<td width="46%">
-
-
-<p><b>str:</b><i>pyiapws.__version__</i></p></td>
-<td width="32%">
+<p style="margin-top: 1em"><b>real(dp), parameter ::</b>
+<i>Tc_H2O</i></p> </td>
+<td width="41%">
 </td></tr>
 </table>
+
+<p style="margin-left:22%; margin-top: 1em"><b>real(dp),
+parameter ::</b> <i>Tc_D2O</i></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">C</p></td>
+<td width="12%"></td>
+<td width="40%">
+
+
+<p style="margin-top: 1em"><b>const double</b>
+<i>iapws_r283_Tc_H2O;</i></p> </td>
+<td width="38%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em"><b>const
+double</b> <i>iapws_r283_Tc_D2O;</i></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="9%"></td>
+<td width="8%">
+
+
+<p style="margin-top: 1em">Python</p></td>
+<td width="5%"></td>
+<td width="15%">
+
+
+<p style="margin-top: 1em"><b>float:</b><i>Tc_H2O</i></p></td>
+<td width="63%">
+</td></tr>
+</table>
+
+
+<p style="margin-left:22%; margin-top: 1em"><b>float:</b><i>Tc_D2O</i></p>
 
 <h2>DESCRIPTION
 <a name="DESCRIPTION"></a>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Get the library
-version.</p>
+<p style="margin-left:9%; margin-top: 1em">Critical
+temperature constants for water, .<b>Tc_H2O</b>, and heavy
+water, <i>Tc_D2O</i>, used for computing the water
+properties.</p>
 
-<h2>RETURN VALUE
-<a name="RETURN VALUE"></a>
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
 </h2>
 
 
-<table width="100%" border="0" rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="9%"></td>
-<td width="9%">
-
-
-<p style="margin-top: 1em">pointer</p></td>
-<td width="4%"></td>
-<td width="38%">
-
-
-<p style="margin-top: 1em">Pointer to the version
-string.</p> </td>
-<td width="40%">
-</td></tr>
-</table>
-
-<h2>EXAMPLE
-<a name="EXAMPLE"></a>
-</h2>
-
-
-<p style="margin-left:9%; margin-top: 1em">Fortran: <br>
+<p style="margin-left:9%; margin-top: 1em">Fortran <br>
 use iapws <br>
-print *, &quot;version = &quot;, version()</p>
+real(dp) :: T = Tc_H2O <br>
+real(dp) :: T = Tc_D2O</p>
 
-<p style="margin-left:9%; margin-top: 1em">C: <br>
-include &lt;stdio.h&gt; <br>
-include &quot;iapws.h&quot; <br>
-printf(&quot;version = %s\n&quot;, iapws_version());</p>
+<p style="margin-left:9%; margin-top: 1em">C <br>
+#include &quot;iapws.h&quot; <br>
+double T; <br>
+T = iapws_r283_Tc_H2O; <br>
+T = iapws_r283_Tc_D2O;</p>
 
 <p style="margin-left:9%; margin-top: 1em">Python: <br>
 import pyiapws <br>
-print(f&quot;version = {pyiapws.__version__}&quot;)</p>
+T = Tc_H2O <br>
+T = Tc_D2O</p>
 
 <h2>SEE ALSO
 <a name="SEE ALSO"></a>
