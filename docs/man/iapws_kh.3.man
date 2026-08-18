@@ -1,4 +1,4 @@
-.TH iapws_kh 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+.TH iapws_kh 3 "@DATE@" "@VERSION@" "Library calls"
 
 .SH NAME
 kh \- compute the Henry constant in water or heavy water.

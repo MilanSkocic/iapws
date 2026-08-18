@@ -1,0 +1,63 @@
+.TH iapws_Tc 3 "@DATE@" "@VERSION@" "Library calls"
+
+.SH NAME
+Tc \- critical temperature
+
+.SH LIBRARY
+iapws library 
+.RI ( libiapws ", " \-liapws )
+
+.SH SYNOPSIS
+\"{{{
+.IP Fortran 10
+.BI "real(dp), parameter :: " Tc_H2O
+
+.BI "real(dp), parameter :: " Tc_D2O
+
+.IP C 10
+.BI "const double " iapws_r283_Tc_H2O;
+
+.BI "const double " iapws_r283_Tc_D2O;
+
+.IP Python 10
+.BI float: Tc_H2O
+
+.BI float: Tc_D2O
+\"}}}
+
+.SH DESCRIPTION
+Critical temperature constants for water, .\fBTc_H2O\fP, and heavy water, \fITc_D2O\fP,
+used for computing the water properties.
+
+.SH EXAMPLES
+.PP
+Fortran
+.nf
+.ft CR
+    use iapws
+    real(dp) :: T = Tc_H2O
+    real(dp) :: T = Tc_D2O
+.ft R
+
+.PP
+C
+.nf
+.ft CR
+    #include "iapws.h" 
+    double T;
+    T = iapws_r283_Tc_H2O;
+    T = iapws_r283_Tc_D2O;
+.ft R
+
+
+.PP
+Python: 
+.nf
+.ft CR 
+    import pyiapws
+    T = Tc_H2O
+    T = Tc_D2O
+.ft R
+.fi
+
+

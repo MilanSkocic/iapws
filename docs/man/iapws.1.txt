@@ -93,9 +93,6 @@ OPTIONS
               -h, --help,
                      Show help text and exit.
 
-              -V, --verbose
-                     Display additional information.
-
               -v, --version
                      Show version information and exit.
 
@@ -122,6 +119,7 @@ EXAMPLE
 
 SEE ALSO
        iapws(1) iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
-       iapws_kd(3) iapws_kw(3) ciaaw(3), codata(3),
+       iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3) ciaaw(3), co‐
+       data(3),
 
-0.7.1                        10 August 2026                    iapws(1)
+0.7.1                        15 August 2026                    iapws(1)

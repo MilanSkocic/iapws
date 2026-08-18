@@ -1,0 +1,48 @@
+iapws_Tc(3)                  Library calls                  iapws_Tc(3)
+
+NAME
+       Tc - critical temperature
+
+LIBRARY
+       iapws library (libiapws, -liapws)
+
+SYNOPSIS
+       Fortran   real(dp), parameter :: Tc_H2O
+
+                 real(dp), parameter :: Tc_D2O
+
+       C         const double iapws_r283_Tc_H2O;
+
+                 const double iapws_r283_Tc_D2O;
+
+       Python    float:Tc_H2O
+
+                 float:Tc_D2O
+
+DESCRIPTION
+       Critical temperature constants for water, .Tc_H2O, and heavy wa‐
+       ter, Tc_D2O, used for computing the water properties.
+
+EXAMPLES
+       Fortran
+           use iapws
+           real(dp) :: T = Tc_H2O
+           real(dp) :: T = Tc_D2O
+
+       C
+           #include "iapws.h"
+           double T;
+           T = iapws_r283_Tc_H2O;
+           T = iapws_r283_Tc_D2O;
+
+       Python:
+           import pyiapws
+           T = Tc_H2O
+           T = Tc_D2O
+
+SEE ALSO
+       iapws(1)  iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3) iapws_kh(3)
+       iapws_kd(3) iapws_kw(3) iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
+       data(3),
+
+0.7.1                        15 August 2026                 iapws_Tc(3)

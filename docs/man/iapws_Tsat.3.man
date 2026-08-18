@@ -1,4 +1,4 @@
-.TH iapws_Tsat 3 "@DATE@" "@VERSION@" "Library Functions Manual"
+.TH iapws_Tsat 3 "@DATE@" "@VERSION@" "Library calls"
 
 .SH NAME
 Tsat \- compute the saturation pressure
