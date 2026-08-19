@@ -15,20 +15,20 @@ character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
 
 
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 public :: get_version, capi_get_version
 public :: version, capi_version
 public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 public :: kh, capi_kh, kd, capi_kd, Kw, capi_Kw
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 contains
-!=======================================================================
+!-----------------------------------------------------------------------
 ! GET_VERSION() - DEPRECATED
-!=======================================================================
+!-----------------------------------------------------------------------
 function get_version()result(fptr)
 !! Get the version.
 !! Deprecated. It will be removed in the next major release.
@@ -43,12 +43,12 @@ function capi_get_version()bind(c, name='iapws_get_version')result(cptr)
 type(c_ptr) :: cptr    !! C pointer to a string indicating the version.
 cptr = capi_version()
 end function capi_get_version
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! VERSION()
-!=======================================================================
+!-----------------------------------------------------------------------
+! FUNCTION: VERSION()
+!-----------------------------------------------------------------------
 function version()result(fptr)
 !! Get the version.
 character(len=:), pointer :: fptr !! Pointer to a string (=>version).
@@ -72,12 +72,12 @@ allocate(character(len=len(fptr)+1) :: vc)
 vc = fptr // c_null_char
 cptr = c_loc(vc)
 end function capi_version
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! G704 - KH()
-!=======================================================================
+!-----------------------------------------------------------------------
+! SUBROUTINE: G704 - KH()
+!-----------------------------------------------------------------------
 pure subroutine kh(T, gas, heavywater, k)
 !! Compute the henry constant kH in MPa for a given temperature (x_2=1/kH).
 real(dp), intent(in), contiguous :: T(:)      !! Temperature in K.
@@ -124,12 +124,12 @@ do i=1, size_gas
 enddo
 call kh(T, f_gas, heavywater, k)
 end subroutine capi_kh
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! G704 - KD()
-!=======================================================================
+!-----------------------------------------------------------------------
+! SUBROUTINE: G704 - KD()
+!-----------------------------------------------------------------------
 pure subroutine kd(T, gas, heavywater, k)
 !! Compute the vapor-liquid constant kd for a given temperature (kd=y_2/x_2).
 implicit none
@@ -180,12 +180,12 @@ do i=1, size_gas
 enddo
 call kd(T, f_gas, heavywater, k)    
 end subroutine
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! R797 - PSAT()
-!=======================================================================
+!-----------------------------------------------------------------------
+! SUBROUTINE: R797 - PSAT()
+!-----------------------------------------------------------------------
 pure subroutine psat(Ts, ps) 
 !! Compute the saturation pressure at temperature Ts (273.13 K <= Ts <= 647.096 K).
 real(dp), intent(in), contiguous :: Ts(:)  !! Saturation temperature in K.
@@ -200,12 +200,12 @@ real(c_double), intent(in) :: Ts(N)           !! Saturation temperature in K.
 real(c_double), intent(out) :: ps(N)          !! Saturation pressure in MPa. Filled with nan if out of validity range.
 call psat(Ts, ps)
 end subroutine
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! R797 - TSAT()
-!=======================================================================
+!-----------------------------------------------------------------------
+! SUBROUTINE: R797 - TSAT()
+!-----------------------------------------------------------------------
 pure subroutine Tsat(ps, Ts) 
 !! Compute the saturation temperature at pressure ps (611.213 Pa <= ps <= 22.064 MPa).
 real(dp), intent(in), contiguous :: ps(:)  !! Saturation pressure in MPa.
@@ -220,12 +220,12 @@ real(c_double), intent(in) ::   ps(N)         !! Saturation pressure in MPa.
 real(c_double), intent(out) ::  Ts(N)         !! Saturation temperature in K. Filled with nan if out of validity range.
 call Tsat(ps, Ts)
 end subroutine
-!=======================================================================
+!-----------------------------------------------------------------------
 
 
-!=======================================================================
-! R1124 - KW()
-!=======================================================================
+!-----------------------------------------------------------------------
+! SUBROUTINE: R1124 - KW()
+!-----------------------------------------------------------------------
 pure subroutine Kw(T, rhow, k) 
 !! Compute the ionization constant of water Kw (273.13 K <= T <= 1273.15 K and 0 <= p <= 1000 MPa).
 ! arguments
@@ -246,6 +246,6 @@ real(c_double), intent(out) :: k(N)        !! Ionization constant. Filled with N
 
 call Kw(T, rhow, k)
 end subroutine
-!=======================================================================
+!-----------------------------------------------------------------------
 
 end module
