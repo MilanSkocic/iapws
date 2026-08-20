@@ -21,7 +21,7 @@ module iapws__api
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 public :: gases, gases2, ngases, gas_type                       ! G704
 public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
-public :: wp, wr, wp
+public :: wp, wr, wph
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 contains

@@ -126,7 +126,7 @@ use iapws__common, only: dp
 implicit none(type,external)
 real(dp), intent(in) :: p(:)
 real(dp), intent(in) :: T(:)
-character(len>*), intent(in) :: prop
+character(len=*), intent(in) :: prop
 real(dp), intent(out) :: res(:)
 end subroutine rai
 end interface
