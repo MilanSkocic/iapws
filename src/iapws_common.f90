@@ -1,3 +1,8 @@
+! SPDX-License-Identifier: MIT
+
+!=======================================================================
+! MODULE: IAPWS__COMMON
+!=======================================================================
 module iapws__common
 !! Common parameters
 use stdlib_kinds, only: int64, dp, int32, sp

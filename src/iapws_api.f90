@@ -1,3 +1,8 @@
+! SPDX-License-Identifier: MIT
+
+!=======================================================================
+! MODULE: IAPWS__API
+!=======================================================================
 module iapws__api
     !! API.
     use iapws__common
@@ -11,11 +16,13 @@ module iapws__api
     type(gas_type), allocatable, target :: f_gases(:)
     character(len=:), allocatable, target :: f_gases_str
 
-    public :: gases, gases2, ngases, gas_type                           ! G704
-
-    public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w                        ! R797
-
-    public :: wp, wr, wph
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! PUBLIC
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public :: gases, gases2, ngases, gas_type                       ! G704
+public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
+public :: wp, wr, wp
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 contains
 
