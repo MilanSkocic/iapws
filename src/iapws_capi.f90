@@ -1,3 +1,8 @@
+! SPDX-License-Identifier: MIT
+
+!=======================================================================
+! MODULE: IAPWS__CAPI
+!=======================================================================
 module iapws__capi
     !! C API.
     use iapws__common
@@ -14,9 +19,12 @@ module iapws__capi
     type(c_char_p), allocatable, target :: char_pp(:)
     character(len=:), allocatable, target :: c_gases_str
 
-    public :: capi_ngases, capi_gases                !!G704
-
-    public :: capi_wp                !! R797
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! PUBLIC
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public :: capi_ngases, capi_gases                !!G704
+public :: capi_wp                !! R797
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 contains

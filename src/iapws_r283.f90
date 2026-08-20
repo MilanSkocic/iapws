@@ -1,3 +1,8 @@
+! SPDX-License-Identifier: MIT
+
+!=======================================================================
+! MODULE: IAPWS__R283
+!=======================================================================
 module iapws__r283
 !! Module for IAPWS R2-83.
 use iapws__common, only: dp, c_double
@@ -18,11 +23,11 @@ real(c_double), protected, bind(C, name="iapws_r283_pc_D2O") :: capi_pc_D2O = pc
 real(c_double), protected, bind(C, name="iapws_r283_rhoc_H2O") :: capi_rhoc_H2O = rhoc_H2O !! Critical density for H2O in kg.m-3
 real(c_double), protected, bind(C, name="iapws_r283_rhoc_D2O") :: capi_rhoc_D2O = rhoc_D2O !! Critical density for D2O in kg.m-3
 
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
-!=======================================================================
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 end module iapws__r283
