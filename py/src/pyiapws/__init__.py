@@ -1,3 +1,6 @@
+#=======================================================================
+# MODULE: PYIAPWS
+#=======================================================================
 """Python wrapper of the (Modern Fortran) iapws library."""
 import platform
 import subprocess
@@ -19,6 +22,9 @@ pc_D2O = _iapws.pc_D2O
 rhoc_H2O = _iapws.rhoc_H2O
 rhoc_D2O = _iapws.rhoc_D2O
 
+#-----------------------------------------------------------------------
+# FUNCTION: MAIN()
+#-----------------------------------------------------------------------
 def main():
     binary = Path(__file__).parent / "iapws"
     if platform.system() == "Windows":
@@ -26,8 +32,12 @@ def main():
 
     res = subprocess.run([binary] + sys.argv[1:])
     sys.exit(res.returncode)
+#-----------------------------------------------------------------------
 
-# utilities
+
+#-----------------------------------------------------------------------
+# FUNCTION: _CAST_NDARRAY()
+#-----------------------------------------------------------------------
 def _cast_ndarray(X):
     """
     Cast X to numpy 1d-array.
@@ -56,9 +66,12 @@ def _cast_ndarray(X):
         raise TypeError("X must be a 1d-array of floats.")
 
     return X_, scalar
+#-----------------------------------------------------------------------
 
 
-# G704
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - KH()
+#-----------------------------------------------------------------------
 def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
     """
     Get the Henry constant for gas in H2O or D2O at T. 
@@ -88,7 +101,12 @@ def kh(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         return float(k[0])
     else:
         return k
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - KD()
+#-----------------------------------------------------------------------
 def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float]:
     """
     Get the vapor-liquid constant for gas in H2O or D2O at T. 
@@ -118,7 +136,12 @@ def kd(T: np.ndarray, gas: str, heavywater: bool=False)->Union[np.ndarray, float
         return float(k[0])
     else:
         return k
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - NAGASES()
+#-----------------------------------------------------------------------
 def ngases(heavywater:bool=False)->int:
     """
     Get the number of available gases.
@@ -134,7 +157,12 @@ def ngases(heavywater:bool=False)->int:
         Number of available gases in water or heavywater.
     """
     return _iapws.ngases(bool(heavywater))
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - GASES()
+#-----------------------------------------------------------------------
 def gases(heavywater: bool=False)->List[str]:
     """
     Get the list of available gases.
@@ -150,7 +178,12 @@ def gases(heavywater: bool=False)->List[str]:
         List of available gases.
     """
     return _iapws.gases(bool(heavywater))
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - GASES2()
+#-----------------------------------------------------------------------
 def gases2(heavywater: bool=False)->str:
     """
     Get the available gases as a string.
@@ -166,9 +199,12 @@ def gases2(heavywater: bool=False)->str:
         Available gases as comma separated string.
     """
     return _iapws.gases2(bool(heavywater))
+#-----------------------------------------------------------------------
 
 
-# R797
+#-----------------------------------------------------------------------
+# FUNCTION: R797 - PSAT()
+#-----------------------------------------------------------------------
 def psat(Ts: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the saturation pressure at temperature Ts. 
@@ -191,7 +227,11 @@ def psat(Ts: np.ndarray)->Union[np.ndarray, float]:
         return ps[0]
     else:
         return ps
+#-----------------------------------------------------------------------
 
+#-----------------------------------------------------------------------
+# FUNCTION: G704 - TSAT()
+#-----------------------------------------------------------------------
 def Tsat(ps: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the saturation temperature at pressure ps.
@@ -214,7 +254,11 @@ def Tsat(ps: np.ndarray)->Union[np.ndarray, float]:
         return Ts[0]
     else:
         return Ts
+#-----------------------------------------------------------------------
 
+#-----------------------------------------------------------------------
+# FUNCTION: R797 - WP()
+#-----------------------------------------------------------------------
 def wp(p, T, prop)->Union[np.ndarray, float]:
     """
     Compute water properties at pressure p in MPa and temperature T in Kelvin.
@@ -259,7 +303,12 @@ def wp(p, T, prop)->Union[np.ndarray, float]:
         return res[0]
     else:
         return res
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION: R797 - WR()
+#-----------------------------------------------------------------------
 def wr(p, T)->Union[np.ndarray, float]:
     """
     Get the water region corresponding to p and T.
@@ -285,7 +334,12 @@ def wr(p, T)->Union[np.ndarray, float]:
         return res[0]
     else:
         return res
+#-----------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------
+# FUNCTION:  R797 - WPH()
+#-----------------------------------------------------------------------
 def wph(p, T)->Union[np.ndarray, str]:
     """
     Get the water phase corresponding to p and T.
@@ -311,9 +365,12 @@ def wph(p, T)->Union[np.ndarray, str]:
         return res[0].decode("utf-8")
     else:
         return res.astype("U1")
+#-----------------------------------------------------------------------
 
 
-# R1124
+#-----------------------------------------------------------------------
+# FUNCTION: R1124 - KW()
+#-----------------------------------------------------------------------
 def Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]:
     """
     Compute the ionization constant of water Kw.
@@ -343,3 +400,4 @@ def Kw(T: np.ndarray, rhow: np.ndarray)->Union[np.ndarray, float]:
             return k[0]
         else:
             return k
+#-----------------------------------------------------------------------
