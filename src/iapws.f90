@@ -14,8 +14,10 @@ use iapws__r1124, only: pkw
 use iapws__r797, only: r4_Ts, r4_ps
 use iapws__capi
 use iapws__api
+implicit none(type,external)
+private
 
-character(len=*), parameter, private :: v = '0.7.1'
+character(len=*), parameter :: v = '0.7.1'
 character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
 
@@ -28,6 +30,15 @@ public :: version, capi_version
 public :: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 public :: kh, capi_kh, kd, capi_kd, Kw, capi_Kw
+public :: Tsat, capi_Tsat, psat, capi_psat
+
+public :: gases, gases2, ngases, gas_type                       ! G704
+public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
+public :: wp, wr, wph
+
+
+public :: capi_ngases, capi_gases                !!G704
+public :: capi_wp                !! R797
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 contains
