@@ -56,16 +56,21 @@ real(dp), parameter :: q_H2O = -0.023767_dp !! solvent coefficient for kd in wat
 real(dp), parameter :: q_D2O = -0.024552_dp !! solvent coefficient for kd in heavywater
 !-----------------------------------------------------------------------
 !! ai and bi coefficients for water
+!{{{
 real(dp), dimension(6, 2), parameter :: aibi_H2O = reshape([&
 -7.85951783_dp, 1.84408259_dp, -11.78664970_dp, 22.68074110_dp, -15.96187190_dp, 1.80122502_dp,&
 1.000_dp, 1.500_dp, 3.000_dp, 3.500_dp, 4.000_dp, 7.500_dp], [6,2])
+!}}}
 !-----------------------------------------------------------------------
 !! ai and bi coefficients for heavywater
+!{{{
 real(dp), dimension(5, 2), parameter :: aibi_D2O = reshape([&
 -7.8966570_dp, 24.7330800_dp, -27.8112800_dp,  9.3559130_dp, -9.2200830_dp, &
 1.00_dp, 1.89_dp, 2.00_dp, 3.00_dp, 3.60_dp], [5, 2])
+!}}}
 !-----------------------------------------------------------------------
 !! ABC constants water.
+!{{{
 type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
 [abc_t("He", -3.52839_dp, 7.12983_dp, 4.47770_dp),&
  abc_t("Ne", -3.18301_dp, 5.31448_dp, 5.43774_dp),&
@@ -81,8 +86,10 @@ type(abc_t), dimension(ngas_H2O), parameter :: abc_H2O = &
  abc_t("CH4", -10.44708_dp, 4.66491_dp, 12.12986_dp),&
  abc_t("C2H6", -19.67563_dp, 4.51222_dp, 20.62567_dp),&
  abc_t("SF6", -16.56118_dp, 2.15289_dp, 20.35440_dp)]
+ !}}}
 !-----------------------------------------------------------------------
 !! ABC constants for heavywater
+!{{{
 type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
 [abc_t("He", -0.72643_dp, 7.02134_dp, 2.04433_dp),&
  abc_t("Ne", -0.91999_dp, 5.65327_dp, 3.17247_dp),&
@@ -91,18 +98,24 @@ type(abc_t), dimension(ngas_D2O), parameter :: abc_D2O = &
  abc_t("Xe", -14.46485_dp, 4.42330_dp, 15.60919_dp),&
  abc_t("D2", -5.33843_dp, 6.15723_dp, 6.53046_dp),&
  abc_t("CH4", -10.01915_dp, 4.73368_dp, 11.75711_dp)]
+ !}}}
 !-----------------------------------------------------------------------
 !! ci and di coefficients for water
+!{{{
 real(dp), dimension(6, 2), parameter :: cidi_H2O = reshape([&
 1.99274064_dp, 1.09965342_dp, -0.510839303_dp, -1.75493479_dp, -45.5170352_dp, -6.7469445d5,&
 1.0_dp/3.0_dp, 2.0_dp/3.0_dp, 5.0_dp/3.0_dp, 16.0_dp/3.0_dp, 43.0_dp/3.0_dp, 110.0_dp/3.0_dp], [6,2])
+!}}}
 !-----------------------------------------------------------------------
 !! ci and di coefficients for heavywater
+!{{{
 real(dp), dimension(4, 2), parameter :: cidi_D2O = reshape([&
 2.7072_dp, 0.58662_dp, -1.3069_dp, -45.663_dp, &
 0.374_dp, 1.45_dp, 2.6_dp, 12.3_dp], [4,2])
+!}}}
 !-----------------------------------------------------------------------
 !! EFGH constants for water
+!{{{
 type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
 [efgh_t("He", 2267.4082_dp, -2.9616_dp, -3.2604_dp, 7.8819_dp),&
  efgh_t("Ne", 2507.3022_dp, -38.6955_dp, 110.3992_dp, -71.9096_dp),&
@@ -118,8 +131,10 @@ type(efgh_t), dimension(ngas_H2O), parameter :: efgh_H2O = &
  efgh_t("CH4", 2215.6977_dp, -0.1089_dp, -6.6240_dp, 4.6789_dp),&
  efgh_t("C2H6", 2143.8121_dp, 6.8859_dp, -12.6084_dp, 0.0_dp),&
  efgh_t("SF6", 2871.7265_dp, -66.7556_dp, 229.7191_dp, -172.7400_dp)]
+ !}}}
 !-----------------------------------------------------------------------
  !! EFGH constants for heavywater
+ !{{{
 type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 [efgh_t("He", 2293.2474_dp, -54.7707_dp, 194.2924_dp, -142.1257), &
  efgh_t("Ne", 2439.6677_dp, -93.4934_dp, 330.7783_dp, -243.0100_dp),&
@@ -128,6 +143,7 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
  efgh_t("Xe", 2038.3656_dp, 68.1228_dp, -271.3390_dp, 207.7984_dp),& 
  efgh_t("D2", 2141.3214_dp, -1.9696_dp, 1.6136_dp, 0.0_dp),&
  efgh_t("CH4", 2216.0181_dp, -40.7666_dp, 152.5778_dp, -117.7430_dp)] 
+ !}}}
 !----------------------------------------------------------------------
 
 
