@@ -1,61 +1,59 @@
 iapws_psat(3)                Library calls                iapws_psat(3)
 
 NAME
-       psat - compute the saturation pressure
+     psat - compute the saturation pressure
 
 LIBRARY
-       iapws library (libiapws, -liapws)
+     iapws library (libiapws, -liapws)
 
 SYNOPSIS
-       Fortran   pure subroutine psat(Ts,ps)
+     Fortran   pure subroutine psat(Ts,ps)
 
-                    real(dp), intent(in), contiguous  :: Ts(:)
+                  real(dp), intent(in), contiguous  :: Ts(:)
 
-                    real(dp), intent(out), contiguous  :: ps(:)
+                  real(dp), intent(out), contiguous  :: ps(:)
 
-       C         void iapws_r797_psat(size_t N,double *Ts,double *ps);
+     C         void iapws_r797_psat(size_t N,double *Ts,double *ps);
 
-       Python    psat(Ts:np.ndarray)->Union[np.ndarray,float]:
+     Python    psat(Ts:np.ndarray)->Union[np.ndarray,float]:
 
 DESCRIPTION
-       Compute the saturation pressure ps at temperature Ts.
+     Compute the saturation pressure ps at temperature Ts.
 
-       Arguments:
+     Arguments:
 
-              Ts(:)
-                   Saturation temperature in K.
+            Ts(:)Saturation temperature in K.
 
-              ps(:)
-                   Saturation pressure in MPa.
+            ps(:)Saturation pressure in MPa.
 
-       Validity range: 273.13 K <= T <= 647.096 K
+     Validity range: 273.13 K <= T <= 647.096 K
 
 RETURN VALUE
-       ps is filled with NaN if out of validity range.
+     ps is filled with NaN if out of validity range.
 
 EXAMPLES
-       Fortran:
-           use iapws
-           real(dp) :: T(1), p(1)
-           T(1) = 25.0_dp + 273.15_dp
-           call psat(T, p)
+     Fortran:
+         use iapws
+         real(dp) :: T(1), p(1)
+         T(1) = 25.0_dp + 273.15_dp
+         call psat(T, p)
 
-       C:
-           #include "iapws.h"
-           double T = 25.0 + 273.15;
-           double p;
-           iapws_g704_psat(1, &T, &p);
+     C:
+         #include "iapws.h"
+         double T = 25.0 + 273.15;
+         double p;
+         iapws_g704_psat(1, &T, &p);
 
-       Python:
-           import numpy as np
-           import pyiapws
-           T = np.asarray([25.0])
-           p = pyiapws.psat(T+273.15)
-           print(p)
+     Python:
+         import numpy as np
+         import pyiapws
+         T = np.asarray([25.0])
+         p = pyiapws.psat(T+273.15)
+         print(p)
 
 SEE ALSO
-       iapws(1)  iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3) iapws_kh(3)
-       iapws_kd(3) iapws_kw(3) iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
-       data(3),
+     iapws(1)   iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
+     iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
+     data(3),
 
-0.7.1                        15 August 2026               iapws_psat(3)
+0.7.1                      30 September 2026              iapws_psat(3)

@@ -13,12 +13,12 @@
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
 </style>
-<title>iapws_Tc</title>
+<title>iapws_pc</title>
 
 </head>
 <body>
 
-<h1 align="center">iapws_Tc</h1>
+<h1 align="center">iapws_pc</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#LIBRARY">LIBRARY</a><br>
@@ -35,8 +35,8 @@
 </h2>
 
 
-<p style="margin-left:6%; margin-top: 1em">Tc - critical
-temperature</p>
+<p style="margin-left:6%; margin-top: 1em">pc - critical
+pressure</p>
 
 <h2>LIBRARY
 <a name="LIBRARY"></a>
@@ -64,13 +64,13 @@ temperature</p>
 
 
 <p style="margin-top: 1em"><b>real(dp), parameter ::</b>
-<i>Tc_H2O</i></p> </td>
+<i>pc_H2O</i></p> </td>
 <td width="45%">
 </td></tr>
 </table>
 
 <p style="margin-left:19%; margin-top: 1em"><b>real(dp),
-parameter ::</b> <i>Tc_D2O</i></p>
+parameter ::</b> <i>pc_D2O</i></p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
@@ -85,13 +85,13 @@ parameter ::</b> <i>Tc_D2O</i></p>
 
 
 <p style="margin-top: 1em"><b>const double</b>
-<i>iapws_r283_Tc_H2O;</i></p> </td>
+<i>iapws_r283_pc_H2O;</i></p> </td>
 <td width="42%">
 </td></tr>
 </table>
 
 <p style="margin-left:19%; margin-top: 1em"><b>const
-double</b> <i>iapws_r283_Tc_D2O;</i></p>
+double</b> <i>iapws_r283_pc_D2O;</i></p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
@@ -105,13 +105,13 @@ double</b> <i>iapws_r283_Tc_D2O;</i></p>
 <td width="15%">
 
 
-<p style="margin-top: 1em"><b>float:</b><i>Tc_H2O</i></p></td>
+<p style="margin-top: 1em"><b>float:</b><i>pc_H2O</i></p></td>
 <td width="66%">
 </td></tr>
 </table>
 
 
-<p style="margin-left:19%; margin-top: 1em"><b>float:</b><i>Tc_D2O</i></p>
+<p style="margin-left:19%; margin-top: 1em"><b>float:</b><i>pc_D2O</i></p>
 
 <h2>DESCRIPTION
 <a name="DESCRIPTION"></a>
@@ -119,8 +119,8 @@ double</b> <i>iapws_r283_Tc_D2O;</i></p>
 
 
 <p style="margin-left:6%; margin-top: 1em">Critical
-temperature constants for water, .<b>Tc_H2O</b>, and heavy
-water, <i>Tc_D2O</i>, used for computing the water
+pressure constants for water, .<b>pc_H2O</b>, and heavy
+water, <i>pc_D2O</i>, used for computing the water
 properties.</p>
 
 <h2>EXAMPLES
@@ -130,19 +130,19 @@ properties.</p>
 
 <p style="margin-left:6%; margin-top: 1em">Fortran <br>
 use iapws <br>
-real(dp) :: T = Tc_H2O <br>
-real(dp) :: T = Tc_D2O</p>
+real(dp) :: T = pc_H2O <br>
+real(dp) :: T = pc_D2O</p>
 
 <p style="margin-left:6%; margin-top: 1em">C <br>
 #include &quot;iapws.h&quot; <br>
 double T; <br>
-T = iapws_r283_Tc_H2O; <br>
-T = iapws_r283_Tc_D2O;</p>
+T = iapws_r283_pc_H2O; <br>
+T = iapws_r283_pc_D2O;</p>
 
 <p style="margin-left:6%; margin-top: 1em">Python: <br>
 import pyiapws <br>
-T = Tc_H2O <br>
-T = Tc_D2O</p>
+T = pc_H2O <br>
+T = pc_D2O</p>
 
 <h2>SEE ALSO
 <a name="SEE ALSO"></a>

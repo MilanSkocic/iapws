@@ -1,0 +1,48 @@
+iapws_pc(3)                  Library calls                  iapws_pc(3)
+
+NAME
+     pc - critical pressure
+
+LIBRARY
+     iapws library (libiapws, -liapws)
+
+SYNOPSIS
+     Fortran   real(dp), parameter :: pc_H2O
+
+               real(dp), parameter :: pc_D2O
+
+     C         const double iapws_r283_pc_H2O;
+
+               const double iapws_r283_pc_D2O;
+
+     Python    float:pc_H2O
+
+               float:pc_D2O
+
+DESCRIPTION
+     Critical  pressure  constants for water, .pc_H2O, and heavy water,
+     pc_D2O, used for computing the water properties.
+
+EXAMPLES
+     Fortran
+         use iapws
+         real(dp) :: T = pc_H2O
+         real(dp) :: T = pc_D2O
+
+     C
+         #include "iapws.h"
+         double T;
+         T = iapws_r283_pc_H2O;
+         T = iapws_r283_pc_D2O;
+
+     Python:
+         import pyiapws
+         T = pc_H2O
+         T = pc_D2O
+
+SEE ALSO
+     iapws(1)  iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)   iapws_kh(3)
+     iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
+     data(3),
+
+0.7.1                      30 September 2026                iapws_pc(3)

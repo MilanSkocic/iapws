@@ -1,7 +1,7 @@
-.TH iapws_Tc 3 "30 September 2026" "0.7.1" "Library calls"
+.TH iapws_pc 3 "30 September 2026" "0.7.1" "Library calls"
 
 .SH NAME
-Tc \- critical temperature
+pc \- critical pressure
 
 .SH LIBRARY
 iapws library 
@@ -10,23 +10,23 @@ iapws library
 .SH SYNOPSIS
 \"{{{
 .IP Fortran 10
-.BI "real(dp), parameter :: " Tc_H2O
+.BI "real(dp), parameter :: " pc_H2O
 
-.BI "real(dp), parameter :: " Tc_D2O
+.BI "real(dp), parameter :: " pc_D2O
 
 .IP C 10
-.BI "const double " iapws_r283_Tc_H2O;
+.BI "const double " iapws_r283_pc_H2O;
 
-.BI "const double " iapws_r283_Tc_D2O;
+.BI "const double " iapws_r283_pc_D2O;
 
 .IP Python 10
-.BI float: Tc_H2O
+.BI float: pc_H2O
 
-.BI float: Tc_D2O
+.BI float: pc_D2O
 \"}}}
 
 .SH DESCRIPTION
-Critical temperature constants for water, .\fBTc_H2O\fP, and heavy water, \fITc_D2O\fP,
+Critical pressure constants for water, .\fBpc_H2O\fP, and heavy water, \fIpc_D2O\fP,
 used for computing the water properties.
 
 .SH EXAMPLES
@@ -35,8 +35,8 @@ Fortran
 .nf
 .ft CR
     use iapws
-    real(dp) :: T = Tc_H2O
-    real(dp) :: T = Tc_D2O
+    real(dp) :: T = pc_H2O
+    real(dp) :: T = pc_D2O
 .ft R
 
 .PP
@@ -45,8 +45,8 @@ C
 .ft CR
     #include "iapws.h" 
     double T;
-    T = iapws_r283_Tc_H2O;
-    T = iapws_r283_Tc_D2O;
+    T = iapws_r283_pc_H2O;
+    T = iapws_r283_pc_D2O;
 .ft R
 
 
@@ -55,8 +55,8 @@ Python:
 .nf
 .ft CR 
     import pyiapws
-    T = Tc_H2O
-    T = Tc_D2O
+    T = pc_H2O
+    T = pc_D2O
 .ft R
 .fi
 
