@@ -14,7 +14,7 @@ else
 	btype=release
 endif
 
-install_dir=$(PREFIX)
+install_dir=$(DESTDIR)$(PREFIX)
 
 ARCHIVE=$(FPM_NAME)-$(FPM_PLATFORM)-$(FPM_ARCH)-$(FPM_VERSION)
 PYARCHIVE=$(FPM_PYNAME)-$(FPM_PLATFORM)-$(FPM_ARCH)-$(FPM_VERSION)
