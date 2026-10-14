@@ -1,11 +1,11 @@
-<!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Aug 15 06:45:34 2026 -->
+<!-- Creator     : groff version 1.24.2 -->
+<!-- CreationDate: Wed Sep 30 06:11:14 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="generator" content="groff -Thtml, see www.gnu.org">
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="Content-Style" content="text/css">
 <style type="text/css">
        p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
@@ -36,7 +36,7 @@
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">psat - compute
+<p style="margin-left:6%; margin-top: 1em">psat - compute
 the saturation pressure</p>
 
 <h2>LIBRARY
@@ -44,7 +44,7 @@ the saturation pressure</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">iapws library
+<p style="margin-left:6%; margin-top: 1em">iapws library
 (<i>libiapws</i>, <i>-liapws</i>)</p>
 
 <h2>SYNOPSIS
@@ -55,70 +55,71 @@ the saturation pressure</p>
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="9%"></td>
+<td width="6%"></td>
 <td width="9%">
 
 
 <p style="margin-top: 1em">Fortran</p></td>
 <td width="4%"></td>
-<td width="68%">
+<td width="66%">
 
 
 <p style="margin-top: 1em"><b>pure subroutine
 psat(</b><i>Ts</i><b>,</b><i>ps</i><b>)</b></p> </td>
-<td width="10%">
+<td width="15%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
+<td width="6%"></td>
 <td width="9%">
 </td>
 <td width="4%"></td>
-<td width="68%">
+<td width="66%">
 
 
-<p><b>real(dp), intent(in), contiguous ::</b>
-<i>Ts(:)</i></p> </td>
-<td width="10%">
+<p style="margin-top: 1em"><b>real(dp), intent(in),
+contiguous ::</b> <i>Ts(:)</i></p></td>
+<td width="15%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
+<td width="6%"></td>
 <td width="9%">
 </td>
 <td width="4%"></td>
-<td width="68%">
+<td width="66%">
 
 
-<p><b>real(dp), intent(out), contiguous ::</b>
-<i>ps(:)</i></p> </td>
-<td width="10%">
+<p style="margin-top: 1em"><b>real(dp), intent(out),
+contiguous ::</b> <i>ps(:)</i></p></td>
+<td width="15%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
+<td width="6%"></td>
 <td width="9%">
 
 
-<p>C</p></td>
+<p style="margin-top: 1em">C</p></td>
 <td width="4%"></td>
-<td width="68%">
+<td width="66%">
 
 
-<p><b>void iapws_r797_psat(size_t</b> <i>N,</i><b>double
+<p style="margin-top: 1em"><b>void
+iapws_r797_psat(size_t</b> <i>N,</i><b>double
 *</b><i>Ts,</i><b>double *</b><i>ps</i><b>)</b><i>;</i></p></td>
-<td width="10%">
+<td width="15%">
 </td></tr>
 <tr valign="top" align="left">
-<td width="9%"></td>
+<td width="6%"></td>
 <td width="9%">
 
 
-<p>Python</p></td>
+<p style="margin-top: 1em">Python</p></td>
 <td width="4%"></td>
-<td width="68%">
+<td width="66%">
 
 
 
-<p><b>psat(</b><i>Ts:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td>
-<td width="10%">
+<p style="margin-top: 1em"><b>psat(</b><i>Ts:</i><b>np.ndarray)-&gt;Union[np.ndarray,float]:</b></p> </td>
+<td width="15%">
 </td></tr>
 </table>
 
@@ -127,21 +128,40 @@ psat(</b><i>Ts</i><b>,</b><i>ps</i><b>)</b></p> </td>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Compute the
+<p style="margin-left:6%; margin-top: 1em">Compute the
 saturation pressure <i>ps</i> at temperature <i>Ts</i>.</p>
 
-<p style="margin-left:9%; margin-top: 1em">Arguments:</p>
+<p style="margin-left:6%; margin-top: 1em">Arguments:</p>
 
-<p style="margin-left:18%;"><i>Ts(:)</i></p>
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="15%"></td>
+<td width="6%">
 
-<p style="margin-left:24%;">Saturation temperature in
-K.</p>
 
-<p style="margin-left:18%;"><i>ps(:)</i></p>
+<p style="margin-top: 1em"><i>Ts(:)</i></p></td>
+<td width="35%">
 
-<p style="margin-left:24%;">Saturation pressure in MPa.</p>
 
-<p style="margin-left:9%; margin-top: 1em">Validity range:
+<p style="margin-top: 1em">Saturation temperature in K.</p></td>
+<td width="44%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="15%"></td>
+<td width="6%">
+
+
+<p style="margin-top: 1em"><i>ps(:)</i></p></td>
+<td width="35%">
+
+
+<p style="margin-top: 1em">Saturation pressure in MPa.</p></td>
+<td width="44%">
+</td></tr>
+</table>
+
+<p style="margin-left:6%; margin-top: 1em">Validity range:
 273.13 K &lt;= T &lt;= 647.096 K</p>
 
 <h2>RETURN VALUE
@@ -149,7 +169,7 @@ K.</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em"><i>ps</i> is
+<p style="margin-left:6%; margin-top: 1em"><i>ps</i> is
 filled with NaN if out of validity range.</p>
 
 <h2>EXAMPLES
@@ -157,19 +177,19 @@ filled with NaN if out of validity range.</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em">Fortran: <br>
+<p style="margin-left:6%; margin-top: 1em">Fortran: <br>
 use iapws <br>
 real(dp) :: T(1), p(1) <br>
 T(1) = 25.0_dp + 273.15_dp <br>
 call psat(T, p)</p>
 
-<p style="margin-left:9%; margin-top: 1em">C: <br>
+<p style="margin-left:6%; margin-top: 1em">C: <br>
 #include &quot;iapws.h&quot; <br>
 double T = 25.0 + 273.15; <br>
 double p; <br>
 iapws_g704_psat(1, &amp;T, &amp;p);</p>
 
-<p style="margin-left:9%; margin-top: 1em">Python: <br>
+<p style="margin-left:6%; margin-top: 1em">Python: <br>
 import numpy as np <br>
 import pyiapws <br>
 T = np.asarray([25.0]) <br>
@@ -181,7 +201,7 @@ print(p)</p>
 </h2>
 
 
-<p style="margin-left:9%; margin-top: 1em"><b>iapws</b>(1)
+<p style="margin-left:6%; margin-top: 1em"><b>iapws</b>(1)
 <b>iapws_lib</b>(3) <b>iapws_psat</b>(3)
 <b>iapws_Tsat</b>(3) <b>iapws_kh</b>(3) <b>iapws_kd</b>(3)
 <b>iapws_kw</b>(3) <b>iapws_Tc</b>(3) <b>iapws_pc</b>(3)

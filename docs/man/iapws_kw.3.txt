@@ -1,72 +1,72 @@
 iapws_kw(3)                  Library calls                  iapws_kw(3)
 
 NAME
-       kh - compute the Henry constant in water or heavy water.
+     kh - compute the Henry constant in water or heavy water.
 
 LIBRARY
-       iapws library (libiapws, -liapws)
+     iapws library (libiapws, -liapws)
 
 SYNOPSIS
-       Fortran   pure subroutine Kw(T,rhow,k)
+     Fortran   pure subroutine Kw(T,rhow,k)
 
-                    real(dp), intent(in)  :: T(:)
+                  real(dp), intent(in)  :: T(:)
 
-                    real(dp), intent(in)  :: rhow(:)
+                  real(dp), intent(in)  :: rhow(:)
 
-                    real(dp), intent(out)  :: k(:)
+                  real(dp), intent(out)  :: k(:)
 
-       C         void    iapws_r1124_Kw(size_t    N,double    *T,double
-                 *rhow,double *k);
+     C         void iapws_r1124_Kw(size_t N,double *T,double *rhow,dou‐
+               ble *k);
 
-       Python    Kw(T:np.ndarray,rhow:np.ndarray)->Union[np.ndar‐
-                 ray,float]:
+     Python    Kw(T:np.ndarray,rhow:np.ndarray)->Union[np.ndar‐
+               ray,float]:
 
 DESCRIPTION
-       Compute the ionization constant of water Kw.
+     Compute the ionization constant of water Kw.
 
-       Arguments:
+     Arguments:
 
-              T(:)      Temperature in K.
+            T(:)      Temperature in K.
 
-              rhow      Mass density in g.cm^-3.
+            rhow      Mass density in g.cm^-3.
 
-              k(:)      Ionisation constant.
+            k(:)      Ionisation constant.
 
-       Validity range:
+     Validity range:
 
-              •  273.13 K <= T <= 1273.15 K
+            •  273.13 K <= T <= 1273.15 K
 
-              •  0 <= p <= 1000 MPa).
+            •  0 <= p <= 1000 MPa).
 
 RETURN VALUE
-       k is filled with NaN if out of validity range.
+     k is filled with NaN if out of validity range.
 
 EXAMPLES
-       Fortran:
-           use iapws
-           real(dp) :: T(1), k(1), rhow(1)
-           T(1) = 25.0_dp + 273.15_dp
-           rhow(1) = 1.0_dp
-           call Kw(T, rhow, 0, k)
+     Fortran:
+         use iapws
+         real(dp) :: T(1), k(1), rhow(1)
+         T(1) = 25.0_dp + 273.15_dp
+         rhow(1) = 1.0_dp
+         call Kw(T, rhow, 0, k)
 
-       C:
-           #include "iapws.h"
-           double T = 25.0 + 273.15;
-           double rhow = 1.0;
-           double k;
-           void iapws_r1124_Kw(1, &T, &rhow, &k)
+     C:
+         #include "iapws.h"
+         double T = 25.0 + 273.15;
+         double rhow = 1.0;
+         double k;
+         void iapws_r1124_Kw(1, &T, &rhow, &k)
 
-       Python:
-           import numpy as np
-           import pyiapws
-           T = np.asarray([25.0])
-           rhow = np.asarray([1.0])
-           k = pyiapws.Kw(T+273.15, rhow)
-           print(k)
+     Python:
+         import numpy as np
+         import pyiapws
+         T = np.asarray([25.0])
+         rhow = np.asarray([1.0])
+         k = pyiapws.Kw(T+273.15, rhow)
+         print(k)
 
 SEE ALSO
-       iapws(1) iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
-       iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3) ciaaw(3), co‐
-       data(3),
+     iapws(1)   iapws_lib(3)  iapws_psat(3)  iapws_Tsat(3)  iapws_kh(3)
+     iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
+     data(3),
 
-0.7.1                        15 August 2026                 iapws_kw(3)
+0.7.1                      30 September 2026                iapws_kw(3)
