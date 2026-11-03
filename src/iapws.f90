@@ -7,7 +7,7 @@ module iapws
 !! Main module for the IAPWS library.
 use iapws__r283, only: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 use iapws__r283, only: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
-use iapws__g704, only: findgas_abc, findgas_efgh
+use iapws__g704, only: findgas_abc, findgas_efgh, ngas_H2O, ngas_D2O
 use iapws__g704, only: abc_H2O, abc_D2O, efgh_H2O, efgh_D2O
 use iapws__g704, only: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O
 use iapws__r1124, only: pkw
@@ -33,7 +33,7 @@ public :: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, cap
 public :: kh, capi_kh, kd, capi_kd, Kw, capi_Kw
 public :: Tsat, capi_Tsat, psat, capi_psat
 
-public :: gases, gases2, ngases, gas_type                       ! G704
+public :: gases, gases2, ngases, gas_t                     ! G704
 public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
 public :: wp, wr, wph
 
@@ -97,6 +97,39 @@ allocate(character(len=len(fptr)+1) :: vc)
 vc = fptr // c_null_char
 cptr = c_loc(vc)
 end function capi_version
+!}}}
+!-----------------------------------------------------------------------
+
+!-----------------------------------------------------------------------
+! FUNCTION: G704 - NAGSES()
+!-----------------------------------------------------------------------
+!{{{
+pure function ngases(heavywater)result(n)
+    !! Returns the number of gases.
+    implicit none
+    
+    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
+    integer(int32) :: n                      !! Number of gases.
+
+    if(heavywater > 0)then
+        n = ngas_D2O
+    else
+        n = ngas_H2O
+    endif
+end function
+!-----------------------------------------------------------------------
+function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
+    !! C API.
+    implicit none
+    
+    ! arguments
+    integer(c_int), intent(in), value :: heavywater
+        !! Flag if D2O (1) is used or H2O(0).
+    integer(c_int) :: n
+        !! Number of gases.
+
+    n = ngases(heavywater)
+end function
 !}}}
 !-----------------------------------------------------------------------
 

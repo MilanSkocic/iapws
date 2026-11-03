@@ -11,15 +11,23 @@ module iapws__api
     use iapws__r1124
     private
 
-    
-    character(len=:), allocatable, target :: version_f
-    type(gas_type), allocatable, target :: f_gases(:)
-    character(len=:), allocatable, target :: f_gases_str
+!***********************************************************************
+! DERIVED TYPE: GAS_T
+!***********************************************************************
+!{{{
+type :: gas_t
+character(len=:), allocatable :: gas !! Gas
+end type gas_t
+!}}}
+!***********************************************************************
+
+type(gas_t), allocatable, target :: f_gases(:)
+character(len=:), allocatable, target :: f_gases_str
 
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-public :: gases, gases2, ngases, gas_type                       ! G704
+public :: gases, gases2, gas_t                       ! G704
 public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
 public :: wp, wr, wph
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -27,25 +35,6 @@ public :: wp, wr, wph
 contains
 
 
-!-----------------------------------------------------------------------
-! FUNCTION: NAGSES()
-!-----------------------------------------------------------------------
-!{{{
-pure function ngases(heavywater)result(n)
-    !! Returns the number of gases.
-    implicit none
-    
-    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    integer(int32) :: n                      !! Number of gases.
-
-    if(heavywater > 0)then
-        n = ngas_D2O
-    else
-        n = ngas_H2O
-    endif
-end function
-!}}}
-------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
 ! FUNCTION: GASES()
@@ -57,7 +46,7 @@ function gases(heavywater)result(list_gases)
 
     ! arguments
     integer(int32), intent(in) :: heavywater      !! Flag if D2O (1) is used or H2O(0).
-    type(gas_type), pointer :: list_gases(:)      !! Available gases.
+    type(gas_t), pointer :: list_gases(:)      !! Available gases.
     
     ! variables
     integer(int32) :: i, n
@@ -106,7 +95,7 @@ function gases2(heavywater)result(str_gases)
 
     ! variables
     integer(int32) :: i, j, k, ngas
-    type(gas_type), pointer :: f_gases_list(:)
+    type(gas_t), pointer :: f_gases_list(:)
     
     f_gases_list => gases(heavywater)
     ngas = size(f_gases_list)

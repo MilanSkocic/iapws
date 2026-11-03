@@ -11,7 +11,7 @@ integer(int32) :: r(3)
 character(len=1) :: s(3)
 character(len=2) :: gas = "O2"
 integer(int32) :: heavywater = 0
-type(gas_type), pointer :: gases_list(:)
+type(gas_t), pointer :: gases_list(:)
 character(len=:), pointer :: gases_str
 
 print *, '########################## IAPWS VERSION ##########################'

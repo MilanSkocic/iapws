@@ -4,48 +4,43 @@
 ! MODULE: IAPWS__CAPI
 !=======================================================================
 module iapws__capi
-    !! C API.
-    use iapws__common
-    use iapws__api
-    implicit none
-    
-    type, bind(C) :: c_char_p
-        type(c_ptr) :: p
-    end type
-    type :: cgas_type
-        character(kind=c_char, len=1), allocatable :: gas(:)
-    end type
-    type(cgas_type), allocatable, target :: c_gases(:)
-    type(c_char_p), allocatable, target :: char_pp(:)
-    character(len=:), allocatable, target :: c_gases_str
+!! C API.
+use iapws__common
+use iapws__api
+implicit none
+
+!***********************************************************************
+! DERIVED TYPRE: c_ptr_t + cgas_t
+!***********************************************************************
+!{{{
+type, bind(C) :: c_ptr_t
+type(c_ptr) :: p
+end type
+
+type :: cgas_t
+character(kind=c_char, len=1), allocatable :: gas(:)
+end type
+!}}}
+!***********************************************************************
+
+
+
+
+type(cgas_t), allocatable, target :: c_gases(:)
+type(c_ptr_t), allocatable, target :: char_pp(:)
+character(len=:), allocatable, target :: c_gases_str
 
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-public :: capi_ngases, capi_gases                !!G704
+public :: capi_gases                !!G704
 public :: capi_wp                !! R797
+public :: gas_t
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 contains
 
-
-! ------------------------------------------------------------------------------
-! G704
-
-
-function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
-    !! C API.
-    implicit none
-    
-    ! arguments
-    integer(c_int), intent(in), value :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    integer(c_int) :: n
-        !! Number of gases.
-
-    n = ngases(heavywater)
-end function
 
 function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
     !! C API.
@@ -60,7 +55,7 @@ function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases
     ! variables
     integer(int32) :: i, j, ngas, n
 
-    type(gas_type), pointer :: f_gases(:) => null()
+    type(gas_t), pointer :: f_gases(:) => null()
     f_gases => gases(heavywater)
     ngas = size(f_gases)
 
