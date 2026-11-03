@@ -17,9 +17,46 @@ use iapws__api
 implicit none(type,external)
 private
 
+
+!***********************************************************************
+! DERIVED TYPE: GAS_T
+!***********************************************************************
+!{{{
+!}}}
+!***********************************************************************
+
+!***********************************************************************
+! DERIVED TYPRE: gas_t + c_ptr_t + cgas_t
+!***********************************************************************
+!{{{
+type :: gas_t
+character(len=:), allocatable :: gas !! Gas
+end type gas_t
+
+type, bind(C) :: c_ptr_t
+type(c_ptr) :: p
+end type
+
+type :: cgas_t
+character(kind=c_char, len=1), allocatable :: gas(:)
+end type
+!}}}
+!***********************************************************************
+
+!-----------------------------------------------------------------------
+! MODULE variables
+!-----------------------------------------------------------------------
+!{{{
+type(gas_t), allocatable, target :: f_gases(:)
+character(len=:), allocatable, target :: f_gases_str
+type(cgas_t), allocatable, target :: c_gases(:)
+type(c_ptr_t), allocatable, target :: char_pp(:)
+character(len=:), allocatable, target :: c_gases_str
 character(len=*), parameter :: v = '0.7.1'
 character(len=:), allocatable, target :: vf
 character(len=:), allocatable, target :: vc
+!}}}
+!-----------------------------------------------------------------------
 
 
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -100,22 +137,23 @@ end function capi_version
 !}}}
 !-----------------------------------------------------------------------
 
+
 !-----------------------------------------------------------------------
 ! FUNCTION: G704 - NAGSES()
 !-----------------------------------------------------------------------
 !{{{
 pure function ngases(heavywater)result(n)
-    !! Returns the number of gases.
-    implicit none
-    
-    integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
-    integer(int32) :: n                      !! Number of gases.
+!! Returns the number of gases.
+implicit none
 
-    if(heavywater > 0)then
-        n = ngas_D2O
-    else
-        n = ngas_H2O
-    endif
+integer(int32), intent(in) :: heavywater !! Flag if D2O (1) is used or H2O(0).
+integer(int32) :: n                      !! Number of gases.
+
+if(heavywater > 0)then
+    n = ngas_D2O
+else
+    n = ngas_H2O
+endif
 end function
 !-----------------------------------------------------------------------
 function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
@@ -132,6 +170,166 @@ function capi_ngases(heavywater)bind(C, name="iapws_g704_ngases")result(n)
 end function
 !}}}
 !-----------------------------------------------------------------------
+
+
+!-----------------------------------------------------------------------
+! FUNCTION: G704 - GASES()
+!-----------------------------------------------------------------------
+!{{{
+function gases(heavywater)result(list_gases)
+!! Returns the list of available gases.
+implicit none
+
+! arguments
+integer(int32), intent(in) :: heavywater      !! Flag if D2O (1) is used or H2O(0).
+type(gas_t), pointer :: list_gases(:)      !! Available gases.
+
+! variables
+integer(int32) :: i, n
+
+if(allocated(f_gases))then
+    deallocate(f_gases)
+endif
+
+if(heavywater > 0)then
+    allocate(f_gases(ngas_D2O))
+    do i=1, ngas_D2O
+        if(allocated(f_gases(i)%gas))then
+            deallocate(f_gases(i)%gas)
+        endif
+        n = len(trim(abc_D2O(i)%gas))
+        allocate(character(len=n) :: f_gases(i)%gas)
+        f_gases(i)%gas = trim(abc_D2O(i)%gas)
+    enddo
+else
+    allocate(f_gases(ngas_H2O))
+    do i=1, ngas_H2O
+        if(allocated(f_gases(i)%gas))then
+            deallocate(f_gases(i)%gas)
+        endif
+        n = len(trim(abc_H2O(i)%gas))
+        allocate(character(len=n) :: f_gases(i)%gas)
+        f_gases(i)%gas = trim(abc_H2O(i)%gas)
+    enddo
+endif
+list_gases => f_gases
+end function
+!-----------------------------------------------------------------------
+function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
+!! C API.
+implicit none
+
+! arguments
+integer(c_int), intent(in), value :: heavywater
+    !! Flag if D2O (1) is used or H2O(0).
+type(c_ptr) :: list_gases
+    !! Available gases.
+
+! variables
+integer(int32) :: i, j, ngas, n
+
+type(gas_t), pointer :: f_gases(:) => null()
+f_gases => gases(heavywater)
+ngas = size(f_gases)
+
+if(allocated(c_gases))then
+    deallocate(c_gases)
+endif
+allocate(c_gases(ngas))
+
+if(allocated(char_pp))then
+    deallocate(char_pp)
+endif
+allocate(char_pp(ngas))
+
+do i=1, ngas
+    if(allocated(c_gases(i)%gas))then
+        deallocate(c_gases(i)%gas)
+    endif
+    n = len(f_gases(i)%gas)
+    allocate(c_gases(i)%gas(n+1))
+    do j=1, n
+        c_gases(i)%gas(j) = f_gases(i)%gas(j:j)
+    enddo
+    c_gases(i)%gas(n+1) = c_null_char
+    char_pp(i)%p = c_loc(c_gases(i)%gas)
+enddo
+list_gases = c_loc(char_pp)
+end function
+!}}}
+!-----------------------------------------------------------------------
+
+
+!-----------------------------------------------------------------------
+! FUNCTION: G704 - GASES2()
+!-----------------------------------------------------------------------
+!{{{
+function gases2(heavywater)result(str_gases)
+!! Returns the available gases as a string.
+implicit none
+
+! arguments
+integer(int32), intent(in) :: heavywater    !! Flag if D2O (1) is used or H2O(0).
+character(len=:), pointer :: str_gases      !! Available gases
+
+! variables
+integer(int32) :: i, j, k, ngas
+type(gas_t), pointer :: f_gases_list(:)
+
+f_gases_list => gases(heavywater)
+ngas = size(f_gases_list)
+
+k = 0
+do i=1, ngas
+    k = k + len(f_gases_list(i)%gas)
+enddo
+
+if(allocated(f_gases_str))then
+    deallocate(f_gases_str)
+endif
+allocate(character(len=k+ngas) :: f_gases_str)
+
+i = 1
+j = 1
+k = 1
+do i=1, ngas
+    do j=1, len(f_gases_list(i)%gas)
+        f_gases_str(k:k) = f_gases_list(i)%gas(j:j)
+        k = k + 1
+    enddo
+    f_gases_str(k:k) = ","
+    k = k + 1
+enddo
+f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
+str_gases => f_gases_str
+end function
+!-----------------------------------------------------------------------
+function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gases)
+!! C API.
+implicit none
+
+! arguments
+integer(c_int), intent(in), value :: heavywater
+    !! Flag if D2O (1) is used or H2O(0).
+type(c_ptr) :: str_gases
+    !! Available gases.
+
+! variables
+character(len=:), pointer :: f_gases_str => null()
+f_gases_str => gases2(heavywater)
+
+if(allocated(c_gases_str))then
+    deallocate(c_gases_str)
+endif
+allocate(character(len=len(f_gases_str)) :: c_gases_str)
+
+c_gases_str = f_gases_str
+c_gases_str(len(f_gases_str):len(f_gases_str)) = c_null_char
+
+str_gases = c_loc(c_gases_str)
+end function
+!}}}
+!-------------------------------------------------------------------------------
 
 
 !-----------------------------------------------------------------------

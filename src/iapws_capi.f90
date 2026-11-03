@@ -9,111 +9,10 @@ use iapws__common
 use iapws__api
 implicit none
 
-!***********************************************************************
-! DERIVED TYPRE: c_ptr_t + cgas_t
-!***********************************************************************
-!{{{
-type, bind(C) :: c_ptr_t
-type(c_ptr) :: p
-end type
-
-type :: cgas_t
-character(kind=c_char, len=1), allocatable :: gas(:)
-end type
-!}}}
-!***********************************************************************
-
-
-
-
-type(cgas_t), allocatable, target :: c_gases(:)
-type(c_ptr_t), allocatable, target :: char_pp(:)
-character(len=:), allocatable, target :: c_gases_str
-
-!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-! PUBLIC
-!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-public :: capi_gases                !!G704
-public :: capi_wp                !! R797
-public :: gas_t
-!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
 contains
 
-
-function capi_gases(heavywater)bind(C, name="iapws_g704_gases")result(list_gases)
-    !! C API.
-    implicit none
-
-    ! arguments
-    integer(c_int), intent(in), value :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    type(c_ptr) :: list_gases
-        !! Available gases.
-    
-    ! variables
-    integer(int32) :: i, j, ngas, n
-
-    type(gas_t), pointer :: f_gases(:) => null()
-    f_gases => gases(heavywater)
-    ngas = size(f_gases)
-
-    if(allocated(c_gases))then
-        deallocate(c_gases)
-    endif
-    allocate(c_gases(ngas))
-
-    if(allocated(char_pp))then
-        deallocate(char_pp)
-    endif
-    allocate(char_pp(ngas))
-
-    do i=1, ngas
-        if(allocated(c_gases(i)%gas))then
-            deallocate(c_gases(i)%gas)
-        endif
-        n = len(f_gases(i)%gas)
-        allocate(c_gases(i)%gas(n+1))
-        do j=1, n
-            c_gases(i)%gas(j) = f_gases(i)%gas(j:j)
-        enddo
-        c_gases(i)%gas(n+1) = c_null_char
-        char_pp(i)%p = c_loc(c_gases(i)%gas)
-    enddo
-    list_gases = c_loc(char_pp)
-end function
-
-function capi_gases2(heavywater)bind(C, name="iapws_g704_gases2")result(str_gases)
-    !! C API.
-    implicit none
-
-    ! arguments
-    integer(c_int), intent(in), value :: heavywater
-        !! Flag if D2O (1) is used or H2O(0).
-    type(c_ptr) :: str_gases
-        !! Available gases.
-
-    ! variables
-    character(len=:), pointer :: f_gases_str => null()
-    f_gases_str => gases2(heavywater)
-
-    if(allocated(c_gases_str))then
-        deallocate(c_gases_str)
-    endif
-    allocate(character(len=len(f_gases_str)) :: c_gases_str)
-
-    c_gases_str = f_gases_str
-    c_gases_str(len(f_gases_str):len(f_gases_str)) = c_null_char
-
-    str_gases = c_loc(c_gases_str)
-end function
 ! ------------------------------------------------------------------------------
-
-
-
-! ------------------------------------------------------------------------------
-! R797
 subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     !! C API.
     
@@ -148,6 +47,7 @@ subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
     call wp(p, T, fprop, res)
 end subroutine
 
+! ------------------------------------------------------------------------------
 subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
     !! C API.
 
@@ -160,6 +60,7 @@ subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
     call wr(p, T, res)
 end subroutine
 
+! ------------------------------------------------------------------------------
 subroutine capi_wph(p, T, res, N)bind(C, name="iapws_r797_wph")
     !! C API.
 

@@ -11,123 +11,17 @@ module iapws__api
     use iapws__r1124
     private
 
-!***********************************************************************
-! DERIVED TYPE: GAS_T
-!***********************************************************************
-!{{{
-type :: gas_t
-character(len=:), allocatable :: gas !! Gas
-end type gas_t
-!}}}
-!***********************************************************************
-
-type(gas_t), allocatable, target :: f_gases(:)
-character(len=:), allocatable, target :: f_gases_str
 
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-public :: gases, gases2, gas_t                       ! G704
+!{{{
 public :: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w            ! R797
 public :: wp, wr, wph
+!}}}
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 contains
-
-
-
-!-----------------------------------------------------------------------
-! FUNCTION: GASES()
-!-----------------------------------------------------------------------
-!{{{
-function gases(heavywater)result(list_gases)
-    !! Returns the list of available gases.
-    implicit none
-
-    ! arguments
-    integer(int32), intent(in) :: heavywater      !! Flag if D2O (1) is used or H2O(0).
-    type(gas_t), pointer :: list_gases(:)      !! Available gases.
-    
-    ! variables
-    integer(int32) :: i, n
-
-    if(allocated(f_gases))then
-        deallocate(f_gases)
-    endif
-
-    if(heavywater > 0)then
-        allocate(f_gases(ngas_D2O))
-        do i=1, ngas_D2O
-            if(allocated(f_gases(i)%gas))then
-                deallocate(f_gases(i)%gas)
-            endif
-            n = len(trim(abc_D2O(i)%gas))
-            allocate(character(len=n) :: f_gases(i)%gas)
-            f_gases(i)%gas = trim(abc_D2O(i)%gas)
-        enddo
-    else
-        allocate(f_gases(ngas_H2O))
-        do i=1, ngas_H2O
-            if(allocated(f_gases(i)%gas))then
-                deallocate(f_gases(i)%gas)
-            endif
-            n = len(trim(abc_H2O(i)%gas))
-            allocate(character(len=n) :: f_gases(i)%gas)
-            f_gases(i)%gas = trim(abc_H2O(i)%gas)
-        enddo
-    endif
-    list_gases => f_gases
-end function
-!}}}
-!-----------------------------------------------------------------------
-
-!-----------------------------------------------------------------------
-! FUNCTION: GASES2()
-!-----------------------------------------------------------------------
-!{{{
-function gases2(heavywater)result(str_gases)
-    !! Returns the available gases as a string.
-    implicit none
-
-    ! arguments
-    integer(int32), intent(in) :: heavywater    !! Flag if D2O (1) is used or H2O(0).
-    character(len=:), pointer :: str_gases      !! Available gases
-
-    ! variables
-    integer(int32) :: i, j, k, ngas
-    type(gas_t), pointer :: f_gases_list(:)
-    
-    f_gases_list => gases(heavywater)
-    ngas = size(f_gases_list)
-
-    k = 0
-    do i=1, ngas
-        k = k + len(f_gases_list(i)%gas)
-    enddo
-
-    if(allocated(f_gases_str))then
-        deallocate(f_gases_str)
-    endif
-    allocate(character(len=k+ngas) :: f_gases_str)
-
-    i = 1
-    j = 1
-    k = 1
-    do i=1, ngas
-        do j=1, len(f_gases_list(i)%gas)
-            f_gases_str(k:k) = f_gases_list(i)%gas(j:j)
-            k = k + 1
-        enddo
-        f_gases_str(k:k) = ","
-        k = k + 1
-    enddo
-    f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
-    str_gases => f_gases_str
-end function
-!}}}
-!-------------------------------------------------------------------------------
-
-
 
 !------------------------------------------------------------------------------
 ! SUBROUTINE: WP()
