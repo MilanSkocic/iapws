@@ -27,6 +27,10 @@ public :: wp, wr, wph
 contains
 
 
+!-----------------------------------------------------------------------
+! FUNCTION: NAGSES()
+!-----------------------------------------------------------------------
+!{{{
 pure function ngases(heavywater)result(n)
     !! Returns the number of gases.
     implicit none
@@ -40,7 +44,13 @@ pure function ngases(heavywater)result(n)
         n = ngas_H2O
     endif
 end function
+!}}}
+------------------------------------------------------------------------
 
+!-----------------------------------------------------------------------
+! FUNCTION: GASES()
+!-----------------------------------------------------------------------
+!{{{
 function gases(heavywater)result(list_gases)
     !! Returns the list of available gases.
     implicit none
@@ -79,7 +89,13 @@ function gases(heavywater)result(list_gases)
     endif
     list_gases => f_gases
 end function
+!}}}
+!-----------------------------------------------------------------------
 
+!-----------------------------------------------------------------------
+! FUNCTION: GASES2()
+!-----------------------------------------------------------------------
+!{{{
 function gases2(heavywater)result(str_gases)
     !! Returns the available gases as a string.
     implicit none
@@ -119,12 +135,15 @@ function gases2(heavywater)result(str_gases)
     f_gases_str(len(f_gases_str):len(f_gases_str)) = ""
     str_gases => f_gases_str
 end function
-! ------------------------------------------------------------------------------
+!}}}
+!-------------------------------------------------------------------------------
 
 
 
-! ------------------------------------------------------------------------------
-! R797
+!------------------------------------------------------------------------------
+! SUBROUTINE: WP()
+!------------------------------------------------------------------------------
+!{{{
 pure subroutine wp(p, T, prop, res) 
     !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
     
@@ -170,7 +189,13 @@ pure subroutine wp(p, T, prop, res)
         end do
     end if
 end subroutine
+!}}}
+!------------------------------------------------------------------------------
 
+!------------------------------------------------------------------------------
+! SUBROUTINE: WR()
+!------------------------------------------------------------------------------
+!{{{
 pure subroutine wr(p, T, res) 
     !! Get the water region corresponding to p and T.
 
@@ -181,7 +206,12 @@ pure subroutine wr(p, T, res)
 
     res = find_region(p, T)
 end subroutine
+!}}}
 
+!------------------------------------------------------------------------------
+! SUBROUTINE: WPH()
+!------------------------------------------------------------------------------
+!{{{
 pure subroutine wph(p, T, res) 
     !! Get the water phase corresponding to p and T.
     
@@ -192,6 +222,7 @@ pure subroutine wph(p, T, res)
 
     res = find_phase(p, T)
 end subroutine
+!}}}
 ! ------------------------------------------------------------------------------
 
 end module iapws__api
