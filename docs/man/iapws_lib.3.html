@@ -1,5 +1,5 @@
-<!-- Creator     : groff version 1.24.2 -->
-<!-- CreationDate: Wed Sep 30 06:11:14 2026 -->
+<!-- Creator     : groff version 1.25.0 -->
+<!-- CreationDate: Mon Nov 23 23:08:36 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,6 +12,10 @@
        pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
+       body    { max-width: 80ch; margin-left: auto; margin-right: auto; padding: 1em; }
+       img     { max-width: 100%; height: auto; }
+         .code-display { display: block; font-family: monospace; }
+         .code-display p { margin-top: 0; margin-bottom: 0; }
 </style>
 <title>iapws_lib</title>
 
@@ -26,6 +30,9 @@
 <a href="#DESCRIPTION">DESCRIPTION</a><br>
 <a href="#NOTES">NOTES</a><br>
 <a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#FORTRAN">FORTRAN</a><br>
+<a href="#C">C</a><br>
+<a href="#PYTHON">PYTHON</a><br>
 <a href="#SEE ALSO">SEE ALSO</a><br>
 
 <hr>
@@ -571,9 +578,13 @@ no. 2, p. 23103, May 2024, doi: 10.1063/5.0198792.</p></td></tr>
 </h2>
 
 
-<p style="margin-left:6%; margin-top: 1em">Example in
-Fortran: <br>
-program example_in_f <br>
+<h3>FORTRAN
+<a name="FORTRAN"></a>
+</h3>
+
+
+<p style="margin-left:6%; margin-top: 1em">program
+example_in_f <br>
 use iapws__common, only: dp, int32 <br>
 use iapws <br>
 implicit none(type,external)</p>
@@ -587,7 +598,7 @@ integer(int32) :: r(3) <br>
 character(len=1) :: s(3) <br>
 character(len=2) :: gas = &quot;O2&quot; <br>
 integer(int32) :: heavywater = 0 <br>
-type(gas_type), pointer :: gases_list(:) <br>
+type(gas_t), pointer :: gases_list(:) <br>
 character(len=:), pointer :: gases_str</p>
 
 <p style="margin-left:6%; margin-top: 1em">print *,
@@ -699,9 +710,13 @@ print *, s</p>
 <p style="margin-left:6%; margin-top: 1em">end program
 example_in_f</p>
 
-<p style="margin-left:6%; margin-top: 1em">Example in C
-<br>
-#include &lt;string.h&gt; <br>
+<h3>C
+<a name="C"></a>
+</h3>
+
+
+<p style="margin-left:6%; margin-top: 1em">#include
+&lt;string.h&gt; <br>
 #include &lt;stdio.h&gt; <br>
 #include &quot;iapws.h&quot;</p>
 
@@ -835,9 +850,14 @@ printf(&quot;0);</p>
 <p style="margin-left:6%; margin-top: 1em">return 0; <br>
 }</p>
 
-<p style="margin-left:6%; margin-top: 1em">Example in
-Python <br>
-r&quot;&quot;&quot;Example in python&quot;&quot;&quot; <br>
+<h3>PYTHON
+<a name="PYTHON"></a>
+</h3>
+
+
+
+<p style="margin-left:6%; margin-top: 1em">r&quot;&quot;&quot;Example
+in python&quot;&quot;&quot; <br>
 import sys <br>
 sys.path.insert(0, &quot;../py/src/&quot;) <br>
 import array <br>

@@ -1,20 +1,25 @@
 .TH iapws 1 "23 November 2026" "0.7.1" "User Commands"
 
 .SH NAME
+\"{{{
 iapws \- compute light and heavy water properties
-
+\"}}}
 
 .SH SYNOPSIS
+\"{{{
 .B iapws 
 \fISUBCOMMAND\fP [\fIOPTION\fP]\.\.\.
-
+\"}}}
 
 .SH DESCRIPTION
+\"{{{
 .B iapws 
 is a command line interface for computing properties
 of light and heavy water according to IAPWS.
+\"}}}
 
 .SH SUBCOMMANDS
+\"{{{
 Valid subcommands are:
 .RS
 .TP
@@ -52,8 +57,10 @@ The default behavior is to compute the properties
 at 25°C and 1 bar.
 WARNING: Currently, only region 1 is supported.
 .RE
+\"}}}
 
 .SH OPTIONS
+\"{{{
 .PP
 kh:
 .RS
@@ -134,9 +141,10 @@ Show help text and exit.
 .TP
 .B \-v, \-\-version
 Show version information and exit.
-
+\"}}}
 
 .SH NOTES
+\"{{{
 .PP
 You may replace the default options from a file if your first
 options begin with @file.
@@ -150,9 +158,10 @@ contain @file arguments. That is, it is not processed recursively.
 .PP
 For more information on response files see
 https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html
-
+\"}}}
 
 .SH EXAMPLE
+\"{{{
 Minimal example
 .PP
 .nf
@@ -162,6 +171,7 @@ Minimal example
       iapws wp -T 25,100 -p 0.035,1.0
 .ft R
 .fi
+\"}}}
 
 .SH SEE ALSO
 .BR iapws (1)

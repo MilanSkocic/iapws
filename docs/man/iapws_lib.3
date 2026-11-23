@@ -1,4 +1,4 @@
-.TH iapws_lib 3 "30 September 2026" "0.7.1" "Library calls"
+.TH iapws_lib 3 "23 November 2026" "0.7.1" "Library calls"
 
 .SH NAME
 iapws \- library for light and heavy water properties according to IAPWS
@@ -134,8 +134,8 @@ H. Arcis et al.,
 Journal of Physical and Chemical Reference Data, vol. 53, no. 2, p. 23103, May 2024, doi: 10.1063/5.0198792.
 .SH EXAMPLES
 \"{{{
+.SS FORTRAN
 .PP
-Example in Fortran:
 .nf
 .ft CR
     program example_in_f
@@ -151,7 +151,7 @@ Example in Fortran:
     character(len=1) :: s(3)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
-    type(gas_type), pointer :: gases_list(:)
+    type(gas_t), pointer :: gases_list(:)
     character(len=:), pointer :: gases_str
     
     print *, '########################## IAPWS VERSION ##########################'
@@ -233,8 +233,8 @@ Example in Fortran:
 .ft R
 .fi
 
+.SS C
 .PP
-Example in C
 .nf
 .ft CR
     #include <string.h>
@@ -337,8 +337,8 @@ Example in C
 .ft R
 .fi
 
+.SS PYTHON
 .PP
-Example in Python
 .nf
 .ft CR
     r"""Example in python"""

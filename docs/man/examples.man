@@ -1,7 +1,7 @@
 .SH EXAMPLES
 \"{{{
+.SS FORTRAN
 .PP
-Example in Fortran:
 .nf
 .ft CR
     program example_in_f
@@ -99,8 +99,8 @@ Example in Fortran:
 .ft R
 .fi
 
+.SS C
 .PP
-Example in C
 .nf
 .ft CR
     #include <string.h>
@@ -203,8 +203,8 @@ Example in C
 .ft R
 .fi
 
+.SS PYTHON
 .PP
-Example in Python
 .nf
 .ft CR
     r"""Example in python"""

@@ -45,4 +45,4 @@ SEE ALSO
      iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
      data(3),
 
-0.7.1                      30 September 2026                iapws_Tc(3)
+0.7.1                       23 November 2026                iapws_Tc(3)
