@@ -5,25 +5,18 @@
 !=======================================================================
 module iapws
 !! Main module for the IAPWS library.
+use iapws__common
 use iapws__r283, only: Tc_H2O, Tc_D2O, pc_H2O, pc_D2O, rhoc_H2O, rhoc_D2O
 use iapws__r283, only: capi_Tc_H2O, capi_Tc_D2O, capi_pc_H2O, capi_pc_D2O, capi_rhoc_H2O, capi_rhoc_D2O
 use iapws__g704, only: findgas_abc, findgas_efgh, ngas_H2O, ngas_D2O
 use iapws__g704, only: abc_H2O, abc_D2O, efgh_H2O, efgh_D2O
 use iapws__g704, only: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O
+use iapws__r797, only: r1_v, r1_u, r1_s, r1_h, r1_cp, r1_cv, r1_w
 use iapws__r1124, only: pkw
-use iapws__r797, only: r4_Ts, r4_ps
-use iapws__capi
-use iapws__api
+use iapws__r797, only: r4_Ts, r4_ps, rai, find_region, find_phase, is1region, get_r
 implicit none(type,external)
 private
 
-
-!***********************************************************************
-! DERIVED TYPE: GAS_T
-!***********************************************************************
-!{{{
-!}}}
-!***********************************************************************
 
 !***********************************************************************
 ! DERIVED TYPRE: gas_t + c_ptr_t + cgas_t
@@ -525,4 +518,141 @@ end subroutine
 !}}}
 !-----------------------------------------------------------------------
 
+
+!-----------------------------------------------------------------------
+! SUBROUTINE: WP()
+!-----------------------------------------------------------------------
+!{{{
+pure subroutine wp(p, T, prop, res) 
+    !! Compute water properties at pressure p in MPa and temperature T in Kelvin.
+    
+    ! The adequate region is selected according to p and T.
+    !
+    ! Available properties:
+    !     * v: specific volume in m3/kg
+    !     * u: specific internal energy in kJ/kg
+    !     * s: specific entropy in kJ/kg 
+    !     * h: specific enthalpy in kJ/kg/K
+    !     * cp: specific isobaric heat capacity in kJ/kg/K
+    !     * cv: specific isochoric heat capacity in kJ/kg/K
+    !     * w: speed of sound in m/s
+
+    ! parameters
+    real(dp), intent(in) :: p(:)                 !! Pressure in MPa.
+    real(dp), intent(in) :: T(:)                 !! Pressure in K.
+    character(len=*), intent(in) :: prop         !! Property (v, u, s, h, cp, cv, w)
+    real(dp), intent(out) :: res(:)              !! Filled with NaN if no adequate region is found.
+
+    ! variables
+    logical :: is1r
+    integer(int32) :: i
+    integer(int32) :: regions(size(p))
+    procedure(rai), pointer :: fptr
+
+    res = ieee_value(1.0_dp, ieee_quiet_nan)
+
+    regions = find_region(p, T)
+    is1r = is1region(regions) 
+
+    if(is1r .eqv. .true.)then
+        fptr => get_r(regions(1))
+        if(associated(fptr)) then
+            call fptr(p, T, prop, res) 
+        end if
+    else
+        do i=1, size(regions)
+            fptr => get_r(regions(i))
+            if(associated(fptr)) then
+                call fptr(p, T, prop, res) 
+            end if
+        end do
+    end if
+end subroutine
+!}}}
+!-----------------------------------------------------------------------
+!{{{
+subroutine capi_wp(p, T, prop, res, N, len)bind(C, name="iapws_r797_wp")
+!! C API.
+integer(c_int), intent(in), value    :: len         !! Size of the prop string.
+integer(c_size_t), intent(in), value :: N           !! Size of T and p.
+real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
+real(c_double), intent(in)           :: T(N)        !! Temperature in K.
+type(c_ptr), intent(in), value       :: prop        !! Water property.
+real(c_double), intent(out)          :: res(N)      !! Result. Filled with NaNs if gas not found.
+
+! variables
+character, pointer, dimension(:) :: cprop
+character(len=len) :: fprop
+integer(int32) :: i
+
+call c_f_pointer(prop, cprop, shape=[len])
+
+do i=1, len
+    fprop(i:i) = cprop(i)
+enddo
+
+call wp(p, T, fprop, res)
+end subroutine
+!}}}
+!-----------------------------------------------------------------------
+
+
+!------------------------------------------------------------------------------
+! SUBROUTINE: WR()
+!------------------------------------------------------------------------------
+!{{{
+pure subroutine wr(p, T, res) 
+    !! Get the water region corresponding to p and T.
+
+    ! parameters
+    real(dp), intent(in)        :: p(:)           !! Pressure in MPa.
+    real(dp), intent(in)        :: T(:)           !! Temperature in K.
+    integer(int32), intent(out) :: res(:)         !! Region 1 to 5 if found or -1.
+
+    res = find_region(p, T)
+end subroutine
+!}}}
+!------------------------------------------------------------------------------
+!{{{
+subroutine capi_wr(p, T, res, N)bind(C, name="iapws_r797_wr")
+!! C API.
+integer(c_size_t), intent(in), value :: N           !! Size of T and p.
+real(c_double), intent(in)           :: p(N)        !! Pressure in MPa.
+real(c_double), intent(in)           :: T(N)        !! Temperature in K.
+integer(c_int), intent(out)          :: res(N)      !! Regions.
+
+call wr(p, T, res)
+end subroutine
+!}}}
+!------------------------------------------------------------------------------
+
+
+!------------------------------------------------------------------------------
+! SUBROUTINE: WPH()
+!------------------------------------------------------------------------------
+!{{{
+pure subroutine wph(p, T, res) 
+    !! Get the water phase corresponding to p and T.
+    
+    ! parameters
+    real(dp), intent(in)          :: p(:)     !! pressure in MPa.
+    real(dp), intent(in)          :: T(:)     !! Temperature in K.
+    character(len=1), intent(out) :: res(:)   !! Phases: l(liquid), v(VAPOR), c(SUPER CRITICAL), s(SATURATION), n(UNKNOWN).
+
+    res = find_phase(p, T)
+end subroutine
+!}}}
+! ------------------------------------------------------------------------------
+!{{{
+subroutine capi_wph(p, T, res, N)bind(C, name="iapws_r797_wph")
+!! C API.
+integer(c_size_t), intent(in), value          :: N           !! Size of T and p.
+real(c_double), intent(in)                    :: p(N)        !! Pressure in MPa.
+real(c_double), intent(in)                    :: T(N)        !! Temperature in K.
+character(len=1, kind=c_char), intent(out)     :: res(N)      !! Regions.
+
+call wph(p, T, res)
+end subroutine
+!}}}
+! ------------------------------------------------------------------------------
 end module
