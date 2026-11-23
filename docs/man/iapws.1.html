@@ -1,5 +1,5 @@
-<!-- Creator     : groff version 1.24.2 -->
-<!-- CreationDate: Wed Sep 30 06:11:14 2026 -->
+<!-- Creator     : groff version 1.25.0 -->
+<!-- CreationDate: Mon Nov 23 23:08:36 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,6 +12,10 @@
        pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
        table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
        h1      { text-align: center }
+       body    { max-width: 80ch; margin-left: auto; margin-right: auto; padding: 1em; }
+       img     { max-width: 100%; height: auto; }
+         .code-display { display: block; font-family: monospace; }
+         .code-display p { margin-top: 0; margin-bottom: 0; }
 </style>
 <title>iapws</title>
 
@@ -132,19 +136,20 @@ WARNING: Currently, only region 1 is supported.</p></td></tr>
 
 <p style="margin-left:6%; margin-top: 1em">kh:</p>
 
-<p style="margin-left:15%;"><b>-T,
---temperatureTEMPERATURE...</b></p>
+<p style="margin-left:15%;"><b>-T, --temperature</b>
+<i>TEMPERATURE...</i></p>
 
 <p style="margin-left:24%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:15%;"><b>-f, --fugacity
-FUGACITY...</b></p>
+<p style="margin-left:15%;"><b>-f, --fugacity</b>
+<i>FUGACITY...</i></p>
 
 <p style="margin-left:24%;">Liquid-phase fugacity in MPa.
 Default to 1 bar.</p>
 
-<p style="margin-left:15%;"><b>-g, --gases GAS...</b></p>
+<p style="margin-left:15%;"><b>-g, --gases</b>
+<i>GAS...</i></p>
 
 <p style="margin-left:24%;">Gases for which to compute kH.
 Default to O2.</p>
@@ -173,26 +178,40 @@ computing kH.</p>
 
 <p style="margin-left:6%; margin-top: 1em">kd:</p>
 
-<p style="margin-left:15%;"><b>-T, --temperature
-TEMPERATURE...</b></p>
+<p style="margin-left:15%;"><b>-T, --temperature</b>
+<i>TEMPERATURE...</i></p>
 
 <p style="margin-left:24%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:15%;"><b>-x, --x2 x2...</b></p>
+<p style="margin-left:15%;"><b>-x, --x2</b>
+<i>x2...</i></p>
 
 <p style="margin-left:24%;">Molar fraction of gas in water.
 Default to 1e-9.</p>
 
-<p style="margin-left:15%;"><b>-g, --gases GAS...</b></p>
+<p style="margin-left:15%;"><b>-g, --gases</b>
+<i>GAS...</i></p>
 
 <p style="margin-left:24%;">Gases for which to compute kD.
 Default to H2.</p>
 
-<p style="margin-left:15%;"><b>--D2O,</b></p>
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="15%"></td>
+<td width="6%">
 
-<p style="margin-left:24%;">Set heavywater as the
-solvent.</p>
+
+<p><b>--D2O</b></p></td>
+<td width="3%"></td>
+<td width="37%">
+
+
+<p>Set heavywater as the solvent.</p></td>
+<td width="39%">
+</td></tr>
+</table>
 
 <p style="margin-left:15%;"><b>--listgases</b></p>
 
@@ -201,35 +220,30 @@ computing kD.</p>
 
 <p style="margin-left:6%; margin-top: 1em">psat:</p>
 
-<p style="margin-left:15%;"><b>-T, --temperature
-TEMPERATURE...</b></p>
+<p style="margin-left:15%;"><b>-T, --temperature</b>
+<i>TEMPERATURE...</i></p>
 
 <p style="margin-left:24%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
 <p style="margin-left:6%; margin-top: 1em">Tsat:</p>
 
-<table width="100%" border="0" rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="24%"></td>
-<td width="76%">
+<p style="margin-left:15%;"><b>-p, --pressure</b>
+<i>PRESSURE...</i></p>
 
-
-<p>-p<b>, --pressure PRESSURE... Pressure in bar. Default
-to 1 bar.</b></p></td></tr>
-</table>
+<p style="margin-left:24%;">Pressure in bar. Default to 1
+bar.</p>
 
 <p style="margin-left:6%; margin-top: 1em">wp:</p>
 
-<p style="margin-left:15%;"><b>-T, --temperature
-TEMPERATURE...</b></p>
+<p style="margin-left:15%;"><b>-T, --temperature</b>
+<i>TEMPERATURE...</i></p>
 
 <p style="margin-left:24%;">Temperature in &deg;C. Default
 to 25&deg;C.</p>
 
-<p style="margin-left:15%;"><b>-p, --pressure
-PRESSURE...</b></p>
+<p style="margin-left:15%;"><b>-p, --pressure</b>
+<i>PRESSURE...</i></p>
 
 <p style="margin-left:24%;">Pressure in bar. Default to 1
 bar.</p>
@@ -240,7 +254,7 @@ bar.</p>
 
 <p style="margin-left:24%;">Show usage text and exit.</p>
 
-<p style="margin-left:15%;"><b>-h, --help,</b></p>
+<p style="margin-left:15%;"><b>-h, --help</b></p>
 
 <p style="margin-left:24%;">Show help text and exit.</p>
 

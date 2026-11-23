@@ -5,8 +5,8 @@ fpath="./examples.man"
 echo  ".SH EXAMPLES" > $fpath
 echo  "\\\"{{{" >> $fpath
 
+echo ".SS FORTRAN" >> $fpath
 echo ".PP" >> $fpath
-echo "Example in Fortran:" >> $fpath
 echo ".nf" >> $fpath
 echo ".ft CR" >> $fpath
 while IFS="" read -r line; do
@@ -17,8 +17,8 @@ echo ".ft R" >> $fpath
 echo ".fi" >> $fpath
 echo "" >> $fpath
 
+echo ".SS C" >> $fpath
 echo ".PP" >> $fpath
-echo "Example in C"       >> $fpath
 echo ".nf" >> $fpath
 echo ".ft CR" >> $fpath
 while IFS="" read -r line; do
@@ -28,8 +28,8 @@ echo ".ft R" >> $fpath
 echo ".fi" >> $fpath
 echo "" >> $fpath
 
+echo ".SS PYTHON" >> $fpath
 echo ".PP" >> $fpath
-echo "Example in Python"  >> $fpath
 echo ".nf" >> $fpath
 echo ".ft CR" >> $fpath
 while IFS="" read -r line; do

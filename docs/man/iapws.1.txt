@@ -38,7 +38,7 @@ SUBCOMMANDS
 OPTIONS
      kh:
 
-            -T, --temperatureTEMPERATURE...
+            -T, --temperature TEMPERATURE...
                    Temperature in °C. Default to 25°C.
 
             -f, --fugacity FUGACITY...
@@ -63,8 +63,7 @@ OPTIONS
             -g, --gases GAS...
                    Gases for which to compute kD.  Default to H2.
 
-            --D2O,
-                   Set heavywater as the solvent.
+            --D2O  Set heavywater as the solvent.
 
             --listgases
                    Display available gases for computing kD.
@@ -76,8 +75,8 @@ OPTIONS
 
      Tsat:
 
-                   -p, --pressure PRESSURE...  Pressure in bar. Default
-                   to 1 bar.
+            -p, --pressure PRESSURE...
+                   Pressure in bar. Default to 1 bar.
 
      wp:
 
@@ -92,7 +91,7 @@ OPTIONS
             -u, --usage
                    Show usage text and exit.
 
-            -h, --help,
+            -h, --help
                    Show help text and exit.
 
             -v, --version
@@ -124,4 +123,4 @@ SEE ALSO
      iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
      data(3),
 
-0.7.1                      30 September 2026                   iapws(1)
+0.7.1                       23 November 2026                   iapws(1)

@@ -121,7 +121,7 @@ NOTES
           53, no. 2, p. 23103, May 2024, doi: 10.1063/5.0198792.
 
 EXAMPLES
-     Example in Fortran:
+   FORTRAN
          program example_in_f
          use iapws__common, only: dp, int32
          use iapws
@@ -135,7 +135,7 @@ EXAMPLES
          character(len=1) :: s(3)
          character(len=2) :: gas = "O2"
          integer(int32) :: heavywater = 0
-         type(gas_type), pointer :: gases_list(:)
+         type(gas_t), pointer :: gases_list(:)
          character(len=:), pointer :: gases_str
 
          print *, '########################## IAPWS VERSION ##########################'
@@ -215,7 +215,7 @@ EXAMPLES
 
          end program example_in_f
 
-     Example in C
+   C
          #include <string.h>
          #include <stdio.h>
          #include "iapws.h"
@@ -313,7 +313,7 @@ EXAMPLES
          return 0;
          }
 
-     Example in Python
+   PYTHON
          r"""Example in python"""
          import sys
          sys.path.insert(0, "../py/src/")
@@ -455,4 +455,4 @@ SEE ALSO
      iapws_kd(3)  iapws_kw(3)  iapws_Tc(3)  iapws_pc(3)  ciaaw(3),  co‐
      data(3),
 
-0.7.1                      30 September 2026               iapws_lib(3)
+0.7.1                       23 November 2026               iapws_lib(3)

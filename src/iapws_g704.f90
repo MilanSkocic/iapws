@@ -17,11 +17,6 @@ private
 !***********************************************************************
 integer(int32), parameter :: lengas = 5
 !-----------------------------------------------------------------------
-type :: gas_type
-!! Derived type containing a allocatable string for representing a gas.
-character(len=:), allocatable :: gas !! Gas
-end type gas_type
-!-----------------------------------------------------------------------
 !! ABC coefficients for gases in water.
 type :: abc_t
 character(len=lengas) :: gas !! Gas
@@ -150,7 +145,6 @@ type(efgh_t), dimension(ngas_D2O), parameter :: efgh_D2O = &
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! PUBLIC
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-public :: gas_type
 public :: f_kh_H2O, f_kh_D2O, f_kd_H2O, f_kd_D2O, findgas_abc, findgas_efgh
 public :: efgh_H2O, efgh_D2O, abc_H2O, abc_D2O
 public :: ngas_H2O, ngas_D2O

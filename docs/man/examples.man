@@ -1,7 +1,7 @@
 .SH EXAMPLES
 \"{{{
+.SS FORTRAN
 .PP
-Example in Fortran:
 .nf
 .ft CR
     program example_in_f
@@ -17,7 +17,7 @@ Example in Fortran:
     character(len=1) :: s(3)
     character(len=2) :: gas = "O2"
     integer(int32) :: heavywater = 0
-    type(gas_type), pointer :: gases_list(:)
+    type(gas_t), pointer :: gases_list(:)
     character(len=:), pointer :: gases_str
     
     print *, '########################## IAPWS VERSION ##########################'
@@ -99,8 +99,8 @@ Example in Fortran:
 .ft R
 .fi
 
+.SS C
 .PP
-Example in C
 .nf
 .ft CR
     #include <string.h>
@@ -203,8 +203,8 @@ Example in C
 .ft R
 .fi
 
+.SS PYTHON
 .PP
-Example in Python
 .nf
 .ft CR
     r"""Example in python"""
