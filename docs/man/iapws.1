@@ -1,4 +1,4 @@
-.TH iapws 1 "30 September 2026" "0.7.1" "User Commands"
+.TH iapws 1 "23 November 2026" "0.7.1" "User Commands"
 
 .SH NAME
 iapws \- compute light and heavy water properties
@@ -58,26 +58,21 @@ WARNING: Currently, only region 1 is supported.
 kh:
 .RS
 .TP
-.B
-\fB-T\fP, \fB--temperature\fPTEMPERATURE\.\.\.
+.BI "-T, \-\-temperature " TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
-.B
-\fB-f\fP, \fB--fugacity\fP FUGACITY\.\.\.
+.BI "\-f, \-\-fugacity " FUGACITY\.\.\.
 Liquid-phase fugacity in MPa.
 Default to 1 bar.
 .TP
-.B
-\fB-g\fP, \fB--gases\fP GAS\.\.\.
+.BI "\-g, \-\-gases " GAS\.\.\.
 Gases for which to compute kH.
 Default to O2.
 .TP
-.B
-\fB--D2O\fP
+.B \-\-D2O
 Set heavywater as the solvent.
 .TP
-.B
-\fB--listgases\fP
+.B \-\-listgases
 Display available gases for
 computing kH.
 .RE
@@ -85,26 +80,21 @@ computing kH.
 kd:
 .RS
 .TP
-.B
-\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
+.BI "-T, \-\-temperature " TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
-.B
-\fB-x\fP, \fB--x2\fP x2\.\.\.
+.BI "\-x, \-\-x2 " x2\.\.\.
 Molar fraction of gas in water.
 Default to 1e-9.
 .TP
-.B
-\fB-g\fP, \fB--gases\fP GAS\.\.\.
+.BI "\-g, \-\-gases " GAS\.\.\.
 Gases for which to compute kD.
 Default to H2.
 .TP
-.B
-\fB--D2O\fP,
+.B \-\-D2O
 Set heavywater as the solvent.
 .TP
-.B
-\fB--listgases\fP
+.B --listgases
 Display available gases for
 computing kD.
 .RE
@@ -112,47 +102,42 @@ computing kD.
 psat:
 .RS
 .TP
-.B
-\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
+.BI "-T, \-\-temperature " TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .RE
 .PP
 Tsat:
 .RS
 .TP
-.B
- \fB-p\fP, \fB--pressure\fP PRESSURE\.\.\.
+.BI "\-p, \-\-pressure " PRESSURE\.\.\.
 Pressure in bar. Default to 1 bar.
 .RE
 .PP
 wp:
 .RS
 .TP
-.B
-\fB-T\fP, \fB--temperature\fP TEMPERATURE\.\.\.
+.BI "-T, \-\-temperature " TEMPERATURE\.\.\.
 Temperature in °C. Default to 25°C.
 .TP
-.B
-\fB-p\fP, \fB--pressure\fP PRESSURE\.\.\.
+.BI "\-p, \-\-pressure " PRESSURE\.\.\.
 Pressure in bar. Default to 1 bar.
 .RE
 .PP
 all:
 .RS
 .TP
-.B
-\fB-u\fP, \fB--usage\fP
+.B \-u, \-\-usage
 Show usage text and exit.
 .TP
-.B
-\fB-h\fP, \fB--help\fP,
+.B \-h, \-\-help
 Show help text and exit.
 .TP
-.B
-\fB-v\fP, \fB--version\fP
+.B \-v, \-\-version
 Show version information and exit.
-.SH NOTES
 
+
+.SH NOTES
+.PP
 You may replace the default options from a file if your first
 options begin with @file.
 Initial options will then be read from the "response file"
@@ -165,6 +150,8 @@ contain @file arguments. That is, it is not processed recursively.
 .PP
 For more information on response files see
 https://urbanjost.github.io/M_CLI2/set_args.3m_cli2.html
+
+
 .SH EXAMPLE
 Minimal example
 .PP
@@ -173,7 +160,6 @@ Minimal example
       iapws kh -T 25,100 -f 1,0.2 -g O2,H2
       iapws kd -T 25,100 -x2 1d-9,1d-6 -g O2,H2
       iapws wp -T 25,100 -p 0.035,1.0
-
 .ft R
 .fi
 
