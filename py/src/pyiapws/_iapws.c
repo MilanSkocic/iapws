@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "iapws.h"
@@ -5,6 +7,7 @@
 PyDoc_STRVAR(module_docstring, "C extension wrapping the iapws modules of the Fortran iapws library.");
 
 /* R797 Doc */
+//{{{
 PyDoc_STRVAR(r797_psat_doc, 
 "psat(Ts: array-like) --> mview \n\n"
 "Get the saturation-pressure line.");
@@ -20,9 +23,10 @@ PyDoc_STRVAR(r797_wr_doc,
 PyDoc_STRVAR(r797_wph_doc, 
 "wph(p: array-like, T: array-like) --> mview \n\n"
 "Get water phase.");
-
+//}}}
 
 /* G704 Doc */
+//{{{
 PyDoc_STRVAR(g704_kh_doc, 
 "kh(T: array-like, gas: str, heavywater :bool) --> mview \n\n"
 "Get the Henry constant for gas in H2O or D2O for T.");
@@ -38,6 +42,7 @@ PyDoc_STRVAR(g704_gases_doc,
 PyDoc_STRVAR(g704_gases2_doc,
 "gases(heavywater: bool) --> str\n\n"
 "Get the available gases as a string.");
+//}}}
 
 /* R1124 Doc */
 PyDoc_STRVAR(r1124_Kw_doc, 
@@ -45,7 +50,8 @@ PyDoc_STRVAR(r1124_Kw_doc,
 "Get the ionization constant.");
 
 /*Common function*/
-Py_buffer newbuffer_like(Py_buffer *buffer){
+static Py_buffer newbuffer_like(Py_buffer *buffer){
+//{{{
     Py_buffer newbuffer;
     newbuffer.buf = PyMem_Malloc(buffer->len);
     newbuffer.obj = NULL;
@@ -59,9 +65,10 @@ Py_buffer newbuffer_like(Py_buffer *buffer){
     newbuffer.suboffsets = NULL;
 
     return newbuffer;
-}
+}//}}}
 
-Py_buffer create_new_buffer(char *format, Py_ssize_t itemsize, Py_ssize_t ndim, Py_ssize_t *shape){
+static Py_buffer create_new_buffer(char *format, Py_ssize_t itemsize, Py_ssize_t ndim, Py_ssize_t *shape){
+//{{{
     Py_buffer buffer;
     Py_ssize_t i, j, size, subsize;
     Py_ssize_t *strides = (Py_ssize_t *)PyMem_Calloc(ndim, sizeof(Py_ssize_t));
@@ -95,9 +102,10 @@ Py_buffer create_new_buffer(char *format, Py_ssize_t itemsize, Py_ssize_t ndim, 
     buffer.buf = PyMem_Calloc(size, itemsize);
 
     return buffer;
-}
+}///}}}
 
-Py_buffer *get_buffer(PyObject *o){
+static Py_buffer *get_buffer(PyObject *o){
+//{{{
     PyObject *mview;
     Py_buffer *buffer;
 
@@ -117,11 +125,12 @@ Py_buffer *get_buffer(PyObject *o){
     }else{
         return NULL;
     }
-}
+}//}}}
 
 
 /* R797 */
 static PyObject *r797_psat(PyObject *self, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -139,9 +148,10 @@ static PyObject *r797_psat(PyObject *self, PyObject *args){
     new_mview = PyMemoryView_FromBuffer(&newbuffer);
 
     return new_mview;
-}
+}//}}}
 
 static PyObject *r797_Tsat(PyObject *self, PyObject *args){
+//{{{
     PyObject *p_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -159,9 +169,10 @@ static PyObject *r797_Tsat(PyObject *self, PyObject *args){
     new_mview = PyMemoryView_FromBuffer(&newbuffer);
 
     return new_mview;
-}
+}//}}}
 
 static PyObject *r797_wp(PyObject *self, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *p_obj;
 
@@ -191,9 +202,10 @@ static PyObject *r797_wp(PyObject *self, PyObject *args){
 
     res_mview = PyMemoryView_FromBuffer(&res_buf);
     return res_mview;
-}
+}//}}}
 
 static PyObject *r797_wr(PyObject *self, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *p_obj;
 
@@ -221,9 +233,10 @@ static PyObject *r797_wr(PyObject *self, PyObject *args){
 
     res_mview = PyMemoryView_FromBuffer(&res_buf);
     return res_mview;
-}
+}//}}}
 
 static PyObject *r797_wph(PyObject *self, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *p_obj;
 
@@ -251,10 +264,11 @@ static PyObject *r797_wph(PyObject *self, PyObject *args){
 
     res_mview = PyMemoryView_FromBuffer(&res_buf);
     return res_mview;
-}
+}//}}}
 
 /* G704 */
 static PyObject *kx(char k, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *mview;
     Py_buffer *buffer;
@@ -286,17 +300,14 @@ static PyObject *kx(char k, PyObject *args){
     fkx((double *)buffer->buf, gas, heavywater, (double *)newbuffer.buf, strlen(gas), newbuffer.shape[0]);
     new_mview = PyMemoryView_FromBuffer(&newbuffer);
     return new_mview;
-}
+}//}}}
 
-static PyObject *g704_kh(PyObject *self, PyObject *args){
-    return kx('h', args);
-}
+static PyObject *g704_kh(PyObject *self, PyObject *args){ return kx('h', args); }
 
-static PyObject *g704_kd(PyObject *self, PyObject *args){
-    return kx('d', args);
-}
+static PyObject *g704_kd(PyObject *self, PyObject *args){ return kx('d', args); }
 
 static PyObject *g704_ngases(PyObject *self, PyObject *args){
+//{{{
     int heavywater;
     int ngas;
     
@@ -306,10 +317,10 @@ static PyObject *g704_ngases(PyObject *self, PyObject *args){
     ngas = iapws_g704_ngases(heavywater);
     
     return Py_BuildValue("i", ngas);
-}
+}//}}}
 
 static PyObject *g704_gases(PyObject *self, PyObject *args){
-    
+//{{{ 
     int heavywater;
     char **gases;
     int ngas;
@@ -326,9 +337,10 @@ static PyObject *g704_gases(PyObject *self, PyObject *args){
         PyTuple_SET_ITEM(tuple, i, PyUnicode_FromFormat("%s", gases[i]));
     }
     return tuple;
-}
+}//}}}
 
 static PyObject *g704_gases2(PyObject *self, PyObject *args){
+//{{{
     int heavywater;
     char *gases;
     PyObject *py_gases;
@@ -339,10 +351,11 @@ static PyObject *g704_gases2(PyObject *self, PyObject *args){
     gases = iapws_g704_gases2(heavywater);
     py_gases = PyUnicode_FromFormat("%s", gases);
     return py_gases;
-}
+}//}}}
 
 /* R1124 */
 static PyObject *r1124_Kw(PyObject *self, PyObject *args){
+//{{{
     PyObject *T_obj;
     PyObject *rho_obj;
 
@@ -371,9 +384,10 @@ static PyObject *r1124_Kw(PyObject *self, PyObject *args){
     new_mview = PyMemoryView_FromBuffer(&newbuffer);
 
     return new_mview;
-}
+}//}}}
 
 static PyMethodDef myMethods[] = {
+//{{{
     {"psat", (PyCFunction) r797_psat, METH_VARARGS, r797_psat_doc},
     {"Tsat", (PyCFunction) r797_Tsat, METH_VARARGS, r797_Tsat_doc},
     {"wp", (PyCFunction) r797_wp, METH_VARARGS, r797_wp_doc},
@@ -386,10 +400,12 @@ static PyMethodDef myMethods[] = {
     {"gases2", (PyCFunction) g704_gases2, METH_VARARGS, g704_gases2_doc},
     {"Kw", (PyCFunction) r1124_Kw, METH_VARARGS, r1124_Kw_doc},
     { NULL, NULL, 0, NULL }
-};
+};//}}}
+
 static struct PyModuleDef _iapws = {PyModuleDef_HEAD_INIT, "_iapws", module_docstring, -1, myMethods};
 
 PyMODINIT_FUNC PyInit__iapws(void){
+//{{{
     PyObject *m;
     PyObject *d;
     PyObject *v;
@@ -422,4 +438,4 @@ PyMODINIT_FUNC PyInit__iapws(void){
     Py_INCREF(v);
     
     return m;
-}
+}//}}}

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #ifndef IAPWS_H
 #define IAPWS_H
 

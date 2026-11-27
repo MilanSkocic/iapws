@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 """Main"""
 from . import main
 
